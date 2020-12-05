@@ -1,3 +1,5 @@
+import 'package:buildup/entities/builder.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/widgets/admin_candidating_builder_card.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,16 @@ class AdminBuildersCandidatingPage extends StatelessWidget {
           );
         }
         
-        return const Center(child: Text("Hello World"));
+        return Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final BuBuilder builder in candidatingBuildersStore.builders) 
+                AdminCandidatingBuilderCard(builder: builder)
+            ],
+          ),
+        );
       },
     );
   }
