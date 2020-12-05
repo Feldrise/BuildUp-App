@@ -1,5 +1,6 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_delete_candidating_builder_dialog.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_update_candidating_builder.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
 import 'package:buildup/utils/colors.dart';
@@ -22,7 +23,7 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
       const SizedBox(width: 10.0,),
       BuIconButton(
         icon: Icons.edit, 
-        onPressed: _editBuilder
+        onPressed: () => _editBuilder(context)
       ),
       const SizedBox(width: 10.0,),
       BuIconButton(
@@ -163,8 +164,11 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
 
   }
 
-  Future _editBuilder() async {
-
+  Future _editBuilder(BuildContext context) async {
+    final bool updated = await showDialog(
+      context: context,
+      builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: builder,)
+    );
   }
 
   Future _deleteBuilder(BuildContext context) async {
