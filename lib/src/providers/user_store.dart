@@ -18,7 +18,7 @@ class UserStore with ChangeNotifier {
   String get id => _user.id;
   String get authentificationHeader => _user.authentificationHeader;
 
-  String get fullName => "${_user.firstName} ${_user.lastName}";
+  String get fullName => _user.fullName;
   String get firstName => _user.firstName;
   String get lastName => _user.lastName;
   DateTime get birthdate => _user.birthdate;
