@@ -1,4 +1,7 @@
+import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/authentication_service.dart';
 import 'package:buildup/src/pages/autentication/login_page/widgets/login_form.dart';
+import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
@@ -6,6 +9,8 @@ import 'package:buildup/src/shared/widgets/bu_checkbox.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -15,7 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> _loginFormState = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginFormState = GlobalKey<FormState>();
 
   bool _isLoading = false;
   bool _hasError = false;
@@ -23,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   final List<GlobalKey<State>> _loadKeyLoaders = [];
 
   bool _rememberMe = false;
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {    
@@ -128,15 +133,29 @@ class _LoginPageState extends State<LoginPage> {
   Future _login() async {
     setState(() {
       _isLoading = true;
+      _hasError = false;
       _statusMessage = "Connexion en cours...";
     });
 
-    await Future<void>.delayed(const Duration(seconds: 3));
+    try {
+      final String username = _emailTextController.text;
+      final String password = _passwordTextController.text;
 
-    setState(() {
-      _isLoading = false;
-      _hasError = true;
-      _statusMessage = "Votre mot de passe ou votre email est incorrect";
-    });
+      final User loggedUser = await AuthenticationService.instance.login(username, password, remember: _rememberMe);
+
+      setState(() {
+        _isLoading = false;
+        _hasError = false;
+        _statusMessage = "";
+      });
+
+      Provider.of<UserStore>(context, listen: false).loginUser(loggedUser);
+    } on PlatformException catch(e) {
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _statusMessage = e.message;
+      });
+    } 
   }
 }
