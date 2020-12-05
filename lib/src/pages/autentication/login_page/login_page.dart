@@ -1,8 +1,11 @@
 import 'package:buildup/src/pages/autentication/login_page/widgets/login_form.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_checkbox.dart';
+import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -15,18 +18,33 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _loginFormState = GlobalKey<FormState>();
 
   bool _isLoading = false;
+  bool _hasError = false;
   String _statusMessage = "";
+  final List<GlobalKey<State>> _loadKeyLoaders = [];
 
   bool _rememberMe = false;
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      for (final keyLoader in _loadKeyLoaders) {
+        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      }
+
+      _loadKeyLoaders.clear();
+
+      if (_isLoading) {
+        _loadKeyLoaders.add(GlobalKey<State>());
+        Dialogs.showLoadingDialog(context, _loadKeyLoaders.last, _statusMessage); 
+      }
+    });
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final double dialogWidth = constraints.maxWidth <= 366 ? constraints.maxWidth : 366;
-        final double dialogHeight = constraints.maxWidth <= 366 ? constraints.maxHeight : 500;
+        final double dialogHeight = constraints.maxWidth <= 366 ? constraints.maxHeight : _hasError ? 630 : 500;
 
         return Stack(
           children: [
@@ -52,6 +70,13 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 5.0,),
                         Text("Bienvenue ! ", textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline3,),
                         const SizedBox(height: 32.0),
+                        if (_hasError && _statusMessage.isNotEmpty) ...{
+                          BuStatusMessage(
+                            title: "Erreur lors de la connexion :",
+                            message: _statusMessage,
+                          ),
+                          const SizedBox(height: 16.0,),
+                        },
                         LoginForm(
                           formKey: _loginFormState,
                           emailTextController: _emailTextController,
@@ -84,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                         Flexible(
                           child: BuButton(
                             text: "Se connecter", 
-                            onPressed: () {}
+                            onPressed: _login
                           ),
                         )
                       ],
@@ -98,5 +123,20 @@ class _LoginPageState extends State<LoginPage> {
         
       },
     );
+  }
+
+  Future _login() async {
+    setState(() {
+      _isLoading = true;
+      _statusMessage = "Connexion en cours...";
+    });
+
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    setState(() {
+      _isLoading = false;
+      _hasError = true;
+      _statusMessage = "Votre mot de passe ou votre email est incorrect";
+    });
   }
 }

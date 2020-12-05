@@ -1,4 +1,5 @@
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Build Up',
       theme: ThemeData(
-        primaryColor: const Color(0xFFD43744),
+        primaryColor: colorPrimary,
         
-        accentColor: const Color(0xFFD43744),
+        accentColor: colorSecondary,
 
         cardColor: Colors.white,
 
