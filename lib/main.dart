@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
             
             accentColor: colorSecondary,
 
+            scaffoldBackgroundColor: colorScaffolddWhite,
             cardColor: Colors.white,
 
             textTheme: const TextTheme(

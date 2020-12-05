@@ -1,4 +1,5 @@
 import 'package:buildup/entities/page_item.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_candidating_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,9 @@ class AdminMainPage extends StatelessWidget {
     ),
   ];
 
-  final List<Widget> pages = const [
-    Center(child: Text("Hello Candidature",)),
-    Center(child: Text("Hello Membres Actifs",)),
+  final List<Widget> pages = [
+    AdminCandidatingPage(),
+    const Center(child: Text("Hello Membres Actifs",)),
   ];
 
   @override
