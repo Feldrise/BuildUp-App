@@ -22,7 +22,7 @@ class BuCheckBox extends StatelessWidget {
           value: value,
           onChanged: onChanged,
         ),
-        Text(text, style: Theme.of(context).textTheme.caption,)
+        Flexible(child: Text(text, style: Theme.of(context).textTheme.caption,))
       ],
     );
   }
