@@ -31,9 +31,10 @@ class BuButton extends StatelessWidget {
 
     if (buttonType == BuButtonType.secondary) {
       return RaisedButton(
+        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
-          side: const BorderSide(color: Colors.white38)
+          side: BorderSide(color: Theme.of(context).dividerColor)
         ),
         elevation: 0,
         color: Theme.of(context).scaffoldBackgroundColor,

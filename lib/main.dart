@@ -41,14 +41,15 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: colorScaffolddWhite,
             cardColor: Colors.white,
 
-            dividerColor: const Color(0xffedf1f7),
+            dividerColor: const Color(0xffefefef),
 
             textTheme: const TextTheme(
               headline1: TextStyle(fontSize: 48, color: colorBlack),
               headline2: TextStyle(fontSize: 40, color: colorBlack),
               headline3: TextStyle(fontSize: 32, color: colorBlack),
-              headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-              headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              headline4: TextStyle(fontSize: 28, fontWeight: FontWeight.w300, color: colorBlack),
+              headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: colorBlack),
+              headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: colorBlack),
               bodyText2: TextStyle(fontSize: 16),
               button: TextStyle(fontSize: 16)
             ),
