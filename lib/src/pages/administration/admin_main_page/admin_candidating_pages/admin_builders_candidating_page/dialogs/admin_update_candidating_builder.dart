@@ -154,8 +154,7 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
       ),
       const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
-        icon: Icons.delete,
-        text: "Supprimer",
+        text: "Valider",
         onPressed: () => Navigator.pop(context, true),
       )
     ];

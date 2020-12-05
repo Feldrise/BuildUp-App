@@ -1,6 +1,7 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_delete_candidating_builder_dialog.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_update_candidating_builder.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_view_candidating_builder_dialog.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
 import 'package:buildup/utils/colors.dart';
@@ -18,7 +19,7 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
     return [
       BuIconButton(
         icon: Icons.visibility, 
-        onPressed: _viewBuilder
+        onPressed: () => _viewBuilder(context)
       ),
       const SizedBox(width: 10.0,),
       BuIconButton(
@@ -149,6 +150,7 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(8.0),
+      width: 200,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -156,12 +158,15 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
           )
         )
       ),
-      child: SizedBox(width: 200, child: info),
+      child: info,
     );
   }
 
-  Future _viewBuilder() async {
-
+  Future _viewBuilder(BuildContext context) async {
+    final bool validated = await showDialog(
+      context: context,
+      builder: (context) => AdminViewCandidatingBuilderDialog(builder: builder,)
+    );
   }
 
   Future _editBuilder(BuildContext context) async {
