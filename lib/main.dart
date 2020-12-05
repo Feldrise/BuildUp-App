@@ -41,11 +41,14 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: colorScaffolddWhite,
             cardColor: Colors.white,
 
+            dividerColor: const Color(0xffedf1f7),
+
             textTheme: const TextTheme(
               headline1: TextStyle(fontSize: 48, color: colorBlack),
               headline2: TextStyle(fontSize: 40, color: colorBlack),
               headline3: TextStyle(fontSize: 32, color: colorBlack),
               headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+              headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               bodyText2: TextStyle(fontSize: 16),
               button: TextStyle(fontSize: 16)
             ),
@@ -58,6 +61,11 @@ class MyApp extends StatelessWidget {
               textTheme: TextTheme(
                 headline6: TextStyle(color: colorBlack, fontSize: 40)
               )
+            ),
+
+            dividerTheme: const DividerThemeData(
+              color: Color(0xffedf1f7),
+              thickness: 1
             ),
 
             visualDensity: VisualDensity.adaptivePlatformDensity,
