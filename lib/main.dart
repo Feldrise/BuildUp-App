@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:buildup/entities/user.dart';
-import 'package:buildup/src/pages/administration/temp.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admib_main_page.dart';
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
 import 'package:buildup/src/pages/splash_screen/splash_screen.dart';
 import 'package:buildup/src/providers/user_store.dart';
@@ -41,11 +41,21 @@ class MyApp extends StatelessWidget {
             cardColor: Colors.white,
 
             textTheme: const TextTheme(
-              headline1: TextStyle(fontSize: 48, color: Color(0xff2c3e50)),
-              headline2: TextStyle(fontSize: 40, color: Color(0xff2c3e50)),
-              headline3: TextStyle(fontSize: 32, color: Color(0xff2c3e50)),
+              headline1: TextStyle(fontSize: 48, color: colorBlack),
+              headline2: TextStyle(fontSize: 40, color: colorBlack),
+              headline3: TextStyle(fontSize: 32, color: colorBlack),
               bodyText2: TextStyle(fontSize: 16),
               button: TextStyle(fontSize: 16)
+            ),
+
+            appBarTheme: const AppBarTheme(
+              brightness: Brightness.light,
+              color: Colors.white,
+              elevation: 0,
+              iconTheme: IconThemeData(color: colorBlack),
+              textTheme: TextTheme(
+                headline6: TextStyle(color: colorBlack, fontSize: 40)
+              )
             ),
 
             visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -65,7 +75,7 @@ class MyApp extends StatelessWidget {
                 final User loggedUser = snapshot.data as User;
 
                 if (loggedUser.role == UserRoles.admin) {
-                  return TempPage();
+                  return AdminMainPage();
                 }
                 else {
                   return const Center(child: Text("Erreur lors du chargement de l'application : vous n'avez pas les permissions nécessaires"),);

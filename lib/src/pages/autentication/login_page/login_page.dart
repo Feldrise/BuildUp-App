@@ -22,10 +22,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormState = GlobalKey<FormState>();
 
-  bool _isLoading = false;
   bool _hasError = false;
   String _statusMessage = "";
-  final List<GlobalKey<State>> _loadKeyLoaders = [];
 
   bool _rememberMe = false;
   final TextEditingController _emailTextController = TextEditingController();
@@ -33,19 +31,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {    
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      for (final keyLoader in _loadKeyLoaders) {
-        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
-      }
-
-      _loadKeyLoaders.clear();
-
-      if (_isLoading) {
-        _loadKeyLoaders.add(GlobalKey<State>());
-        Dialogs.showLoadingDialog(context, _loadKeyLoaders.last, _statusMessage); 
-      }
-    });
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final double dialogWidth = constraints.maxWidth <= 366 ? constraints.maxWidth : 366;
@@ -131,8 +116,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future _login() async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, _statusMessage); 
+
     setState(() {
-      _isLoading = true;
       _hasError = false;
       _statusMessage = "Connexion en cours...";
     });
@@ -144,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
       final User loggedUser = await AuthenticationService.instance.login(username, password, remember: _rememberMe);
 
       setState(() {
-        _isLoading = false;
         _hasError = false;
         _statusMessage = "";
       });
@@ -152,10 +138,11 @@ class _LoginPageState extends State<LoginPage> {
       Provider.of<UserStore>(context, listen: false).loginUser(loggedUser);
     } on PlatformException catch(e) {
       setState(() {
-        _isLoading = false;
         _hasError = true;
         _statusMessage = e.message;
       });
     } 
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
 }
