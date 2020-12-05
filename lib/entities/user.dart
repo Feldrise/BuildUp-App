@@ -18,6 +18,7 @@ class User {
   final String role;
   final String token;
 
+  String get fullName =>  "$firstName $lastName";
   String get authentificationHeader => "Bearer $token";
 
   User(this.id, {
