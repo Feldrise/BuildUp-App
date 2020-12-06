@@ -1,4 +1,5 @@
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/forms/form_qa.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,12 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
                     buildBigInfo("Information générales : ", "TODO"),
                     const SizedBox(height: 10,),
                     buildBigInfo("Equipe :", builder.associatedProjects.first.team),
+                    const SizedBox(height: 15,),
+                    buildTitle("Réponses au formulaire"),
+                    for (final qa in builder.associatedForm.qas) ...{
+                      const SizedBox(height: 10,),
+                      buildBigInfo(qa.question, qa.answer),
+                    },
                     const SizedBox(height: 60,),
                   ],
                 ),

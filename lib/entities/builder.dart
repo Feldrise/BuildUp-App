@@ -1,3 +1,4 @@
+import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class BuBuilder {
   final String id;
   final User associatedUser;
   final List<Project> associatedProjects = [];
+  final BuForm associatedForm;
 
   String coachId;
 
@@ -47,7 +49,7 @@ class BuBuilder {
   String situation;
   String description;
 
-  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser}) :
+  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm}) :
     id = map['id'] as String,
     coachId = map['coachId'] as String,
     status = map['status'] as String,

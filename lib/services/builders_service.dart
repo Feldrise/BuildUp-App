@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:flutter/services.dart';
@@ -31,8 +32,9 @@ class BuildersService {
       for (final map in jsonBuilders) {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
         final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+        final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
 
-        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser));
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
         builders.last.associatedProjects.add(associatedProject);
       }
 
@@ -67,6 +69,21 @@ class BuildersService {
 
     if (response.statusCode == 200) {
       return Project.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  Future<BuForm> getFormForBuilder(String authorization, String builderId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$builderId/form',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return BuForm.fromList(jsonDecode(response.body) as List<dynamic>);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
