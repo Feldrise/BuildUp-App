@@ -15,6 +15,7 @@ class BuildersService {
 
   static final BuildersService instance = BuildersService._privateConstructor();
 
+  // GET
   Future<List<BuBuilder>> getCandidatingBuilders(String authorization) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/candidating',
@@ -70,4 +71,19 @@ class BuildersService {
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
+
+  // PUT
+  Future refuseBuilder(String authorization, String builderId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$builderId/refuse',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
 }

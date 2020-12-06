@@ -2,18 +2,32 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_delete_candidating_builder_dialog.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_update_candidating_builder.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_view_candidating_builder_dialog.dart';
+import 'package:buildup/src/providers/candidating_builders_store.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
+import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
-class AdminCandidatingBuilderCard extends StatelessWidget {
+class AdminCandidatingBuilderCard extends StatefulWidget {
   const AdminCandidatingBuilderCard({
     Key key, 
     @required this.builder
   }) : super(key: key);
   
   final BuBuilder builder;
+
+  @override
+  _AdminCandidatingBuilderCardState createState() => _AdminCandidatingBuilderCardState();
+}
+
+class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCard> {
+  bool _hasError = false;
+  String _errorMessage = "";
 
   List<Widget> actions(BuildContext context) {
     return [
@@ -63,12 +77,12 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
           ],
         )
       ),
-      buildInfo("étape", Text(builder.step ?? "Inconnue")),
+      buildInfo("étape", Text(widget.builder.step ?? "Inconnue")),
       // TODO replace by the candidating date
       buildInfo("Date", const Text("20/08/2020")),
-      buildInfo("Projet", Text(builder.associatedProjects.first.name)),
-      buildInfo("Email", Text(builder.associatedUser.email)),
-      buildInfo("Tag Discord", Text(builder.associatedUser.discordTag))
+      buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
+      buildInfo("Email", Text(widget.builder.associatedUser.email)),
+      buildInfo("Tag Discord", Text(widget.builder.associatedUser.discordTag))
     ];
   }
 
@@ -88,7 +102,7 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(builder.associatedUser.fullName, style: Theme.of(context).textTheme.headline6,),
+                      child: Text(widget.builder.associatedUser.fullName, style: Theme.of(context).textTheme.headline6,),
                     ),
                     Expanded(
                       child: Align(
@@ -101,12 +115,22 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
                   ],
                 ),
               ),
+              if (_hasError && _errorMessage.isNotEmpty) 
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BuStatusMessage(
+                      title: "Erreur",
+                      message: _errorMessage,
+                    ),
+                  ),
+                ),
               if (showTable)
                 Container(
                   height: 1,
                   color: Theme.of(context).dividerColor
                 ),
-                
               Wrap(
                 children: [
                   for (final widget in infos()) 
@@ -165,21 +189,44 @@ class AdminCandidatingBuilderCard extends StatelessWidget {
   Future _viewBuilder(BuildContext context) async {
     final bool validated = await showDialog(
       context: context,
-      builder: (context) => AdminViewCandidatingBuilderDialog(builder: builder,)
+      builder: (context) => AdminViewCandidatingBuilderDialog(builder: widget.builder,)
     );
   }
 
   Future _editBuilder(BuildContext context) async {
     final bool updated = await showDialog(
       context: context,
-      builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: builder,)
+      builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: widget.builder,)
     );
   }
 
   Future _deleteBuilder(BuildContext context) async {
     final bool delete = await showDialog(
       context: context,
-      builder: (context) => AdminDeleteCandidatingBuilderDialog(builder: builder,)
+      builder: (context) => AdminDeleteCandidatingBuilderDialog(builder: widget.builder,)
     );
+
+    if (delete != null && delete) {
+      final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+      final GlobalKey<State> keyLoader = GlobalKey<State>();
+      Dialogs.showLoadingDialog(context, keyLoader, "Suppression..."); 
+
+      try {
+        await Provider.of<CandidatingBuilderStore>(context, listen: false).refuseBuilder(authorization, widget.builder);
+      } on PlatformException catch (e) {
+        setState(() {
+          _hasError = true;
+          _errorMessage = "Impossible de refuser ce builder : ${e.message}";
+        });
+      } on Exception catch(e) {
+        setState(() {
+          _hasError = true;
+          _errorMessage = "Impossible de refuser ce builder : $e";
+        });
+      }
+
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    }
   }
 }
