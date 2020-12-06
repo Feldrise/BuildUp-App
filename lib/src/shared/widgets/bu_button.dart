@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-enum BuButtonType { primary, secondary }
+import 'package:buildup/utils/colors.dart';
+
+enum BuButtonType { primary, secondary, coloredSecondary }
 
 class BuButton extends StatelessWidget {
   const BuButton({
@@ -41,6 +43,21 @@ class BuButton extends StatelessWidget {
         elevation: 0,
         color: Theme.of(context).scaffoldBackgroundColor,
         textColor: Theme.of(context).primaryColor,
+        onPressed: onPressed,
+        child: child
+      );
+    }
+    
+    if (buttonType == BuButtonType.coloredSecondary) {
+      return RaisedButton(
+        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(60.0),
+          side: const BorderSide(color: colorSecondary)
+        ),
+        elevation: 0,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        textColor: colorSecondary,
         onPressed: onPressed,
         child: child
       );

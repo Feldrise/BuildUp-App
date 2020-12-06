@@ -45,16 +45,16 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
                 actions: [
                   if (!_isUpToDate) 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       child: BuButton(
-                        buttonType: BuButtonType.secondary,
+                        buttonType: BuButtonType.coloredSecondary,
                         text: "Annuler", 
                         onPressed: () {}
                       ),
                     ),
                   
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: BuButton(
                       icon: Icons.save,
                       text: "Enregister", 

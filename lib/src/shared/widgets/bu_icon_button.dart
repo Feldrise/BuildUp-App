@@ -27,7 +27,11 @@ class BuIconButton extends StatelessWidget {
           child: SizedBox(
             width: iconSize + 16,
             height: iconSize + 16,
-            child: Icon(icon, size: iconSize,),
+            child: Icon(
+              icon, 
+              size: iconSize,
+              color: colorIsDark(backgroundColor) ? Colors.white : colorBlack,
+            ),
           ),
         ),
       ),

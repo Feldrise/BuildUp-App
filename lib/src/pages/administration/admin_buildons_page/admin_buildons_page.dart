@@ -3,7 +3,6 @@ import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/src/pages/administration/admin_buildon_steps_page/admin_buildon_steps_page.dart';
 import 'package:buildup/src/pages/administration/admin_buildons_page/diaogs/admin_buildon_update_dialog.dart';
 import 'package:buildup/src/pages/administration/admin_buildons_page/widgets/admin_buildons_list_view.dart';
-import 'package:buildup/src/providers/builders_store.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
@@ -42,16 +41,16 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                 actions: [
                   if (!_isUpToDate) 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       child: BuButton(
-                        buttonType: BuButtonType.secondary,
+                        buttonType: BuButtonType.coloredSecondary,
                         text: "Annuler", 
                         onPressed: () {}
                       ),
                     ),
                   
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     child: BuButton(
                       icon: Icons.save,
                       text: "Enregister", 

@@ -2,6 +2,7 @@ import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -82,6 +83,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: BuIconButton(
+                backgroundColor: colorPrimary,
                 icon: Icons.edit, 
                 onPressed: _selectImage
               ),

@@ -2,8 +2,10 @@
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/src/pages/administration/admin_buildon_steps_page/widgets/admin_buildon_step_list_tile.dart';
+import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdminBuildOnStepsListView extends StatelessWidget {
   const AdminBuildOnStepsListView({
@@ -35,16 +37,18 @@ class AdminBuildOnStepsListView extends StatelessWidget {
       scrollController: ScrollController(),
       onReorder: (oldIndex, newIndex) {
         buildOn.reorderStep(oldIndex: oldIndex, newIndex: newIndex);
+        Provider.of<BuildOnsStore>(context, listen: false).buildonUpdated();
         onUpdated();
       },
       children: [
-        for (final buildOnStep in buildOn.steps)
+        for (int i = 0; i < buildOn.steps.length; ++i)
           GestureDetector(
-            key: ValueKey(buildOnStep),
-            onTap: () => buildOnStepRequestUpdate(buildOnStep),
+            key: ValueKey(buildOn.steps[i]),
+            onTap: () => buildOnStepRequestUpdate(buildOn.steps[i]),
             child: AdminBuildOnStepListTile(
-              buildOnStep: buildOnStep,
-              isActive: buildOnStep == activeBuildOnStep,
+              buildOnStep: buildOn.steps[i],
+              index: i + 1,
+              isActive: buildOn.steps[i] == activeBuildOnStep,
             ),
           )
       ],
