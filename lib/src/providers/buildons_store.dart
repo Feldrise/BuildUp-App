@@ -6,9 +6,8 @@ class BuildOnsStore with ChangeNotifier {
   List<BuildOn> _buildOns;
 
   void clear() {
-    if (_buildOns != null) {
-      _buildOns.clear();
-    }
+    _buildOns = null;
+    
     notifyListeners();
   }
 

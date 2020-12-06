@@ -49,7 +49,7 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
                       child: BuButton(
                         buttonType: BuButtonType.coloredSecondary,
                         text: "Annuler", 
-                        onPressed: () {}
+                        onPressed: _cancel
                       ),
                     ),
                   
@@ -227,6 +227,11 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
       _isUpToDate = false;
       _activeBuildOnStep = newBuildOnStep;
     });
+  }
+
+  Future _cancel() async {
+    Provider.of<BuildOnsStore>(context, listen: false).clear();
+    Navigator.of(context).pop();
   }
 
   Future _save(BuildOnsStore buildOnsStore) async {
