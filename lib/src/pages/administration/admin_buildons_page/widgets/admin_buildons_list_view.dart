@@ -23,10 +23,19 @@ class AdminBuildOnsListView extends StatelessWidget {
     return Consumer<BuildOnsStore>(
       builder: (context, buildOnsStore, child) {
         if (buildOnsStore.loadedBuildOns.isEmpty) {
-          return const BuStatusMessage(
-            type: BuStatusMessageType.info,
-            title: "Liste vide",
-            message: "Il n'y a actuellement aucun Build-On. Créez-en un !",
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const BuStatusMessage(
+                type: BuStatusMessageType.info,
+                title: "Liste vide",
+                message: "Il n'y a actuellement aucun Build-On. Créez-en un !",
+              ),
+              Expanded(
+                child: Container(),
+              )
+            ],
           );
         }
 

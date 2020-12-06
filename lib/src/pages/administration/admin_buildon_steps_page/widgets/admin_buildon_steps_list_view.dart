@@ -26,10 +26,19 @@ class AdminBuildOnStepsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (buildOn.steps.isEmpty) {
-      return const BuStatusMessage(
-        type: BuStatusMessageType.info,
-        title: "Liste vide",
-        message: "Il n'y a actuellement aucun étape. Créez-en une !",
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const BuStatusMessage(
+            type: BuStatusMessageType.info,
+            title: "Liste vide",
+            message: "Il n'y a actuellement aucun étape. Créez-en une !",
+          ),
+          Expanded(
+            child: Container(),
+          )
+        ],
       );
     }
 
