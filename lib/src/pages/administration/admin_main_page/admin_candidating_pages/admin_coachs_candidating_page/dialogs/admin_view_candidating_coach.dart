@@ -103,6 +103,7 @@ class AdminViewCandidatingCoachDialog extends StatelessWidget {
         children: [
           BuButton(
             buttonType: BuButtonType.secondary,
+            icon: Icons.picture_as_pdf,
             text: "Exporter en PDF", 
             onPressed: () {}
           ),

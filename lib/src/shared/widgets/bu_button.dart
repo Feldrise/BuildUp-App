@@ -22,8 +22,10 @@ class BuButton extends StatelessWidget {
     final Row child = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (icon != null) 
+        if (icon != null) ...{
           Icon(icon),
+          const SizedBox(width: 4.0,)
+        },
         
         Text(text, textAlign: TextAlign.center,),
       ],
