@@ -7,20 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AdminMainPage extends StatelessWidget {
-  final List<PageItem> pageItems = [
-    PageItem(
-      index: 0, 
-      title: "Candidatures", 
-      icon: Icons.book,
-      suffixWidget: const Text("6")
-    ),
-    PageItem(
-      index: 1, 
-      title: "Membres Actifs", 
-      icon: Icons.person,
-    ),
-  ];
-
   final List<Widget> pages = [
     AdminCandidatingPage(),
     const Center(child: Text("Hello Membres Actifs",)),
@@ -33,7 +19,29 @@ class AdminMainPage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CandidatingBuilderStore(),),
         ChangeNotifierProvider(create: (context) => CandidatingCoachsStore()),
       ],
-      builder: (context, child) {
+      builder: (context, child) {        
+        final CandidatingBuilderStore candidatingBuilderStore = Provider.of<CandidatingBuilderStore>(context);
+        final CandidatingCoachsStore candidatingCoachsStore = Provider.of<CandidatingCoachsStore>(context);
+
+        int candidatingNumber = 0;
+        if (candidatingBuilderStore.builders != null && candidatingCoachsStore.coachs != null) {
+          candidatingNumber = candidatingBuilderStore.builders.length + candidatingCoachsStore.coachs.length;
+        }
+        
+        final List<PageItem> pageItems = [
+          PageItem(
+            index: 0, 
+            title: "Candidatures", 
+            icon: Icons.book,
+            suffixWidget: Text("$candidatingNumber")
+          ),
+          PageItem(
+            index: 1, 
+            title: "Membres Actifs", 
+            icon: Icons.person,
+          ),
+        ];
+
         return MainPage(
           pageItems: pageItems, 
           pages: pages
