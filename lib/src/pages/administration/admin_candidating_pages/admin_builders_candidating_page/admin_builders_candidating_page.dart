@@ -1,6 +1,6 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/services/builders_service.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/widgets/admin_candidating_builder_card.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_builders_candidating_page/widgets/admin_candidating_builder_card.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';

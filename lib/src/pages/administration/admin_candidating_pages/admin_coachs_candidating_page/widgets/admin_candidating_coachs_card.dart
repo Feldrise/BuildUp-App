@@ -1,8 +1,8 @@
 
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_delete_candidating_coach_dialog.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_update_candidating_coach.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_view_candidating_coach.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_delete_candidating_coach_dialog.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_update_candidating_coach.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_view_candidating_coach.dart';
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';

@@ -1,6 +1,8 @@
 import 'package:buildup/entities/page_item.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_candidating_page.dart';
+import 'package:buildup/src/pages/administration/admin_buildons_page/admin_buildons_page.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_candidating_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
+import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ class AdminMainPage extends StatelessWidget {
   final List<Widget> pages = [
     AdminCandidatingPage(),
     const Center(child: Text("Hello Membres Actifs",)),
+    AdminBuildOnsPage()
   ];
 
   @override
@@ -18,6 +21,7 @@ class AdminMainPage extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => CandidatingBuilderStore(),),
         ChangeNotifierProvider(create: (context) => CandidatingCoachsStore()),
+        ChangeNotifierProvider(create: (context) => BuildOnsStore(),),
       ],
       builder: (context, child) {        
         final CandidatingBuilderStore candidatingBuilderStore = Provider.of<CandidatingBuilderStore>(context);
@@ -40,6 +44,11 @@ class AdminMainPage extends StatelessWidget {
             title: "Membres Actifs", 
             icon: Icons.person,
           ),
+          PageItem(
+            index: 2,
+            title: "Gestion des Build-On",
+            icon: Icons.build
+          )
         ];
 
         return MainPage(

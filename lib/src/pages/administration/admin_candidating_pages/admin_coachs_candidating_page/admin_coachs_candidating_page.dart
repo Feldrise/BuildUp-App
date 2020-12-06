@@ -1,5 +1,5 @@
 import 'package:buildup/services/coachs_services.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/widgets/admin_candidating_coachs_card.dart';
+import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_coachs_candidating_page/widgets/admin_candidating_coachs_card.dart';
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
