@@ -1,12 +1,12 @@
-import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class AdminDeleteCandidatingBuilderDialog extends StatelessWidget {
-  const AdminDeleteCandidatingBuilderDialog({Key key, @required this.builder}) : super(key: key);
+class AdminDeleteCandidatingCoachDialog extends StatelessWidget {
+  const AdminDeleteCandidatingCoachDialog({Key key, @required this.coach}) : super(key: key);
 
-  final BuBuilder builder;
+  final Coach coach;
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +88,11 @@ class AdminDeleteCandidatingBuilderDialog extends StatelessWidget {
         children: [
           const Text("Nom :", style: TextStyle(fontWeight: FontWeight.w500),),
           const SizedBox(height: 5,),
-          Text(builder.associatedUser.fullName),
+          Text(coach.associatedUser.fullName),
           const SizedBox(height: 8,),
-          const Text("Projet :", style: TextStyle(fontWeight: FontWeight.w500),),
+          const Text("Situation :", style: TextStyle(fontWeight: FontWeight.w500),),
           const SizedBox(height: 5,),
-          Text(builder.associatedProjects.first.name),
+          Text(coach.situation),
         ],        
       ),
     );

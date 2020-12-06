@@ -46,6 +46,7 @@ class AdminBuildersCandidatingPage extends StatelessWidget {
     );
   }
 
+  // TODO : handle errors
   Future<void> _refresh(BuildContext context) async {
     final CandidatingBuilderStore candidatingBuilderStore = Provider.of<CandidatingBuilderStore>(context, listen: false);
     final UserStore currentUser = Provider.of<UserStore>(context, listen: false);

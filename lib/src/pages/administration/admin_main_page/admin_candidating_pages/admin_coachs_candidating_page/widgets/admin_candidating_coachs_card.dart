@@ -1,8 +1,9 @@
-import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_delete_candidating_builder_dialog.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_update_candidating_builder.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_builders_candidating_page/dialogs/admin_view_candidating_builder_dialog.dart';
-import 'package:buildup/src/providers/candidating_builders_store.dart';
+
+import 'package:buildup/entities/coach.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_delete_candidating_coach_dialog.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_update_candidating_coach.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_coachs_candidating_page/dialogs/admin_view_candidating_coach.dart';
+import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
@@ -11,21 +12,22 @@ import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AdminCandidatingBuilderCard extends StatefulWidget {
-  const AdminCandidatingBuilderCard({
+class AdminCandidatingCoachCard extends StatefulWidget {
+  const AdminCandidatingCoachCard({
     Key key, 
-    @required this.builder
+    @required this.coach
   }) : super(key: key);
   
-  final BuBuilder builder;
+  final Coach coach;
 
   @override
-  _AdminCandidatingBuilderCardState createState() => _AdminCandidatingBuilderCardState();
+  _AdminCandidatingCoachCardState createState() => _AdminCandidatingCoachCardState();
 }
 
-class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCard> {
+class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
   bool _hasError = false;
   String _errorMessage = "";
 
@@ -33,39 +35,23 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     return [
       BuIconButton(
         icon: Icons.visibility, 
-        onPressed: _viewBuilder
+        onPressed: _viewCoach
       ),
       const SizedBox(width: 10.0,),
       BuIconButton(
         icon: Icons.edit, 
-        onPressed: _editBuilder
+        onPressed: _editCoach
       ),
       const SizedBox(width: 10.0,),
       BuIconButton(
         icon: Icons.delete, 
-        onPressed: _deleteBuilder
+        onPressed: _deleteCoach
       ),
     ];
   }
 
   List<Widget> infos() {
     return [
-        // Row(
-      //   children: [
-      //     buildInfo(
-      //       "état", 
-      //       Row(
-      //         mainAxisSize: MainAxisSize.min,
-      //         children: const [
-      //           Icon(Icons.access_time, size: 16, color: colorYellow,),
-      //           SizedBox(width: 3,),
-      //           Text("En attente", style: TextStyle(color: colorYellow),)
-      //         ],
-      //       )
-      //     ),
-      //     buildInfo("étape", Text(builder.step ?? "Inconnue"))
-      //   ],
-      // ),
       buildInfo(
         "état", 
         Row(
@@ -77,12 +63,11 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
           ],
         )
       ),
-      buildInfo("étape", Text(BuilderSteps.detailled[widget.builder.step] ?? "Inconnue")),
-      // TODO replace by the candidating date
-      buildInfo("Date", const Text("20/08/2020")),
-      buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
-      buildInfo("Email", Text(widget.builder.associatedUser.email)),
-      buildInfo("Tag Discord", Text(widget.builder.associatedUser.discordTag))
+      buildInfo("étape", Text(CoachSteps.detailled[widget.coach.step] ?? "Inconnue")),
+      buildInfo("Date", Text(DateFormat("yyyy/MM/dd").format(widget.coach.candidatingDate))),
+      buildInfo("Sitaution", Text(widget.coach.situation)),
+      buildInfo("Email", Text(widget.coach.associatedUser.email)),
+      buildInfo("Tag Discord", Text(widget.coach.associatedUser.discordTag))
     ];
   }
 
@@ -102,7 +87,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(widget.builder.associatedUser.fullName, style: Theme.of(context).textTheme.headline6,),
+                      child: Text(widget.coach.associatedUser.fullName, style: Theme.of(context).textTheme.headline6,),
                     ),
                     Expanded(
                       child: Align(
@@ -186,17 +171,17 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     );
   }
 
-  Future _viewBuilder() async {
+  Future _viewCoach() async {
     await showDialog<void>(
       context: context,
-      builder: (context) => AdminViewCandidatingBuilderDialog(builder: widget.builder,)
+      builder: (context) => AdminViewCandidatingCoachDialog(coach: widget.coach,)
     );
   }
 
-  Future _editBuilder() async {
+  Future _editCoach() async {
     final bool updated = await showDialog(
       context: context,
-      builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: widget.builder,)
+      builder: (context) => AdminUpdateCandidatingCoachDialog(coach: widget.coach,)
     );
 
     if (updated != null && updated) {
@@ -206,16 +191,16 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour..."); 
 
       try {
-        await Provider.of<CandidatingBuilderStore>(context, listen: false).updateBuilder(authorization, widget.builder);
+        await Provider.of<CandidatingCoachsStore>(context, listen: false).updateCoach(authorization, widget.coach);
       } on PlatformException catch (e) {
         setState(() {
           _hasError = true;
-          _errorMessage = "Impossible de mettre à jour ce builder : ${e.message}";
+          _errorMessage = "Impossible de mettre à jour ce coach : ${e.message}";
         });
       } on Exception catch(e) {
         setState(() {
           _hasError = true;
-          _errorMessage = "Impossible de mettre à jour ce builder : $e";
+          _errorMessage = "Impossible de mettre à jour ce coach : $e";
         });
       }
 
@@ -223,10 +208,10 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     }
   }
 
-  Future _deleteBuilder() async {
+  Future _deleteCoach() async {
     final bool delete = await showDialog(
       context: context,
-      builder: (context) => AdminDeleteCandidatingBuilderDialog(builder: widget.builder,)
+      builder: (context) => AdminDeleteCandidatingCoachDialog(coach: widget.coach,)
     );
 
     if (delete != null && delete) {
@@ -236,16 +221,16 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
       Dialogs.showLoadingDialog(context, keyLoader, "Suppression..."); 
 
       try {
-        await Provider.of<CandidatingBuilderStore>(context, listen: false).refuseBuilder(authorization, widget.builder);
+        await Provider.of<CandidatingCoachsStore>(context, listen: false).refuseCoach(authorization, widget.coach);
       } on PlatformException catch (e) {
         setState(() {
           _hasError = true;
-          _errorMessage = "Impossible de refuser ce builder : ${e.message}";
+          _errorMessage = "Impossible de refuser ce coach : ${e.message}";
         });
       } on Exception catch(e) {
         setState(() {
           _hasError = true;
-          _errorMessage = "Impossible de refuser ce builder : $e";
+          _errorMessage = "Impossible de refuser ce coach : $e";
         });
       }
 

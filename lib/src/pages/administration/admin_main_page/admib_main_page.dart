@@ -2,6 +2,7 @@ import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_candidating_pages/admin_candidating_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
+import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +31,7 @@ class AdminMainPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CandidatingBuilderStore(),),
+        ChangeNotifierProvider(create: (context) => CandidatingCoachsStore()),
       ],
       builder: (context, child) {
         return MainPage(

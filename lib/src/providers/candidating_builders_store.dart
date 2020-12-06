@@ -6,7 +6,9 @@ class CandidatingBuilderStore with ChangeNotifier {
   List<BuBuilder> _builders;
 
   void clear() {
-    _builders.clear();
+    if (_builders != null) {
+      _builders.clear();
+    }
     notifyListeners();
   }
 

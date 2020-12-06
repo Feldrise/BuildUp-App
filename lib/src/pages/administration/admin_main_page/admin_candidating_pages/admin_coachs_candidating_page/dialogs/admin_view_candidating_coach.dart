@@ -1,13 +1,13 @@
-import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdminViewCandidatingBuilderDialog extends StatelessWidget {
-  const AdminViewCandidatingBuilderDialog({Key key, @required this.builder}) : super(key: key);
+class AdminViewCandidatingCoachDialog extends StatelessWidget {
+  const AdminViewCandidatingCoachDialog({Key key, @required this.coach}) : super(key: key);
 
-  final BuBuilder builder;
+  final Coach coach;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(builder.associatedUser.fullName, style: Theme.of(context).textTheme.headline4,)
+                  child: Text(coach.associatedUser.fullName, style: Theme.of(context).textTheme.headline4,)
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context, false),
@@ -52,41 +52,24 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
                     const SizedBox(height: 10,),
                     Wrap(
                       children: [
-                        buildSmallInfo("Nom", builder.associatedUser.fullName),
-                        buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(builder.associatedUser.birthdate)),
-                        buildSmallInfo("Département", builder.department.toString())
+                        buildSmallInfo("Nom", coach.associatedUser.fullName),
+                        buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(coach.associatedUser.birthdate)),
+                        buildSmallInfo("Département", coach.department.toString())
                       ],
                     ),
                     const SizedBox(height: 10,),
                     Wrap(
                       children: [
-                        buildSmallInfo("Situation", builder.situation),
-                        buildSmallInfo("Tag Discord", builder.associatedUser.discordTag),
-                        buildSmallInfo("Email", builder.associatedUser.email)
+                        buildSmallInfo("Situation", coach.situation),
+                        buildSmallInfo("Tag Discord", coach.associatedUser.discordTag),
+                        buildSmallInfo("Email", coach.associatedUser.email)
                       ],
                     ),
                     const SizedBox(height: 10,),
-                    buildBigInfo("Description :", builder.description),
-                    const SizedBox(height: 15,),
-                    buildTitle("Projet"),
-                    const SizedBox(height: 10,),
-                    Wrap(
-                      children: [
-                        buildSmallInfo("Nom", builder.associatedProjects.first.name),
-                        // TODO add categorie
-                        buildSmallInfo("Catégorie", "Application"),
-                        buildSmallInfo("Date de lancement", DateFormat("dd/MM/yyyy").format(builder.associatedProjects.first.launchDate)),
-                      ],
-                    ),
-                    const SizedBox(height: 10,),
-                    buildBigInfo("Description :", builder.associatedProjects.first.description),
-                    const SizedBox(height: 10,),
-                    buildBigInfo("Information générales : ", "TODO"),
-                    const SizedBox(height: 10,),
-                    buildBigInfo("Equipe :", builder.associatedProjects.first.team),
+                    buildBigInfo("Description :", coach.description),
                     const SizedBox(height: 15,),
                     buildTitle("Réponses au formulaire"),
-                    for (final qa in builder.associatedForm.qas) ...{
+                    for (final qa in coach.associatedForm.qas) ...{
                       const SizedBox(height: 10,),
                       buildBigInfo(qa.question, qa.answer),
                     },
