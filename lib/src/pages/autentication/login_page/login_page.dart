@@ -115,13 +115,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future _login() async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Connexion en cours"); 
+
     setState(() {
       _hasError = false;
       _statusMessage = "Connexion en cours...";
     });
-
-    final GlobalKey<State> keyLoader = GlobalKey<State>();
-    Dialogs.showLoadingDialog(context, keyLoader, _statusMessage); 
 
     try {
       final String username = _emailTextController.text;

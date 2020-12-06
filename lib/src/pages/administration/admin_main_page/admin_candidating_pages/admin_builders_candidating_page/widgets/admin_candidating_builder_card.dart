@@ -77,7 +77,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
           ],
         )
       ),
-      buildInfo("étape", Text(BuilderStatus.detailled[widget.builder.step] ?? "Inconnue")),
+      buildInfo("étape", Text(BuilderSteps.detailled[widget.builder.step] ?? "Inconnue")),
       // TODO replace by the candidating date
       buildInfo("Date", const Text("20/08/2020")),
       buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
@@ -187,7 +187,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
   }
 
   Future _viewBuilder(BuildContext context) async {
-    final bool validated = await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) => AdminViewCandidatingBuilderDialog(builder: widget.builder,)
     );
