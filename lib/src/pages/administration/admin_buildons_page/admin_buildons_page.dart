@@ -239,6 +239,11 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   Future _cancel(BuildOnsStore buildOnsStore) async {
+    setState(() {
+      _activeBuildOn = null;
+      _isUpToDate = true;
+    });
+    
     buildOnsStore.clear();
   }
 

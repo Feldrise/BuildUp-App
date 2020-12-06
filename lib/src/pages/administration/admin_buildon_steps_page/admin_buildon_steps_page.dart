@@ -230,6 +230,11 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
   }
 
   Future _cancel() async {
+    setState(() {
+      _activeBuildOnStep = null;
+      _isUpToDate = true;
+    });
+
     Provider.of<BuildOnsStore>(context, listen: false).clear();
     Navigator.of(context).pop();
   }
