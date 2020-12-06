@@ -1,5 +1,6 @@
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/bu_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
     }
 
     return BuCard(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -46,6 +48,10 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                BuImagePicker(
+                  image: buildOn.image,
+                  onUpdated: onUpdated,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(30),
                   child: Column(

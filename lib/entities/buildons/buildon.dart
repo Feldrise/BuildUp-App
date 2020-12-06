@@ -1,9 +1,11 @@
+import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
+import 'package:buildup/services/buildons_service.dart';
 
 class BuildOn {
   String id;
 
-  String imageId;
+  BuImage image;
 
   String name;
   String description;
@@ -12,12 +14,13 @@ class BuildOn {
 
   BuildOn() :
     name = "",
+    image = BuImage(""),
     description = "",
     steps = [];
 
   BuildOn.fromMap(Map<String, dynamic> map, {this.steps}) :
     id = map['id'] as String,
-    imageId = map['imageId'] as String,
+    image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/${map['id'] as String}/image"),
     name = map['name'] as String,
     description = map['description'] as String;
 }
