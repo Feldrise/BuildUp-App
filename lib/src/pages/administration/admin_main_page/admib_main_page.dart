@@ -12,7 +12,12 @@ class AdminMainPage extends StatelessWidget {
   final List<Widget> pages = [
     AdminCandidatingPage(),
     const Center(child: Text("Hello Membres Actifs",)),
-    AdminBuildOnsPage()
+    Navigator(
+      onGenerateRoute: (route) => MaterialPageRoute<void>(
+        settings: route,
+        builder: (context) => AdminBuildOnsPage()
+      ),
+    )
   ];
 
   @override

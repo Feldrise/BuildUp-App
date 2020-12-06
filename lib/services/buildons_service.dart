@@ -88,4 +88,30 @@ class BuildOnsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+   Future<List<BuildOn>> syncBuildOnSteps(String authorization, String buildOnId, List<BuildOnStep> toSync) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/$buildOnId/steps/sync',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<Map<String, dynamic>>[
+        for (final buildOnStep in toSync) 
+          buildOnStep.toJson()
+      ])
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBuildOns = jsonDecode(response.body) as List<dynamic>;
+      final List<BuildOn> buildOns = [];
+
+      for (final map in jsonBuildOns) {
+        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>,));
+      }
+
+      return buildOns;
+    }
+    
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
 }

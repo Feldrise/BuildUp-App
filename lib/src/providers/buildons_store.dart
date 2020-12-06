@@ -1,7 +1,6 @@
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/services/buildons_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class BuildOnsStore with ChangeNotifier {
   List<BuildOn> _buildOns;
@@ -42,7 +41,30 @@ class BuildOnsStore with ChangeNotifier {
 
       for (int i = 0; i < synced.length; ++i) {
         _buildOns[i].id = synced[i].id;
-        _buildOns[i].image.isImageEvenWithServer = true;
+        if (_buildOns[i].image.image != null) {
+          _buildOns[i].image.isImageEvenWithServer = true;
+        }
+      }
+
+      notifyListeners();
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  Future syncBuildOnSteps(String authorization, BuildOn buildOn) async {
+    try {
+      final synced = await BuildOnsService.instance.syncBuildOnSteps(authorization, buildOn.id, buildOn.steps);
+
+      if (synced.length != buildOn.steps.length) {
+        throw Exception("Quelques étapes du build-ons se sont perdu en route...");
+      }
+
+      for (int i = 0; i < synced.length; ++i) {
+        buildOn.steps[i].id = synced[i].id;
+        if (buildOn.steps[i].image.image != null) {
+          buildOn.steps[i].image.isImageEvenWithServer = true;
+        }
       }
 
       notifyListeners();

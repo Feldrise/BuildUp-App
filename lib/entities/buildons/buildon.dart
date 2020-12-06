@@ -40,4 +40,9 @@ class BuildOn {
       "description": description
     };
   }
+
+  void reorderStep({int oldIndex, int newIndex}) {
+    final item = steps.removeAt(oldIndex);
+    steps.insert(newIndex < oldIndex ? newIndex: newIndex - 1, item);
+  }
 }

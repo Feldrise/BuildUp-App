@@ -1,9 +1,8 @@
 
 import 'package:buildup/entities/buildons/buildon.dart';
-import 'package:buildup/src/pages/administration/admin_buildon_steps_page/admin_buildon_steps_page.dart';
-import 'package:buildup/src/pages/administration/admin_buildons_page/diaogs/admin_buildon_update_dialog.dart';
-import 'package:buildup/src/pages/administration/admin_buildons_page/widgets/admin_buildons_list_view.dart';
-import 'package:buildup/src/providers/builders_store.dart';
+import 'package:buildup/entities/buildons/buildon_step.dart';
+import 'package:buildup/src/pages/administration/admin_buildon_steps_page/dialogs/admin_buildon_step_update_dialog.dart';
+import 'package:buildup/src/pages/administration/admin_buildon_steps_page/widgets/admin_buildon_steps_list_view.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
@@ -14,13 +13,17 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AdminBuildOnsPage extends StatefulWidget {
+class AdminBuildOnStepsPage extends StatefulWidget {
+  const AdminBuildOnStepsPage({Key key, @required this.buildOn}) : super(key: key);
+  
+  final BuildOn buildOn;
+
   @override
-  _AdminBuildOnsPageState createState() => _AdminBuildOnsPageState();
+  _AdminBuildOnStepsPageState createState() => _AdminBuildOnStepsPageState();
 }
 
-class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
-  BuildOn _activeBuildOn;
+class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
+  BuildOnStep _activeBuildOnStep;
 
   bool _hasError = false;
   bool _isUpToDate = true;
@@ -38,7 +41,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
             return Scaffold(
               backgroundColor: colorScaffoldGrey,
               appBar: BuAppBar(
-                title: Container(),
+                title: Text(widget.buildOn.name, style: Theme.of(context).textTheme.headline5,),
                 actions: [
                   if (!_isUpToDate) 
                     Padding(
@@ -67,23 +70,22 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                   ),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    width: _activeBuildOn != null ? panelWidth : 0.0,
-                    child: AdminBuildOnUpdateDialog(
-                      buildOn: _activeBuildOn, 
+                    width: _activeBuildOnStep != null ? panelWidth : 0.0,
+                    child: AdminBuildOnStepUpdateDialog(
+                      buildOnStep: _activeBuildOnStep, 
                       onUpdated: _haveUpdate, 
-                      onRequestUpdateSteps: _buildOnRequestStepsUpdate,
                       onClosed: _closeActiveBuildOn
                     )
                   )
                 ],
               ),
               floatingActionButton: Visibility(
-                visible: !fullScreenDialog || _activeBuildOn == null,
+                visible: !fullScreenDialog || _activeBuildOnStep == null,
                 child: Padding(
-                  padding: EdgeInsets.only(right: (_activeBuildOn != null) ? panelWidth : 0),
+                  padding: EdgeInsets.only(right: (_activeBuildOnStep != null) ? panelWidth : 0),
                   child: FloatingActionButton(
                     backgroundColor: colorPrimary,
-                    onPressed: () => _addNewBuildOn(buildOnsStore),
+                    onPressed: () => _addNewBuildOnStep(buildOnsStore),
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
                 ),
@@ -112,9 +114,10 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
               const SizedBox(height: 15),
             },
             Expanded(
-              child: AdminBuildOnsListView(
-                buildOnRequestUpdate: _buildOnRequestUpdate,
-                activeBuildOn: _activeBuildOn, 
+              child: AdminBuildOnStepsListView(
+                buildOn: widget.buildOn,
+                buildOnStepRequestUpdate: _buildOnStepRequestUpdate,
+                activeBuildOnStep: _activeBuildOnStep, 
                 onUpdated: _haveUpdate,
               ),
             )
@@ -151,9 +154,10 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                   const SizedBox(height: 15),
                 },
                 Expanded(
-                  child: AdminBuildOnsListView(
-                    buildOnRequestUpdate: _buildOnRequestUpdate, 
-                    activeBuildOn: _activeBuildOn, 
+                  child: AdminBuildOnStepsListView(
+                    buildOn: widget.buildOn,
+                    buildOnStepRequestUpdate: _buildOnStepRequestUpdate,
+                    activeBuildOnStep: _activeBuildOnStep, 
                     onUpdated: _haveUpdate,
                   ),
                 ),
@@ -183,30 +187,16 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
     );
   }
 
-  Future _buildOnRequestStepsUpdate(BuildOn buildOn) async {
-    final BuildOnsStore buildersStore = Provider.of<BuildOnsStore>(context, listen: false);
-    final bool canUpdate = await _save(buildersStore);
-
-    if (canUpdate) {
-      await Navigator.of(context).push<void>(
-        MaterialPageRoute(builder: (context) => ChangeNotifierProvider.value(
-          value: buildersStore,
-          child: AdminBuildOnStepsPage(buildOn: buildOn)
-        ))
-      );
-    }
-  }
-
-  Future _buildOnRequestUpdate(BuildOn toUpdate) async {
-    if (_activeBuildOn != null) {
+  Future _buildOnStepRequestUpdate(BuildOnStep toUpdate) async {
+    if (_activeBuildOnStep != null) {
       setState(() {
-        _activeBuildOn = null;
+        _activeBuildOnStep = null;
       });
 
       await Future<void>.delayed(const Duration(milliseconds: 50));
     }
     setState(() {
-      _activeBuildOn = toUpdate;
+      _activeBuildOnStep = toUpdate;
     });
   }
 
@@ -224,44 +214,41 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
 
   void _closeActiveBuildOn() {
     setState(() {
-      _activeBuildOn = null;
+      _activeBuildOnStep = null;
     });
   }
 
-  void _addNewBuildOn(BuildOnsStore buildOnsStore) {
-    final BuildOn newBuildOn = BuildOn();
-    buildOnsStore.loadedBuildOns.add(newBuildOn);
+  void _addNewBuildOnStep(BuildOnsStore buildOnsStore) {
+    final BuildOnStep newBuildOnStep = BuildOnStep();
+    widget.buildOn.steps.add(newBuildOnStep);
     buildOnsStore.buildonUpdated();
 
     setState(() {
       _isUpToDate = false;
-      _activeBuildOn = newBuildOn;
+      _activeBuildOnStep = newBuildOnStep;
     });
   }
 
-  Future<bool> _save(BuildOnsStore buildOnsStore) async {
+  Future _save(BuildOnsStore buildOnsStore) async {
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
 
     try {
       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-      await buildOnsStore.syncBuildOns(authorization);
+      await buildOnsStore.syncBuildOnSteps(authorization, widget.buildOn);
 
       setState(() {
         _isUpToDate = true;
         _hasError = false;
-        _statusMessage = "Les build-ons ont été correctement enregistrés";
+        _statusMessage = "Les étapes ont été correctement enregistrés";
       });
-
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
-      return true;
     } on Exception catch(e) {
       setState(() {
         _hasError = true;
-        _statusMessage = "Impossible d'enregistrer les Build-ons : ${e.toString()}";
+        _statusMessage = "Impossible d'enregistrer les étapes : ${e.toString()}";
       });
     }
     
-    return false;
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
 }
