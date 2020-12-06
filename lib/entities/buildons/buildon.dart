@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/services/buildons_service.dart';
@@ -23,4 +25,19 @@ class BuildOn {
     image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/${map['id'] as String}/image"),
     name = map['name'] as String,
     description = map['description'] as String;
+
+  Map<String, dynamic> toJson() {
+    String imageString;
+
+    if (!image.isImageEvenWithServer && image.image != null) {
+      imageString = base64Encode(image.image.bytes);
+    }
+
+    return <String, dynamic>{
+      "id": id,
+      "image": imageString,
+      "name": name,
+      "description": description
+    };
+  }
 }

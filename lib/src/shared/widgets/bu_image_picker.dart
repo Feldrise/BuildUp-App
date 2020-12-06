@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
@@ -102,6 +100,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
     if (result != null) {
       final PlatformFile file = result.files.first;
       widget.image.image = MemoryImage(file.bytes);
+      widget.image.isImageEvenWithServer = false;
       setState(() {});
 
       if (widget.onUpdated != null) {

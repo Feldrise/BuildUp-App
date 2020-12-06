@@ -4,11 +4,13 @@ import 'package:buildup/src/pages/administration/admin_buildons_page/diaogs/admi
 import 'package:buildup/src/pages/administration/admin_buildons_page/widgets/admin_buildons_list_view.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AdminBuildOnsPage extends StatefulWidget {
@@ -19,70 +21,73 @@ class AdminBuildOnsPage extends StatefulWidget {
 class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   BuildOn _activeBuildOn;
 
+  bool _hasError = false;
   bool _isUpToDate = true;
+  String _statusMessage = "";
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<BuildOnsStore, UserStore>(
       builder: (context, buildOnsStore, userStore, child) {
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              _activeBuildOn = null;
-            });
-          },
-          child: Scaffold(
-            backgroundColor: colorScaffoldGrey,
-            appBar: BuAppBar(
-              title: Container(),
-              actions: [
-                if (!_isUpToDate) 
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final bool fullScreenDialog =  constraints.maxWidth <= 800;
+            final double panelWidth = fullScreenDialog ? constraints.maxWidth : 400;
+
+            return Scaffold(
+              backgroundColor: colorScaffoldGrey,
+              appBar: BuAppBar(
+                title: Container(),
+                actions: [
+                  if (!_isUpToDate) 
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: BuButton(
+                        buttonType: BuButtonType.secondary,
+                        text: "Annuler", 
+                        onPressed: () {}
+                      ),
+                    ),
+                  
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: BuButton(
-                      buttonType: BuButtonType.secondary,
-                      text: "Annuler", 
-                      onPressed: () {}
+                      icon: Icons.save,
+                      text: "Enregister", 
+                      onPressed: _isUpToDate ? null : () => _save(buildOnsStore)
                     ),
+                  )
+                ],
+              ),
+              body: Row(
+                children: [
+                  Expanded(
+                    child: buildCenterWidget(buildOnsStore, userStore),
                   ),
-                
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: BuButton(
-                    icon: Icons.save,
-                    text: "Enregister", 
-                    onPressed: _isUpToDate ? null : _save
-                  ),
-                )
-              ],
-            ),
-            body: LayoutBuilder(
-              builder: (context, constraints) {
-                final double panelWidth = constraints.maxWidth > 800 ? 400 : constraints.maxWidth;
-
-                return Row(
-                  children: [
-                    Expanded(
-                      child: buildCenterWidget(buildOnsStore, userStore),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: _activeBuildOn != null ? panelWidth : 0.0,
-                      child: AdminBuildOnUpdateDialog(
-                        buildOn: _activeBuildOn, 
-                        onUpdated: _haveUpdate, 
-                        onClosed: _closeActiveBuildOn
-                      )
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: _activeBuildOn != null ? panelWidth : 0.0,
+                    child: AdminBuildOnUpdateDialog(
+                      buildOn: _activeBuildOn, 
+                      onUpdated: _haveUpdate, 
+                      onClosed: _closeActiveBuildOn
                     )
-                  ],
-                );
-              },
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () => _addNewBuildOn(buildOnsStore),
-              child: const Icon(Icons.add),
-            ),
-          ),
+                  )
+                ],
+              ),
+              floatingActionButton: Visibility(
+                visible: !fullScreenDialog || _activeBuildOn == null,
+                child: Padding(
+                  padding: EdgeInsets.only(right: (_activeBuildOn != null) ? panelWidth : 0),
+                  child: FloatingActionButton(
+                    backgroundColor: colorPrimary,
+                    onPressed: () => _addNewBuildOn(buildOnsStore),
+                    child: const Icon(Icons.add, color: Colors.white),
+                  ),
+                ),
+              )
+            );
+          },
         );
       },
     );
@@ -90,10 +95,30 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
 
   Widget buildCenterWidget(BuildOnsStore buildOnsStore, UserStore userStore) {
     if (buildOnsStore.hasData) {
-      return AdminBuildOnsListView(
-        buildOnRequestUpdate: _buildOnRequestUpdate,
-        activeBuildOn: _activeBuildOn, 
-      ); 
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (_statusMessage.isNotEmpty) ...{ 
+              BuStatusMessage(
+                type: _hasError ? BuStatusMessageType.error : BuStatusMessageType.success,
+                title: _hasError ? "Erreur" : "Bravo !",
+                message: _statusMessage,
+              ),
+              const SizedBox(height: 15),
+            },
+            Expanded(
+              child: AdminBuildOnsListView(
+                buildOnRequestUpdate: _buildOnRequestUpdate,
+                activeBuildOn: _activeBuildOn, 
+                onUpdated: _haveUpdate,
+              ),
+            )
+          ]
+        )
+      );
     }
 
     return FutureBuilder<void>(
@@ -109,9 +134,29 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
             );
           }
           
-          return AdminBuildOnsListView(
-            buildOnRequestUpdate: _buildOnRequestUpdate, 
-            activeBuildOn: _activeBuildOn, 
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (_statusMessage.isNotEmpty) ...{ 
+                  BuStatusMessage(
+                    type: _hasError ? BuStatusMessageType.error : BuStatusMessageType.success,
+                    title: _hasError ? "Erreur" : "Bravo !",
+                    message: _statusMessage,
+                  ),
+                  const SizedBox(height: 15),
+                },
+                Expanded(
+                  child: AdminBuildOnsListView(
+                    buildOnRequestUpdate: _buildOnRequestUpdate, 
+                    activeBuildOn: _activeBuildOn, 
+                    onUpdated: _haveUpdate,
+                  ),
+                ),
+              ],
+            ),
           );
         }
 
@@ -166,7 +211,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   void _addNewBuildOn(BuildOnsStore buildOnsStore) {
-    BuildOn newBuildOn = BuildOn();
+    final BuildOn newBuildOn = BuildOn();
     buildOnsStore.loadedBuildOns.add(newBuildOn);
     buildOnsStore.buildonUpdated();
 
@@ -176,7 +221,26 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
     });
   }
 
-  Future _save() async {
+  Future _save(BuildOnsStore buildOnsStore) async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
 
+    try {
+      final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+      await buildOnsStore.syncBuildOns(authorization);
+
+      setState(() {
+        _isUpToDate = true;
+        _hasError = false;
+        _statusMessage = "Les build-ons ont été correctement enregistrés";
+      });
+    } on Exception catch(e) {
+      setState(() {
+        _hasError = true;
+        _statusMessage = "Impossible d'enregistrer les Build-ons : ${e.toString()}";
+      });
+    }
+    
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
 }

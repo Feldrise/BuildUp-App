@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class ImagesService {
@@ -20,7 +19,7 @@ class ImagesService {
     );
 
     if (response.statusCode == 200) {
-      return base64Decode(response.body);
+      return base64Decode(jsonDecode(response.body) as String);
     }
     
     return null;

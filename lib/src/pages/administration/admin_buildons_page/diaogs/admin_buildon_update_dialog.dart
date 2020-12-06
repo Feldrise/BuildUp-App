@@ -2,6 +2,7 @@ import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/bu_text_field.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminBuildOnUpdateDialog extends StatelessWidget {
@@ -29,7 +30,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
             child: Row(
               children: [
                 Expanded(
@@ -43,6 +44,31 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
             ),
           ),
           const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: GestureDetector(
+                    onTap: _updateSteps,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.edit, color: colorPrimary,),
+                        Expanded(
+                          child: Text("Modifier les étapes", style: TextStyle(color: colorPrimary),),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Text("${buildOn.steps.length} étapes", style: const TextStyle(color: colorSecondary),),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8.0,),
           SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -88,5 +114,9 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future _updateSteps() async {
+
   }
 }

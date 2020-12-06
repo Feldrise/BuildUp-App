@@ -5,7 +5,7 @@ class BuImage {
   String source;
 
   bool isImageEvenWithServer = false;
-  ImageProvider<dynamic> image;
+  MemoryImage image;
 
   BuImage(this.source,{
     this.isImageEvenWithServer = false,

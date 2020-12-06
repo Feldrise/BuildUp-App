@@ -15,43 +15,27 @@ class BuildOnsService {
 
   // GET
   Future<List<BuildOn>> getAllBuildOns(String authorization) async {
-    await Future<void>.delayed(const Duration(seconds: 1));
+    final http.Response response = await http.get(
+      serviceBaseUrl,
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
 
-    return [
-      BuildOn()
-        ..name = "Test 1"
-        ..description = "Description Test 1",
-      BuildOn()
-        ..name = "Test 2"
-        ..description = "Description Test 2",
-      BuildOn()
-        ..name = "Test 3"
-        ..description = "Description Test 3",
-      BuildOn()
-        ..name = "Test 4"
-        ..description = "Description Test 4"
-    ];
-    // final http.Response response = await http.get(
-    //   serviceBaseUrl,
-    //   headers: <String, String>{
-    //     HttpHeaders.authorizationHeader: authorization,
-    //   },
-    // );
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBuildOns = jsonDecode(response.body) as List<dynamic>;
+      final List<BuildOn> buildOns = [];
 
-    // if (response.statusCode == 200) {
-    //   final List<dynamic> jsonBuildOns = jsonDecode(response.body) as List<dynamic>;
-    //   final List<BuildOn> buildOns = [];
+      for (final map in jsonBuildOns) {
+        final List<BuildOnStep> steps = await getBuildOnSteps(authorization, map['id'] as String);
 
-    //   for (final map in jsonBuildOns) {
-    //     final List<BuildOnStep> steps = await getBuildOnSteps(authorization, map['id'] as String);
+        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>, steps: steps));
+      }
 
-    //     buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>, steps: steps));
-    //   }
+      return buildOns;
+    }
 
-    //   return buildOns;
-    // }
-
-    // throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
   Future<List<BuildOnStep>> getBuildOnSteps(String authorization, String buildOnId) async {
@@ -73,6 +57,34 @@ class BuildOnsService {
       return buildOnSteps;
     }
 
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  // POST
+  Future<List<BuildOn>> syncBuildOns(String authorization, List<BuildOn> toSync) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/sync',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<Map<String, dynamic>>[
+        for (final buildOn in toSync) 
+          buildOn.toJson()
+      ])
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBuildOns = jsonDecode(response.body) as List<dynamic>;
+      final List<BuildOn> buildOns = [];
+
+      for (final map in jsonBuildOns) {
+        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>,));
+      }
+
+      return buildOns;
+    }
+    
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
