@@ -115,13 +115,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future _login() async {
-    final GlobalKey<State> keyLoader = GlobalKey<State>();
-    Dialogs.showLoadingDialog(context, keyLoader, _statusMessage); 
-
     setState(() {
       _hasError = false;
       _statusMessage = "Connexion en cours...";
     });
+
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, _statusMessage); 
 
     try {
       final String username = _emailTextController.text;
@@ -140,7 +140,12 @@ class _LoginPageState extends State<LoginPage> {
         _hasError = true;
         _statusMessage = e.message;
       });
-    } 
+    } on Exception catch(e) {
+      setState(() {
+        _hasError = true;
+        _statusMessage = e.toString();
+      });
+    }
 
     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
