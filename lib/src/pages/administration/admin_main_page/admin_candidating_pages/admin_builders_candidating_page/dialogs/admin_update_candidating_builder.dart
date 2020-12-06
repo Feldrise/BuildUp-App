@@ -98,10 +98,10 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
             Text("état".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: const <String, String>{
-                BuilderStatus.candidating: "En attente",
-                BuilderStatus.validated: "Validé",
-                BuilderStatus.deleted: "Supprimé"
+              items: <String, String>{
+                BuilderStatus.candidating: BuilderStatus.detailled[BuilderStatus.candidating],
+                BuilderStatus.validated: BuilderStatus.detailled[BuilderStatus.validated],
+                BuilderStatus.deleted: BuilderStatus.detailled[BuilderStatus.deleted]
               },
               currentValue: _currentStatus,
               onChanged: (newValue) {
@@ -123,13 +123,13 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
             Text("état".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: const <String, String>{
-                BuilderSteps.preselected: "Présélectionné",
-                BuilderSteps.adminMeeting: "Entretient avec un admin",
-                BuilderSteps.coachMeeting: "Entretient avec le coach",
-                BuilderSteps.active: "Actif",
-                BuilderSteps.finished: "Fini",
-                BuilderSteps.abandoned: "Abandonné"
+              items: <String, String>{
+                BuilderSteps.preselected: BuilderSteps.detailled[BuilderSteps.preselected],
+                BuilderSteps.adminMeeting: BuilderSteps.detailled[BuilderSteps.adminMeeting],
+                BuilderSteps.coachMeeting: BuilderSteps.detailled[BuilderSteps.coachMeeting],
+                BuilderSteps.active: BuilderSteps.detailled[BuilderSteps.active],
+                BuilderSteps.finished: BuilderSteps.detailled[BuilderSteps.finished],
+                BuilderSteps.abandoned: BuilderSteps.detailled[BuilderSteps.abandoned]
               },
               currentValue: _currentStep,
               onChanged: (newValue) {

@@ -77,7 +77,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
           ],
         )
       ),
-      buildInfo("étape", Text(widget.builder.step ?? "Inconnue")),
+      buildInfo("étape", Text(BuilderStatus.detailled[widget.builder.step] ?? "Inconnue")),
       // TODO replace by the candidating date
       buildInfo("Date", const Text("20/08/2020")),
       buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
@@ -198,6 +198,29 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
       context: context,
       builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: widget.builder,)
     );
+
+    if (updated != null && updated) {
+      final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+      final GlobalKey<State> keyLoader = GlobalKey<State>();
+      Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour..."); 
+
+      try {
+        await Provider.of<CandidatingBuilderStore>(context, listen: false).updateBuilder(authorization, widget.builder);
+      } on PlatformException catch (e) {
+        setState(() {
+          _hasError = true;
+          _errorMessage = "Impossible de mettre à jour ce builder : ${e.message}";
+        });
+      } on Exception catch(e) {
+        setState(() {
+          _hasError = true;
+          _errorMessage = "Impossible de mettre à jour ce builder : $e";
+        });
+      }
+
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    }
   }
 
   Future _deleteBuilder(BuildContext context) async {

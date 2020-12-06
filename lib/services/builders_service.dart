@@ -73,6 +73,21 @@ class BuildersService {
   }
 
   // PUT
+  Future updateBuilder(String authorization, BuBuilder toUpdate) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/${toUpdate.id}/update',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(toUpdate.toJson())
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
   Future refuseBuilder(String authorization, String builderId) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/$builderId/refuse',

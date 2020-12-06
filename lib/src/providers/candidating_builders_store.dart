@@ -22,10 +22,20 @@ class CandidatingBuilderStore with ChangeNotifier {
 
   bool get hasData => _builders != null && _builders.isNotEmpty;
 
-    Future refuseBuilder(String authorization, BuBuilder toRefuse) async {
+  Future refuseBuilder(String authorization, BuBuilder toRefuse) async {
     await BuildersService.instance.refuseBuilder(authorization, toRefuse.id);
 
     _builders.remove(toRefuse);
+    notifyListeners();
+  }
+
+  Future updateBuilder(String authorization, BuBuilder toUpdate) async {
+    await BuildersService.instance.updateBuilder(authorization, toUpdate);
+
+    if (toUpdate.status != BuilderStatus.candidating) {
+      _builders.remove(toUpdate);
+    }
+
     notifyListeners();
   }
 }
