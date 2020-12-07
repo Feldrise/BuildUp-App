@@ -28,10 +28,10 @@ class _BuImagePickerState extends State<BuImagePicker> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return buildFullImagePicker();
+                return _buildFullImagePicker();
               }
               
-              return buildEmptyImagePicker();
+              return _buildEmptyImagePicker();
             }
 
             return Container(
@@ -47,7 +47,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
     );
   }
 
-  Widget buildEmptyImagePicker() {
+  Widget _buildEmptyImagePicker() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 44),
       color: const Color(0xfff5f5f6),
@@ -66,7 +66,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
     );
   }
 
-  Widget buildFullImagePicker() {
+  Widget _buildFullImagePicker() {
     return Container(
       height: 232,
       padding: EdgeInsets.zero,
