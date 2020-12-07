@@ -2,6 +2,7 @@ import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/bu_date_form_field.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
@@ -237,6 +238,26 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
             },
             onSaved: (value) {
               widget.coach.associatedUser.firstName = value;
+            },
+          ),
+        ),
+        const SizedBox(height: 20,),
+        Flexible(
+          child: BuDateFormField(
+            context: context,
+            firstDate: DateTime.fromMillisecondsSinceEpoch(0),
+            lastDate: DateTime.now(),
+            initialValue: widget.coach.associatedUser.birthdate,
+            label: "Date de naissance",
+            validator: (value) {
+              if (value == null) {
+                return "Une date est obligatoire";
+              }
+
+              return null;
+            },
+            onSave: (value) {
+              widget.coach.associatedUser.birthdate = value;
             },
           ),
         )

@@ -9,6 +9,7 @@ class BuTextInput extends StatefulWidget {
     @required this.controller,
     @required this.validator,
     @required this.labelText,
+    this.suffixIcon,
     this.hintText,
     this.maxLines = 1,
     this.onSaved,
@@ -22,6 +23,7 @@ class BuTextInput extends StatefulWidget {
   final String Function(String) validator;
   final Function(String) onSaved;
 
+  final IconData suffixIcon;
   final String labelText;
   final String hintText;
 
@@ -76,7 +78,7 @@ class _BuTextInputState extends State<BuTextInput> {
                 borderSide: const BorderSide(color: Colors.black12,),
                 borderRadius: BorderRadius.circular(6.0),
               ),
-              suffixIcon: !widget.obscureText ? null : GestureDetector(
+              suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : GestureDetector(
                 onTap: _textVisibilityUpdated,
                 child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
               )

@@ -8,6 +8,7 @@ class BuTextField extends StatefulWidget {
     @required this.controller,
     @required this.labelText,
     @required this.onChanged,
+    this.suffixIcon,
     this.hintText,
     this.maxLines = 1,
     this.readOnly = false,
@@ -16,6 +17,7 @@ class BuTextField extends StatefulWidget {
   final TextEditingController controller;
   final Function(String) onChanged;
 
+  final IconData suffixIcon;
   final String labelText;
   final String hintText;
 
@@ -69,7 +71,7 @@ class _BuTextFieldState extends State<BuTextField> {
               borderSide: const BorderSide(color: Colors.black12,),
               borderRadius: BorderRadius.circular(6.0),
             ),
-            suffixIcon: !widget.obscureText ? null : GestureDetector(
+            suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : GestureDetector(
               onTap: _textVisibilityUpdated,
               child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
             )
