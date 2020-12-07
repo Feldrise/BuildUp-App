@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class BuildOnsService {
   BuildOnsService._privateConstructor();
 
-  final String serviceBaseUrl = "https://192.168.1.19:45455/buildup/buildons";
+  final String serviceBaseUrl = "$kApiBaseUrl/buildons";
 
   static final BuildOnsService instance = BuildOnsService._privateConstructor();
 

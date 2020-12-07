@@ -5,6 +5,7 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ import 'package:http/http.dart' as http;
 class BuildersService {
   BuildersService._privateConstructor();
 
-  final String serviceBaseUrl = "https://192.168.1.19:45455/buildup/builders";
+  final String serviceBaseUrl = "$kApiBaseUrl/builders";
 
   static final BuildersService instance = BuildersService._privateConstructor();
 

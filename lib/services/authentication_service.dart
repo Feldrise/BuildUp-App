@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthenticationService {
   AuthenticationService._privateConstructor();
 
-  final String serviceBaseUrl = "https://192.168.1.19:45455/buildup/authentication";
+  final String serviceBaseUrl = "$kApiBaseUrl/authentication";
 
   static final AuthenticationService instance = AuthenticationService._privateConstructor();
 

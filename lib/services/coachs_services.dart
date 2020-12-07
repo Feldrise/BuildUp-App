@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class CoachsService {
   CoachsService._privateConstructor();
 
-  final String serviceBaseUrl = "https://192.168.1.19:45455/buildup/coachs";
+  final String serviceBaseUrl = "$kApiBaseUrl/coachs";
 
   static final CoachsService instance = CoachsService._privateConstructor();
 
