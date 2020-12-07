@@ -1,11 +1,16 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/admin_view_active_coach_page.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_delete_dialog.dart';
+import 'package:buildup/src/providers/active_coachs_store.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 mixin AdminActiveCoachCardAction {
   static const String viewProfile = "viewProfile";
@@ -134,6 +139,30 @@ class AdminActiveCoachCard extends StatelessWidget {
   }
 
   Future _navigate(BuildContext context, String route) async {
+    if (route == AdminActiveCoachCardAction.delete) {
+      final bool delete = await showDialog<bool>(
+        context: context,
+        builder: (context) => AdminActiveCoachDeleteDialog(coach: coach)
+      );
+
+      if (delete != null && delete) {
+        final GlobalKey<State> keyLoader = GlobalKey<State>();
+        Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
+
+        try {
+          final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+          await Provider.of<ActiveCoachsStore>(context, listen: false).refuseCoach(authorization, coach);
+        } on Exception {
+          Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+          return;
+        }
+
+        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+        return;
+      }
+    }
+
     Widget page;
 
     if (route == AdminActiveCoachCardAction.viewProfile) {

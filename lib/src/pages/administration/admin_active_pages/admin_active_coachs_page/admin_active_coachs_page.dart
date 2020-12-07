@@ -12,9 +12,12 @@ class AdminActiveCoachsPage extends StatelessWidget {
     return Consumer<ActiveCoachsStore>(
       builder: (context, activeCoachsStore, child) {
         if (!activeCoachsStore.hasData) {
-          return const BuStatusMessage(
-            type: BuStatusMessageType.info,
-            message: "Il n'y a aucun coach candidatant pour le moment",
+          return const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: BuStatusMessage(
+              type: BuStatusMessageType.info,
+              message: "Il n'y a aucun coach actif pour le moment",
+            ),
           );
         }
 

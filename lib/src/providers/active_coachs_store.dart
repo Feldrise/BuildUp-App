@@ -26,7 +26,7 @@ class ActiveCoachsStore with ChangeNotifier {
 
   bool get hasData => _coachs != null && _coachs.isNotEmpty;
 
-  Future updateCoach(String authorization, Coach toUpdate, {bool updateUser}) async {
+  Future updateCoach(String authorization, Coach toUpdate, {bool updateUser = false}) async {
     try {
       await CoachsService.instance.updateCoach(authorization, toUpdate);
     
@@ -47,4 +47,13 @@ class ActiveCoachsStore with ChangeNotifier {
       rethrow;
     }
   }
+
+  
+  Future refuseCoach(String authorization, Coach toRefuse) async {
+    await CoachsService.instance.refuseCoach(authorization, toRefuse.id);
+
+    _coachs.remove(toRefuse);
+    notifyListeners();
+  }
+
 }
