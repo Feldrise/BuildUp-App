@@ -64,7 +64,7 @@ class _AdminActivePageState extends State<AdminActivePage> {
                     child: CircularProgressIndicator()
                   ),
                   SizedBox(height: 30,),
-                  Text("Récupération des données des candidats")
+                  Text("Récupération des données des membres actifs")
                 ]
               ),
             ),

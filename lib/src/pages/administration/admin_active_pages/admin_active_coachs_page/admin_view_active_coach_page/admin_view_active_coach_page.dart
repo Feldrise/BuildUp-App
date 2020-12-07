@@ -1,4 +1,6 @@
 import 'package:buildup/entities/coach.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_form_card.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_info_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
@@ -26,6 +28,9 @@ class AdminViewActiveCoachPage extends StatelessWidget {
             children: [
               AdminActiveCoachProfileCard(coach: coach),
               const SizedBox(height: 30),
+              AdminActiveCoachInfoCard(coach: coach),
+              const SizedBox(height: 30),
+              AdminActiveCoachFormCard(coach: coach)
             ],
           ),
         ),
