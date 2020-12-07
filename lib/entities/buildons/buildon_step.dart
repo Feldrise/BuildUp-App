@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:buildup/entities/bu_image.dart';
+import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/services/buildons_service.dart';
 
 class BuildOnStep {
@@ -10,20 +11,27 @@ class BuildOnStep {
 
   String name;
   String description;
-  String proofDescription;
+
+  String returningType;
+  String returningDescription;
+  String returningLink;
 
   BuildOnStep() :
     name = "",
     image = BuImage(""),
     description = "",
-    proofDescription = "";
+    returningType = BuildOnReturningType.file,
+    returningDescription = "",
+    returningLink = "";
 
   BuildOnStep.fromMap(Map<String, dynamic> map) :
     id = map['id'] as String,
     image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/steps/${map['id'] as String}/image"),
     name = map['name'] as String,
     description = map['description'] as String,
-    proofDescription = map['proofDescription'] as String;
+    returningType = map['returningType'] as String,
+    returningDescription = map['returningDescription'] as String,
+    returningLink = map['returningLink'] as String;
 
   Map<String, dynamic> toJson() {
     String imageString;
@@ -37,7 +45,9 @@ class BuildOnStep {
       "image": imageString,
       "name": name,
       "description": description,
-      "proofDescription": proofDescription
+      "returningType": returningType,
+      "returningDescription": returningDescription,
+      "returningLink": returningLink
     };
   }
 }
