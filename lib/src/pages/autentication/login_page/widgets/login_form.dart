@@ -21,14 +21,14 @@ class LoginForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BuTextInpute( 
+          BuTextInput( 
             controller: emailTextController,
             validator: null, 
             labelText: "Adresse Email",
             hintText: "Email",
           ),
           const SizedBox(height: 15.0,),
-          BuTextInpute( 
+          BuTextInput( 
             controller: passwordTextController,
             validator: null, 
             obscureText: true,

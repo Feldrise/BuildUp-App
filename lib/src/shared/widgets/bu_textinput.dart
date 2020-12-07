@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BuTextInpute extends StatefulWidget {
-  const BuTextInpute({
+class BuTextInput extends StatefulWidget {
+  const BuTextInput({
     Key key,
     this.formKey,
     this.obscureText = false,
@@ -31,10 +31,10 @@ class BuTextInpute extends StatefulWidget {
   final bool readOnly;
 
   @override
-  _BuTextInputeState createState() => _BuTextInputeState();
+  _BuTextInputState createState() => _BuTextInputState();
 }
 
-class _BuTextInputeState extends State<BuTextInpute> {
+class _BuTextInputState extends State<BuTextInput> {
   bool _obscureText;
 
   @override
@@ -45,7 +45,7 @@ class _BuTextInputeState extends State<BuTextInpute> {
   }
 
   @override
-  void didUpdateWidget(covariant BuTextInpute oldWidget) {
+  void didUpdateWidget(covariant BuTextInput oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _obscureText = widget.obscureText;
