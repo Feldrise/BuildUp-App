@@ -2,6 +2,7 @@ import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -188,12 +189,10 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
     return SizedBox(
       height: 112,
       width: 112,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(56),
-        child: Container(
-          color: Colors.grey,
-        ),
-      ),
+      child: BuImagePicker(
+        image: widget.coach.associatedUser.profilePicture,
+        isCircular: true,
+      )
     );
   }
 

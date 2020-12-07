@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BuImagePicker extends StatefulWidget {
-  const BuImagePicker({Key key, @required this.image, this.onUpdated}) : super(key: key);
+  const BuImagePicker({Key key, @required this.image, this.onUpdated, this.isCircular = false}) : super(key: key);
 
   final BuImage image;
 
   final Function() onUpdated;
+
+  final bool isCircular;
 
   @override
   _BuImagePickerState createState() => _BuImagePickerState();
@@ -27,6 +29,10 @@ class _BuImagePickerState extends State<BuImagePicker> {
           future: widget.image.loadImageFromSource(userStore.authentificationHeader),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              if (widget.isCircular) {
+                return _buildCircularImagePicker();
+              }
+
               if (snapshot.hasData) {
                 return _buildFullImagePicker();
               }
@@ -42,6 +48,48 @@ class _BuImagePickerState extends State<BuImagePicker> {
               )
             );
           },
+        );
+      }
+    );
+  }
+
+  Widget _buildCircularImagePicker() {
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return Stack(
+          children: [
+            if (widget.image.image != null)
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(constraint.maxWidth / 2), 
+                  child: Image(
+                    image: widget.image.image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            else
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(constraint.maxWidth / 2), 
+                  child: Image.asset(
+                    "icons/icon_profile_picture.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BuIconButton(
+                  backgroundColor: colorPrimary,
+                  icon: Icons.edit, 
+                  onPressed: _selectImage
+                ),
+              ),
+            )
+          ],
         );
       }
     );
