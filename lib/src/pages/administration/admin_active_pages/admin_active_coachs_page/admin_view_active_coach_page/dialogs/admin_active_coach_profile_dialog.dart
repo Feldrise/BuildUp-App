@@ -1,12 +1,20 @@
 import 'package:buildup/entities/coach.dart';
+import 'package:buildup/src/providers/active_coachs_store.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_date_form_field.dart';
+import 'package:buildup/src/shared/widgets/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
+import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class AdminActiveCoachProfileDialog extends StatefulWidget {
   const AdminActiveCoachProfileDialog({Key key, @required this.coach}) : super(key: key); 
@@ -30,6 +38,12 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
 
   final TextEditingController _descriptionTextControler = TextEditingController();
 
+  String _currentSituation;
+  int _currentDepartment;
+
+  bool _hasError = false;
+  String _statusMessage = "";
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +54,24 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
     _emailTextController.text = widget.coach.associatedUser.email;
     _discordTagTextController.text = widget.coach.associatedUser.discordTag;
     _descriptionTextControler.text = widget.coach.description;
+
+    _currentSituation = widget.coach.situation;
+    _currentDepartment = widget.coach.department;
+  }
+
+  @override
+  void didUpdateWidget(covariant AdminActiveCoachProfileDialog oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _firstNameTextController.text = widget.coach.associatedUser.firstName;
+    _lastNameTextController.text = widget.coach.associatedUser.lastName;
+
+    _emailTextController.text = widget.coach.associatedUser.email;
+    _discordTagTextController.text = widget.coach.associatedUser.discordTag;
+    _descriptionTextControler.text = widget.coach.description;
+
+    _currentSituation = widget.coach.situation;
+    _currentDepartment = widget.coach.department;
   }
 
   @override
@@ -60,40 +92,57 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (_statusMessage.isNotEmpty) ...{ 
+                  BuStatusMessage(
+                    type: _hasError ? BuStatusMessageType.error : BuStatusMessageType.success,
+                    title: _hasError ? "Erreur" : "Bravo !",
+                    message: _statusMessage,
+                  ),
+                  const SizedBox(height: 15),
+                },
                 Expanded(
                   child: SingleChildScrollView(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        if (constraints.maxWidth > 722) {
-                          return _buildBigLayout();
-                        }
-                        else if (constraints.maxWidth > 411) {
-                          return _buildMediumLayout();
-                        }
+                    child: Form(
+                      key: _formKey,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          if (constraints.maxWidth > 722) {
+                            return _buildBigLayout();
+                          }
+                          else if (constraints.maxWidth > 411) {
+                            return _buildMediumLayout();
+                          }
 
-                        return _buildSmallLayout();
-                      },
+                          return _buildSmallLayout();
+                        },
+                      ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 30,),
                 Wrap(
                   alignment: WrapAlignment.end,
                   children: [
-                    SizedBox(
-                      width: 200,
-                      child: BuButton(
-                        buttonType: BuButtonType.secondary,
-                        text: "Annuler", 
-                        onPressed: _cancel
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 200,
+                        child: BuButton(
+                          buttonType: BuButtonType.secondary,
+                          text: "Annuler", 
+                          onPressed: _cancel
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 15, height: 15,),
-                    SizedBox(
-                      width: 200,
-                      child: BuButton(
-                        icon: Icons.edit,
-                        text: "Modifier",
-                        onPressed: _save,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 200,
+                        child: BuButton(
+                          icon: Icons.edit,
+                          text: "Modifier",
+                          onPressed: _save,
+                        ),
                       ),
                     )
                   ],
@@ -119,6 +168,7 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
             children: [
               Flexible(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       flex: 4,
@@ -260,7 +310,76 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
               widget.coach.associatedUser.birthdate = value;
             },
           ),
-        )
+        ),
+        const SizedBox(height: 20,),
+        Flexible(
+          child: BuDropdown<int>(
+            label: "Département",
+            items: kFrenchDepartment, 
+            currentValue: _currentDepartment,
+            onChanged: (value) {
+              setState(() {
+                _currentDepartment = value;
+              });
+            }
+          ),
+        ),
+        const SizedBox(height: 20,),
+        Flexible(
+          child: BuDropdown<String>(
+            label: "Situation",
+            items: kSituations, 
+            currentValue: _currentSituation,
+            onChanged: (value) {
+              setState(() {
+                _currentSituation = value;
+              });
+            }
+          ),
+        ),
+        const SizedBox(height: 20,),
+        Flexible(
+          child: BuTextInput(
+            controller: _emailTextController,
+            inputType: TextInputType.emailAddress,
+            labelText: "Email",
+            hintText: "Email",
+            validator: (value) {
+              if (value.isEmpty) {
+                return "Vous devez rentrer une email";
+              }
+
+              final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+
+              if (!emailValid) {
+                return "L'email semble invalide...";
+              }
+
+              return null;
+            },
+            onSaved: (value) {
+              widget.coach.associatedUser.email = value;
+            },
+          ),
+        ),
+        const SizedBox(height: 20,),
+        Flexible(
+          child: BuTextInput(
+            controller: _discordTagTextController,
+            labelText: "Tag Discord",
+            hintText: "Tag Discord",
+            validator: (value) {
+              if (value.isEmpty) {
+                return "Vous devez rentrer un tag Discord";
+              }
+
+              return null;
+            },
+            onSaved: (value) {
+              widget.coach.associatedUser.discordTag = value;
+            },
+          ),
+        ),
       ],
     );
   }
@@ -306,7 +425,7 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
             hintText: "Mot de passe",
             validator: (value) {
               if (value.isEmpty && _passwordTextController.text.isNotEmpty) {
-                return "Le mot de passe ne peut pas être vide";
+                return "La confirmation ne peut pas être vide";
               }
 
               if (value != _passwordTextController.text) {
@@ -351,6 +470,36 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
   }
 
   Future _save() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      widget.coach.situation = _currentSituation;
+      widget.coach.department = _currentDepartment;
+      
+      final GlobalKey<State> keyLoader = GlobalKey<State>();
+      Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
+      try {
+        final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+        await Provider.of<ActiveCoachsStore>(context, listen: false).updateCoach(authorization, widget.coach, updateUser: true);
+
+        setState(() {
+          _hasError = false;
+          _statusMessage = "Le profil a bien été mis à jour.";
+        });
+      } on PlatformException catch(e) {
+        setState(() {
+          _hasError = true;
+          _statusMessage = "Erreur lors de la mise à jour du profil : ${e.message}";
+        });
+      } on Exception catch(e) {
+        setState(() {
+          _hasError = true;
+          _statusMessage = "Erreur lors de la mise à jour du profil : $e";
+        });
+      }
+
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    }
   }
 }

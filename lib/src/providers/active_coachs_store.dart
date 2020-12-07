@@ -1,6 +1,7 @@
 
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/services/coachs_services.dart';
+import 'package:buildup/services/users_service.dart';
 import 'package:flutter/material.dart';
 
 class ActiveCoachsStore with ChangeNotifier {
@@ -26,13 +27,24 @@ class ActiveCoachsStore with ChangeNotifier {
   bool get hasData => _coachs != null && _coachs.isNotEmpty;
 
   Future updateCoach(String authorization, Coach toUpdate, {bool updateUser}) async {
-    await CoachsService.instance.updateCoach(authorization, toUpdate);
-    // TODO: update user if necessary
+    try {
+      await CoachsService.instance.updateCoach(authorization, toUpdate);
+    
+      if (updateUser) {
+        await UsersService.instance.updateUser(authorization, toUpdate.associatedUser);
 
-    if (toUpdate.step != CoachSteps.active) {
-      _coachs.remove(toUpdate);
+        if (toUpdate.associatedUser.profilePicture.image != null) {
+          toUpdate.associatedUser.profilePicture.isImageEvenWithServer = true;
+        }
+      }
+
+      if (toUpdate.step != CoachSteps.active) {
+        _coachs.remove(toUpdate);
+      }
+
+      notifyListeners();
+    } on Exception {
+      rethrow;
     }
-
-    notifyListeners();
   }
 }

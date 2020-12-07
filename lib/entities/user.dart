@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/services/users_service.dart';
 
@@ -54,4 +56,22 @@ class User {
     role = map['role'] as String,
     token = map['token'] as String;
 
+  
+  Map<String, dynamic> toJson() {
+    String profilePictureString;
+
+    if (!profilePicture.isImageEvenWithServer && profilePicture.image != null) {
+      profilePictureString = base64Encode(profilePicture.image.bytes);
+    }
+
+    return <String, dynamic>{
+      "profilePicture": profilePictureString,
+      "firstName": firstName,
+      "lastName": lastName,
+      "birthdate": birthdate.toIso8601String(),
+      "email": email,
+      "discordTag": discordTag,
+      "password": newPassword
+    };
+  }
 }

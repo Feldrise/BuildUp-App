@@ -7,11 +7,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdminActiveCoachProfileCard extends StatelessWidget {
+class AdminActiveCoachProfileCard extends StatefulWidget {
   const AdminActiveCoachProfileCard({Key key, @required this.coach}) : super(key: key);
   
   final Coach coach;
 
+  @override
+  _AdminActiveCoachProfileCardState createState() => _AdminActiveCoachProfileCardState();
+}
+
+class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -23,7 +28,7 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
             alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text(coach.associatedUser.fullName, style: Theme.of(context).textTheme.headline3,),
+              Text(widget.coach.associatedUser.fullName, style: Theme.of(context).textTheme.headline3,),
               SizedBox(
                 width: 200,
                 child: BuButton(
@@ -51,7 +56,7 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
             },
           ),
           const SizedBox(height: 15,),
-          _buildBigInfo("Description", coach.description),
+          _buildBigInfo("Description", widget.coach.description),
         ],
       ),
     );
@@ -64,18 +69,18 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
         child: SizedBox(
           width: 112,
           height: 112,
-          child: BuImageWidget(image: coach.associatedUser.profilePicture, isCircular: true,),
+          child: BuImageWidget(image: widget.coach.associatedUser.profilePicture, isCircular: true,),
         ),
       ),
       const SizedBox(height: 15, width: 15,),
       Flexible(
         child: Wrap(
                   children: [
-            _buildSmallInfo("Date de naissance", DateFormat("yyyy/MM/dd").format(coach.associatedUser.birthdate)),
-            _buildSmallInfo("Département", coach.department.toString()),
-            _buildSmallInfo("Situation", coach.situation),
-            _buildSmallInfo("Tag Disocrd", coach.associatedUser.discordTag),
-            _buildSmallInfo("Email", coach.associatedUser.email),
+            _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.coach.associatedUser.birthdate)),
+            _buildSmallInfo("Département", widget.coach.department.toString()),
+            _buildSmallInfo("Situation", widget.coach.situation),
+            _buildSmallInfo("Tag Disocrd", widget.coach.associatedUser.discordTag),
+            _buildSmallInfo("Email", widget.coach.associatedUser.email),
           ],
         ),
       )
@@ -98,7 +103,6 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
     );
   } 
 
-  
   Widget _buildBigInfo(String title, String info) {
     return Flexible(
       child: Container(
@@ -121,7 +125,7 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveCoachProfileDialog(coach: coach)
+        builder: (context) => AdminActiveCoachProfileDialog(coach: widget.coach)
       )
       // PageRouteBuilder(
       //   pageBuilder: (context, animation, anotherAnimation) => AdminActiveCoachProfileDialog(coach: coach),
@@ -135,5 +139,7 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
       //   }
       // )
     );
+
+    setState(() {});
   }
 }
