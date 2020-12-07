@@ -17,7 +17,7 @@ class AdminActiveCoachFormCard extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            child: Text("Réonses au formulaire", style: Theme.of(context).textTheme.headline3,),
+            child: Text("Réponses au formulaire", style: Theme.of(context).textTheme.headline3,),
           ),
           const SizedBox(height: 30,),
           for (final qa in coach.associatedForm.qas) 
