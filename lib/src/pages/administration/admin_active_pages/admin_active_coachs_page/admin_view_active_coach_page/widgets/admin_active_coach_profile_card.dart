@@ -1,7 +1,9 @@
 import 'package:buildup/entities/coach.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_profile_dialog.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,7 +29,7 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
                 child: BuButton(
                   icon: Icons.edit,
                   text: "Modifier",
-                  onPressed: () {},
+                  onPressed: () => _modifyProfile(context),
                 ),
               )
             ],
@@ -114,4 +116,24 @@ class AdminActiveCoachProfileCard extends StatelessWidget {
       ),
     );
   } 
+
+  Future _modifyProfile(BuildContext context) async {
+    await Navigator.push<void>(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AdminActiveCoachProfileDialog(coach: coach)
+      )
+      // PageRouteBuilder(
+      //   pageBuilder: (context, animation, anotherAnimation) => AdminActiveCoachProfileDialog(coach: coach),
+      //   transitionsBuilder: (context, animation, anotherAnimation, child) {
+      //     animation = CurvedAnimation(parent: animation, curve: Curves.linear);
+
+      //     return FadeTransition(
+      //       opacity: animation,
+      //       child: child,
+      //     );
+      //   }
+      // )
+    );
+  }
 }

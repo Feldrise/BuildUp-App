@@ -23,6 +23,8 @@ class User {
   String role;
   String token;
 
+  String newPassword;
+  
   String get fullName =>  "$firstName $lastName";
   String get authentificationHeader => "Bearer $token";
 

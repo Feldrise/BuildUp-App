@@ -21,20 +21,28 @@ class AdminViewActiveCoachPage extends StatelessWidget {
       appBar: BuAppBar(
         title: Text("Coach : ${coach.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            children: [
-              AdminActiveCoachProfileCard(coach: coach),
-              const SizedBox(height: 30),
-              AdminActiveCoachInfoCard(coach: coach),
-              const SizedBox(height: 30),
-              AdminActiveCoachFormCard(coach: coach)
-            ],
-          ),
+      body: Navigator(
+        key: GlobalKey<NavigatorState>(),
+        onGenerateRoute: (route) => MaterialPageRoute<void>(
+          settings: route,
+          builder: (context) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  children: [
+                    AdminActiveCoachProfileCard(coach: coach),
+                    const SizedBox(height: 30),
+                    AdminActiveCoachInfoCard(coach: coach),
+                    const SizedBox(height: 30),
+                    AdminActiveCoachFormCard(coach: coach)
+                  ],
+                ),
+              ),
+            );
+          }
         ),
-      ),
+      )
     );
   }
 

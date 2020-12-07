@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class BuAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BuAppBar({
     Key key, 
+    this.backgroundColor,
     @required this.title,
     this.actions,
     this.preferredSize = const Size.fromHeight(64)
@@ -12,12 +13,15 @@ class BuAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final List<Widget> actions;
 
+  final Color backgroundColor;
+
   @override
   final Size preferredSize;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: backgroundColor,
       title: title,
       actions: actions,
     );
