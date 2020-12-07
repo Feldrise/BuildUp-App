@@ -41,6 +41,31 @@ class CoachsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+  Future<List<Coach>> getActiveCoachs(String authorization) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/active',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonCoachs = jsonDecode(response.body) as List<dynamic>;
+      final List<Coach> coachs = [];
+
+      for (final map in jsonCoachs) {
+        final User associatedUser = await getUserForCoach(authorization, map['id'] as String);
+        final BuForm associatedForm = await getFormForCoach(authorization, map['id'] as String);
+
+        coachs.add(Coach.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
+      }
+
+      return coachs;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
   Future<User> getUserForCoach(String authorization, String coachId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/$coachId/user',

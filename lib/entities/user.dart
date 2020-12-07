@@ -1,4 +1,5 @@
 import 'package:buildup/entities/bu_image.dart';
+import 'package:buildup/services/users_service.dart';
 
 mixin UserRoles {
   static const String admin = "Admin";
@@ -39,7 +40,7 @@ class User {
 
   User.fromMap(Map<String, dynamic> map) : 
     id = map['id'] as String,
-    image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/steps/${map['id'] as String}/image"),
+    profilePicture = BuImage("${UsersService.instance.serviceBaseUrl}/${map['id'] as String}/profile_picture"),
     firstName = map['firstName'] as String,
     lastName = map['lastName'] as String,
     birthdate = DateTime.tryParse(map['birthdate'] as String),
