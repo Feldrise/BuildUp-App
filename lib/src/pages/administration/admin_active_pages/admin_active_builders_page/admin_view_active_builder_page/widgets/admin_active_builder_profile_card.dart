@@ -41,7 +41,7 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
                       child: BuButton(
                         icon: Icons.edit,
                         text: "Modifier",
-                        onPressed: () => _modifyProfile(context),
+                        onPressed: _modifyProfile,
                       ),
                     )
                   else 
@@ -51,7 +51,7 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
                         backgroundColor: colorPrimary,
                         icon: Icons.edit,
                         iconSize: 24,
-                        onPressed: () => _modifyProfile(context),
+                        onPressed: _modifyProfile,
                       ),
                     )
                 ],
@@ -140,7 +140,7 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
     );
   } 
 
-  Future _modifyProfile(BuildContext context) async {
+  Future _modifyProfile() async {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
