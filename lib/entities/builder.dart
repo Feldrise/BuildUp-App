@@ -1,7 +1,14 @@
+import 'dart:convert';
+
+import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/builders_service.dart';
 import 'package:flutter/material.dart';
+
+import 'coach.dart';
 
 mixin BuilderStatus {
   static const String candidating = "Candidating";
@@ -33,14 +40,16 @@ mixin BuilderSteps {
   };
 }
 
-
 class BuBuilder {
   final String id;
   final User associatedUser;
   final List<Project> associatedProjects = [];
   final BuForm associatedForm;
 
-  String coachId;
+  BuImage builderCard;
+
+  Coach associatedCoach;
+  NtfReferent associatedNtfReferent;
 
   String status;
   String step;
@@ -49,9 +58,9 @@ class BuBuilder {
   String situation;
   String description;
 
-  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm}) :
+  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent}) :
     id = map['id'] as String,
-    coachId = map['coachId'] as String,
+    builderCard = BuImage("${BuildersService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
     status = map['status'] as String,
     step = map['step'] as String,
     department = map['department'] as int,
@@ -59,9 +68,17 @@ class BuBuilder {
     description = map['description'] as String;
 
   Map<String, dynamic> toJson() {
+    String builderCardString;
+
+    if (!builderCard.isImageEvenWithServer && builderCard.image != null) {
+      builderCardString = base64Encode(builderCard.image.bytes);
+    }
+
     return <String, dynamic>{
+      "builderCard": builderCardString,
       "userId": associatedUser.id,
-      "coachId": coachId,
+      "coachId": associatedCoach.id,
+      "ntfReferentId": associatedNtfReferent.id,
       "status": status,
       "step": step,
       "department": department,

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:buildup/entities/user.dart';
-import 'package:buildup/src/pages/administration/admin_main_page/admib_main_page.dart';
+import 'package:buildup/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
 import 'package:buildup/src/pages/splash_screen/splash_screen.dart';
+import 'package:buildup/src/providers/buildons_store.dart';
+import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserStore(),),
+        ChangeNotifierProvider(create: (context) => BuildOnsStore(),),
+        ChangeNotifierProvider(create: (context) => NtfReferentsStore(),)
       ],
       builder: (context, child) {
         return MaterialApp(

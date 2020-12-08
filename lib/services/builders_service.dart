@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/coachs_services.dart';
+import 'package:buildup/services/ntf_referents_service.dart';
 import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
 
@@ -61,8 +65,10 @@ class BuildersService {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
         final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
+        final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+        final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
-        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);
       }
 
@@ -82,6 +88,32 @@ class BuildersService {
 
     if (response.statusCode == 200) {
       return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  
+  Future<Coach> getCoachForBuilder(String authorization, String coachId, String builderId) async {
+    if (coachId == null) {
+      return null;
+    }
+
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$builderId/coach',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final User coachUser = await CoachsService.instance.getUserForCoach(authorization, coachId);
+      
+      return Coach.fromMap(jsonDecode(response.body) as Map<String, dynamic>, associatedForm: null, associatedUser: coachUser);
+    }
+
+    if (response.statusCode == 404) {
+      return null;
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
