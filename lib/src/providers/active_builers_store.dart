@@ -14,7 +14,7 @@ class ActiveBuildersStore with ChangeNotifier {
     notifyListeners();
   }
 
-  void coachUpdated() {
+  void builderUpdated() {
     notifyListeners();
   }
 
@@ -26,7 +26,7 @@ class ActiveBuildersStore with ChangeNotifier {
 
   bool get hasData => _builders != null && _builders.isNotEmpty;
 
-  Future updateCoach(String authorization, BuBuilder toUpdate, {bool updateUser = false}) async {
+  Future updateBuilder(String authorization, BuBuilder toUpdate, {bool updateUser = false}) async {
     try {
       await BuildersService.instance.updateBuilder(authorization, toUpdate);
     

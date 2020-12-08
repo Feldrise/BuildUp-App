@@ -1,6 +1,6 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/admin_view_active_coach_page.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_delete_dialog.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/dialogs/admin_active_coach_delete_dialog.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';

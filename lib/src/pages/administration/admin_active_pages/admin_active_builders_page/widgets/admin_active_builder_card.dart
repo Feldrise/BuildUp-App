@@ -1,10 +1,16 @@
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/admin_view_active_builder_page.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/dialogs/admin_active_builder_delete_dialog.dart';
+import 'package:buildup/src/providers/active_builers_store.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 mixin AdminActiveBuilderCardAction {
   static const String viewProfile = "viewProfile";
@@ -175,55 +181,44 @@ class AdminActiveBuilderCard extends StatelessWidget {
   }
 
   Future _navigate(BuildContext context, String route) async {
-    // if (route == AdminActiveCoachCardAction.delete) {
-    //   final bool delete = await showDialog<bool>(
-    //     context: context,
-    //     builder: (context) => AdminActiveCoachDeleteDialog(coach: coach)
-    //   );
+    if (route == AdminActiveBuilderCardAction.delete) {
+      final bool delete = await showDialog<bool>(
+        context: context,
+        builder: (context) => AdminActiveBuilderDeleteDialog(builder: builder)
+      );
 
-    //   if (delete != null && delete) {
-    //     final GlobalKey<State> keyLoader = GlobalKey<State>();
-    //     Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
+      if (delete != null && delete) {
+        final GlobalKey<State> keyLoader = GlobalKey<State>();
+        Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
 
-    //     try {
-    //       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+        try {
+          final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
-    //       await Provider.of<ActiveCoachsStore>(context, listen: false).refuseCoach(authorization, coach);
-    //     } on Exception {
-    //       Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
-    //       return;
-    //     }
+          await Provider.of<ActiveBuildersStore>(context, listen: false).refuseBuilder(authorization, builder);
+        } on Exception {
+          Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+          return;
+        }
 
-    //     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
-    //     return;
-    //   }
-    // }
+        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+        return;
+      }
+    }
 
-    // Widget page;
+    Widget page;
 
-    // if (route == AdminActiveCoachCardAction.viewProfile) {
-    //   page = AdminViewActiveCoachPage(coach: coach);
-    // }
+    if (route == AdminActiveBuilderCardAction.viewProfile) {
+      page = AdminViewActiveBuilderPage(builder: builder);
+    }
 
-    // if (page != null) {
-    //   await Navigator.push<void>(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => page
-    //     )
-    //     // PageRouteBuilder(
-    //     //   pageBuilder: (context, animation, anotherAnimation) => page,
-    //     //   transitionsBuilder: (context, animation, anotherAnimation, child) {
-    //     //     animation = CurvedAnimation(parent: animation, curve: Curves.linear);
-
-    //     //     return FadeTransition(
-    //     //       opacity: animation,
-    //     //       child: child,
-    //     //     );
-    //     //   }
-    //     // )
-    //   );
-    // }
+    if (page != null) {
+      await Navigator.push<void>(
+        context,
+        MaterialPageRoute(
+          builder: (context) => page
+        )
+      );
+    }
 
   }
 }
