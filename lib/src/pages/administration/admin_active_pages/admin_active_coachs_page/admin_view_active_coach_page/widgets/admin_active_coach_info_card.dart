@@ -3,6 +3,8 @@ import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_info_dialog.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,20 +20,35 @@ class AdminActiveCoachInfoCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text("Informations Coach", style: Theme.of(context).textTheme.headline3,),
-              SizedBox(
-                width: 200,
-                child: BuButton(
-                  icon: Icons.edit,
-                  text: "Modifier",
-                  onPressed: () => _updateInfo(context),
-                ),
-              )
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final bool showText = constraints.maxWidth > 411;
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text("Informations Coach", style: Theme.of(context).textTheme.headline3,)),
+                  if (showText)
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: BuButton(
+                        icon: Icons.edit,
+                        text: "Modifier",
+                        onPressed: () => _updateInfo(context),
+                      ),
+                    )
+                  else 
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: BuIconButton(
+                        backgroundColor: colorPrimary,
+                        icon: Icons.edit,
+                        iconSize: 24,
+                        onPressed: () => _updateInfo(context),
+                      ),
+                    )
+                ],
+              );
+            },
           ),
           const SizedBox(height: 30,),
           _buildSmallInfo("étape actuelle", Row(
