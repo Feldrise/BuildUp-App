@@ -1,7 +1,10 @@
 
 import 'package:buildup/entities/tab_item.dart';
+import 'package:buildup/services/builders_service.dart';
 import 'package:buildup/services/coachs_services.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_active_builders_page.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_active_coachs_page.dart';
+import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
@@ -27,7 +30,7 @@ class _AdminActivePageState extends State<AdminActivePage> {
   ];
 
   final List<Widget> pages = const [
-    Center(child: Text("Hello Active builders"),),
+    AdminActiveBuildersPage(),
     AdminActiveCoachsPage(),
   ];
   
@@ -75,16 +78,16 @@ class _AdminActivePageState extends State<AdminActivePage> {
   }
 
   Future _loadData() async {
-    // final CandidatingBuilderStore candidatingBuilderStore = Provider.of<CandidatingBuilderStore>(context, listen: false);
+    final ActiveBuildersStore activeBuildersStore = Provider.of<ActiveBuildersStore>(context, listen: false);
     final ActiveCoachsStore activeCoachsStore = Provider.of<ActiveCoachsStore>(context, listen: false);
 
-    if (/*candidatingBuilderStore.hasData &&*/ activeCoachsStore.hasData) {
+    if (activeBuildersStore.hasData && activeCoachsStore.hasData) {
       return;
     }
 
     final UserStore currentUser = Provider.of<UserStore>(context, listen: false);
 
-    // candidatingBuilderStore.builders = await BuildersService.instance.getCandidatingBuilders(currentUser.authentificationHeader);
+    activeBuildersStore.builders = await BuildersService.instance.getActiveBuilders(currentUser.authentificationHeader);
     activeCoachsStore.coachs = await CoachsService.instance.getActiveCoachs(currentUser.authentificationHeader);
   }
 }

@@ -3,6 +3,7 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/pages/administration/admin_buildons_page/admin_buildons_page.dart';
 import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_candidating_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
+import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
@@ -37,6 +38,7 @@ class AdminMainPage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CandidatingCoachsStore()),
         ChangeNotifierProvider(create: (context) => BuildOnsStore(),),
         ChangeNotifierProvider(create: (context) => ActiveCoachsStore()),
+        ChangeNotifierProvider(create: (context) => ActiveBuildersStore()),
       ],
       builder: (context, child) {        
         final CandidatingBuilderStore candidatingBuilderStore = Provider.of<CandidatingBuilderStore>(context);
@@ -48,10 +50,11 @@ class AdminMainPage extends StatelessWidget {
         }
 
         final ActiveCoachsStore activeCoachsStore = Provider.of<ActiveCoachsStore>(context);
+        final ActiveBuildersStore activeBuildersStore = Provider.of<ActiveBuildersStore>(context);
 
         int activeNumber = 0;
-        if (/*candidatingBuilderStore.builders != null && */activeCoachsStore.coachs != null) {
-          activeNumber = /*candidatingBuilderStore.builders.length +*/ activeCoachsStore.coachs.length;
+        if (activeBuildersStore.builders != null && activeCoachsStore.coachs != null) {
+          activeNumber = activeBuildersStore.builders.length + activeCoachsStore.coachs.length;
         }
         
         final List<PageItem> pageItems = [

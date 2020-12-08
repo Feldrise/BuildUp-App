@@ -45,6 +45,33 @@ class BuildersService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+  Future<List<BuBuilder>> getActiveBuilders(String authorization) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/active',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBuilders = jsonDecode(response.body) as List<dynamic>;
+      final List<BuBuilder> builders = [];
+
+      for (final map in jsonBuilders) {
+        final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
+        final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+        final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
+
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
+        builders.last.associatedProjects.add(associatedProject);
+      }
+
+      return builders;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
   Future<User> getUserForBuilder(String authorization, String builderId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/$builderId/user',
