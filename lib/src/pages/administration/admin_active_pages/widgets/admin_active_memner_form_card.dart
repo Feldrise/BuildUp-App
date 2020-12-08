@@ -1,12 +1,12 @@
 
-import 'package:buildup/entities/coach.dart';
+import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:flutter/material.dart';
 
-class AdminActiveCoachFormCard extends StatelessWidget {
-  const AdminActiveCoachFormCard({Key key, @required this.coach}) : super(key: key);
+class AdminActiveMemeberFormCard extends StatelessWidget {
+  const AdminActiveMemeberFormCard({Key key, @required this.form}) : super(key: key);
   
-  final Coach coach;
+  final BuForm form;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class AdminActiveCoachFormCard extends StatelessWidget {
             child: Text("Réponses au formulaire", style: Theme.of(context).textTheme.headline3,),
           ),
           const SizedBox(height: 30,),
-          for (final qa in coach.associatedForm.qas) 
+          for (final qa in form.qas) 
             _buildBigInfo(qa.question, qa.answer)
         ],
       ),

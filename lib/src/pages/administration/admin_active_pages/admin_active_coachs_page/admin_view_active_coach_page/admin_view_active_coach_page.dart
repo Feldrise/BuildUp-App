@@ -1,5 +1,5 @@
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_form_card.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_active_memner_form_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_info_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
@@ -35,7 +35,7 @@ class AdminViewActiveCoachPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     AdminActiveCoachInfoCard(coach: coach),
                     const SizedBox(height: 30),
-                    AdminActiveCoachFormCard(coach: coach)
+                    AdminActiveMemeberFormCard(form: coach.associatedForm,)
                   ],
                 ),
               ),
