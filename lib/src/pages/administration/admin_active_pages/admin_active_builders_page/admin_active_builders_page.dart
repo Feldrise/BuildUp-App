@@ -24,14 +24,18 @@ class AdminActiveBuildersPage extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.all(30),
-          child: Wrap(
-            children: [
-              for (final builder in activeBuildersStore.builders) 
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 250),
-                  child: AdminActiveBuilderCard(builder: builder)
-                )
-            ], 
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Wrap(
+                children: [
+                  for (final builder in activeBuildersStore.builders) 
+                    AdminActiveBuilderCard(
+                      builder: builder,
+                      width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
+                    )
+                ],
+              );
+            },
           )
         );
       }, 
