@@ -178,4 +178,20 @@ class BuildersService {
     }
   }
 
+  
+  Future updateProject(String authorization, BuBuilder toUpdate) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/${toUpdate.id}/projects/${toUpdate.associatedProjects.first.id}/update',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(toUpdate.associatedProjects.first.toJson())
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
 }

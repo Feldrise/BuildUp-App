@@ -26,7 +26,7 @@ class ActiveBuildersStore with ChangeNotifier {
 
   bool get hasData => _builders != null && _builders.isNotEmpty;
 
-  Future updateBuilder(String authorization, BuBuilder toUpdate, {bool updateUser = false}) async {
+  Future updateBuilder(String authorization, BuBuilder toUpdate, {bool updateUser = false, bool updateProject = false}) async {
     try {
       await BuildersService.instance.updateBuilder(authorization, toUpdate);
     
@@ -36,6 +36,10 @@ class ActiveBuildersStore with ChangeNotifier {
         if (toUpdate.associatedUser.profilePicture.image != null) {
           toUpdate.associatedUser.profilePicture.isImageEvenWithServer = true;
         }
+      }
+
+      if (updateProject) {
+        await BuildersService.instance.updateProject(authorization, toUpdate);
       }
 
       if (toUpdate.step != BuilderSteps.active) {

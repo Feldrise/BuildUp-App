@@ -12,6 +12,22 @@ mixin ProjectCategories {
   static const String audiovisuel = "Audiovisuel";
   static const String musique = "Musique";
   static const String other = "Autre";
+
+  static const Map<String, String> map = {
+    agroalimentaire: "Agro alimentaire",
+    etudesEtConseils: "Etudes et conseils",
+    education: "Education",
+    communication: "Communication",
+    textile: "Textile",
+    serviceEntreprise: "Service entreprise",
+    commerce: "Commerce",
+    jeuxVideos: "Jeux vidéo",
+    informatique: "Informatique",
+    electronique: "Electronique",
+    audiovisuel: "Audiovisuel",
+    musique: "Musique",
+    other: "Autre",
+  };
 }
 
 class Project {
@@ -38,4 +54,17 @@ class Project {
     launchDate = DateTime.tryParse(map['launchDate'] as String),
     isLucrative = map['isLucratif'] as bool,
     isDeclared = map['isDeclared'] as bool;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "name": name,
+      "categorie": categorie,
+      "description": description,
+      "keywords": keywords,
+      "team": team,
+      "launchDate": launchDate.toIso8601String(),
+      "isLucratif": isLucrative,
+      "isDeclared": isDeclared
+    };
+  }
 }

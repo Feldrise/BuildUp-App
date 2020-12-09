@@ -77,8 +77,8 @@ class BuBuilder {
     return <String, dynamic>{
       "builderCard": builderCardString,
       "userId": associatedUser.id,
-      "coachId": associatedCoach.id,
-      "ntfReferentId": associatedNtfReferent.id,
+      "coachId": associatedCoach?.id,
+      "ntfReferentId": associatedNtfReferent?.id,
       "status": status,
       "step": step,
       "department": department,
