@@ -2,6 +2,7 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/widgets/admin_active_builder_info_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/widgets/admin_active_builder_profile_card.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/widgets/admin_active_builder_project_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_active_member_form_card.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
@@ -35,6 +36,8 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
                     AdminActiveBuilderProfileCard(builder: builder),
                     const SizedBox(height: 30),
                     AdminActiveBuilderInfoCard(builder: builder),
+                    const SizedBox(height: 30),
+                    AdminActiveBuilderProjectCard(builder: builder),
                     const SizedBox(height: 30),
                     AdminActiveMemberFormCard(form: builder.associatedForm,)
                   ],

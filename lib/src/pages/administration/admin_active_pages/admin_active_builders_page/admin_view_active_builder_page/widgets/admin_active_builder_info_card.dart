@@ -1,7 +1,6 @@
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -19,35 +18,9 @@ class AdminActiveBuilderInfoCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final bool showText = constraints.maxWidth > 411;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text("Informations Builder", style: Theme.of(context).textTheme.headline3,)),
-                  if (showText)
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuButton(
-                        icon: Icons.edit,
-                        text: "Modifier",
-                        onPressed: _updateInfo,
-                      ),
-                    )
-                  else 
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuIconButton(
-                        backgroundColor: colorPrimary,
-                        icon: Icons.edit,
-                        iconSize: 24,
-                        onPressed: _updateInfo,
-                      ),
-                    )
-                ],
-              );
-            },
+          AdminCardTitleBar(
+            title: "Informations Builder",
+            onModified: _updateInfo,
           ),
           const SizedBox(height: 30,),
           LayoutBuilder(

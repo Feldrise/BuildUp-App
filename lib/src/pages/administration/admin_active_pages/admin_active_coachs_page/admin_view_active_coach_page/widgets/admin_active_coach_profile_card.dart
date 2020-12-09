@@ -1,10 +1,8 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_profile_dialog.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
-import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -26,35 +24,9 @@ class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCar
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final bool showText = constraints.maxWidth > 411;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text(widget.coach.associatedUser.fullName, style: Theme.of(context).textTheme.headline3,)),
-                  if (showText)
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuButton(
-                        icon: Icons.edit,
-                        text: "Modifier",
-                        onPressed: () => _modifyProfile(context),
-                      ),
-                    )
-                  else 
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuIconButton(
-                        backgroundColor: colorPrimary,
-                        icon: Icons.edit,
-                        iconSize: 24,
-                        onPressed: () => _modifyProfile(context),
-                      ),
-                    )
-                ],
-              );
-            },
+          AdminCardTitleBar(
+            title: widget.coach.associatedUser.fullName,
+            onModified: _modifyProfile,
           ),
           const SizedBox(height: 30,),
           LayoutBuilder(
@@ -138,7 +110,7 @@ class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCar
     );
   } 
 
-  Future _modifyProfile(BuildContext context) async {
+  Future _modifyProfile() async {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(

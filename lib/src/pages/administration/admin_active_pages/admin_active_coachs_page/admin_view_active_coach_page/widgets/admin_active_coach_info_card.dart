@@ -1,10 +1,8 @@
 
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_info_dialog.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
-import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,35 +18,9 @@ class AdminActiveCoachInfoCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final bool showText = constraints.maxWidth > 411;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text("Informations Coach", style: Theme.of(context).textTheme.headline3,)),
-                  if (showText)
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuButton(
-                        icon: Icons.edit,
-                        text: "Modifier",
-                        onPressed: () => _updateInfo(context),
-                      ),
-                    )
-                  else 
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      child: BuIconButton(
-                        backgroundColor: colorPrimary,
-                        icon: Icons.edit,
-                        iconSize: 24,
-                        onPressed: () => _updateInfo(context),
-                      ),
-                    )
-                ],
-              );
-            },
+          AdminCardTitleBar(
+            title: "Informations Coach",
+            onModified: () => _updateInfo(context),
           ),
           const SizedBox(height: 30,),
           _buildSmallInfo("étape actuelle", Row(
@@ -93,18 +65,7 @@ class AdminActiveCoachInfoCard extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (context) => AdminActiveCoachInfoDialog(coach: coach)
-      )
-      // PageRouteBuilder(
-      //   pageBuilder: (context, animation, anotherAnimation) => AdminActiveCoachProfileDialog(coach: coach),
-      //   transitionsBuilder: (context, animation, anotherAnimation, child) {
-      //     animation = CurvedAnimation(parent: animation, curve: Curves.linear);
-
-      //     return FadeTransition(
-      //       opacity: animation,
-      //       child: child,
-      //     );
-      //   }
-      // )
+      ),
     );
   }
 }

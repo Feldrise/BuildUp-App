@@ -1,5 +1,6 @@
 
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,7 @@ class AdminActiveMemberFormCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text("Réponses au formulaire", style: Theme.of(context).textTheme.headline3,),
-          ),
+          const AdminCardTitleBar(title: "Réponses au formulaire",),
           const SizedBox(height: 30,),
           for (final qa in form.qas) 
             _buildBigInfo(qa.question, qa.answer)
