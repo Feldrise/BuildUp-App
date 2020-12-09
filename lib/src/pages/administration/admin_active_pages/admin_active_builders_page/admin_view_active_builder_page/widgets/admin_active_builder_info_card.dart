@@ -1,16 +1,23 @@
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/dialogs/admin_active_builder_info_dialog.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AdminActiveBuilderInfoCard extends StatelessWidget {
+class AdminActiveBuilderInfoCard extends StatefulWidget {
   const AdminActiveBuilderInfoCard({Key key, @required this.builder}) : super(key: key);
 
   final BuBuilder builder;
 
+  @override
+  _AdminActiveBuilderInfoCardState createState() => _AdminActiveBuilderInfoCardState();
+}
+
+class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -49,7 +56,7 @@ class AdminActiveBuilderInfoCard extends StatelessWidget {
       Flexible(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 265),
-          child: BuImageWidget(image: builder.builderCard,),
+          child: BuImageWidget(image: widget.builder.builderCard,),
         ),
       ),
       const SizedBox(width: 30, height: 30,),
@@ -77,18 +84,18 @@ class AdminActiveBuilderInfoCard extends StatelessWidget {
             ),
             Wrap(
               children: [
-                _buildSmallInfo("Coach assigné", Text(builder.associatedCoach != null ? builder.associatedCoach.associatedUser.fullName : "Pas de coach")),
-                _buildSmallInfo("Référent assigné", Text(builder.associatedNtfReferent != null ? builder.associatedNtfReferent.name : "Pas de référent")),
+                _buildSmallInfo("Coach assigné", Text(widget.builder.associatedCoach != null ? widget.builder.associatedCoach.associatedUser.fullName : "Pas de coach")),
+                _buildSmallInfo("Référent assigné", Text(widget.builder.associatedNtfReferent != null ? widget.builder.associatedNtfReferent.name : "Pas de référent")),
               ]
             ),
             const SizedBox(height: 15,),
             Wrap(
               children: [
-                if (builder.associatedCoach != null)
-                  _buildSmallInfo("Contact coach", _buildContactWidget(builder.associatedCoach.associatedUser.email, builder.associatedCoach.associatedUser.discordTag)),
+                if (widget.builder.associatedCoach != null)
+                  _buildSmallInfo("Contact coach", _buildContactWidget(widget.builder.associatedCoach.associatedUser.email, widget.builder.associatedCoach.associatedUser.discordTag)),
 
-                if (builder.associatedNtfReferent != null) 
-                  _buildSmallInfo("Contact Référent", _buildContactWidget(builder.associatedNtfReferent.email, builder.associatedNtfReferent.discordTag))
+                if (widget.builder.associatedNtfReferent != null) 
+                  _buildSmallInfo("Contact Référent", _buildContactWidget(widget.builder.associatedNtfReferent.email, widget.builder.associatedNtfReferent.discordTag))
                 
               ]
             )
@@ -98,7 +105,6 @@ class AdminActiveBuilderInfoCard extends StatelessWidget {
     ];
   }
 
-  
   Widget _buildSmallInfo(String title, Widget info) {
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -148,6 +154,13 @@ class AdminActiveBuilderInfoCard extends StatelessWidget {
   }
 
   Future _updateInfo() async {
+    await Navigator.push<void>(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AdminActiveBuilderInfoDialog(builder: widget.builder)
+      )
+    );
 
+    setState(() {});
   }
 }
