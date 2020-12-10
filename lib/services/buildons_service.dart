@@ -158,6 +158,20 @@ class BuildOnsService {
     }
   }
 
+  Future validateBuildOnStep(String authorization, String projectId, String buildOnStepId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/projects/$projectId/validate/$buildOnStepId',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+
   Future refuseReturning(String authorization, String projectId, String returningId) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/projects/$projectId/returnings/$returningId/refuse',

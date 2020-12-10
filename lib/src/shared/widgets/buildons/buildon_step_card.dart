@@ -202,7 +202,12 @@ class BuildOnStepCard extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour avec le serveur..."); 
 
     if (validate) {
-      await BuildOnsService.instance.acceptReturnging(authorization, project.id, buildOnReturning.id);
+      if (buildOnReturning != null) {
+        await BuildOnsService.instance.acceptReturnging(authorization, project.id, buildOnReturning.id);
+      }
+      else {
+        await BuildOnsService.instance.validateBuildOnStep(authorization, project.id, buildOnStep.id);
+      }
 
       project.currentBuildOn = nextBuildOn;
       project.currentBuildOnStep = nextBuildOnStep;
