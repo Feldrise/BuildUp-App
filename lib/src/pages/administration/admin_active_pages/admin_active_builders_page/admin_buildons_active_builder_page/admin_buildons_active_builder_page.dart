@@ -96,7 +96,7 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
         BuStepperChild(
           widget: BuildOnCard(
             buildOn: buildOn, 
-            onOpened: () async => _openBuildOn(context, buildOn), 
+            onOpened: () async => _openBuildOn(context, buildOn, buildOns), 
             isSmall: isSmall,
           ),
           color: buildOn.id != currentBuildOn ? const Color(0xff17ba63) : const Color(0xffaeb5b7)
@@ -111,11 +111,15 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
     return result;
   }
 
-  Future _openBuildOn(BuildContext context, BuildOn buildOn) async {
+  Future _openBuildOn(BuildContext context, BuildOn buildOn, List<BuildOn> buildOns) async {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminBuildOnStepActiveBuilderPage(builder: builder, buildOn: buildOn,)
+        builder: (context) => AdminBuildOnStepActiveBuilderPage(
+          builder: builder, 
+          buildOn: buildOn,
+          nextBuildOn: buildOns.last == buildOn ? null : buildOns[buildOns.indexOf(buildOn) + 1]
+        )
       )
     );
   }

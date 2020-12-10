@@ -75,6 +75,10 @@ class BuildOnsService {
       final Map<String, BuildOnReturning> buildOnReturnings = {};
 
       for (final map in jsonReturnings) {
+        if ((map['status'] as String) == BuildOnReturningStatus.refused) {
+          continue;
+        }
+
         buildOnReturnings[map['buildOnStepId'] as String] = BuildOnReturning.fromMap(map as Map<String, dynamic>);
       }
 
@@ -137,5 +141,33 @@ class BuildOnsService {
     }
     
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  
+  // RETURNINGS
+  Future acceptReturnging(String authorization, String projectId, String returningId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/accept',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  Future refuseReturning(String authorization, String projectId, String returningId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/refuse',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
   }
 }

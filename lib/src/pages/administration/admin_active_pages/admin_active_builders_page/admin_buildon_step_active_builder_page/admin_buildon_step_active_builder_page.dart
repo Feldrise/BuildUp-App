@@ -13,10 +13,13 @@ class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
   const AdminBuildOnStepActiveBuilderPage({
     Key key,
     @required this.builder,
-    @required this.buildOn  
+    @required this.buildOn,
+    this.nextBuildOn,  
   }) : super(key: key);
   
   final BuBuilder builder;
+  final BuildOn nextBuildOn;
+
   final BuildOn buildOn;
 
   @override
@@ -71,7 +74,10 @@ class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
           widget: BuildOnStepCard(
             buildOnStep: buildOnStep,
             buildOnReturning: returning,
+            project: builder.associatedProjects.first,
             isSmall: isSmall,
+            nextBuildOn: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn.id : buildOn.id,
+            nextBuildOnStep: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn.steps.first.id : buildOnSteps[buildOnSteps.indexOf(buildOnStep) + 1].id,
           ),
           color: color
         )

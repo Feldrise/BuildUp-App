@@ -1,22 +1,37 @@
 
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
+import 'package:buildup/entities/project.dart';
+import 'package:buildup/services/buildons_service.dart';
+import 'package:buildup/src/providers/buildons_store.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/buildon_step_process_validation_dialog.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BuildOnStepCard extends StatelessWidget {
   const BuildOnStepCard({
     Key key,
+    @required this.project,
     @required this.buildOnStep,
     @required this.buildOnReturning,
+    this.nextBuildOnStep,
+    this.nextBuildOn,
     this.isSmall = false
   }) : super(key: key);
 
+  final Project project;
   final BuildOnStep buildOnStep;
+  
   final BuildOnReturning buildOnReturning;
+
+  final String nextBuildOn;
+  final String nextBuildOnStep;
 
   final bool isSmall;
 
@@ -96,7 +111,7 @@ class BuildOnStepCard extends StatelessWidget {
         const SizedBox(height: 15),
       },
       if (buildOnReturning == null || buildOnReturning.status == BuildOnReturningStatus.waiting) 
-        _buildValidationButton()
+        _buildValidationButton(context)
     ];
   }
 
@@ -135,10 +150,10 @@ class BuildOnStepCard extends StatelessWidget {
 
     if (buildOnReturning.type == BuildOnReturningType.file) {
       summaryWidget = Row(
-        children: const [
-          Text("Télécharger", style: TextStyle(decoration: TextDecoration.underline, color: Color(0xff155724)),),
-          SizedBox(width: 10,),
-          Icon(Icons.file_download, size: 16, color: Color(0xff155724),)
+        children: [
+          Text(buildOnReturning.fileName, style: const TextStyle(decoration: TextDecoration.underline, color: Color(0xff155724)),),
+          const SizedBox(width: 10,),
+          const Icon(Icons.file_download, size: 16, color: Color(0xff155724),)
         ],
       );
     }
@@ -161,18 +176,45 @@ class BuildOnStepCard extends StatelessWidget {
     );
   }
 
-  Widget _buildValidationButton() {
+  Widget _buildValidationButton(BuildContext context) {
     return Align(
       alignment: Alignment.bottomRight,
       child: GestureDetector(
-        onTap: _processValidation,
+        onTap: () => _processValidation(context),
         child: const Text("Procéder à la validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
       ),
     );
   }
 
-  Future _processValidation() async {
+  Future _processValidation(BuildContext context) async {
+    final bool validate = await showDialog<bool>(
+      context: context,
+      builder: (context) => BuildOnStepProcessValidationDialog(buildOnStep: buildOnStep, buildOnReturning: buildOnReturning, onDownload: _downloadFile,)
+    );
 
+    if (validate == null) {
+      return;
+    }
+
+    final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+    
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour avec le serveur..."); 
+
+    if (validate) {
+      await BuildOnsService.instance.acceptReturnging(authorization, project.id, buildOnReturning.id);
+
+      project.currentBuildOn = nextBuildOn;
+      project.currentBuildOnStep = nextBuildOnStep;
+      buildOnReturning.status = BuildOnReturningStatus.validated;
+
+    } else {
+      await BuildOnsService.instance.refuseReturning(authorization, project.id, buildOnReturning.id);
+    }
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    Provider.of<BuildOnsStore>(context, listen: false).clear();
+    Navigator.of(context).pop();
   }
 
   Future _downloadFile() async {

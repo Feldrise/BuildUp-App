@@ -29,6 +29,7 @@ class BuildOnReturning {
   String type;
   String status;
 
+  String fileName;
   String fileId;
   String comment;
 
@@ -37,6 +38,7 @@ class BuildOnReturning {
     buildOnStepId = map['buildOnStepId'] as String,
     type = map['type'] as String,
     status = map['status'] as String,
+    fileName = map['fileName'] as String,
     fileId = map['fileId'] as String,
     comment = map['comment'] as String;
 }
