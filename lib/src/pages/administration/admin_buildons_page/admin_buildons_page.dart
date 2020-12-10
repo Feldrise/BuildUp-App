@@ -228,6 +228,11 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   void _addNewBuildOn(BuildOnsStore buildOnsStore) {
+    // Avoid adding build-ons if they are not loaded
+    if (buildOnsStore.loadedBuildOns == null) {
+      return;
+    }
+
     final BuildOn newBuildOn = BuildOn();
     buildOnsStore.loadedBuildOns.add(newBuildOn);
     buildOnsStore.buildonUpdated();
