@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:buildup/entities/buildons/buildon.dart';
+import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/utils/constants.dart';
 import 'package:flutter/services.dart';
@@ -56,6 +57,28 @@ class BuildOnsService {
       }
 
       return buildOnSteps;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  Future<Map<String, BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/projects/$projectId/returnings',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonReturnings = jsonDecode(response.body) as List<dynamic>;
+      final Map<String, BuildOnReturning> buildOnReturnings = {};
+
+      for (final map in jsonReturnings) {
+        buildOnReturnings[map['buildOnStepId'] as String] = BuildOnReturning.fromMap(map as Map<String, dynamic>);
+      }
+
+      return buildOnReturnings;
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);

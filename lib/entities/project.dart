@@ -1,3 +1,5 @@
+import 'package:buildup/entities/buildons/buildon_returning.dart';
+
 mixin ProjectCategories {
   static const String agroalimentaire = "Agro alimentaire";
   static const String etudesEtConseils = "Etudes et conseils";
@@ -44,7 +46,12 @@ class Project {
   bool isLucrative;
   bool isDeclared;
 
-  Project.fromMap(Map<String, dynamic> map) : 
+  String currentBuildOn;
+  String currentBuildOnStep;
+
+  Map<String, BuildOnReturning> associatedReturnings;
+
+  Project.fromMap(Map<String, dynamic> map, {this.associatedReturnings}) : 
     id = map['id'] as String,
     name = map['name'] as String,
     categorie = map['categorie'] as String,
@@ -53,7 +60,9 @@ class Project {
     team = map['team'] as String,
     launchDate = DateTime.tryParse(map['launchDate'] as String),
     isLucrative = map['isLucratif'] as bool,
-    isDeclared = map['isDeclared'] as bool;
+    isDeclared = map['isDeclared'] as bool,
+    currentBuildOn = map['currentBuildOn'] as String,
+    currentBuildOnStep = map['currentBuildOnStep'] as String;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

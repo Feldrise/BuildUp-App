@@ -1,5 +1,6 @@
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_buildons_active_builder_page/admin_buildons_active_builder_page.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/admin_view_active_builder_page.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/dialogs/admin_active_builder_delete_dialog.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
@@ -209,6 +210,9 @@ class AdminActiveBuilderCard extends StatelessWidget {
 
     if (route == AdminActiveBuilderCardAction.viewProfile) {
       page = AdminViewActiveBuilderPage(builder: builder);
+    }
+    else if (route == AdminActiveBuilderCardAction.viewBuildOns) {
+      page = AdminBuildOnsActiveBuilderPage(builder: builder);
     }
 
     if (page != null) {

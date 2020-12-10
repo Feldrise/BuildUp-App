@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/buildons_service.dart';
 import 'package:buildup/services/coachs_services.dart';
 import 'package:buildup/services/ntf_referents_service.dart';
 import 'package:buildup/utils/constants.dart';
@@ -128,7 +130,10 @@ class BuildersService {
     );
 
     if (response.statusCode == 200) {
-      return Project.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
+      final Map<String, dynamic> json = jsonDecode(response.body) as Map<String, dynamic>;
+
+      final Map<String, BuildOnReturning> projectReturnings = await BuildOnsService.instance.getReturningsForProject(authorization, json['id'] as String);      
+      return Project.fromMap(json, associatedReturnings: projectReturnings);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);

@@ -10,3 +10,33 @@ mixin BuildOnReturningType {
 
   };
 }
+
+mixin BuildOnReturningStatus {
+  static const String validated = "Validated";
+  static const String waiting = "Waiting";
+  static const String refused = "Refused";
+
+  static const Map<String, String> detailled = {
+    validated: "Validé",
+    waiting: "En attente",
+    refused: "Refusé"
+  };
+}
+
+class BuildOnReturning {
+  String id;
+  String buildOnStepId;
+  String type;
+  String status;
+
+  String fileId;
+  String comment;
+
+  BuildOnReturning.fromMap(Map<String, dynamic> map) : 
+    id = map['id'] as String,
+    buildOnStepId = map['buildOnStepId'] as String,
+    type = map['type'] as String,
+    status = map['status'] as String,
+    fileId = map['fileId'] as String,
+    comment = map['comment'] as String;
+}
