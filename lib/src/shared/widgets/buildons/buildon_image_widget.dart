@@ -39,8 +39,8 @@ class BuildOnImageWidget extends StatelessWidget {
                   topRight: (corners == BuildOnImageRoundedCorner.onlyTopLeft) ? Radius.zero : const Radius.circular(8)
                 ),
               ),
-              height: 100,
-              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 50),
+              height: 200,
+              padding: const EdgeInsets.all(8.0),
               child: const Center(
                 child: CircularProgressIndicator(),
               )
@@ -67,7 +67,7 @@ class BuildOnImageWidget extends StatelessWidget {
   Widget _buildEmptyImage() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      height: 100,
+      height: 200,
       decoration: BoxDecoration(
         color: const Color(0xfff5f5f6),
         borderRadius: corners == BuildOnImageRoundedCorner.all ? BorderRadius.circular(8) : BorderRadius.only(

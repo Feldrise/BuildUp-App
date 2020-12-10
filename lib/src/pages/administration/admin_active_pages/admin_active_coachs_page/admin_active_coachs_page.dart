@@ -12,27 +12,35 @@ class AdminActiveCoachsPage extends StatelessWidget {
     return Consumer<ActiveCoachsStore>(
       builder: (context, activeCoachsStore, child) {
         if (!activeCoachsStore.hasData) {
-          return const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: BuStatusMessage(
-              type: BuStatusMessageType.info,
-              message: "Il n'y a aucun coach actif pour le moment",
+          return const Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: BuStatusMessage(
+                type: BuStatusMessageType.info,
+                message: "Il n'y a aucun coach actif pour le moment",
+              ),
             ),
           );
         }
 
         return Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return Wrap(
-                children: [
-                  for (final coach in activeCoachsStore.coachs) 
-                    AdminActiveCoachCard(
-                      coach: coach,
-                      width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
-                    )
-                ],
+              return SingleChildScrollView(
+                child: Wrap(
+                  children: [
+                    for (final coach in activeCoachsStore.coachs) 
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: AdminActiveCoachCard(
+                          coach: coach,
+                          width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
+                        ),
+                      )
+                  ],
+                ),
               );
             },
           )

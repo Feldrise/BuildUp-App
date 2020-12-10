@@ -33,9 +33,11 @@ class BuButton extends StatelessWidget {
       ],
     );
 
+    const padding = EdgeInsets.symmetric(vertical: 15, horizontal: 20);
+
     if (buttonType == BuButtonType.secondary) {
       return RaisedButton(
-        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: BorderSide(color: Theme.of(context).dividerColor)
@@ -50,7 +52,7 @@ class BuButton extends StatelessWidget {
     
     if (buttonType == BuButtonType.coloredSecondary) {
       return RaisedButton(
-        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: colorSecondary)
@@ -65,7 +67,7 @@ class BuButton extends StatelessWidget {
 
     if (buttonType == BuButtonType.outlineRed) {
       return RaisedButton(
-        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: Color(0xffe01c1c))
@@ -80,7 +82,7 @@ class BuButton extends StatelessWidget {
 
     if (buttonType == BuButtonType.outlineGreen) {
       return RaisedButton(
-        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: Color(0xff17ba63))
@@ -94,7 +96,7 @@ class BuButton extends StatelessWidget {
     }
 
     return RaisedButton(
-      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 38),
+        padding: padding,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(60.0)
       ),

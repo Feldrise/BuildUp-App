@@ -58,7 +58,7 @@ class BuImageWidget extends StatelessWidget {
           return ClipRRect(
             borderRadius: BorderRadius.circular(constraint.maxWidth / 2),
             child: Image.asset(
-              "icons/icon_profile_picture.png",
+              "assets/icons/icon_profile_picture.png",
               fit: BoxFit.cover,
             ),
           );

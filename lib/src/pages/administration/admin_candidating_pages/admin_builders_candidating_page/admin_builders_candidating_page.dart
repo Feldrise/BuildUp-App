@@ -21,21 +21,27 @@ class AdminBuildersCandidatingPage extends StatelessWidget {
           Consumer<CandidatingBuilderStore>(
             builder: (context, candidatingBuildersStore, child) {
               if (!candidatingBuildersStore.hasData) {
-                return const Center(
-                  child: BuStatusMessage(
-                    type: BuStatusMessageType.info,
-                    message: "Il n'y a aucun builder candidatant pour le moment",
+                return const Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: BuStatusMessage(
+                      type: BuStatusMessageType.info,
+                      message: "Il n'y a aucun builder candidatant pour le moment",
+                    ),
                   ),
                 );
               }
               
               return Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    for (final BuBuilder builder in candidatingBuildersStore.builders) 
-                      AdminCandidatingBuilderCard(builder: builder)
+                    for (final BuBuilder builder in candidatingBuildersStore.builders) ...{
+                      AdminCandidatingBuilderCard(builder: builder),
+                      const SizedBox(height: 15,)
+                    }
                   ],
                 ),
               );

@@ -30,87 +30,90 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {    
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double dialogWidth = constraints.maxWidth <= 366 ? constraints.maxWidth : 366;
-        final double dialogHeight = constraints.maxWidth <= 366 ? constraints.maxHeight : _hasError ? 630 : 500;
+    return Scaffold(
+      resizeToAvoidBottomPadding: true,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final double dialogWidth = constraints.maxWidth <= 411 ? constraints.maxWidth : 411;
+          final double dialogHeight = constraints.maxWidth <= 411 ? constraints.maxHeight : _hasError ? 680 : 550;
 
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                "assets/backgrounds/login.png",
-                fit: BoxFit.cover,
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  "assets/backgrounds/login.png",
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Align(
-              child: SingleChildScrollView(
-                child: BuCard(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-                  width: dialogWidth,
-                  height: dialogHeight,
-                  child: Scaffold(
-                    backgroundColor: Theme.of(context).cardColor,
-                    body: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [  
-                        Image.asset("assets/icons/icon_buildup.png", height: 56,),
-                        const SizedBox(height: 5.0,),
-                        Text("Bienvenue ! ", textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline3,),
-                        const SizedBox(height: 32.0),
-                        if (_hasError && _statusMessage.isNotEmpty) ...{
-                          BuStatusMessage(
-                            title: "Erreur lors de la connexion :",
-                            message: _statusMessage,
-                          ),
-                          const SizedBox(height: 16.0,),
-                        },
-                        LoginForm(
-                          formKey: _loginFormState,
-                          emailTextController: _emailTextController,
-                          passwordTextController: _passwordTextController,
-                        ),
-                        const SizedBox(height: 8.0,),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: BuCheckBox(
-                                value: _rememberMe,
-                                text: "Se souvenir de moi",
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _rememberMe = newValue;
-                                  });
-                                },
-                              ),
+              Align(
+                child: SingleChildScrollView(
+                  child: BuCard(
+                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+                    width: dialogWidth,
+                    height: dialogHeight,
+                    child: Scaffold(
+                      backgroundColor: Theme.of(context).cardColor,
+                      body: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [  
+                          Image.asset("assets/icons/icon_buildup.png", height: 56,),
+                          const SizedBox(height: 5.0,),
+                          Text("Bienvenue ! ", textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline3,),
+                          const SizedBox(height: 32.0),
+                          if (_hasError && _statusMessage.isNotEmpty) ...{
+                            BuStatusMessage(
+                              title: "Erreur lors de la connexion :",
+                              message: _statusMessage,
                             ),
-                            Expanded(
-                              child: GestureDetector(
-                                child: Text("Mot de passe oublié ?", textAlign: TextAlign.end, style: Theme.of(context).textTheme.caption),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 32.0),
-                        Flexible(
-                          child: BuButton(
-                            text: "Se connecter", 
-                            onPressed: _login
+                            const SizedBox(height: 16.0,),
+                          },
+                          LoginForm(
+                            formKey: _loginFormState,
+                            emailTextController: _emailTextController,
+                            passwordTextController: _passwordTextController,
                           ),
-                        )
-                      ],
+                          const SizedBox(height: 8.0,),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: BuCheckBox(
+                                  value: _rememberMe,
+                                  text: "Se souvenir de moi",
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _rememberMe = newValue;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  child: Text("Mot de passe oublié ?", textAlign: TextAlign.end, style: Theme.of(context).textTheme.caption),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 32.0),
+                          Flexible(
+                            child: BuButton(
+                              text: "Se connecter", 
+                              onPressed: _login
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
-        );
-        
-      },
+              )
+            ],
+          );
+          
+        },
+      ),
     );
   }
 

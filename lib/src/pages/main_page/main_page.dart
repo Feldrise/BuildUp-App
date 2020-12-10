@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
                   pageItems: widget.pageItems,
                   currentPageIndex: _currentIndex,
                   onSelectedPage: _selectedPage,
+                  shouldPop: false,
                 ),
               ),
 
@@ -46,6 +47,7 @@ class _MainPageState extends State<MainPage> {
                   pageItems: widget.pageItems,
                   currentPageIndex: _currentIndex,
                   onSelectedPage: _selectedPage,
+                  shouldPop: true,
                 )
                 : null,
                 body: widget.pages[_currentIndex],

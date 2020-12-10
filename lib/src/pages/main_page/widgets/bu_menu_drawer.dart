@@ -6,11 +6,13 @@ class BuMenuDrawer extends StatelessWidget {
   const BuMenuDrawer({
     Key key, 
     @required this.onSelectedPage, 
+    @required this.shouldPop,
     @required this.currentPageIndex, 
     @required this.pageItems
   }) : super(key: key);
 
   final ValueChanged<PageItem> onSelectedPage;
+  final bool shouldPop;
   final int currentPageIndex;
 
   final List<PageItem> pageItems;
@@ -42,7 +44,7 @@ class BuMenuDrawer extends StatelessWidget {
               height: 64,
               child: Center(
                 child: Image.asset(
-                  "icons/icon_buildup.png",
+                  "assets/icons/icon_buildup.png",
 
                 ),
               ),
@@ -52,7 +54,12 @@ class BuMenuDrawer extends StatelessWidget {
               itemCount: pageItems.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () => onSelectedPage(pageItems[index]),
+                  onTap: () {
+                    onSelectedPage(pageItems[index]);
+                    if (shouldPop) {
+                      Navigator.of(context).pop();
+                    }
+                  },
                   child: BuPageItem(
                     item: pageItems[index],
                     isActive: index == currentPageIndex 

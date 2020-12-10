@@ -22,23 +22,18 @@ class _BuTabWidgetState extends State<BuTabWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: colorScaffoldGrey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Flexible(
-            child: BuTabBar(
-              onSelectedTab: _selectedTab, 
-              currentTabIndex: _currentIndex, 
-              tabItems: widget.tabItems
-            ),
-          ),
-          Expanded(
-            child: widget.pages[_currentIndex],
-          )
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        BuTabBar(
+          onSelectedTab: _selectedTab, 
+          currentTabIndex: _currentIndex, 
+          tabItems: widget.tabItems
+        ),
+        Expanded(
+          child: widget.pages[_currentIndex],
+        )
+      ],
     );
   }
 

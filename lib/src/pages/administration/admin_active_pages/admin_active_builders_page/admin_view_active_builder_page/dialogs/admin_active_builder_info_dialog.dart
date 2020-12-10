@@ -133,7 +133,7 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
         ),
       ),
       const SizedBox(width: 30, height: 30,),
-      Expanded(
+      Flexible(
         child:_buildDropDowns() ,
       )
     ];
@@ -196,21 +196,23 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
               width: width,
               child: FutureBuilder(
                 future: Provider.of<NtfReferentsStore>(context).ntfReferents(authorizaton),
-                builder: (context, snaphshot) {
-                  if (snaphshot.connectionState != ConnectionState.done) {
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (snaphshot.hasError) {
+                  if (snapshot.hasError) {
                     return const Center(child: Text("Erreur lors de la récupération des référents..."),);
                   }
+
+                  final List<NtfReferent> ntfReferents = snapshot.data as List<NtfReferent>;
 
                   return BuDropdown<String>(
                     label: "Référent assigné",
                     currentValue: _assignedReferent,
                     items: <String, String> {
                       "": "Pas de référent",
-                      for (NtfReferent referent in Provider.of<NtfReferentsStore>(context).loadedNtfReferents)
+                      for (NtfReferent referent in ntfReferents)
                         referent.id: referent.name
                     },
                     onChanged: (value) {

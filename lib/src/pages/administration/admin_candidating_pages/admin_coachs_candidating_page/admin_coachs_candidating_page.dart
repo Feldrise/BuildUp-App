@@ -20,21 +20,27 @@ class AdminCoachsCandidatingPage extends StatelessWidget {
           Consumer<CandidatingCoachsStore>(
             builder: (context, candidatingCoachsStore, child) {
               if (!candidatingCoachsStore.hasData) {
-                return const Center(
-                  child: BuStatusMessage(
-                    type: BuStatusMessageType.info,
-                    message: "Il n'y a aucun coach candidatant pour le moment",
+                return const Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: BuStatusMessage(
+                      type: BuStatusMessageType.info,
+                      message: "Il n'y a aucun coach candidatant pour le moment",
+                    ),
                   ),
                 );
               }
               
               return Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    for (final coach in candidatingCoachsStore.coachs) 
-                      AdminCandidatingCoachCard(coach: coach,)
+                    for (final coach in candidatingCoachsStore.coachs) ...{
+                      AdminCandidatingCoachCard(coach: coach,),
+                      const SizedBox(height: 15,)
+                    }
                   ],
                 ),
               );

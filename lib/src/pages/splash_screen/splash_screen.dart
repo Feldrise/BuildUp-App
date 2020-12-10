@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Center(
-        child: Image.asset("icons/icon_buildup.png"),
+        child: Image.asset("assets/icons/icon_buildup.png"),
       ),
     );
   }

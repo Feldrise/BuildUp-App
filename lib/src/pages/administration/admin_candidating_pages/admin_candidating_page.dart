@@ -7,6 +7,7 @@ import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_tab_widget/bu_tab_widget.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,7 @@ class _AdminCandidatingPageState extends State<AdminCandidatingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorScaffoldGrey,
       body: FutureBuilder<void>(
         future: _loadData(),
         builder: (context, snaphsot) {
@@ -73,7 +75,7 @@ class _AdminCandidatingPageState extends State<AdminCandidatingPage> {
             ),
           );
         },
-      )
+      ),
     );
   }
 
