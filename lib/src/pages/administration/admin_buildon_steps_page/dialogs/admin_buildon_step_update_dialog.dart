@@ -68,96 +68,98 @@ class _AdminBuildOnStepUpdateDialogState extends State<AdminBuildOnStepUpdateDia
               ],
             ),
           ),
-          SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                BuImagePicker(
-                  image: widget.buildOnStep.image,
-                  onUpdated: widget.onUpdated,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      BuTextField(
-                        controller: TextEditingController()..text = widget.buildOnStep.name, 
-                        labelText: "Nom de l'étape", 
-                        hintText: "Nom",
-                        onChanged: (value) {
-                          widget.buildOnStep.name = value;
-                          widget.onUpdated();
-                        }
-                      ),
-                      const SizedBox(height: 10,),
-                      BuTextField(
-                        controller: TextEditingController()..text = widget.buildOnStep.description, 
-                        labelText: "Description", 
-                        hintText: "Description",
-                        inputType: TextInputType.multiline,
-                        maxLines: 3,
-                        onChanged: (value) {
-                          widget.buildOnStep.description = value;
-                          widget.onUpdated();
-                        }
-                      ),
-                      const SizedBox(height: 10,),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("étape actuelle".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
-                          const SizedBox(height: 10,),
-                          BuDropdown<String>(
-                            items: <String, String>{
-                              BuildOnReturningType.file: BuildOnReturningType.detailled[BuildOnReturningType.file],
-                              BuildOnReturningType.link: BuildOnReturningType.detailled[BuildOnReturningType.link],
-                              BuildOnReturningType.comment: BuildOnReturningType.detailled[BuildOnReturningType.comment],
-                            },
-                            currentValue: _returningType,
-                            onChanged: (newValue) {
-                              widget.buildOnStep.returningType = newValue;
-                              setState(() {
-                                _returningType = newValue;
-                              });
-
-                              widget.onUpdated();
-                            },
-                          ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 10,),
-                      if (_returningType == BuildOnReturningType.link)
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BuImagePicker(
+                    image: widget.buildOnStep.image,
+                    onUpdated: widget.onUpdated,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                         BuTextField(
-                          controller: TextEditingController()..text = widget.buildOnStep.returningLink, 
-                          labelText: "URL du lien", 
-                          hintText: "Lien",
-                          inputType: TextInputType.url,
+                          controller: TextEditingController()..text = widget.buildOnStep.name, 
+                          labelText: "Nom de l'étape", 
+                          hintText: "Nom",
                           onChanged: (value) {
-                            widget.buildOnStep.returningLink = value;
+                            widget.buildOnStep.name = value;
                             widget.onUpdated();
                           }
                         ),
-                      const SizedBox(height: 10,),
-                      BuTextField(
-                        controller: TextEditingController()..text = widget.buildOnStep.returningDescription, 
-                        labelText: "Description des preuves à fournir", 
-                        hintText: "Preuve",
-                        inputType: TextInputType.multiline,
-                        maxLines: 3,
-                        onChanged: (value) {
-                          widget.buildOnStep.returningDescription = value;
-                          widget.onUpdated();
-                        }
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                        const SizedBox(height: 10,),
+                        BuTextField(
+                          controller: TextEditingController()..text = widget.buildOnStep.description, 
+                          labelText: "Description", 
+                          hintText: "Description",
+                          inputType: TextInputType.multiline,
+                          maxLines: 3,
+                          onChanged: (value) {
+                            widget.buildOnStep.description = value;
+                            widget.onUpdated();
+                          }
+                        ),
+                        const SizedBox(height: 10,),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("étape actuelle".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
+                            const SizedBox(height: 10,),
+                            BuDropdown<String>(
+                              items: <String, String>{
+                                BuildOnReturningType.file: BuildOnReturningType.detailled[BuildOnReturningType.file],
+                                BuildOnReturningType.link: BuildOnReturningType.detailled[BuildOnReturningType.link],
+                                BuildOnReturningType.comment: BuildOnReturningType.detailled[BuildOnReturningType.comment],
+                              },
+                              currentValue: _returningType,
+                              onChanged: (newValue) {
+                                widget.buildOnStep.returningType = newValue;
+                                setState(() {
+                                  _returningType = newValue;
+                                });
+
+                                widget.onUpdated();
+                              },
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 10,),
+                        if (_returningType == BuildOnReturningType.link)
+                          BuTextField(
+                            controller: TextEditingController()..text = widget.buildOnStep.returningLink, 
+                            labelText: "URL du lien", 
+                            hintText: "Lien",
+                            inputType: TextInputType.url,
+                            onChanged: (value) {
+                              widget.buildOnStep.returningLink = value;
+                              widget.onUpdated();
+                            }
+                          ),
+                        const SizedBox(height: 10,),
+                        BuTextField(
+                          controller: TextEditingController()..text = widget.buildOnStep.returningDescription, 
+                          labelText: "Description des preuves à fournir", 
+                          hintText: "Preuve",
+                          inputType: TextInputType.multiline,
+                          maxLines: 3,
+                          onChanged: (value) {
+                            widget.buildOnStep.returningDescription = value;
+                            widget.onUpdated();
+                          }
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],

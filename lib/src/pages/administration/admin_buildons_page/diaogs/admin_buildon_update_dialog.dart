@@ -71,46 +71,48 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0,),
-          SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                BuImagePicker(
-                  image: buildOn.image,
-                  onUpdated: onUpdated,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      BuTextField(
-                        controller: TextEditingController()..text = buildOn.name, 
-                        labelText: "Nom du Build-On", 
-                        hintText: "Nom",
-                        onChanged: (value) {
-                          buildOn.name = value;
-                          onUpdated();
-                        }
-                      ),
-                      const SizedBox(height: 10,),
-                      BuTextField(
-                        controller: TextEditingController()..text = buildOn.description, 
-                        labelText: "Description", 
-                        hintText: "Description",
-                        inputType: TextInputType.multiline,
-                        maxLines: 3,
-                        onChanged: (value) {
-                          buildOn.description = value;
-                          onUpdated();
-                        }
-                      ),
-                    ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BuImagePicker(
+                    image: buildOn.image,
+                    onUpdated: onUpdated,
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        BuTextField(
+                          controller: TextEditingController()..text = buildOn.name, 
+                          labelText: "Nom du Build-On", 
+                          hintText: "Nom",
+                          onChanged: (value) {
+                            buildOn.name = value;
+                            onUpdated();
+                          }
+                        ),
+                        const SizedBox(height: 10,),
+                        BuTextField(
+                          controller: TextEditingController()..text = buildOn.description, 
+                          labelText: "Description", 
+                          hintText: "Description",
+                          inputType: TextInputType.multiline,
+                          maxLines: 3,
+                          onChanged: (value) {
+                            buildOn.description = value;
+                            onUpdated();
+                          }
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],
