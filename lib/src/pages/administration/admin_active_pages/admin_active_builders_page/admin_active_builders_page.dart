@@ -31,7 +31,7 @@ class AdminActiveBuildersPage extends StatelessWidget {
                   children: [
                     for (final builder in activeBuildersStore.builders) 
                       Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                         child: AdminActiveBuilderCard(
                           builder: builder,
                           width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,

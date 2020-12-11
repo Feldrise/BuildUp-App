@@ -69,7 +69,7 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
           children: [
             _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.builder.associatedUser.birthdate)),
             _buildSmallInfo("Département", kFrenchDepartment[widget.builder.department]),
-            _buildSmallInfo("Situation", kSituations[widget.builder.situation]),
+            _buildSmallInfo("Situation", kSituations[widget.builder.situation] ?? "Inconnue"),
             _buildSmallInfo("Tag Disocrd", widget.builder.associatedUser.discordTag),
             _buildSmallInfo("Email", widget.builder.associatedUser.email),
           ],

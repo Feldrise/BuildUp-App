@@ -33,7 +33,7 @@ class AdminActiveCoachsPage extends StatelessWidget {
                   children: [
                     for (final coach in activeCoachsStore.coachs) 
                       Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                         child: AdminActiveCoachCard(
                           coach: coach,
                           width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,

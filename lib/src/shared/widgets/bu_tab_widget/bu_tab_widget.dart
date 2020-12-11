@@ -1,6 +1,5 @@
 import 'package:buildup/entities/tab_item.dart';
 import 'package:buildup/src/shared/widgets/bu_tab_widget/bu_tabbar.dart';
-import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class BuTabWidget extends StatefulWidget {

@@ -33,7 +33,7 @@ class _AdminActiveBuilderProjectCardState extends State<AdminActiveBuilderProjec
               _buildSmallInfo("Nom", widget.builder.associatedProjects.first.name),
               _buildSmallInfo("Catégorie", widget.builder.associatedProjects.first.categorie),
               _buildSmallInfo("Date de lancement", DateFormat("dd/MM/yyyy").format(widget.builder.associatedProjects.first.launchDate)),
-              _buildSmallInfo("Projet lucratif", widget.builder.associatedProjects.first.isLucrative ? "Oui" : "Nom"),
+              _buildSmallInfo("Projet lucratif", widget.builder.associatedProjects.first.isLucrative ? "Oui" : "Non"),
               _buildSmallInfo("Projet déclaré", widget.builder.associatedProjects.first.isDeclared ? "Oui" : "Non"),
             ],
           ),
