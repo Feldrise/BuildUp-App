@@ -209,10 +209,20 @@ class BuildOnStepCard extends StatelessWidget {
         await BuildOnsService.instance.validateBuildOnStep(authorization, project.id, buildOnStep.id);
       }
 
+      if (buildOnReturning != null) {
+        buildOnReturning.status = BuildOnReturningStatus.validated;
+      }
+      else {
+        project.associatedReturnings[buildOnStep.id] = BuildOnReturning(null,
+          buildOnStepId: buildOnStep.id,
+          type: BuildOnReturningType.comment,
+          status: BuildOnReturningStatus.validated,
+          comment: "Vous n'avez pas fournis de preuve pour cette étape"
+        );
+      }
+
       project.currentBuildOn = nextBuildOn;
       project.currentBuildOnStep = nextBuildOnStep;
-      buildOnReturning.status = BuildOnReturningStatus.validated;
-
     } else {
       await BuildOnsService.instance.refuseReturning(authorization, project.id, buildOnReturning.id);
     }

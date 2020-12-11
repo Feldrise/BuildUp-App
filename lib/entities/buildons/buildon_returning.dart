@@ -33,6 +33,14 @@ class BuildOnReturning {
   String fileId;
   String comment;
 
+  BuildOnReturning(this.id, {
+    this.buildOnStepId,
+    this.type,
+    this.status,
+    this.fileName,
+    this.comment
+  });
+
   BuildOnReturning.fromMap(Map<String, dynamic> map) : 
     id = map['id'] as String,
     buildOnStepId = map['buildOnStepId'] as String,
