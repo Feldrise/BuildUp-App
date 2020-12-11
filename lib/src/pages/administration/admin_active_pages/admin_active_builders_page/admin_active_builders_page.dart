@@ -13,11 +13,14 @@ class AdminActiveBuildersPage extends StatelessWidget {
     return Consumer<ActiveBuildersStore>(
       builder: (context, activeBuildersStore, child) {
         if (!activeBuildersStore.hasData) {
-          return const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: BuStatusMessage(
-              type: BuStatusMessageType.info,
-              message: "Il n'y a aucun builder actif pour le moment",
+          return const Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: BuStatusMessage(
+                type: BuStatusMessageType.info,
+                message: "Il n'y a aucun builder actif pour le moment",
+              ),
             ),
           );
         }
