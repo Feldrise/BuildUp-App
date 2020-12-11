@@ -114,6 +114,7 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
         buttonType: BuButtonType.secondary,
         text: "Annuler",
         onPressed: () => Navigator.pop(context, false),
+        isBig: true,
       ),
       const SizedBox(width: 8.0, height: 8.0,),
       Wrap(
@@ -122,12 +123,14 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
             buttonType: BuButtonType.secondary,
             icon: Icons.picture_as_pdf,
             text: "Exporter en PDF", 
-            onPressed: () {}
+            onPressed: () {},
+            isBig: true,
           ),
           const SizedBox(width: 20,),
           BuButton(
             text: "Valider",
             onPressed: () => Navigator.pop(context, true),
+            isBig: true,
           )
         ],
       )

@@ -10,7 +10,8 @@ class BuButton extends StatelessWidget {
     this.icon,
     @required this.text,
     @required this.onPressed,
-    this.buttonType = BuButtonType.primary
+    this.buttonType = BuButtonType.primary,
+    this.isBig = false,
   }) : super(key: key);
 
   final IconData icon;
@@ -18,6 +19,7 @@ class BuButton extends StatelessWidget {
   final Function() onPressed;
 
   final BuButtonType buttonType;
+  final bool isBig;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,9 @@ class BuButton extends StatelessWidget {
       ],
     );
 
-    const padding = EdgeInsets.symmetric(vertical: 15, horizontal: 20);
+    final double verticalBigFactor = isBig ? 1.7 : 1.0;
+    final double horizontalBigFactor = isBig ? 3.5 : 1.0;
+    final padding = EdgeInsets.symmetric(vertical: 15 * verticalBigFactor, horizontal: 20 * horizontalBigFactor);
 
     if (buttonType == BuButtonType.secondary) {
       return RaisedButton(

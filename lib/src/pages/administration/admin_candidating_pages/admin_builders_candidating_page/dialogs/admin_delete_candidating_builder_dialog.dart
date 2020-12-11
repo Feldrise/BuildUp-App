@@ -64,12 +64,14 @@ class AdminDeleteCandidatingBuilderDialog extends StatelessWidget {
         buttonType: BuButtonType.secondary,
         text: "Annuler",
         onPressed: () => Navigator.pop(context, false),
+        isBig: true,
       ),
       const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         icon: Icons.delete,
         text: "Supprimer",
         onPressed: () => Navigator.pop(context, true),
+        isBig: true,
       )
     ];
   }
