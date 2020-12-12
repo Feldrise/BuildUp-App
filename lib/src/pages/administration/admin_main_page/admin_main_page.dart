@@ -2,6 +2,7 @@ import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_page.dart';
 import 'package:buildup/src/pages/administration/admin_buildons_page/admin_buildons_page.dart';
 import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_candidating_page.dart';
+import 'package:buildup/src/pages/administration/admin_ntf_referents_page/admin_ntf_referents_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
@@ -26,7 +27,8 @@ class AdminMainPage extends StatelessWidget {
         settings: route,
         builder: (context) => AdminBuildOnsPage()
       ),
-    )
+    ),
+    AdminNtfReferentsPage()
   ];
 
   @override
@@ -72,6 +74,11 @@ class AdminMainPage extends StatelessWidget {
             index: 2,
             title: "Gestion des Build-On",
             icon: Icons.build
+          ),
+          PageItem(
+            index: 3,
+            title: "Gestion des référents",
+            icon: Icons.supervisor_account
           )
         ];
 

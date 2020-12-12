@@ -100,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                           Flexible(
                             child: BuButton(
                               text: "Se connecter", 
-                              onPressed: _login
+                              onPressed: _login,
+                              isBig: true,
                             ),
                           )
                         ],

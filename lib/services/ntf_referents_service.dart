@@ -59,4 +59,52 @@ class NtfReferentsService {
     
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
+
+  // POST
+  Future<String> addReferent(String authorization, NtfReferent toAdd) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/add',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(toAdd.toJson())
+    );
+
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  // PUT  
+  Future updateReferent(String authorization, NtfReferent toUpdate) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/${toUpdate.id}/update',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(toUpdate.toJson())
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  // Delete
+  Future deleteReferent(String authorization, String id) async {
+    final http.Response response = await http.delete(
+      '$serviceBaseUrl/$id/delete',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
 }
