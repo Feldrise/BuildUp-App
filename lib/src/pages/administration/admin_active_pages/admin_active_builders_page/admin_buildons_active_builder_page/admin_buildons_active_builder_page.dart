@@ -108,11 +108,12 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
                 onOpened: () async => _openBuildOn(context, buildOn, buildOns), 
                 isSmall: isSmall,
               ),
-              const Positioned(
-                top: 25,
-                right: 10,
-                child: BuNotificationDot(),
-              ),
+              if (hasNotification)
+                const Positioned(
+                  top: 25,
+                  right: 10,
+                  child: BuNotificationDot(),
+                ),
               
             ],
           ),

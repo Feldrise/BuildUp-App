@@ -3,6 +3,7 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
+import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_buildon_step_active_builder_page/widgets/admin_buikdon_step_buildon.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_stepper.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_step_card.dart';
@@ -29,26 +30,38 @@ class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
       appBar: BuAppBar(
         title: Text("${buildOn.name} de ${builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final List<BuildOnStep> buildOnSteps = buildOn.steps;
-              final List<BuStepperChild> stepperChildren = _buildStepperChildren(buildOnSteps, isSmall: constraints.maxWidth <= 500);
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: AdminBuildOnStepBuildOn(buildOn: buildOn)
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final List<BuildOnStep> buildOnSteps = buildOn.steps;
+                    final List<BuStepperChild> stepperChildren = _buildStepperChildren(buildOnSteps, isSmall: constraints.maxWidth <= 500);
 
-              return Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: BuStepper(
-                    children: stepperChildren,
-                    showLocked: stepperChildren.length != buildOnSteps.length
-                  ),
-                ),
-              );
-            },
-          )
-        )
+                    return Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: BuStepper(
+                          children: stepperChildren,
+                          showLocked: stepperChildren.length != buildOnSteps.length
+                        ),
+                      ),
+                    );
+                  },
+                )
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
