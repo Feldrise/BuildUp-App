@@ -38,7 +38,8 @@ class ActiveCoachsStore with ChangeNotifier {
         }
       }
 
-      if (toUpdate.step != CoachSteps.active) {
+      if (toUpdate.step != CoachSteps.meeting &&
+          toUpdate.step != CoachSteps.active ) {
         _coachs.remove(toUpdate);
       }
 

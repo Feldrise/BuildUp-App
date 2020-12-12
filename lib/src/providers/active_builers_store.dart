@@ -42,7 +42,9 @@ class ActiveBuildersStore with ChangeNotifier {
         await BuildersService.instance.updateProject(authorization, toUpdate);
       }
 
-      if (toUpdate.step != BuilderSteps.active) {
+      if (toUpdate.step != BuilderSteps.adminMeeting &&
+          toUpdate.step != BuilderSteps.coachMeeting &&
+          toUpdate.step != BuilderSteps.active) {
         _builders.remove(toUpdate);
       }
 

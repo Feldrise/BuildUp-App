@@ -62,7 +62,7 @@ class BuildOnsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<Map<String, BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {
+  Future<List<BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/projects/$projectId/returnings',
       headers: <String, String>{
@@ -72,14 +72,10 @@ class BuildOnsService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonReturnings = jsonDecode(response.body) as List<dynamic>;
-      final Map<String, BuildOnReturning> buildOnReturnings = {};
+      final List<BuildOnReturning> buildOnReturnings = [];
 
       for (final map in jsonReturnings) {
-        if ((map['status'] as String) == BuildOnReturningStatus.refused) {
-          continue;
-        }
-
-        buildOnReturnings[map['buildOnStepId'] as String] = BuildOnReturning.fromMap(map as Map<String, dynamic>);
+        buildOnReturnings.add(BuildOnReturning.fromMap(map as Map<String, dynamic>));
       }
 
       return buildOnReturnings;

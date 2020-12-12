@@ -9,6 +9,7 @@ import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
+import 'package:buildup/src/shared/widgets/bu_notification_dot.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,61 +51,70 @@ class AdminActiveBuilderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BuCard(
-      width: width,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
+      children: [
+        BuCard(
+          width: width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff17ba63),
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
+                  Row(
+                    children: [
+                      Container(
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff17ba63),
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
+                      ),
+                      const SizedBox(width: 5,),
+                      const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
+                    ],
                   ),
-                  const SizedBox(width: 5,),
-                  const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
+                  PopupMenuButton<String>(
+                    onSelected: (route) async {
+                      await _navigate(context, route);
+                    },
+                    itemBuilder: _populateMenu,
+                  )
                 ],
               ),
-              PopupMenuButton<String>(
-                onSelected: (route) async {
-                  await _navigate(context, route);
-                },
-                itemBuilder: _populateMenu,
+              const SizedBox(height: 30,),
+              Center(
+                child: SizedBox(
+                  width: 48,
+                  height: 48,
+                  child: BuImageWidget(
+                    image: builder.associatedUser.profilePicture,
+                    isCircular: true,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Text(builder.associatedUser.fullName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
+              Text(builder.associatedProjects.first.name.toUpperCase(), textAlign: TextAlign.center, style: const TextStyle(color: Color(0xff919c9e), fontSize: 12),),
+              const SizedBox(height: 32,),
+              BuButton(
+                buttonType: BuButtonType.secondary,
+                icon: Icons.account_circle,
+                text: "Voir le profil", 
+                onPressed: () => _navigate(context, AdminActiveBuilderCardAction.viewProfile)
               )
             ],
-          ),
-          const SizedBox(height: 30,),
-          Center(
-            child: SizedBox(
-              width: 48,
-              height: 48,
-              child: BuImageWidget(
-                image: builder.associatedUser.profilePicture,
-                isCircular: true,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10,),
-          Text(builder.associatedUser.fullName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
-          Text(builder.associatedProjects.first.name.toUpperCase(), textAlign: TextAlign.center, style: const TextStyle(color: Color(0xff919c9e), fontSize: 12),),
-          const SizedBox(height: 32,),
-          BuButton(
-            buttonType: BuButtonType.secondary,
-            icon: Icons.account_circle,
-            text: "Voir le profil", 
-            onPressed: () => _navigate(context, AdminActiveBuilderCardAction.viewProfile)
           )
-        ],
-      )
+        ),
+        const Positioned(
+          top: 10,
+          right: 10,
+          child: BuNotificationDot(),
+        ),
+      ],
     );
   }
 

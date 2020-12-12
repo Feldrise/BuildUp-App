@@ -39,7 +39,7 @@ class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
 
               return Center(
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 800),
+                  constraints: const BoxConstraints(maxWidth: 1200),
                   child: BuStepper(
                     children: stepperChildren,
                     showLocked: stepperChildren.length != buildOnSteps.length

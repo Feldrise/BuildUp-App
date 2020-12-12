@@ -4,6 +4,7 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
+import 'package:buildup/src/shared/widgets/bu_notification_dot.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_stepper.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_card.dart';
@@ -49,7 +50,7 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
 
                         return Center(
                           child: Container(
-                            constraints: const BoxConstraints(maxWidth: 800),
+                            constraints: const BoxConstraints(maxWidth: 1200),
                             child: BuStepper(
                               children: stepperChildren,
                               showLocked: stepperChildren.length != buildOns.length
@@ -92,12 +93,28 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
     final String currentBuildOn = builder.associatedProjects.first.currentBuildOn ?? buildOns.first.id;
 
     for (final buildOn in buildOns) {
+      bool hasNotification = builder.associatedProjects.first.hasNotification;
+
+      if (buildOn.id != currentBuildOn) {
+        hasNotification = false;
+      }
+
       result.add(
         BuStepperChild(
-          widget: BuildOnCard(
-            buildOn: buildOn, 
-            onOpened: () async => _openBuildOn(context, buildOn, buildOns), 
-            isSmall: isSmall,
+          widget: Stack(
+            children: [
+              BuildOnCard(
+                buildOn: buildOn, 
+                onOpened: () async => _openBuildOn(context, buildOn, buildOns), 
+                isSmall: isSmall,
+              ),
+              const Positioned(
+                top: 25,
+                right: 10,
+                child: BuNotificationDot(),
+              ),
+              
+            ],
           ),
           color: buildOn.id != currentBuildOn ? const Color(0xff17ba63) : const Color(0xffaeb5b7)
         )

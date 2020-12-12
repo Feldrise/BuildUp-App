@@ -49,9 +49,10 @@ class Project {
   String currentBuildOn;
   String currentBuildOnStep;
 
+  bool hasNotification;
   Map<String, BuildOnReturning> associatedReturnings;
 
-  Project.fromMap(Map<String, dynamic> map, {this.associatedReturnings}) : 
+  Project.fromMap(Map<String, dynamic> map, {this.associatedReturnings, this.hasNotification = false}) : 
     id = map['id'] as String,
     name = map['name'] as String,
     categorie = map['categorie'] as String,

@@ -132,8 +132,23 @@ class BuildersService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> json = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final Map<String, BuildOnReturning> projectReturnings = await BuildOnsService.instance.getReturningsForProject(authorization, json['id'] as String);      
-      return Project.fromMap(json, associatedReturnings: projectReturnings);
+      final List<BuildOnReturning> buildOnReturningsList = await BuildOnsService.instance.getReturningsForProject(authorization, json['id'] as String);      
+      final Map<String, BuildOnReturning> buildOnReturnings = {};
+      bool hasNotification = false;
+
+      for (final returning in buildOnReturningsList) {
+        if (returning.status == BuildOnReturningStatus.refused) {
+          continue;
+        }
+
+        if (returning.status == BuildOnReturningStatus.waiting) {
+          hasNotification = true;
+        }
+
+        buildOnReturnings[returning.buildOnStepId] = returning;
+      }
+
+      return Project.fromMap(json, associatedReturnings: buildOnReturnings, hasNotification: hasNotification);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);

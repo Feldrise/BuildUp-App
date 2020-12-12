@@ -18,7 +18,7 @@ mixin BuilderStatus {
   static const Map<String, String> detailled = {
     candidating: "En attente",
     validated: "Validé",
-    deleted: "Supprimé"
+    deleted: "Refusé"
   };
 }
 
@@ -33,7 +33,7 @@ mixin BuilderSteps {
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
     adminMeeting: "Entretient avec un admin",
-    coachMeeting: "Entretient avec le coach",
+    coachMeeting: "Choix coach",
     active: "Actif",
     finished: "Fini",
     abandoned: "Abandonné"

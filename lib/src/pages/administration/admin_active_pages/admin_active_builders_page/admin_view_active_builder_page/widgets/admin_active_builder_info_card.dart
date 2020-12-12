@@ -66,21 +66,7 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Flexible(
-              child: _buildSmallInfo("Etape actuelle", Row(
-                children: [
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff17ba63),
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
-                  ),
-                  const SizedBox(width: 5,),
-                  const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
-                ],
-              )),
+              child: _buildSmallInfo("Etape actuelle", _buildCurrentStep())
             ),
             Wrap(
               children: [
@@ -149,6 +135,60 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
             )
           ],
         )
+      ],
+    );
+  }
+
+  Widget _buildCurrentStep() {
+    if (widget.builder.step == BuilderSteps.adminMeeting) {
+      return Row(
+        children: [
+          Container(
+            width: 15,
+            height: 15,
+            decoration: BoxDecoration(
+              color: const Color(0xfff4bd2a),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+          ),
+          const SizedBox(width: 5,),
+          const Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),)
+        ],
+      );
+    }
+
+    if (widget.builder.step == BuilderSteps.coachMeeting) {
+      Row(
+        children: [
+          Container(
+            width: 15,
+            height: 15,
+            decoration: BoxDecoration(
+              color: const Color(0xfff4bd2a),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+          ),
+          const SizedBox(width: 5,),
+          const Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),)
+        ],
+      );
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: 15,
+          height: 15,
+          decoration: BoxDecoration(
+            color: const Color(0xff17ba63),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
+        ),
+        const SizedBox(width: 5,),
+        const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
       ],
     );
   }
