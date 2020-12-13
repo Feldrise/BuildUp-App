@@ -109,11 +109,12 @@ class AdminActiveBuilderCard extends StatelessWidget {
             ],
           )
         ),
-        const Positioned(
-          top: 10,
-          right: 10,
-          child: BuNotificationDot(),
-        ),
+        if (builder.associatedProjects.first.hasNotification)
+          const Positioned(
+            top: 10,
+            right: 10,
+            child: BuNotificationDot(),
+          ),
       ],
     );
   }
