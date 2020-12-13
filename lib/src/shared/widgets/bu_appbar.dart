@@ -22,7 +22,10 @@ class BuAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: backgroundColor,
-      title: title,
+      title: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: title
+      ),
       actions: actions,
     );
   }
