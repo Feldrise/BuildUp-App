@@ -20,20 +20,26 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
+  bool _isMenuBarMinimified = false;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        const double withForShowedDrawer = 732;
+
         return Row(
           children: [
-            if (constraints.maxWidth > 732) 
-              SizedBox(
-                width: 300,
+            if (constraints.maxWidth > withForShowedDrawer) 
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: _isMenuBarMinimified ? 64 : 300,
                 child: BuMenuDrawer(
                   pageItems: widget.pageItems,
                   currentPageIndex: _currentIndex,
                   onSelectedPage: _selectedPage,
                   shouldPop: false,
+                  isMinimified: _isMenuBarMinimified,
                 ),
               ),
 
@@ -41,8 +47,14 @@ class _MainPageState extends State<MainPage> {
               child: Scaffold(
                 appBar: BuAppBar(
                   title: Text(widget.pageItems[_currentIndex].title),
+                  showMinimifier: constraints.maxWidth > withForShowedDrawer,
+                  onMinimified: () {
+                    setState(() {
+                      _isMenuBarMinimified = !_isMenuBarMinimified;
+                    });
+                  },
                 ),
-                drawer: (constraints.maxWidth <= 732) 
+                drawer: (constraints.maxWidth <= withForShowedDrawer) 
                 ? BuMenuDrawer(
                   pageItems: widget.pageItems,
                   currentPageIndex: _currentIndex,

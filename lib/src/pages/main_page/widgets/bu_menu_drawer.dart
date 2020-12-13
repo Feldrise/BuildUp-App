@@ -8,7 +8,8 @@ class BuMenuDrawer extends StatelessWidget {
     @required this.onSelectedPage, 
     @required this.shouldPop,
     @required this.currentPageIndex, 
-    @required this.pageItems
+    @required this.pageItems,
+    this.isMinimified = false
   }) : super(key: key);
 
   final ValueChanged<PageItem> onSelectedPage;
@@ -16,6 +17,8 @@ class BuMenuDrawer extends StatelessWidget {
   final int currentPageIndex;
 
   final List<PageItem> pageItems;
+
+  final bool isMinimified;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,7 @@ class BuMenuDrawer extends StatelessWidget {
               height: 64,
               child: Center(
                 child: Image.asset(
-                  "assets/icons/icon_buildup.png",
-
+                  isMinimified ? "assets/icons/icon_buildup_mini.png" : "assets/icons/icon_buildup.png",
                 ),
               ),
             ),
@@ -62,7 +64,8 @@ class BuMenuDrawer extends StatelessWidget {
                   },
                   child: BuPageItem(
                     item: pageItems[index],
-                    isActive: index == currentPageIndex 
+                    isActive: index == currentPageIndex,
+                    isMinimified: isMinimified, 
                   ),
                 );
               },

@@ -6,11 +6,13 @@ class BuPageItem extends StatelessWidget {
   const BuPageItem({
     Key key,
     @required this.item, 
-    this.isActive
+    this.isActive,
+    this.isMinimified = false
   }) : super(key: key);
 
   final PageItem item;
   final bool isActive;
+  final bool isMinimified;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +32,16 @@ class BuPageItem extends StatelessWidget {
             Expanded(
               child: Icon(item.icon, size: 20, color: isActive ? colorPrimary : colorBlack,),
             ),
-            Expanded(
-              flex: 8,
-              child: Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold),),
-            ),
-            if (item.suffixWidget != null) 
+            if (!isMinimified) ...{
               Expanded(
-                child: item.suffixWidget,
-              )
+                flex: 8,
+                child: Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold),),
+              ),
+              if (item.suffixWidget != null) 
+                Expanded(
+                  child: item.suffixWidget,
+                )
+            }
           ],
         ),
       ),
