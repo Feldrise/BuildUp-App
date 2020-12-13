@@ -25,6 +25,8 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   bool _isUpToDate = true;
   String _statusMessage = "";
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<BuildOnsStore, UserStore>(
@@ -68,6 +70,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                     duration: const Duration(milliseconds: 200),
                     width: _activeBuildOn != null ? panelWidth : 0.0,
                     child: AdminBuildOnUpdateDialog(
+                      formKey: _formKey,
                       buildOn: _activeBuildOn, 
                       onUpdated: _haveUpdate, 
                       onRequestUpdateSteps: _buildOnRequestStepsUpdate,
@@ -183,13 +186,19 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   Future _buildOnRequestStepsUpdate(BuildOn buildOn) async {
-    final BuildOnsStore buildersStore = Provider.of<BuildOnsStore>(context, listen: false);
-    final bool canUpdate = await _save(buildersStore);
+    final BuildOnsStore buildOnsStore = Provider.of<BuildOnsStore>(context, listen: false);
+    
+    // Avoid saving build-ons if they are not loaded
+    if (buildOnsStore.loadedBuildOns == null) {
+      return;
+    }
+
+    final bool canUpdate = await _save(buildOnsStore);
 
     if (canUpdate) {
       await Navigator.of(context).push<void>(
         MaterialPageRoute(builder: (context) => ChangeNotifierProvider.value(
-          value: buildersStore,
+          value: buildOnsStore,
           child: AdminBuildOnStepsPage(buildOn: buildOn)
         ))
       );
@@ -253,6 +262,12 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   Future<bool> _save(BuildOnsStore buildOnsStore) async {
+    if (!_formKey.currentState.validate()) {
+      return false;
+    }
+
+    _formKey.currentState.save();
+
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
 

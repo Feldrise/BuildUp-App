@@ -29,6 +29,8 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
   bool _isUpToDate = true;
   String _statusMessage = "";
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<BuildOnsStore, UserStore>(
@@ -72,6 +74,7 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
                     duration: const Duration(milliseconds: 200),
                     width: _activeBuildOnStep != null ? panelWidth : 0.0,
                     child: AdminBuildOnStepUpdateDialog(
+                      formKey: _formKey,
                       buildOnStep: _activeBuildOnStep, 
                       onUpdated: _haveUpdate, 
                       onClosed: _closeActiveBuildOn
@@ -240,6 +243,12 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
   }
 
   Future _save(BuildOnsStore buildOnsStore) async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
+    _formKey.currentState.save();
+
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
 

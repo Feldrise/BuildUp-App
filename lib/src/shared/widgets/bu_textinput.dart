@@ -13,6 +13,7 @@ class BuTextInput extends StatefulWidget {
     this.hintText,
     this.maxLines = 1,
     this.onSaved,
+    this.onChanged,
     this.readOnly = false,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class BuTextInput extends StatefulWidget {
   final TextEditingController controller;
   final String Function(String) validator;
   final Function(String) onSaved;
+  final Function(String) onChanged;
 
   final IconData suffixIcon;
   final String labelText;
@@ -85,6 +87,11 @@ class _BuTextInputState extends State<BuTextInput> {
             ),
             validator: widget.validator,
             onSaved: widget.onSaved,
+            onChanged: (value) {
+              if (widget.onChanged != null) {
+                widget.onChanged(value);
+              }
+            }
         ),
       ],
     );

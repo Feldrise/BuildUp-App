@@ -1,7 +1,7 @@
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/bu_text_field.dart';
+import 'package:buildup/src/shared/widgets/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,8 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
     @required this.buildOn,
     @required this.onUpdated,
     @required this.onRequestUpdateSteps,
-    @required this.onClosed
+    @required this.onClosed,
+    @required this.formKey,
   }) : super(key: key);
 
   final BuildOn buildOn;
@@ -19,6 +20,8 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
   final Function() onUpdated;
   final Function(BuildOn) onRequestUpdateSteps;
   final Function() onClosed;
+
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -72,46 +75,63 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
           ),
           const SizedBox(height: 8.0,),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  BuImagePicker(
-                    image: buildOn.image,
-                    onUpdated: onUpdated,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        BuTextField(
-                          controller: TextEditingController()..text = buildOn.name, 
-                          labelText: "Nom du Build-On", 
-                          hintText: "Nom",
-                          onChanged: (value) {
-                            buildOn.name = value;
-                            onUpdated();
-                          }
-                        ),
-                        const SizedBox(height: 10,),
-                        BuTextField(
-                          controller: TextEditingController()..text = buildOn.description, 
-                          labelText: "Description", 
-                          hintText: "Description",
-                          inputType: TextInputType.multiline,
-                          maxLines: 3,
-                          onChanged: (value) {
-                            buildOn.description = value;
-                            onUpdated();
-                          }
-                        ),
-                      ],
+            child: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    BuImagePicker(
+                      image: buildOn.image,
+                      onUpdated: onUpdated,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          BuTextInput(
+                            controller: TextEditingController()..text = buildOn.name, 
+                            labelText: "Nom du Build-On", 
+                            hintText: "Nom",
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Vous devez rentrer un nom";
+                              }
+
+                              return null;
+                            },
+                            onChanged: (value) => onUpdated(),
+                            onSaved: (value) {
+                              buildOn.name = value;
+                            }
+                          ),
+                          const SizedBox(height: 10,),
+                          BuTextInput(
+                            controller: TextEditingController()..text = buildOn.description, 
+                            labelText: "Description", 
+                            hintText: "Description",
+                            inputType: TextInputType.multiline,
+                            maxLines: 3,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Vous devez rentrer une description";
+                              }
+
+                              return null;
+                            },
+                            onChanged: (value) => onUpdated(),
+                            onSaved: (value) {
+                              buildOn.description = value;
+                            }
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
