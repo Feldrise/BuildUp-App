@@ -7,6 +7,12 @@ mixin UserRoles {
   static const String admin = "Admin";
   static const String builder = "Builder";
   static const String coach = "Coach";
+
+  static const Map<String, String> detailled = {
+    admin: "Equipe New Talents",
+    builder: "Builder",
+    coach: "Coach"
+  };
 }
 
 class User {

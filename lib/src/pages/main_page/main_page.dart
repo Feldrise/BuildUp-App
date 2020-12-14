@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
             if (constraints.maxWidth > withForShowedDrawer) 
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                width: _isMenuBarMinimified ? 64 : 300,
+                width: _isMenuBarMinimified ? 68 : 300,
                 child: BuMenuDrawer(
                   pageItems: widget.pageItems,
                   currentPageIndex: _currentIndex,

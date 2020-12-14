@@ -1,4 +1,5 @@
 import 'package:buildup/entities/page_item.dart';
+import 'package:buildup/src/pages/main_page/widgets/bu_drawer_profile_info.dart';
 import 'package:buildup/src/pages/main_page/widgets/bu_page_item.dart';
 import 'package:flutter/material.dart';
 
@@ -51,24 +52,29 @@ class BuMenuDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: pageItems.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    onSelectedPage(pageItems[index]);
-                    if (shouldPop) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: BuPageItem(
-                    item: pageItems[index],
-                    isActive: index == currentPageIndex,
-                    isMinimified: isMinimified, 
-                  ),
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: pageItems.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      onSelectedPage(pageItems[index]);
+                      if (shouldPop) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: BuPageItem(
+                      item: pageItems[index],
+                      isActive: index == currentPageIndex,
+                      isMinimified: isMinimified, 
+                    ),
+                  );
+                },
+              ),
+            ),
+            BuDrawerProfileInfo(
+              isMinimified: isMinimified,
             )
           ],
         ),
