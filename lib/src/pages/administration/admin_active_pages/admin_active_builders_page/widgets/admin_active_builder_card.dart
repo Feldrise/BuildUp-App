@@ -62,21 +62,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 15,
-                        height: 15,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff17ba63),
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
-                      ),
-                      const SizedBox(width: 5,),
-                      const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
-                    ],
-                  ),
+                  _buildCurrentStep(),
                   PopupMenuButton<String>(
                     onSelected: (route) async {
                       await _navigate(context, route);
@@ -115,6 +101,61 @@ class AdminActiveBuilderCard extends StatelessWidget {
             right: 10,
             child: BuNotificationDot(),
           ),
+      ],
+    );
+  }
+
+  
+  Widget _buildCurrentStep() {
+    if (builder.step == BuilderSteps.adminMeeting) {
+      return Row(
+        children: [
+          Container(
+            width: 15,
+            height: 15,
+            decoration: BoxDecoration(
+              color: const Color(0xfff4bd2a),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+          ),
+          const SizedBox(width: 5,),
+          const Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),)
+        ],
+      );
+    }
+
+    if (builder.step == BuilderSteps.coachMeeting) {
+      Row(
+        children: [
+          Container(
+            width: 15,
+            height: 15,
+            decoration: BoxDecoration(
+              color: const Color(0xfff4bd2a),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+          ),
+          const SizedBox(width: 5,),
+          const Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),)
+        ],
+      );
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: 15,
+          height: 15,
+          decoration: BoxDecoration(
+            color: const Color(0xff17ba63),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
+        ),
+        const SizedBox(width: 5,),
+        const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
       ],
     );
   }
