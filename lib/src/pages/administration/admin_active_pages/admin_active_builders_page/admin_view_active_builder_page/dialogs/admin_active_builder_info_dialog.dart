@@ -9,6 +9,7 @@ import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/bu_button.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/bu_date_form_field.dart';
 import 'package:buildup/src/shared/widgets/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
@@ -126,20 +127,22 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
 
   List<Widget> _buildForm() {
     return [
-      Flexible(
+      Expanded(
+        flex: 3,
         child: Container(
           constraints: const BoxConstraints(maxWidth: 348),
           child: BuImagePicker(image: widget.builder.builderCard,),
         ),
       ),
       const SizedBox(width: 30, height: 30,),
-      Flexible(
-        child:_buildDropDowns() ,
+      Expanded(
+        flex: 7,
+        child:_buildInfoFields() ,
       )
     ];
   }
 
-  Widget _buildDropDowns() {
+  Widget _buildInfoFields() {
     final String authorizaton = Provider.of<UserStore>(context).authentificationHeader;
 
     return LayoutBuilder(
@@ -149,6 +152,7 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
 
         return Wrap(
           spacing: 15,
+          runSpacing: 15,
           children: [
             // Coachs
             SizedBox(
@@ -223,7 +227,29 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
                   );
                 },
               )
-            )
+            ),
+
+            // Program end date
+            SizedBox(
+              width: width,
+              child: BuDateFormField(
+                context: context,
+                firstDate: DateTime.fromMillisecondsSinceEpoch(0),
+                lastDate: DateTime.now().add(const Duration(days: 1000)),
+                initialValue: widget.builder.programEndDate,
+                label: "Fin du programme",
+                validator: (value) {
+                  if (value == null) {
+                    return "Une date est obligatoire";
+                  }
+
+                  return null;
+                },
+                onChanged: (value) {
+                  widget.builder.programEndDate = value;
+                },
+              ),
+            ),
           ]
         );
       }

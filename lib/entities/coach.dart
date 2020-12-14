@@ -9,8 +9,8 @@ mixin CoachStatus {
 
   static const Map<String, String> detailled = {
     candidating: "En attente",
-    validated: "Validé",
-    deleted: "Supprimé"
+    validated: "Validée",
+    deleted: "Refusée"
   };
 }
 
@@ -22,7 +22,7 @@ mixin CoachSteps {
 
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
-    meeting: "Entretient avec un admin",
+    meeting: "Entretient avec un responsable",
     active: "Actif",
     stopped: "Arrêté"
   };

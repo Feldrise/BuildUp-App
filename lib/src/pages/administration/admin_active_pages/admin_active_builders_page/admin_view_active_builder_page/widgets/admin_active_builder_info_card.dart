@@ -6,6 +6,7 @@ import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminActiveBuilderInfoCard extends StatefulWidget {
@@ -65,8 +66,11 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Flexible(
-              child: _buildSmallInfo("Etape actuelle", _buildCurrentStep())
+            Wrap(
+              children: [
+                _buildSmallInfo("Etape actuelle", _buildCurrentStep()),
+                _buildSmallInfo("Fin du programme", Text(DateFormat("dd/MM/yyyy").format(widget.builder.programEndDate)))
+              ]
             ),
             Wrap(
               children: [

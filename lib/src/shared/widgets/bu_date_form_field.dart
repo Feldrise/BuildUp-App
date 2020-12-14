@@ -8,6 +8,7 @@ class BuDateFormField extends FormField<DateTime> {
     Key key,
     @required BuildContext context,
     FormFieldSetter<DateTime> onSave,
+    Function(DateTime) onChanged,
     FormFieldValidator<DateTime> validator,
     DateTime initialValue,
     @required DateTime firstDate,
@@ -27,7 +28,7 @@ class BuDateFormField extends FormField<DateTime> {
 
       return GestureDetector(
         onTap: () async {
-          final DateTime newDate = await showDatePicker(
+          DateTime newDate = await showDatePicker(
             context: context,
             firstDate: firstDate,
             lastDate: lastDate,
@@ -38,6 +39,8 @@ class BuDateFormField extends FormField<DateTime> {
 
           if (newDate != null) {
             state.reset();
+            newDate = newDate.add(const Duration(seconds: 1));
+            onChanged(newDate);
             state.didChange(newDate);
           }
         },

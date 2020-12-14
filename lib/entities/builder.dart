@@ -17,8 +17,8 @@ mixin BuilderStatus {
 
   static const Map<String, String> detailled = {
     candidating: "En attente",
-    validated: "Validé",
-    deleted: "Refusé"
+    validated: "Validée",
+    deleted: "Refusée"
   };
 }
 
@@ -32,11 +32,11 @@ mixin BuilderSteps {
 
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
-    adminMeeting: "Entretient avec un admin",
+    adminMeeting: "Entretien avec un responsable",
     coachMeeting: "Choix coach",
     active: "Actif",
-    finished: "Fini",
-    abandoned: "Abandonné"
+    finished: "Fin programme",
+    abandoned: "Abandon"
   };
 }
 
@@ -51,6 +51,7 @@ class BuBuilder {
   Coach associatedCoach;
   NtfReferent associatedNtfReferent;
 
+  DateTime programEndDate;
   String status;
   String step;
 
@@ -61,6 +62,7 @@ class BuBuilder {
   BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent}) :
     id = map['id'] as String,
     builderCard = BuImage("${BuildersService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
+    programEndDate = DateTime.tryParse(map['programEndDate'] as String),
     status = map['status'] as String,
     step = map['step'] as String,
     department = map['department'] as int,
@@ -79,6 +81,7 @@ class BuBuilder {
       "userId": associatedUser.id,
       "coachId": associatedCoach?.id,
       "ntfReferentId": associatedNtfReferent?.id,
+      "programEndDate": programEndDate?.toIso8601String(),
       "status": status,
       "step": step,
       "department": department,

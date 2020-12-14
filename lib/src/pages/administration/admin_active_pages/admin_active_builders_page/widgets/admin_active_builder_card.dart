@@ -12,6 +12,7 @@ import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
 import 'package:buildup/src/shared/widgets/bu_notification_dot.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 mixin AdminActiveBuilderCardAction {
@@ -62,12 +63,18 @@ class AdminActiveBuilderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildCurrentStep(),
-                  PopupMenuButton<String>(
-                    onSelected: (route) async {
-                      await _navigate(context, route);
-                    },
-                    itemBuilder: _populateMenu,
+                  Expanded(
+                    flex: 85,
+                    child: _buildCurrentStep()
+                  ),
+                  Expanded(
+                    flex: 15,
+                    child: PopupMenuButton<String>(
+                      onSelected: (route) async {
+                        await _navigate(context, route);
+                      },
+                      itemBuilder: _populateMenu,
+                    ),
                   )
                 ],
               ),
@@ -85,6 +92,8 @@ class AdminActiveBuilderCard extends StatelessWidget {
               const SizedBox(height: 10,),
               Text(builder.associatedUser.fullName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
               Text(builder.associatedProjects.first.name.toUpperCase(), textAlign: TextAlign.center, style: const TextStyle(color: Color(0xff919c9e), fontSize: 12),),
+              const SizedBox(height: 20,),
+              Text("Date de fin : ${DateFormat('dd/MM/yyyy').format(builder.programEndDate)}", textAlign: TextAlign.center,),
               const SizedBox(height: 32,),
               BuButton(
                 buttonType: BuButtonType.secondary,
@@ -120,7 +129,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
           ),
           const SizedBox(width: 5,),
-          const Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),)
+          const Flexible(child: Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),))
         ],
       );
     }
@@ -138,7 +147,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
           ),
           const SizedBox(width: 5,),
-          const Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),)
+          const Flexible(child: Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),))
         ],
       );
     }
@@ -155,7 +164,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
           child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
         ),
         const SizedBox(width: 5,),
-        const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
+        const Flexible(child: Text("Actif", style: TextStyle(color: Color(0xff17ba63)),))
       ],
     );
   }

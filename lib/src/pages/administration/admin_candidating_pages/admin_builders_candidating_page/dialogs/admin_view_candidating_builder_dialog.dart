@@ -112,7 +112,7 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
     return [
       BuButton(
         buttonType: BuButtonType.secondary,
-        text: "Annuler",
+        text: "Retour",
         onPressed: () => Navigator.pop(context, false),
         isBig: true,
       ),

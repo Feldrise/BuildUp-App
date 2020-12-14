@@ -120,7 +120,7 @@ class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidati
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("état".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
+            Text("étape".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
               items: <String, String>{
