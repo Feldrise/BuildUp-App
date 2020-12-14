@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_returning.dart';
@@ -141,6 +142,21 @@ class BuildOnsService {
 
   
   // RETURNINGS
+  Future<Uint8List> downloadReturningContent(String authorization, String projectId, String returningId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/file',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return base64Decode((jsonDecode(response.body) as Map<String, dynamic>)['data'] as String);
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  } 
+
   Future acceptReturnging(String authorization, String projectId, String returningId) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/projects/$projectId/returnings/$returningId/accept',

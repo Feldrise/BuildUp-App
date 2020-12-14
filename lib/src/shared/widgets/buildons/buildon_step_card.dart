@@ -1,4 +1,8 @@
 
+import 'dart:convert';
+import 'dart:html';
+import 'dart:js';
+
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/entities/project.dart';
@@ -11,6 +15,7 @@ import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -107,7 +112,7 @@ class BuildOnStepCard extends StatelessWidget {
         const SizedBox(height: 15),
       }
       else if (buildOnReturning.status == BuildOnReturningStatus.validated) ...{
-        _buildValidatedInfo(),
+        _buildValidatedInfo(context),
         const SizedBox(height: 15),
       },
       if (buildOnReturning == null || buildOnReturning.status == BuildOnReturningStatus.waiting) 
@@ -145,7 +150,7 @@ class BuildOnStepCard extends StatelessWidget {
     );
   }
 
-  Widget _buildValidatedInfo() {
+  Widget _buildValidatedInfo(BuildContext context) {
     Widget summaryWidget = Container();
 
     if (buildOnReturning.type == BuildOnReturningType.file) {
@@ -169,7 +174,7 @@ class BuildOnStepCard extends StatelessWidget {
       title: "Document envoyé :",
       children: [
         GestureDetector(
-          onTap: _downloadFile,
+          onTap: () => _downloadFile(context),
           child: summaryWidget
         )
       ],
@@ -189,7 +194,7 @@ class BuildOnStepCard extends StatelessWidget {
   Future _processValidation(BuildContext context) async {
     final bool validate = await showDialog<bool>(
       context: context,
-      builder: (context) => BuildOnStepProcessValidationDialog(buildOnStep: buildOnStep, buildOnReturning: buildOnReturning, onDownload: _downloadFile,)
+      builder: (context) => BuildOnStepProcessValidationDialog(buildOnStep: buildOnStep, buildOnReturning: buildOnReturning, onDownload: () => _downloadFile(context),)
     );
 
     if (validate == null) {
@@ -223,6 +228,7 @@ class BuildOnStepCard extends StatelessWidget {
 
       project.currentBuildOn = nextBuildOn;
       project.currentBuildOnStep = nextBuildOnStep;
+      project.hasNotification = false;
     } else {
       await BuildOnsService.instance.refuseReturning(authorization, project.id, buildOnReturning.id);
     }
@@ -232,7 +238,24 @@ class BuildOnStepCard extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  Future _downloadFile() async {
+  Future _downloadFile(BuildContext context) async {
+    
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Téléchargement du fichier..."); 
 
+    final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+    if (!kIsWeb) {
+      // TODO: show impossibility on other than web
+    }
+    else {
+      final rawData = await BuildOnsService.instance.downloadReturningContent(authorization, project.id, buildOnReturning.id);
+      final content = base64Encode(rawData);
+
+      AnchorElement(href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+        ..setAttribute("download", buildOnReturning.fileName)
+        ..click();
+    }
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
 }
