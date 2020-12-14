@@ -1,7 +1,5 @@
 
 import 'dart:convert';
-import 'dart:html';
-import 'dart:js';
 
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
@@ -18,6 +16,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_html/prefer_universal/html.dart' as html;
 
 class BuildOnStepCard extends StatelessWidget {
   const BuildOnStepCard({
@@ -244,18 +243,18 @@ class BuildOnStepCard extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Téléchargement du fichier..."); 
 
     final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-    if (!kIsWeb) {
-      // TODO: show impossibility on other than web
-    }
-    else {
-      final rawData = await BuildOnsService.instance.downloadReturningContent(authorization, project.id, buildOnReturning.id);
-      final content = base64Encode(rawData);
+    
+    final rawData = await BuildOnsService.instance.downloadReturningContent(authorization, project.id, buildOnReturning.id);
+    final content = base64Encode(rawData);
 
-      AnchorElement(href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+    if (kIsWeb) {
+      html.AnchorElement()
+        ..href = "data:application/octet-stream;charset=utf-16le;base64,$content"
         ..setAttribute("download", buildOnReturning.fileName)
         ..click();
     }
-
+    // TODO non web version
+    
     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
   }
 }

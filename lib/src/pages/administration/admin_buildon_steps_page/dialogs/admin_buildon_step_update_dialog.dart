@@ -3,7 +3,6 @@ import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/src/shared/widgets/bu_card.dart';
 import 'package:buildup/src/shared/widgets/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/bu_text_field.dart';
 import 'package:buildup/src/shared/widgets/bu_textinput.dart';
 import 'package:flutter/material.dart';
 
