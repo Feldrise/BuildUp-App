@@ -32,6 +32,12 @@ class CandidatingBuilderStore with ChangeNotifier {
   }
 
   Future updateBuilder(String authorization, BuBuilder toUpdate) async {
+    // We prevent builder to stay preselected
+    if (toUpdate.status != BuilderStatus.candidating &&
+        toUpdate.step == BuilderSteps.preselected) {
+      toUpdate.step = BuilderSteps.adminMeeting;
+    }
+      
     await BuildersService.instance.updateBuilder(authorization, toUpdate);
 
     if (toUpdate.status != BuilderStatus.candidating) {
