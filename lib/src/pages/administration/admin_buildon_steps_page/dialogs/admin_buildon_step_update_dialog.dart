@@ -109,7 +109,7 @@ class _AdminBuildOnStepUpdateDialogState extends State<AdminBuildOnStepUpdateDia
                             labelText: "Description", 
                             hintText: "Description",
                             inputType: TextInputType.multiline,
-                            maxLines: 3,
+                            maxLines: 7,
                             validator: (value) {
                               if (value.isEmpty) {
                                 return "Vous devez rentrer une description";

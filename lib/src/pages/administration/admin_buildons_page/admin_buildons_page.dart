@@ -34,7 +34,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
         return LayoutBuilder(
           builder: (context, constraints) {
             final bool fullScreenDialog =  constraints.maxWidth <= 800;
-            final double panelWidth = fullScreenDialog ? constraints.maxWidth : 400;
+            final double panelWidth = fullScreenDialog ? constraints.maxWidth : 500;
 
             return Scaffold(
               backgroundColor: colorScaffoldGrey,
