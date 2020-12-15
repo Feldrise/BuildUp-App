@@ -1,32 +1,31 @@
 
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/providers/active_builers_store.dart';
-import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_date_form_field.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-class AdminActiveBuilderProfileDialog extends StatefulWidget {
-  const AdminActiveBuilderProfileDialog({Key key, @required this.builder}) : super(key: key); 
+class BuilderProfileDialog extends StatefulWidget {
+  const BuilderProfileDialog({Key key, @required this.builder, @required this.onSaveBuilderProfile}) : super(key: key); 
   
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveBuilderProfile;
+
   @override
-  _AdminActiveBuilderProfileDialogState createState() => _AdminActiveBuilderProfileDialogState();
+  _BuilderProfileDialogState createState() => _BuilderProfileDialogState();
 }
 
-class _AdminActiveBuilderProfileDialogState extends State<AdminActiveBuilderProfileDialog> {
+class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameTextController = TextEditingController();
@@ -61,7 +60,7 @@ class _AdminActiveBuilderProfileDialogState extends State<AdminActiveBuilderProf
   }
 
   @override
-  void didUpdateWidget(covariant AdminActiveBuilderProfileDialog oldWidget) {
+  void didUpdateWidget(covariant BuilderProfileDialog oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _firstNameTextController.text = widget.builder.associatedUser.firstName;
@@ -480,10 +479,8 @@ class _AdminActiveBuilderProfileDialogState extends State<AdminActiveBuilderProf
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
       try {
-        final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-
-        await Provider.of<ActiveBuildersStore>(context, listen: false).updateBuilder(authorization, widget.builder, updateUser: true);
-
+        await widget.onSaveBuilderProfile(widget.builder);
+        
         setState(() {
           _hasError = false;
           _statusMessage = "Le profil a bien été mis à jour.";

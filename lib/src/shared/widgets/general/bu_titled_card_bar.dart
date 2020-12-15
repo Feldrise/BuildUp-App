@@ -1,10 +1,11 @@
+
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_icon_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class AdminCardTitleBar extends StatelessWidget {
-  const AdminCardTitleBar({Key key, @required this.title, this.onModified}) : super(key: key);
+class BuTitledCardBar extends StatelessWidget {
+  const BuTitledCardBar({Key key, @required this.title, this.onModified}) : super(key: key);
 
   final String title;
 

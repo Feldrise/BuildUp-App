@@ -1,6 +1,6 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/dialogs/admin_active_builder_project_dialog.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
+import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _AdminActiveBuilderProjectCardState extends State<AdminActiveBuilderProjec
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AdminCardTitleBar(
+          BuTitledCardBar(
             title: "Projet",
             onModified: _modifyProject,
           ),

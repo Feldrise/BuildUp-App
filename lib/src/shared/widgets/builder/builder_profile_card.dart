@@ -1,24 +1,30 @@
 
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/dialogs/admin_active_builder_profile_dialog.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
+import 'package:buildup/src/shared/dialogs/builder/builder_profile_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
+import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:buildup/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdminActiveBuilderProfileCard extends StatefulWidget {
-  const AdminActiveBuilderProfileCard({Key key, @required this.builder}) : super(key: key);
+class BuilderProfileCard extends StatefulWidget {
+  const BuilderProfileCard({
+    Key key, 
+    @required this.builder,
+    @required this.onSaveProfile
+  }) : super(key: key);
   
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveProfile;
+
   @override
-  _AdminActiveBuilderProfileCardState createState() => _AdminActiveBuilderProfileCardState();
+  _BuilderProfileCardState createState() => _BuilderProfileCardState();
 }
 
-class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfileCard> {
+class _BuilderProfileCardState extends State<BuilderProfileCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -26,7 +32,7 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AdminCardTitleBar(
+          BuTitledCardBar(
             title: widget.builder.associatedUser.fullName,
             onModified: _modifyProfile,
           ),
@@ -116,7 +122,10 @@ class _AdminActiveBuilderProfileCardState extends State<AdminActiveBuilderProfil
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveBuilderProfileDialog(builder: widget.builder)
+        builder: (context) => BuilderProfileDialog(
+          builder: widget.builder,
+          onSaveBuilderProfile: widget.onSaveProfile,
+        )
       )
     );
 
