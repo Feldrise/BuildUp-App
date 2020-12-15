@@ -1,7 +1,6 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/ntf_referent.dart';
-import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';

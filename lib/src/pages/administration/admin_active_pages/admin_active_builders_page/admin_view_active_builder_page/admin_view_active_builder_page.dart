@@ -1,11 +1,11 @@
 
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/widgets/admin_active_builder_project_card.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_active_member_form_card.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_info_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_profile_card.dart';
+import 'package:buildup/src/shared/widgets/builder/builder_project_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +40,7 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     BuilderInfoCard(builder: builder, onSaveInfo: (builder) => _saveBuilderInfo(context, builder),),
                     const SizedBox(height: 30),
-                    AdminActiveBuilderProjectCard(builder: builder),
+                    BuilderProjectCard(builder: builder, onSaveProject: (builder) => _saveBuilderProject(context, builder),),
                     const SizedBox(height: 30),
                     AdminActiveMemberFormCard(form: builder.associatedForm,)
                   ],
@@ -69,6 +69,19 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
 
     try {
       await Provider.of<ActiveBuildersStore>(context, listen: false).updateBuilder(authorization, builder);
+    }
+    on Exception {
+      rethrow;
+    }
+
+  }
+
+  Future _saveBuilderProject(BuildContext context, BuBuilder builder) async {
+    final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+    try {
+      await Provider.of<ActiveBuildersStore>(context, listen: false).updateBuilder(authorization, builder, updateProject: true);
+
     }
     on Exception {
       rethrow;

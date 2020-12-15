@@ -43,7 +43,7 @@ class BuilderStore with ChangeNotifier {
 
       _builder = toUpdate;
 
-      notifyListeners();
+      // notifyListeners();
     } on Exception {
       rethrow;
     }

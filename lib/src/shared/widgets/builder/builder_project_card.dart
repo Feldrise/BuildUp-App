@@ -1,21 +1,27 @@
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/dialogs/admin_active_builder_project_dialog.dart';
+import 'package:buildup/src/shared/dialogs/builder/builder_project_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdminActiveBuilderProjectCard extends StatefulWidget {
-  const AdminActiveBuilderProjectCard({Key key, @required this.builder}) : super(key: key);
+class BuilderProjectCard extends StatefulWidget {
+  const BuilderProjectCard({
+    Key key, 
+    @required this.builder,
+    this.onSaveProject,
+  }) : super(key: key);
 
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveProject;
+
   @override
-  _AdminActiveBuilderProjectCardState createState() => _AdminActiveBuilderProjectCardState();
+  _BuilderProjectCardState createState() => _BuilderProjectCardState();
 }
 
-class _AdminActiveBuilderProjectCardState extends State<AdminActiveBuilderProjectCard> {
+class _BuilderProjectCardState extends State<BuilderProjectCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -25,7 +31,7 @@ class _AdminActiveBuilderProjectCardState extends State<AdminActiveBuilderProjec
         children: [
           BuTitledCardBar(
             title: "Projet",
-            onModified: _modifyProject,
+            onModified: widget.onSaveProject != null ? _modifyProject : null,
           ),
           const SizedBox(height: 30,),
           Wrap(
@@ -86,7 +92,10 @@ class _AdminActiveBuilderProjectCardState extends State<AdminActiveBuilderProjec
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveBuilderProjectDialog(builder: widget.builder)
+        builder: (context) => BuilderProjectDialog(
+          builder: widget.builder,
+          onSaveProject: widget.onSaveProject,
+        )
       )
     );
 

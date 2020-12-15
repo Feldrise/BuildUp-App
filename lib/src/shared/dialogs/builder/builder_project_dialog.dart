@@ -1,7 +1,5 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/project.dart';
-import 'package:buildup/src/providers/active_builers_store.dart';
-import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
@@ -13,18 +11,23 @@ import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-class AdminActiveBuilderProjectDialog extends StatefulWidget {
-  const AdminActiveBuilderProjectDialog({Key key, @required this.builder}) : super(key: key);
+class BuilderProjectDialog extends StatefulWidget {
+  const BuilderProjectDialog({
+    Key key, 
+    @required this.builder,
+    @required this.onSaveProject,
+  }) : super(key: key);
 
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveProject;
+
   @override
-  _AdminActiveBuilderProjectDialogState createState() => _AdminActiveBuilderProjectDialogState();
+  _BuilderProjectDialogState createState() => _BuilderProjectDialogState();
 }
 
-class _AdminActiveBuilderProjectDialogState extends State<AdminActiveBuilderProjectDialog> {
+class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameTextController = TextEditingController();
@@ -348,9 +351,7 @@ class _AdminActiveBuilderProjectDialogState extends State<AdminActiveBuilderProj
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
       try {
-        final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-
-        await Provider.of<ActiveBuildersStore>(context, listen: false).updateBuilder(authorization, widget.builder, updateProject: true);
+        await widget.onSaveProject(widget.builder);
 
         setState(() {
           _hasError = false;
