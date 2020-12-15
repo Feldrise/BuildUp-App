@@ -1,7 +1,7 @@
 
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/material.dart';
 
 class AdminActiveMemberFormCard extends StatelessWidget {

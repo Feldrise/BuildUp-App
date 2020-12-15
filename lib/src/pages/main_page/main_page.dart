@@ -1,6 +1,6 @@
 import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/main_page/widgets/bu_menu_drawer.dart';
-import 'package:buildup/src/shared/widgets/bu_appbar.dart';
+import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

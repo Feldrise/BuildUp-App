@@ -1,9 +1,9 @@
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_dropdown.dart';
-import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/bu_textinput.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:flutter/material.dart';
 
 class AdminBuildOnStepUpdateDialog extends StatefulWidget {

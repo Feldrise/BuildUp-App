@@ -1,6 +1,6 @@
 
 import 'package:buildup/entities/buildons/buildon_step.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 

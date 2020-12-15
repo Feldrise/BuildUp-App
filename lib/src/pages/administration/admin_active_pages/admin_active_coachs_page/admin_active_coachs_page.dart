@@ -2,7 +2,7 @@ import 'package:buildup/services/coachs_services.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/widgets/admin_active_coach_card.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

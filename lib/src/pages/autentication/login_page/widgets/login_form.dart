@@ -1,4 +1,4 @@
-import 'package:buildup/src/shared/widgets/bu_textinput.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:buildup/src/pages/administration/admin_ntf_referents_page/widget
 import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

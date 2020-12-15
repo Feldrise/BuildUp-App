@@ -2,7 +2,7 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_info_dialog.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_card_title_bar.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

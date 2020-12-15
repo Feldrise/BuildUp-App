@@ -7,7 +7,7 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_tab_widget/bu_tab_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';

@@ -6,9 +6,9 @@ import 'package:buildup/src/pages/administration/admin_buildon_steps_page/widget
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
-import 'package:buildup/src/shared/widgets/bu_appbar.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/src/shared/widgets/general/bu_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

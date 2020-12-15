@@ -3,7 +3,7 @@ import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/src/pages/administration/admin_buildon_steps_page/widgets/admin_buildon_step_list_tile.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

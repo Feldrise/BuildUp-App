@@ -1,6 +1,6 @@
 import 'package:buildup/entities/ntf_referent.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
-import 'package:buildup/src/shared/widgets/bu_textinput.dart';
+import 'package:buildup/src/shared/widgets/general/bu_button.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

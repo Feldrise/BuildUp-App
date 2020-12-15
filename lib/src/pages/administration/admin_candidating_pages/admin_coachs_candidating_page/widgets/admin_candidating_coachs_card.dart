@@ -6,9 +6,9 @@ import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_c
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_icon_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

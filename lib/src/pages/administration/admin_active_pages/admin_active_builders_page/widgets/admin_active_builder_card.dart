@@ -6,10 +6,10 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_image_widget.dart';
-import 'package:buildup/src/shared/widgets/bu_notification_dot.dart';
+import 'package:buildup/src/shared/widgets/general/bu_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
+import 'package:buildup/src/shared/widgets/general/bu_notification_dot.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

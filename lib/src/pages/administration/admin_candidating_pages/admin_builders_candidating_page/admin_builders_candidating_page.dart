@@ -3,7 +3,7 @@ import 'package:buildup/services/builders_service.dart';
 import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_builders_candidating_page/widgets/admin_candidating_builder_card.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

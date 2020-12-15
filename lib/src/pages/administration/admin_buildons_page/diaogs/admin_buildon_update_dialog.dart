@@ -1,7 +1,7 @@
 import 'package:buildup/entities/buildons/buildon.dart';
-import 'package:buildup/src/shared/widgets/bu_card.dart';
-import 'package:buildup/src/shared/widgets/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/bu_textinput.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 

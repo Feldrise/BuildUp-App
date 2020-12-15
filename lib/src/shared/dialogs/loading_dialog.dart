@@ -1,4 +1,4 @@
-import 'package:buildup/src/shared/widgets/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/material.dart';
 
 class LoadingDialog extends StatelessWidget {

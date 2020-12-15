@@ -5,7 +5,7 @@ import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_c
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
-import 'package:buildup/src/shared/widgets/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_tab_widget/bu_tab_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';

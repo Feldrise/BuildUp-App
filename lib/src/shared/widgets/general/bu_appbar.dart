@@ -1,4 +1,4 @@
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class BuAppBar extends StatelessWidget implements PreferredSizeWidget {

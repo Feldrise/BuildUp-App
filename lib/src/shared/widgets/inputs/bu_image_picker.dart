@@ -1,7 +1,7 @@
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/src/providers/user_store.dart';
-import 'package:buildup/src/shared/widgets/bu_button.dart';
-import 'package:buildup/src/shared/widgets/bu_icon_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_button.dart';
+import 'package:buildup/src/shared/widgets/general/bu_icon_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
