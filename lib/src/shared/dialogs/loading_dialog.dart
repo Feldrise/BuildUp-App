@@ -1,4 +1,5 @@
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoadingDialog extends StatelessWidget {
@@ -14,18 +15,7 @@ class LoadingDialog extends StatelessWidget {
         backgroundColor: Colors.transparent,
         child: BuCard(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                width: 84,
-                height: 84,
-                child: CircularProgressIndicator()
-              ),
-              const SizedBox(height: 30,),
-              Text(statusMessage)
-            ]
-          ),
+          child: BuLoadingIndicator(message: statusMessage,)
         ),
       )
     );

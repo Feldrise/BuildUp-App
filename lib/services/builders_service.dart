@@ -24,6 +24,31 @@ class BuildersService {
   static final BuildersService instance = BuildersService._privateConstructor();
 
   // GET
+  Future<BuBuilder> getBuilder(String authorization, User associatedUser) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/${associatedUser.id}',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final map = jsonDecode(response.body) as Map<String, dynamic>;
+      final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+      final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
+      final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+      final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+
+      final BuBuilder builder = BuBuilder.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent);
+      builder.associatedProjects.add(associatedProject);
+
+      return builder;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+
+  }
+
   Future<List<BuBuilder>> getCandidatingBuilders(String authorization) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/candidating',

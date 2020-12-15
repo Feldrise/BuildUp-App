@@ -32,7 +32,7 @@ class BuDrawerProfileInfo extends StatelessWidget {
                 width: 40,
                 height: 40,
                 child: BuImageWidget(
-                  image: userStore.profilePicture,
+                  image: userStore.user.profilePicture,
                   isCircular: true,
                 ),
               ),
@@ -62,9 +62,9 @@ class BuDrawerProfileInfo extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(userStore.fullName, style: Theme.of(context).textTheme.headline6),
+        Text(userStore.user.fullName, style: Theme.of(context).textTheme.headline6),
         const SizedBox(height: 2,),
-        Text(UserRoles.detailled[userStore.role], style: const TextStyle(fontSize: 12, color: Color(0xff8f9bb3)),)
+        Text(UserRoles.detailled[userStore.user.role], style: const TextStyle(fontSize: 12, color: Color(0xff8f9bb3)),)
       ],
     );
   }

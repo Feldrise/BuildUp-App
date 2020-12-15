@@ -1,4 +1,3 @@
-import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/authentication_service.dart';
 import 'package:flutter/material.dart';
@@ -23,19 +22,9 @@ class UserStore with ChangeNotifier {
     notifyListeners();
   }
 
+  User get user => _user;
+
   String get id => _user.id;
   String get authentificationHeader => _user.authentificationHeader;
 
-  String get fullName => _user.fullName;
-  String get firstName => _user.firstName;
-  String get lastName => _user.lastName;
-  DateTime get birthdate => _user.birthdate;
-
-  BuImage get profilePicture => _user.profilePicture;
-
-  String get email => _user.email;
-  String get discordTag => _user.discordTag;
-  String get username => _user.username;
-
-  String get role => _user.role;
 }

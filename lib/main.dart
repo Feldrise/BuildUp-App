@@ -1,12 +1,17 @@
 import 'dart:io';
 
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/authentication_service.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
+import 'package:buildup/src/pages/builder/builder_main_page/builder_main_page.dart';
 import 'package:buildup/src/pages/splash_screen/splash_screen.dart';
+import 'package:buildup/src/providers/builder_store.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserStore(),),
+        ChangeNotifierProvider(create: (context) => BuilderStore()),
         ChangeNotifierProvider(create: (context) => BuildOnsStore(),),
         ChangeNotifierProvider(create: (context) => NtfReferentsStore(),)
       ],
@@ -90,7 +96,10 @@ class MyApp extends StatelessWidget {
                 final User loggedUser = snapshot.data as User;
 
                 if (loggedUser.role == UserRoles.admin) {
-                  return AdminMainPage();
+                  return _buildAdminPage();
+                }
+                else if (loggedUser.role == UserRoles.builder) {
+                  return _buildBuilderPage(context, loggedUser);
                 }
                 else {
                   return const Center(child: Text("Erreur lors du chargement de l'application : vous n'avez pas les permissions nécessaires"),);
@@ -102,6 +111,42 @@ class MyApp extends StatelessWidget {
           )
         );
       },
+    );
+  }
+
+  Widget _buildAdminPage() {
+    return AdminMainPage();
+  }
+
+  Widget _buildBuilderPage(BuildContext context, User loggedUser) {
+    return Scaffold(
+      body: FutureBuilder<void>(
+        future: Provider.of<BuilderStore>(context).loadBuilderFromUser(loggedUser),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              AuthenticationService.instance.logout();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                child: Center(
+                  child: BuStatusMessage(
+                    title: "Erreur",
+                    message: "Erreure lors de la récupération des informations Builder. Veuillez nous le signaler et raffraichir la page (ou redémarrer l'application) pour réessayer : ${snapshot.error}",
+                  ),
+                ),
+              );
+            }
+
+            return BuilderMainPage();
+          }
+
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+            child: Center(child: BuLoadingIndicator(message: "Récupération des informations Builder...")),
+          );
+        },
+      ),
     );
   }
 }
