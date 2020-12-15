@@ -18,16 +18,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class AdminActiveBuilderInfoDialog extends StatefulWidget {
-  const AdminActiveBuilderInfoDialog({Key key, @required this.builder}) : super(key: key);
+class BuilderInfoDialog extends StatefulWidget {
+  const BuilderInfoDialog({
+    Key key, 
+    @required this.builder,
+    @required this.onSaveInfo
+  }) : super(key: key);
 
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveInfo;
+
   @override
-  _AdminActiveBuilderInfoDialogState createState() => _AdminActiveBuilderInfoDialogState();
+  _BuilderInfoDialogState createState() => _BuilderInfoDialogState();
 }
 
-class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDialog> {
+class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
   String _statusMessage = "";
   bool _hasError = false;
 
@@ -296,7 +302,7 @@ class _AdminActiveBuilderInfoDialogState extends State<AdminActiveBuilderInfoDia
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
     try {
-      await Provider.of<ActiveBuildersStore>(context, listen: false).updateBuilder(authorization, widget.builder);
+      await widget.onSaveInfo(widget.builder);
 
       setState(() {
         _hasError = false;

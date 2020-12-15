@@ -2,6 +2,7 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/providers/builder_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/widgets/builder/builder_info_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
@@ -35,7 +36,9 @@ class BuilderProfilPage extends StatelessWidget {
                         BuilderProfileCard(
                           builder: builderStore.builder,
                           onSaveProfile: (builder) => _saveBuilderProfile(context, builder),
-                        )
+                        ),
+                        const SizedBox(height: 30),
+                        BuilderInfoCard(builder: builderStore.builder)
                       ],
                     ),
                   ),

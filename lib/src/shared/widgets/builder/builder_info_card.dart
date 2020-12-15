@@ -1,5 +1,7 @@
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/dialogs/admin_active_builder_info_dialog.dart';
+import 'package:buildup/entities/user.dart';
+import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/builder/builder_info_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
@@ -7,18 +9,25 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AdminActiveBuilderInfoCard extends StatefulWidget {
-  const AdminActiveBuilderInfoCard({Key key, @required this.builder}) : super(key: key);
+class BuilderInfoCard extends StatefulWidget {
+  const BuilderInfoCard({
+    Key key, 
+    @required this.builder,
+    this.onSaveInfo,
+  }) : super(key: key);
 
   final BuBuilder builder;
 
+  final Function(BuBuilder) onSaveInfo;
+
   @override
-  _AdminActiveBuilderInfoCardState createState() => _AdminActiveBuilderInfoCardState();
+  _BuilderInfoCardState createState() => _BuilderInfoCardState();
 }
 
-class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard> {
+class _BuilderInfoCardState extends State<BuilderInfoCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -28,7 +37,7 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
         children: [
           BuTitledCardBar(
             title: "Informations Builder",
-            onModified: _updateInfo,
+            onModified: widget.onSaveInfo != null ? _updateInfo : null,
           ),
           const SizedBox(height: 30,),
           LayoutBuilder(
@@ -68,7 +77,8 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
           children: [
             Wrap(
               children: [
-                _buildSmallInfo("Etape actuelle", _buildCurrentStep()),
+                if (Provider.of<UserStore>(context).user.role != UserRoles.builder)
+                  _buildSmallInfo("Etape actuelle", _buildCurrentStep()),
                 _buildSmallInfo("Fin du programme", Text(DateFormat("dd/MM/yyyy").format(widget.builder.programEndDate)))
               ]
             ),
@@ -145,55 +155,65 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
 
   Widget _buildCurrentStep() {
     if (widget.builder.step == BuilderSteps.adminMeeting) {
-      return Row(
-        children: [
-          Container(
-            width: 15,
-            height: 15,
-            decoration: BoxDecoration(
-              color: const Color(0xfff4bd2a),
-              borderRadius: BorderRadius.circular(15)
+      return ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
+        child: Row(
+          children: [
+            Container(
+              width: 15,
+              height: 15,
+              decoration: BoxDecoration(
+                color: const Color(0xfff4bd2a),
+                borderRadius: BorderRadius.circular(15)
+              ),
+              child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
             ),
-            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
-          ),
-          const SizedBox(width: 5,),
-          const Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),)
-        ],
+            const SizedBox(width: 5,),
+            const Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),)
+          ],
+        ),
       );
     }
 
     if (widget.builder.step == BuilderSteps.coachMeeting) {
-      Row(
+      ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
+        child: Row(
+          children: [
+            Container(
+              width: 15,
+              height: 15,
+              decoration: BoxDecoration(
+                color: const Color(0xfff4bd2a),
+                borderRadius: BorderRadius.circular(15)
+              ),
+              child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+            ),
+            const SizedBox(width: 5,),
+            const Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),)
+          ],
+        ),
+      );
+    }
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 15,
             height: 15,
             decoration: BoxDecoration(
-              color: const Color(0xfff4bd2a),
+              color: const Color(0xff17ba63),
               borderRadius: BorderRadius.circular(15)
             ),
-            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+            child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
           ),
           const SizedBox(width: 5,),
-          const Text("Choix du coach", style: TextStyle(color: Color(0xfff4bd2a)),)
+          const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
         ],
-      );
-    }
-
-    return Row(
-      children: [
-        Container(
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(
-            color: const Color(0xff17ba63),
-            borderRadius: BorderRadius.circular(15)
-          ),
-          child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
-        ),
-        const SizedBox(width: 5,),
-        const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
-      ],
+      ),
     );
   }
 
@@ -201,7 +221,10 @@ class _AdminActiveBuilderInfoCardState extends State<AdminActiveBuilderInfoCard>
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveBuilderInfoDialog(builder: widget.builder)
+        builder: (context) => BuilderInfoDialog(
+          builder: widget.builder,
+          onSaveInfo: widget.onSaveInfo,
+        )
       )
     );
 
