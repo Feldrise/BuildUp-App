@@ -33,6 +33,12 @@ class CandidatingCoachsStore with ChangeNotifier {
   }
 
   Future updateCoach(String authorization, Coach toUpdate) async {
+    // We prevent builder to stay preselected
+    if (toUpdate.status != CoachStatus.candidating &&
+        toUpdate.step == CoachSteps.preselected) {
+      toUpdate.step = CoachSteps.meeting;
+    }
+
     await CoachsService.instance.updateCoach(authorization, toUpdate);
 
     if (toUpdate.status != CoachStatus.candidating) {

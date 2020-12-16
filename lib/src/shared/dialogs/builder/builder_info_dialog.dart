@@ -64,6 +64,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
           body: Padding(
             padding: const EdgeInsets.all(30),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (_statusMessage.isNotEmpty) ...{ 
@@ -74,7 +75,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
                   ),
                   const SizedBox(height: 15),
                 },
-                Expanded(
+                Flexible(
                   child: SingleChildScrollView(
                     child: LayoutBuilder(
                       builder: (context, constraints) {
@@ -132,7 +133,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
 
   List<Widget> _buildForm() {
     return [
-      Expanded(
+      Flexible(
         flex: 3,
         child: Container(
           constraints: const BoxConstraints(maxWidth: 348),
@@ -140,7 +141,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
         ),
       ),
       const SizedBox(width: 30, height: 30,),
-      Expanded(
+      Flexible(
         flex: 7,
         child:_buildInfoFields() ,
       )

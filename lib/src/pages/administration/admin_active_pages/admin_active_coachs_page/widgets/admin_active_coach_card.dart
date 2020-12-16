@@ -50,26 +50,18 @@ class AdminActiveCoachCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff17ba63),
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
-                  ),
-                  const SizedBox(width: 5,),
-                  const Text("Actif", style: TextStyle(color: Color(0xff17ba63)),)
-                ],
+              Expanded(
+                flex: 85,
+                child: _buildCurrentStep()
               ),
-              PopupMenuButton<String>(
-                onSelected: (route) async {
-                  await _navigate(context, route);
-                },
-                itemBuilder: _populateMenu,
+              Expanded(
+                flex: 15,
+                child: PopupMenuButton<String>(
+                  onSelected: (route) async {
+                    await _navigate(context, route);
+                  },
+                  itemBuilder: _populateMenu,
+                )
               )
             ],
           ),
@@ -96,6 +88,42 @@ class AdminActiveCoachCard extends StatelessWidget {
           )
         ],
       )
+    );
+  }
+
+  Widget _buildCurrentStep() {
+    if (coach.step == CoachSteps.meeting) {
+      return Row(
+        children: [
+          Container(
+            width: 15,
+            height: 15,
+            decoration: BoxDecoration(
+              color: const Color(0xfff4bd2a),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: const Center(child: Icon(Icons.watch_later, size: 15, color: Colors.white,),),
+          ),
+          const SizedBox(width: 5,),
+          const Flexible(child: Text("Entretien avec un admin", style: TextStyle(color: Color(0xfff4bd2a)),))
+        ],
+      );
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: 15,
+          height: 15,
+          decoration: BoxDecoration(
+            color: const Color(0xff17ba63),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
+        ),
+        const SizedBox(width: 5,),
+        const Flexible(child: Text("Actif", style: TextStyle(color: Color(0xff17ba63)),))
+      ],
     );
   }
 
