@@ -13,7 +13,7 @@ class BuilderProfileCard extends StatefulWidget {
   const BuilderProfileCard({
     Key key, 
     @required this.builder,
-    @required this.onSaveProfile
+    this.onSaveProfile
   }) : super(key: key);
   
   final BuBuilder builder;
@@ -34,7 +34,7 @@ class _BuilderProfileCardState extends State<BuilderProfileCard> {
         children: [
           BuTitledCardBar(
             title: widget.builder.associatedUser.fullName,
-            onModified: _modifyProfile,
+            onModified: widget.onSaveProfile == null ? null : _modifyProfile,
           ),
           const SizedBox(height: 30,),
           LayoutBuilder(
@@ -119,16 +119,18 @@ class _BuilderProfileCardState extends State<BuilderProfileCard> {
   } 
 
   Future _modifyProfile() async {
-    await Navigator.push<void>(
-      context,
-      CupertinoPageRoute(
-        builder: (context) => BuilderProfileDialog(
-          builder: widget.builder,
-          onSaveBuilderProfile: widget.onSaveProfile,
+    if (widget.onSaveProfile != null) {
+      await Navigator.push<void>(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => BuilderProfileDialog(
+            builder: widget.builder,
+            onSaveBuilderProfile: widget.onSaveProfile,
+          )
         )
-      )
-    );
+      );
 
-    setState(() {});
+      setState(() {});
+    }
   }
 }

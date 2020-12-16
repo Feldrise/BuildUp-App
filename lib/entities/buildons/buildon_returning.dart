@@ -18,11 +18,15 @@ mixin BuildOnReturningType {
 mixin BuildOnReturningStatus {
   static const String validated = "Validated";
   static const String waiting = "Waiting";
+  static const String waitingCoach = "WaitingCoach";
+  static const String waitingAdmin = "WaitingAdmin";
   static const String refused = "Refused";
 
   static const Map<String, String> detailled = {
     validated: "Validé",
     waiting: "En attente",
+    waitingCoach: "En attente du Coach",
+    waitingAdmin: "En attente d'un responsable",
     refused: "Refusé"
   };
 }

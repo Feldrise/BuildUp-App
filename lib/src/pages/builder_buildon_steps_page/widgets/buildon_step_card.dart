@@ -147,6 +147,10 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
             _buildBadgeValidated()
           else if (_buildOnReturning.status == BuildOnReturningStatus.waiting)
             _buildBadgeWaiting()
+          else if (_buildOnReturning.status == BuildOnReturningStatus.waitingCoach)
+          _buildBadgeWaitingCoach()
+          else if (_buildOnReturning.status == BuildOnReturningStatus.waitingAdmin)
+          _buildBadgeWaitingAdmin()
         ],
       ),
       const SizedBox(height: 15),
@@ -166,7 +170,10 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
         _buildValidatedInfo(context),
         const SizedBox(height: 15),
       },
-      if (_buildOnReturning == null || _buildOnReturning.status == BuildOnReturningStatus.waiting) 
+      if (_buildOnReturning == null || 
+          _buildOnReturning.status == BuildOnReturningStatus.waiting ||
+          _buildOnReturning.status == BuildOnReturningStatus.waitingCoach ||
+          _buildOnReturning.status == BuildOnReturningStatus.waitingAdmin) 
         _buildValidationButton(context)
     ];
   }
@@ -187,6 +194,28 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
         Icon(Icons.watch_later, color: Color(0xfff4bd21),),
         SizedBox(width: 5),
         Text("En attente de validation", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
+      ],
+    );
+  }
+
+  
+  Widget _buildBadgeWaitingCoach() {
+    return Row(
+      children: const [
+        Icon(Icons.watch_later, color: Color(0xfff4bd21),),
+        SizedBox(width: 5),
+        Text("En attente de validation du Coach", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
+      ],
+    );
+  }
+
+  
+  Widget _buildBadgeWaitingAdmin() {
+    return Row(
+      children: const [
+        Icon(Icons.watch_later, color: Color(0xfff4bd21),),
+        SizedBox(width: 5),
+        Text("En attente de validation d'un responsable", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
       ],
     );
   }
@@ -247,6 +276,14 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
               child: const Text("Demander validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
             ),
           );
+        }
+
+        if (userStore.user.role == UserRoles.admin && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingCoach) {
+          return Container();
+        }
+        
+        if (userStore.user.role == UserRoles.coach && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingAdmin) {
+          return Container();
         }
 
         return Align(
@@ -327,36 +364,51 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       return;
     }
 
-    final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+    final UserStore userStore = Provider.of<UserStore>(context, listen: false);
     
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour avec le serveur..."); 
 
     if (validate) {
       if (_buildOnReturning != null) {
-        await BuildOnsService.instance.acceptReturnging(authorization, widget.project.id, _buildOnReturning.id);
+        await BuildOnsService.instance.acceptReturnging(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id);
       }
       else {
-        await BuildOnsService.instance.validateBuildOnStep(authorization, widget.project.id, widget.buildOnStep.id);
+        await BuildOnsService.instance.validateBuildOnStep(userStore.authentificationHeader, widget.project.id, widget.buildOnStep.id);
       }
 
       if (_buildOnReturning != null) {
-        _buildOnReturning.status = BuildOnReturningStatus.validated;
+        if (_buildOnReturning.status != BuildOnReturningStatus.waiting) {
+          _buildOnReturning.status = BuildOnReturningStatus.validated;
+        }
+        else {
+           _buildOnReturning.status = userStore.user.role == UserRoles.admin ? BuildOnReturningStatus.waitingCoach : BuildOnReturningStatus.waitingAdmin;
+        }
       }
       else {
-        widget.project.associatedReturnings[widget.buildOnStep.id] = BuildOnReturning(null,
-          buildOnStepId: widget.buildOnStep.id,
-          type: BuildOnReturningType.comment,
-          status: BuildOnReturningStatus.validated,
-          comment: "Vous n'avez pas fournis de preuve pour cette étape"
-        );
+        if (userStore.user.role == UserRoles.admin) {
+            widget.project.associatedReturnings[widget.buildOnStep.id] = BuildOnReturning(null,
+            buildOnStepId: widget.buildOnStep.id,
+            type: BuildOnReturningType.comment,
+            status: BuildOnReturningStatus.waitingCoach,
+            comment: "Vous n'avez pas fournis de preuve pour cette étape"
+          );
+        }
+        else if (userStore.user.role == UserRoles.coach) {
+            widget.project.associatedReturnings[widget.buildOnStep.id] = BuildOnReturning(null,
+            buildOnStepId: widget.buildOnStep.id,
+            type: BuildOnReturningType.comment,
+            status: BuildOnReturningStatus.waitingAdmin,
+            comment: "Vous n'avez pas fournis de preuve pour cette étape"
+          );
+        }
       }
 
       widget.project.currentBuildOn = widget.nextBuildOn;
       widget.project.currentBuildOnStep = widget.nextBuildOnStep;
       widget.project.hasNotification = false;
     } else {
-      await BuildOnsService.instance.refuseReturning(authorization, widget.project.id, _buildOnReturning.id);
+      await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id);
     }
 
     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 

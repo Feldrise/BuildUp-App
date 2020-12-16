@@ -4,8 +4,8 @@ import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/material.dart';
 
-class AdminActiveMemberFormCard extends StatelessWidget {
-  const AdminActiveMemberFormCard({Key key, @required this.form}) : super(key: key);
+class MemberFormCard extends StatelessWidget {
+  const MemberFormCard({Key key, @required this.form}) : super(key: key);
   
   final BuForm form;
 

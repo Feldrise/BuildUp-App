@@ -78,7 +78,9 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
       if (returning == null) {
         color = const Color(0xff36a2b1);
       }
-      else if (returning.status == BuildOnReturningStatus.waiting) {
+      else if (returning.status == BuildOnReturningStatus.waiting ||
+               returning.status == BuildOnReturningStatus.waitingCoach ||
+               returning.status == BuildOnReturningStatus.waitingAdmin) {
         color = const Color(0xfff4bd2a);
       }
 
@@ -96,7 +98,10 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
         )
       );
 
-      if (buildOnStep.id == currentBuildOnStep || returning?.status == BuildOnReturningStatus.waiting) {
+      if (buildOnStep.id == currentBuildOnStep || 
+          returning?.status == BuildOnReturningStatus.waiting ||
+          returning?.status == BuildOnReturningStatus.waitingCoach ||
+          returning?.status == BuildOnReturningStatus.waitingAdmin) {
         break;
       }
     }

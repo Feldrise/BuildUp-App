@@ -13,7 +13,7 @@ class BuilderStore with ChangeNotifier {
     }
 
     try {
-      _builder = await BuildersService.instance.getBuilder(associatedUser.authentificationHeader, associatedUser);
+      _builder = await BuildersService.instance.getBuilder(associatedUser.authentificationHeader, UserRoles.builder, associatedUser);
     }
     on Exception {
       rethrow;

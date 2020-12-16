@@ -24,7 +24,7 @@ class BuildersService {
   static final BuildersService instance = BuildersService._privateConstructor();
 
   // GET
-  Future<BuBuilder> getBuilder(String authorization, User associatedUser) async {
+  Future<BuBuilder> getBuilder(String authorization, String currentUserRole, User associatedUser) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/${associatedUser.id}',
       headers: <String, String>{
@@ -34,7 +34,7 @@ class BuildersService {
 
     if (response.statusCode == 200) {
       final map = jsonDecode(response.body) as Map<String, dynamic>;
-      final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+      final Project associatedProject = await getProjectForBuilder(authorization, currentUserRole, map['id'] as String);
       final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
       final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
       final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
@@ -63,7 +63,7 @@ class BuildersService {
 
       for (final map in jsonBuilders) {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
-        final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+        final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
 
         builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
@@ -90,7 +90,7 @@ class BuildersService {
 
       for (final map in jsonBuilders) {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
-        final Project associatedProject = await getProjectForBuilder(authorization, map['id'] as String);
+        final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
         final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
         final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
@@ -146,7 +146,7 @@ class BuildersService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<Project> getProjectForBuilder(String authorization, String builderId) async {
+  Future<Project> getProjectForBuilder(String authorization, String currentUserRole, String builderId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/$builderId/project',
       headers: <String, String>{
@@ -166,7 +166,9 @@ class BuildersService {
           continue;
         }
 
-        if (returning.status == BuildOnReturningStatus.waiting) {
+        if (returning.status == BuildOnReturningStatus.waiting && currentUserRole != UserRoles.builder ||
+            returning.status == BuildOnReturningStatus.waitingCoach && currentUserRole == UserRoles.coach ||
+            returning.status == BuildOnReturningStatus.waitingAdmin && currentUserRole == UserRoles.admin) {
           hasNotification = true;
         }
 

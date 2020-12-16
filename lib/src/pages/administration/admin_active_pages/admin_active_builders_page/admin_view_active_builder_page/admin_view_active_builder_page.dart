@@ -1,6 +1,6 @@
 
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/widgets/admin_active_member_form_card.dart';
+import 'package:buildup/src/shared/widgets/general/admin_active_member_form_card.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_info_card.dart';
@@ -42,7 +42,7 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     BuilderProjectCard(builder: builder, onSaveProject: (builder) => _saveBuilderProject(context, builder),),
                     const SizedBox(height: 30),
-                    AdminActiveMemberFormCard(form: builder.associatedForm,)
+                    MemberFormCard(form: builder.associatedForm,)
                   ],
                 ),
               ),
