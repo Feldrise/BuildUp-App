@@ -1,22 +1,30 @@
+
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_profile_dialog.dart';
-import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
+import 'package:buildup/src/shared/dialogs/coach/coach_profile_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
+import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
+import 'package:buildup/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdminActiveCoachProfileCard extends StatefulWidget {
-  const AdminActiveCoachProfileCard({Key key, @required this.coach}) : super(key: key);
+class CoachProfileCard extends StatefulWidget {
+  const CoachProfileCard({
+    Key key, 
+    @required this.coach,
+    @required this.onSaveProfile
+  }) : super(key: key);
   
   final Coach coach;
 
+  final Function(Coach) onSaveProfile;
+
   @override
-  _AdminActiveCoachProfileCardState createState() => _AdminActiveCoachProfileCardState();
+  _CoachProfileCardState createState() => _CoachProfileCardState();
 }
 
-class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCard> {
+class _CoachProfileCardState extends State<CoachProfileCard> {
   @override
   Widget build(BuildContext context) {
     return BuCard(
@@ -64,10 +72,10 @@ class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCar
       const SizedBox(height: 15, width: 15,),
       Flexible(
         child: Wrap(
-                  children: [
+          children: [
             _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.coach.associatedUser.birthdate)),
-            _buildSmallInfo("Département", widget.coach.department.toString()),
-            _buildSmallInfo("Situation", widget.coach.situation),
+            _buildSmallInfo("Département", kFrenchDepartment[widget.coach.department]),
+            _buildSmallInfo("Situation", kSituations[widget.coach.situation] ?? "Inconnue"),
             _buildSmallInfo("Tag Disocrd", widget.coach.associatedUser.discordTag),
             _buildSmallInfo("Email", widget.coach.associatedUser.email),
           ],
@@ -114,19 +122,11 @@ class _AdminActiveCoachProfileCardState extends State<AdminActiveCoachProfileCar
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveCoachProfileDialog(coach: widget.coach)
+        builder: (context) => CoachProfileDialog(
+          coach: widget.coach,
+          onSaveCoachProfile: widget.onSaveProfile,
+        )
       )
-      // PageRouteBuilder(
-      //   pageBuilder: (context, animation, anotherAnimation) => AdminActiveCoachProfileDialog(coach: coach),
-      //   transitionsBuilder: (context, animation, anotherAnimation, child) {
-      //     animation = CurvedAnimation(parent: animation, curve: Curves.linear);
-
-      //     return FadeTransition(
-      //       opacity: animation,
-      //       child: child,
-      //     );
-      //   }
-      // )
     );
 
     setState(() {});

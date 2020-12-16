@@ -1,31 +1,31 @@
+
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/providers/active_coachs_store.dart';
-import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_date_form_field.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
-import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-class AdminActiveCoachProfileDialog extends StatefulWidget {
-  const AdminActiveCoachProfileDialog({Key key, @required this.coach}) : super(key: key); 
+class CoachProfileDialog extends StatefulWidget {
+  const CoachProfileDialog({Key key, @required this.coach, this.onSaveCoachProfile}) : super(key: key); 
   
   final Coach coach;
 
+  final Function(Coach) onSaveCoachProfile;
+
   @override
-  _AdminActiveCoachProfileDialogState createState() => _AdminActiveCoachProfileDialogState();
+  _CoachProfileDialogState createState() => _CoachProfileDialogState();
 }
 
-class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileDialog> {
+class _CoachProfileDialogState extends State<CoachProfileDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameTextController = TextEditingController();
@@ -60,7 +60,7 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
   }
 
   @override
-  void didUpdateWidget(covariant AdminActiveCoachProfileDialog oldWidget) {
+  void didUpdateWidget(covariant CoachProfileDialog oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _firstNameTextController.text = widget.coach.associatedUser.firstName;
@@ -479,10 +479,8 @@ class _AdminActiveCoachProfileDialogState extends State<AdminActiveCoachProfileD
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
       try {
-        final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-
-        await Provider.of<ActiveCoachsStore>(context, listen: false).updateCoach(authorization, widget.coach, updateUser: true);
-
+        await widget.onSaveCoachProfile(widget.coach);
+        
         setState(() {
           _hasError = false;
           _statusMessage = "Le profil a bien été mis à jour.";

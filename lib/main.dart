@@ -5,9 +5,11 @@ import 'package:buildup/services/authentication_service.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
 import 'package:buildup/src/pages/builder/builder_main_page/builder_main_page.dart';
+import 'package:buildup/src/pages/coachs/coach_main_page/coach_main_page.dart';
 import 'package:buildup/src/pages/splash_screen/splash_screen.dart';
 import 'package:buildup/src/providers/builder_store.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
+import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserStore(),),
         ChangeNotifierProvider(create: (context) => BuilderStore()),
+        ChangeNotifierProvider(create: (context) => CoachStore(),),
         ChangeNotifierProvider(create: (context) => BuildOnsStore(),),
         ChangeNotifierProvider(create: (context) => NtfReferentsStore(),)
       ],
@@ -101,6 +104,9 @@ class MyApp extends StatelessWidget {
                 else if (loggedUser.role == UserRoles.builder) {
                   return _buildBuilderPage(context, loggedUser);
                 }
+                else if (loggedUser.role == UserRoles.coach) {
+                  return _buildCoachPage(context, loggedUser);
+                }
                 else {
                   return const Center(child: Text("Erreur lors du chargement de l'application : vous n'avez pas les permissions nécessaires"),);
                 }
@@ -144,6 +150,39 @@ class MyApp extends StatelessWidget {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
             child: Center(child: BuLoadingIndicator(message: "Récupération des informations Builder...")),
+          );
+        },
+      ),
+    );
+  }
+
+  
+  Widget _buildCoachPage(BuildContext context, User loggedUser) {
+    return Scaffold(
+      body: FutureBuilder<void>(
+        future: Provider.of<CoachStore>(context).loadCoachFromUser(loggedUser),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              AuthenticationService.instance.logout();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                child: Center(
+                  child: BuStatusMessage(
+                    title: "Erreur",
+                    message: "Erreure lors de la récupération des informations Coachs. Veuillez nous le signaler et raffraichir la page (ou redémarrer l'application) pour réessayer : ${snapshot.error}",
+                  ),
+                ),
+              );
+            }
+
+            return CoachMainPage();
+          }
+
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+            child: Center(child: BuLoadingIndicator(message: "Récupération des informations Coach...")),
           );
         },
       ),

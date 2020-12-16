@@ -73,7 +73,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(constraint.maxWidth / 2), 
                   child: Image.asset(
-                    "&ssets/icons/icon_profile_picture.png",
+                    "assets/icons/icon_profile_picture.png",
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -16,6 +16,27 @@ class CoachsService {
   static final CoachsService instance = CoachsService._privateConstructor();
 
   // GET
+  
+  // GET
+  Future<Coach> getCoach(String authorization, User associatedUser) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/${associatedUser.id}',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final map = jsonDecode(response.body) as Map<String, dynamic>;
+      final BuForm associatedForm = await getFormForCoach(authorization, map['id'] as String);
+
+      return Coach.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm,);
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+
+  }
+
   Future<List<Coach>> getCandidatingCoach(String authorization) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/candidating',
