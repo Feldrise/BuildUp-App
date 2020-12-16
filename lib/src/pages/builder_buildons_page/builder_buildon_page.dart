@@ -7,7 +7,7 @@ import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_notification_dot.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/general/bu_stepper.dart';
-import 'package:buildup/src/shared/widgets/buildons/buildon_card.dart';
+import 'package:buildup/src/pages/builder_buildons_page/widgets/buildon_card.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

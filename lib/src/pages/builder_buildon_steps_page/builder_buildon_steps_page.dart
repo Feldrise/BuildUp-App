@@ -6,7 +6,7 @@ import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/src/pages/builder_buildon_steps_page/widgets/buildon_step_buildon.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_stepper.dart';
-import 'package:buildup/src/shared/widgets/buildons/buildon_step_card.dart';
+import 'package:buildup/src/pages/builder_buildon_steps_page/widgets/buildon_step_card.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 

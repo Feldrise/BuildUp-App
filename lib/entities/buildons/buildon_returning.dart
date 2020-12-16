@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:buildup/entities/bu_file.dart';
+
 mixin BuildOnReturningType {
   static const String file = "File";
   static const String link = "External";
@@ -29,15 +33,14 @@ class BuildOnReturning {
   String type;
   String status;
 
-  String fileName;
-  String fileId;
+  BuFile file;
   String comment;
 
   BuildOnReturning(this.id, {
     this.buildOnStepId,
     this.type,
     this.status,
-    this.fileName,
+    this.file,
     this.comment
   });
 
@@ -46,7 +49,20 @@ class BuildOnReturning {
     buildOnStepId = map['buildOnStepId'] as String,
     type = map['type'] as String,
     status = map['status'] as String,
-    fileName = map['fileName'] as String,
-    fileId = map['fileId'] as String,
-    comment = map['comment'] as String;
+    comment = map['comment'] as String {
+    file = BuFile(
+      map['fileId'] as String,
+      fileName: map['fileName'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "buildOnStepId": buildOnStepId,
+      "type": type,
+      "fileName": file?.fileName,
+      "file": file?.data != null ? base64Encode(file.data) : null,
+      "comment": comment
+    };
+  }
 }

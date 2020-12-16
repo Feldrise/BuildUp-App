@@ -19,7 +19,7 @@ class BuModalDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 50),
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           border: const Border(
@@ -47,7 +47,7 @@ class BuModalDialog extends StatelessWidget {
             const SizedBox(height: 20,),
             const Divider(),
             const SizedBox(height: 30,),
-            content,
+            Flexible(child: SingleChildScrollView(child: content)),
             const SizedBox(height: 40,),
             if (MediaQuery.of(context).size.width > 476) Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

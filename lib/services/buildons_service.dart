@@ -142,6 +142,23 @@ class BuildOnsService {
 
   
   // RETURNINGS
+  Future<String> sendReturning(String authorization, String projectId, BuildOnReturning returning) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/projects/$projectId/returning',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(returning.toJson())
+    );
+
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
   Future<Uint8List> downloadReturningContent(String authorization, String projectId, String returningId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/projects/$projectId/returnings/$returningId/file',
