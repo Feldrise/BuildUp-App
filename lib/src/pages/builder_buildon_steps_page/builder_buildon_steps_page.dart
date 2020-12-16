@@ -3,15 +3,15 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_buildon_step_active_builder_page/widgets/admin_buildon_step_buildon.dart';
+import 'package:buildup/src/pages/builder_buildon_steps_page/widgets/buildon_step_buildon.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_stepper.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_step_card.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
-  const AdminBuildOnStepActiveBuilderPage({
+class BuilderBuildOnStepsPage extends StatelessWidget {
+  const BuilderBuildOnStepsPage({
     Key key,
     @required this.builder,
     @required this.buildOn,
@@ -37,7 +37,7 @@ class AdminBuildOnStepActiveBuilderPage extends StatelessWidget {
           children: [
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1200),
-              child: AdminBuildOnStepBuildOn(buildOn: buildOn)
+              child: BuildOnStepBuildOn(buildOn: buildOn)
             ),
             Flexible(
               child: Padding(

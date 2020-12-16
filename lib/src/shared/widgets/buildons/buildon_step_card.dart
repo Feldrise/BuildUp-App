@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/entities/project.dart';
+import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/buildons_service.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
@@ -181,13 +182,35 @@ class BuildOnStepCard extends StatelessWidget {
   }
 
   Widget _buildValidationButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: GestureDetector(
-        onTap: () => _processValidation(context),
-        child: const Text("Procéder à la validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
-      ),
-    );
+    return Consumer<UserStore>(
+      builder: (context, userStore, child) {
+        if (userStore.user.role == UserRoles.builder) {
+          if (buildOnReturning != null) {
+            return Container();
+          }
+
+          return Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () => _askValidation(context),
+              child: const Text("Demander validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
+            ),
+          );
+        }
+
+        return Align(
+          alignment: Alignment.bottomRight,
+          child: GestureDetector(
+            onTap: () => _processValidation(context),
+            child: const Text("Procéder à la validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
+          ),
+        );
+      },
+    ); 
+  }
+
+  Future _askValidation(BuildContext context) async {
+
   }
 
   Future _processValidation(BuildContext context) async {

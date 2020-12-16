@@ -2,8 +2,8 @@ import 'package:buildup/entities/buildons/buildon.dart';
 import 'package:buildup/src/shared/widgets/buildons/buildon_image_widget.dart';
 import 'package:flutter/material.dart';
 
-class AdminBuildOnStepBuildOn extends StatelessWidget {
-  const AdminBuildOnStepBuildOn({Key key, @required this.buildOn}) : super(key: key);
+class BuildOnStepBuildOn extends StatelessWidget {
+  const BuildOnStepBuildOn({Key key, @required this.buildOn}) : super(key: key);
 
   final BuildOn buildOn;
 

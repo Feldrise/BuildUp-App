@@ -1,8 +1,8 @@
 
 import 'package:buildup/entities/builder.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_buildons_active_builder_page/admin_buildons_active_builder_page.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_view_active_builder_page/admin_view_active_builder_page.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/dialogs/admin_active_builder_delete_dialog.dart';
+import 'package:buildup/src/pages/builder_buildons_page/builder_buildon_page.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
@@ -273,7 +273,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
       page = AdminViewActiveBuilderPage(builder: builder);
     }
     else if (route == AdminActiveBuilderCardAction.viewBuildOns) {
-      page = AdminBuildOnsActiveBuilderPage(builder: builder);
+      page = BuilderBuildOnsPage(builder: builder);
     }
 
     if (page != null) {

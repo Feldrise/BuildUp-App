@@ -1,6 +1,6 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/buildons/buildon.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_builders_page/admin_buildon_step_active_builder_page/admin_buildon_step_active_builder_page.dart';
+import 'package:buildup/src/pages/builder_buildon_steps_page/builder_buildon_steps_page.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
@@ -13,8 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
-  const AdminBuildOnsActiveBuilderPage({Key key, @required this.builder}) : super(key: key);
+class BuilderBuildOnsPage extends StatelessWidget {
+  const BuilderBuildOnsPage({Key key, @required this.builder}) : super(key: key);
   
   final BuBuilder builder;
 
@@ -133,7 +133,7 @@ class AdminBuildOnsActiveBuilderPage extends StatelessWidget {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminBuildOnStepActiveBuilderPage(
+        builder: (context) => BuilderBuildOnStepsPage(
           builder: builder, 
           buildOn: buildOn,
           nextBuildOn: buildOns.last == buildOn ? null : buildOns[buildOns.indexOf(buildOn) + 1]
