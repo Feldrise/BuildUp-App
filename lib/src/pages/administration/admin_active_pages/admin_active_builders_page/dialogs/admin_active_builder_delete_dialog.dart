@@ -1,5 +1,6 @@
 
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/src/shared/dialogs/bu_modal_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -11,55 +12,22 @@ class AdminActiveBuilderDeleteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 50),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          border: const Border(
-            top: BorderSide(
-              width: 4,
-              color: colorPrimary
-            )
-          )
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text("Supprimer le membre actif", style: Theme.of(context).textTheme.headline4,)
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context, false),
-                  child: const Icon(Icons.close, size: 28,),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20,),
-            const Divider(),
-            const SizedBox(height: 30,),
-            const Text("Souhaitez-vous vraiment supprimer le membre actif ?", style: TextStyle(color: colorPrimary)),
-            const SizedBox(height: 20,),
-            buildDescription(),
-            const SizedBox(height: 40,),
-            if (MediaQuery.of(context).size.width > 476) Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: buildButtons(context),
-            ) else Column(
-              mainAxisSize: MainAxisSize.min,
-              children: buildButtons(context),
-            )
-          ],
-        ),
+    return BuModalDialog(
+      title: "Supprimer le membre actif",
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text("Souhaitez-vous vraiment supprimer le membre actif ?", style: TextStyle(color: colorPrimary)),
+          const SizedBox(height: 20,),
+          _buildDescription(),
+        ],
       ),
+      actions: _buildButtons(context),
     );
   }
 
-  List<Widget> buildButtons(BuildContext context) {
+  List<Widget> _buildButtons(BuildContext context) {
     return [
       BuButton(
         buttonType: BuButtonType.secondary,
@@ -75,7 +43,7 @@ class AdminActiveBuilderDeleteDialog extends StatelessWidget {
     ];
   }
 
-  Widget buildDescription() {
+  Widget _buildDescription() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       width: 240,
