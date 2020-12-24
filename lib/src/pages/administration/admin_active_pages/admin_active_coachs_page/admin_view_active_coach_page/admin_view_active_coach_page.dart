@@ -1,7 +1,7 @@
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/widgets/admin_active_coach_info_card.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/widgets/coach/coach_info_card.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/admin_active_member_form_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
@@ -36,7 +36,7 @@ class AdminViewActiveCoachPage extends StatelessWidget {
                   children: [
                     CoachProfileCard(coach: coach, onSaveProfile: (coach) => _saveCoachProfile(context, coach),),
                     const SizedBox(height: 30),
-                    AdminActiveCoachInfoCard(coach: coach),
+                    CoachInfoCard(coach: coach, onSaveInfo: (coach) => _saveCoachInfo(context, coach),),
                     const SizedBox(height: 30),
                     MemberFormCard(form: coach.associatedForm,)
                   ],
@@ -54,6 +54,17 @@ class AdminViewActiveCoachPage extends StatelessWidget {
 
     try {
       await Provider.of<ActiveCoachsStore>(context, listen: false).updateCoach(authorization, coach, updateUser: true);
+    }
+    on Exception {
+      rethrow;
+    }
+  }
+
+  Future _saveCoachInfo(BuildContext context, Coach coach) async {
+    final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
+
+    try {
+      await Provider.of<ActiveCoachsStore>(context, listen: false).updateCoach(authorization, coach);
     }
     on Exception {
       rethrow;

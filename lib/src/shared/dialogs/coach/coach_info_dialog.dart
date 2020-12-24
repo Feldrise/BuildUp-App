@@ -1,27 +1,31 @@
+
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/providers/active_coachs_store.dart';
-import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
-import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-class AdminActiveCoachInfoDialog extends StatefulWidget {
+class CoachInfoDialog extends StatefulWidget {
+  const CoachInfoDialog({
+    Key key,
+    @required this.coach,
+    @required this.onSaveInfo
+  }) : super(key: key);
+
   final Coach coach;
 
-  const AdminActiveCoachInfoDialog({Key key, this.coach}) : super(key: key);
+  final Function(Coach) onSaveInfo;
 
   @override
-  _AdminActiveCoachInfoDialogState createState() => _AdminActiveCoachInfoDialogState();
+  _CoachInfoDialogState createState() => _CoachInfoDialogState();
 }
 
-class _AdminActiveCoachInfoDialogState extends State<AdminActiveCoachInfoDialog> {
+class _CoachInfoDialogState extends State<CoachInfoDialog> {
   bool _hasError = false;
   String _statusMessage = "";
 
@@ -35,7 +39,7 @@ class _AdminActiveCoachInfoDialogState extends State<AdminActiveCoachInfoDialog>
   }
 
   @override
-  void didUpdateWidget(covariant AdminActiveCoachInfoDialog oldWidget) {
+  void didUpdateWidget(covariant CoachInfoDialog oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _currentStep = widget.coach.step;
@@ -142,9 +146,7 @@ class _AdminActiveCoachInfoDialogState extends State<AdminActiveCoachInfoDialog>
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
     try {
-      final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
-
-      await Provider.of<ActiveCoachsStore>(context, listen: false).updateCoach(authorization, widget.coach);
+      await widget.onSaveInfo(widget.coach);
 
       setState(() {
         _hasError = false;

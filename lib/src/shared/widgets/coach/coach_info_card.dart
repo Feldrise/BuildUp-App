@@ -1,15 +1,21 @@
 
 import 'package:buildup/entities/coach.dart';
-import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_coachs_page/admin_view_active_coach_page/dialogs/admin_active_coach_info_dialog.dart';
-import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
+import 'package:buildup/src/shared/dialogs/coach/coach_info_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AdminActiveCoachInfoCard extends StatelessWidget {
-  const AdminActiveCoachInfoCard({Key key, @required this.coach}) : super(key: key);
+class CoachInfoCard extends StatelessWidget {
+  const CoachInfoCard({
+    Key key, 
+    @required this.coach,
+    this.onSaveInfo
+  }) : super(key: key);
   
   final Coach coach;
+
+  final Function(Coach) onSaveInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class AdminActiveCoachInfoCard extends StatelessWidget {
         children: [
           BuTitledCardBar(
             title: "Informations Coach",
-            onModified: () => _updateInfo(context),
+            onModified: onSaveInfo != null ? () => _updateInfo(context) : null,
           ),
           const SizedBox(height: 30,),
           _buildSmallInfo("étape actuelle",_buildCurrentStep())
@@ -87,7 +93,10 @@ class AdminActiveCoachInfoCard extends StatelessWidget {
     await Navigator.push<void>(
       context,
       CupertinoPageRoute(
-        builder: (context) => AdminActiveCoachInfoDialog(coach: coach)
+        builder: (context) => CoachInfoDialog(
+          coach: coach,
+          onSaveInfo: onSaveInfo,
+        )
       ),
     );
   }

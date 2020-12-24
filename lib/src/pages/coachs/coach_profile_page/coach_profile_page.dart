@@ -2,6 +2,7 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/widgets/coach/coach_info_card.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
@@ -36,6 +37,9 @@ class CoachProfilPage extends StatelessWidget {
                           coach: coachStore.coach,
                           onSaveProfile: (coach) => _saveCoachProfile(context, coach),
                         ),
+                        const SizedBox(height: 30),
+                        CoachInfoCard(coach: coachStore.coach),
+                    
                       ],
                     ),
                   ),
