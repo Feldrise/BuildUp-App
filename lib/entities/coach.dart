@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/services/coachs_services.dart';
 import 'package:flutter/material.dart';
 
 mixin CoachStatus {
@@ -34,6 +38,8 @@ class Coach {
   final User associatedUser;
   final BuForm associatedForm;
 
+  BuImage coachCard;
+
   DateTime candidatingDate;
 
   String status;
@@ -45,6 +51,7 @@ class Coach {
 
   Coach.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm}) :
     id = map['id'] as String,
+    coachCard = BuImage("${CoachsService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
     candidatingDate = DateTime.tryParse(map['candidatingDate'] as String),
     status = map['status'] as String,
     step = map['step'] as String,
@@ -53,7 +60,15 @@ class Coach {
     description = map['description'] as String;
 
   Map<String, dynamic> toJson() {
+    String coachCardString;
+
+    if (!coachCard.isImageEvenWithServer && coachCard.image != null) {
+      coachCardString = base64Encode(coachCard.image.bytes);
+    }
+
+
     return <String, dynamic>{
+      "coachCard": coachCardString,
       "userId": associatedUser.id,
       "status": status,
       "step": step,

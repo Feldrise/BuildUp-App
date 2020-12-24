@@ -6,6 +6,7 @@ import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
+import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,35 +71,24 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
                 const SizedBox(height: 15),
               },
               Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("étape actuelle".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
-                      const SizedBox(height: 10,),
-                      SizedBox(
-                        height: 200,
-                        child: BuDropdown<String>(
-                          items: <String, String>{
-                            CoachSteps.preselected: CoachSteps.detailled[CoachSteps.preselected],
-                            CoachSteps.meeting: CoachSteps.detailled[CoachSteps.meeting],
-                            CoachSteps.active: CoachSteps.detailled[CoachSteps.active],
-                            CoachSteps.stopped: CoachSteps.detailled[CoachSteps.stopped],
-                          },
-                          currentValue: _currentStep,
-                          onChanged: (newValue) {
-                            widget.coach.step = newValue;
-                            setState(() {
-                              _currentStep = newValue;
-                            });
-                          },
-                        ),
-                      )
-                    ],
+                child: SingleChildScrollView(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth > 822) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _buildForm(),
+                        );
+                      }
+
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: _buildForm(),
+                      );
+                    },
                   ),
-                ),
+                )
               ),
               const SizedBox(height: 15,),
               Wrap(
@@ -133,6 +123,51 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
         )
       )
     );
+  }
+
+  List<Widget> _buildForm() {
+    return [
+      Flexible(
+        flex: 3,
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 348),
+          child: BuImagePicker(image: widget.coach.coachCard,),
+        ),
+      ),
+      const SizedBox(width: 30, height: 30,),
+      Flexible(
+        flex: 7,
+        child:Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("étape actuelle".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
+              const SizedBox(height: 10,),
+              SizedBox(
+                height: 200,
+                child: BuDropdown<String>(
+                  items: <String, String>{
+                    CoachSteps.preselected: CoachSteps.detailled[CoachSteps.preselected],
+                    CoachSteps.meeting: CoachSteps.detailled[CoachSteps.meeting],
+                    CoachSteps.active: CoachSteps.detailled[CoachSteps.active],
+                    CoachSteps.stopped: CoachSteps.detailled[CoachSteps.stopped],
+                  },
+                  currentValue: _currentStep,
+                  onChanged: (newValue) {
+                    widget.coach.step = newValue;
+                    setState(() {
+                      _currentStep = newValue;
+                    });
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      )
+    ];
   }
 
   void _cancel() {

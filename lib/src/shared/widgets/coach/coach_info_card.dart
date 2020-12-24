@@ -2,6 +2,7 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/src/shared/dialogs/coach/coach_info_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
+import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
 import 'package:buildup/src/shared/widgets/general/bu_titled_card_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,39 @@ class CoachInfoCard extends StatelessWidget {
             onModified: onSaveInfo != null ? () => _updateInfo(context) : null,
           ),
           const SizedBox(height: 30,),
-          _buildSmallInfo("étape actuelle",_buildCurrentStep())
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > 822) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _buildInfo(),
+                );
+              }
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _buildInfo(),
+              );
+            },
+          )
+          
         ],
       ),
     );
+  }
+
+  List<Widget> _buildInfo() {
+    return [
+      Flexible(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 265),
+          child: BuImageWidget(image: coach.coachCard,),
+        ),
+      ),
+      const SizedBox(width: 30, height: 30,),
+      Flexible(child: _buildSmallInfo("étape actuelle",_buildCurrentStep()))
+    ];
   }
 
   Widget _buildSmallInfo(String title, Widget info) {
