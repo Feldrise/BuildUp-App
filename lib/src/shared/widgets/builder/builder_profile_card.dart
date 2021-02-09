@@ -74,7 +74,7 @@ class _BuilderProfileCardState extends State<BuilderProfileCard> {
         child: Wrap(
           children: [
             _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.builder.associatedUser.birthdate)),
-            _buildSmallInfo("Département", kFrenchDepartment[widget.builder.department]),
+            _buildSmallInfo("Département", kFrenchDepartment[widget.builder.associatedUser.department]),
             _buildSmallInfo("Situation", kSituations[widget.builder.situation] ?? "Inconnue"),
             _buildSmallInfo("Tag Disocrd", widget.builder.associatedUser.discordTag),
             _buildSmallInfo("Email", widget.builder.associatedUser.email),

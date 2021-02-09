@@ -22,12 +22,15 @@ mixin CoachSteps {
   static const String preselected = "Preselected";
   static const String meeting = "Meeting";
   static const String meetingDone = "MeetingDone";
+  static const String signing = "Signing";
   static const String active = "Active";
   static const String stopped = "Stopped";
 
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
     meeting: "Entretient avec un responsable",
+    meetingDone: "Entretient avec un responsable réalisé",
+    signing: "Signature",
     active: "Actif",
     stopped: "Arrêté"
   };
@@ -46,7 +49,6 @@ class Coach {
   String status;
   String step;
 
-  int department;
   String situation;
   String description;
 
@@ -56,7 +58,6 @@ class Coach {
     candidatingDate = DateTime.tryParse(map['candidatingDate'] as String),
     status = map['status'] as String,
     step = map['step'] as String,
-    department = map['department'] as int,
     situation = map['situation'] as String,
     description = map['description'] as String;
 
@@ -73,7 +74,6 @@ class Coach {
       "userId": associatedUser.id,
       "status": status,
       "step": step,
-      "department": department,
       "situation": situation,
       "description": description
     };

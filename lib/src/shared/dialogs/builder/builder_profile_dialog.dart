@@ -56,7 +56,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
     _descriptionTextControler.text = widget.builder.description;
 
     _currentSituation = widget.builder.situation;
-    _currentDepartment = widget.builder.department;
+    _currentDepartment = widget.builder.associatedUser.department;
   }
 
   @override
@@ -71,7 +71,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
     _descriptionTextControler.text = widget.builder.description;
 
     _currentSituation = widget.builder.situation;
-    _currentDepartment = widget.builder.department;
+    _currentDepartment = widget.builder.associatedUser.department;
   }
 
   @override
@@ -473,7 +473,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       widget.builder.situation = _currentSituation;
-      widget.builder.department = _currentDepartment;
+      widget.builder.associatedUser.department = _currentDepartment;
       
       final GlobalKey<State> keyLoader = GlobalKey<State>();
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 

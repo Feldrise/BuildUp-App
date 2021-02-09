@@ -30,6 +30,8 @@ class User {
 
   String role;
   String token;
+  
+  int department;
 
   String newPassword;
   
@@ -43,6 +45,7 @@ class User {
     this.birthdate,
     this.email,
     this.discordTag,
+    this.department,
     this.username,
     this.role,
     this.token
@@ -58,6 +61,8 @@ class User {
     email = map['email'] as String,
     discordTag = map['discordTag'] as String,
     username = map['username'] as String,
+
+    department = map['department'] as int,
 
     role = map['role'] as String,
     token = map['token'] as String;
@@ -77,6 +82,7 @@ class User {
       "birthdate": birthdate.toIso8601String(),
       "email": email,
       "discordTag": discordTag,
+      "department": department,
       "password": newPassword
     };
   }

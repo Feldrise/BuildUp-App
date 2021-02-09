@@ -36,7 +36,7 @@ class CandidatingCoachsStore with ChangeNotifier {
     // We prevent builder to stay preselected
     if (toUpdate.status != CoachStatus.candidating &&
         toUpdate.step == CoachSteps.preselected) {
-      toUpdate.step = CoachSteps.meeting;
+      toUpdate.step = CoachSteps.meetingDone;
     }
 
     await CoachsService.instance.updateCoach(authorization, toUpdate);

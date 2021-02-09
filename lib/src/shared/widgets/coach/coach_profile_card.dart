@@ -74,7 +74,7 @@ class _CoachProfileCardState extends State<CoachProfileCard> {
         child: Wrap(
           children: [
             _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.coach.associatedUser.birthdate)),
-            _buildSmallInfo("Département", kFrenchDepartment[widget.coach.department]),
+            _buildSmallInfo("Département", kFrenchDepartment[widget.coach.associatedUser.department]),
             _buildSmallInfo("Situation", kSituations[widget.coach.situation] ?? "Inconnue"),
             _buildSmallInfo("Tag Disocrd", widget.coach.associatedUser.discordTag),
             _buildSmallInfo("Email", widget.coach.associatedUser.email),

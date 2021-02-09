@@ -55,7 +55,6 @@ class BuBuilder {
   String status;
   String step;
 
-  int department;
   String situation;
   String description;
 
@@ -65,7 +64,6 @@ class BuBuilder {
     programEndDate = DateTime.tryParse(map['programEndDate'] as String),
     status = map['status'] as String,
     step = map['step'] as String,
-    department = map['department'] as int,
     situation = map['situation'] as String,
     description = map['description'] as String;
 
@@ -84,7 +82,6 @@ class BuBuilder {
       "programEndDate": programEndDate?.toIso8601String(),
       "status": status,
       "step": step,
-      "department": department,
       "situation": situation,
       "description": description
     };

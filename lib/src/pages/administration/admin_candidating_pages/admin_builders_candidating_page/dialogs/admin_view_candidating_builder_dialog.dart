@@ -54,7 +54,7 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
                       children: [
                         buildSmallInfo("Nom", builder.associatedUser.fullName),
                         buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(builder.associatedUser.birthdate)),
-                        buildSmallInfo("Département", builder.department.toString())
+                        buildSmallInfo("Département", builder.associatedUser.department.toString())
                       ],
                     ),
                     const SizedBox(height: 10,),

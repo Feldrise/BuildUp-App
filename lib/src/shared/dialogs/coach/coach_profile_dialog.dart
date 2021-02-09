@@ -56,7 +56,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     _descriptionTextControler.text = widget.coach.description;
 
     _currentSituation = widget.coach.situation;
-    _currentDepartment = widget.coach.department;
+    _currentDepartment = widget.coach.associatedUser.department;
   }
 
   @override
@@ -71,7 +71,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     _descriptionTextControler.text = widget.coach.description;
 
     _currentSituation = widget.coach.situation;
-    _currentDepartment = widget.coach.department;
+    _currentDepartment = widget.coach.associatedUser.department;
   }
 
   @override
@@ -473,7 +473,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       widget.coach.situation = _currentSituation;
-      widget.coach.department = _currentDepartment;
+      widget.coach.associatedUser.department = _currentDepartment;
       
       final GlobalKey<State> keyLoader = GlobalKey<State>();
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 

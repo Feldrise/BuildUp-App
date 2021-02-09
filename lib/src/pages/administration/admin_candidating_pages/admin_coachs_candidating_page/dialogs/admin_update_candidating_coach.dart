@@ -98,11 +98,7 @@ class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidati
             Text("état".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: <String, String>{
-                CoachStatus.candidating: CoachStatus.detailled[CoachStatus.candidating],
-                CoachStatus.validated: CoachStatus.detailled[CoachStatus.validated],
-                CoachStatus.deleted: CoachStatus.detailled[CoachStatus.deleted]
-              },
+              items: CoachStatus.detailled,
               currentValue: _currentStatus,
               onChanged: (newValue) {
                 widget.coach.status = newValue;
@@ -123,12 +119,7 @@ class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidati
             Text("étape".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: <String, String>{
-                CoachSteps.preselected: CoachSteps.detailled[CoachSteps.preselected],
-                CoachSteps.meeting: CoachSteps.detailled[CoachSteps.meeting],
-                CoachSteps.active: CoachSteps.detailled[CoachSteps.active],
-                CoachSteps.stopped: CoachSteps.detailled[CoachSteps.stopped],
-              },
+              items: CoachSteps.detailled,
               currentValue: _currentStep,
               onChanged: (newValue) {
                 widget.coach.step = newValue;

@@ -54,7 +54,7 @@ class AdminViewCandidatingCoachDialog extends StatelessWidget {
                       children: [
                         buildSmallInfo("Nom", coach.associatedUser.fullName),
                         buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(coach.associatedUser.birthdate)),
-                        buildSmallInfo("Département", coach.department.toString())
+                        buildSmallInfo("Département", coach.associatedUser.department.toString())
                       ],
                     ),
                     const SizedBox(height: 10,),
