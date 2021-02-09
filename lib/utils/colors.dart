@@ -20,6 +20,8 @@ const Color colorInfo = Color(0xffd1ecf1);
 const Color colorBorderInfo = Color(0xffbde4eb);
 const Color colorTextInfo = Color(0xff0c5460);
 
+const Color colorGreyBackground = Color(0xffebeced);
+
 Color darkenColor(Color c, {int percent = 10}) {
     assert(1 <= percent && percent <= 100);
     

@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/authentication_service.dart';
 import 'package:buildup/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:buildup/src/pages/autentication/login_page/login_page.dart';
 import 'package:buildup/src/pages/builder/builder_main_page/builder_main_page.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_main_page/candidating_process_main_page.dart';
 import 'package:buildup/src/pages/coachs/coach_main_page/coach_main_page.dart';
 import 'package:buildup/src/pages/splash_screen/splash_screen.dart';
 import 'package:buildup/src/providers/builder_store.dart';
@@ -144,6 +147,13 @@ class MyApp extends StatelessWidget {
               );
             }
 
+            final BuBuilder builder = Provider.of<BuilderStore>(context, listen: false).builder;
+            
+            if (builder.status == BuilderStatus.candidating ||
+                builder.status == BuilderStatus.deleted) {
+              return CandidatingProcessMainPage();
+            }
+
             return BuilderMainPage();
           }
 
@@ -175,6 +185,13 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               );
+            }
+
+            final Coach coach = Provider.of<CoachStore>(context, listen: false).coach;
+
+            if (coach.status == CoachStatus.candidating ||
+                coach.status == CoachStatus.deleted) {
+              return CandidatingProcessMainPage();
             }
 
             return CoachMainPage();

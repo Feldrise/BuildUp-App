@@ -21,6 +21,7 @@ mixin CoachStatus {
 mixin CoachSteps {
   static const String preselected = "Preselected";
   static const String meeting = "Meeting";
+  static const String meetingDone = "MeetingDone";
   static const String active = "Active";
   static const String stopped = "Stopped";
 
