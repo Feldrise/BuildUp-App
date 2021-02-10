@@ -150,6 +150,20 @@ class CoachsService {
   }
 
   // PUT
+  Future signIntegration(String authorization, String coachId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$coachId/sign_integration',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+
   Future updateCoach(String authorization, Coach toUpdate) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/${toUpdate.id}/update',

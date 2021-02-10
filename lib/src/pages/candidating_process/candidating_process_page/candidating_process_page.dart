@@ -1,9 +1,12 @@
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/user.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/coach/coach_process_sucess.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/coach/coach_validated_candidature.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/common/process_image.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/process_widget.dart';
 import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
+import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,26 +16,29 @@ class CandidatingProcessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Consumer<UserStore>(
-              builder: (context, userStore, child) {
-                if (userStore.user.role == UserRoles.builder) {
-                  return _buildBuilderCandidatingProcess();
-                }
-                else if(userStore.user.role == UserRoles.coach) {
-                  return _buildCoachCandidatingProcess();
-                }
-                else {
-                  return const Center(child: Text("Vous n'avez pas de processus de candiature..."),);
-                }
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Consumer<UserStore>(
+                builder: (context, userStore, child) {
+                  if (userStore.user.role == UserRoles.builder) {
+                    return _buildBuilderCandidatingProcess();
+                  }
+                  else if(userStore.user.role == UserRoles.coach) {
+                    return _buildCoachCandidatingProcess();
+                  }
+                  else {
+                    return const Center(child: Text("Vous n'avez pas de processus de candiature..."),);
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -42,7 +48,7 @@ class CandidatingProcessPage extends StatelessWidget {
   }
 
   Widget _buildCoachCandidatingProcess() {
-    const int maxSteps = 7;
+    const int maxSteps = 5;
     return Consumer<CoachStore>(
       builder: (context, coachStore, child) {
         // The coach has been refused
@@ -105,9 +111,52 @@ class CandidatingProcessPage extends StatelessWidget {
           );
         }
 
+        // The coach need to sign
+        if (!coachStore.coach.hasSignedFicheIntegration && coachStore.coach.step == CoachSteps.signing) {
+          return ProcessWidget(
+            title: "Candidature validée : édition carte et fiche d’intégration", 
+            description: const [
+              Text("Votre candidature a été validée."),
+              Text("Vous pouvez dès à présent remplir votre fiche d’intégration et éditer votre carte."),
+              Text("Pour finaliser votre inscription au programme pour une durée d’une année, lisez les documents présentés ci-dessous et n’oubliez pas de signer.")
+            ],
+            index: 4, maxSteps: maxSteps,
+            child: CoachValidatedCandidature(onSigned: () => _signCoachIntegration(context, coachStore)),
+          );
+        }
+        
+        if (coachStore.coach.hasSignedFicheIntegration) {
+          return ProcessWidget(
+            title: "Candidature terminée", 
+            description: const [
+              Text("Votre canditature est officiellement terminée ! Bienvenue dans le programme !"),
+              Text("Vous pouvez dès à présent télécharger votre carte ainsi que votre fiche d’intégration, puis accéder à votre espace personnel."),
+            ],
+            index: 5, maxSteps: maxSteps,
+            child: CoachProcessSuccess()
+          );
+        }
+
 
         return const Center(child: Text("Etape inconnue..."));
       },
     );
+  }
+
+  Future _signCoachIntegration(BuildContext context, CoachStore coachStore) async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Signature et génération du PDF en cours..."); 
+
+    try {
+      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+
+      await coachStore.signIntegration(authorization);
+    } on Exception {
+      // TODO: proper error message
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      return;
+    }
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
   }
 }

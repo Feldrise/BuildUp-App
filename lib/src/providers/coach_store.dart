@@ -25,7 +25,10 @@ class CoachStore with ChangeNotifier {
 
   Coach get coach => _coach;
 
-  
+  void notifyChange() {
+    notifyListeners();
+  }
+
   Future updateCoach(String authorization, Coach toUpdate, {bool updateUser = false}) async {
     try {
       await CoachsService.instance.updateCoach(authorization, toUpdate);
@@ -40,5 +43,16 @@ class CoachStore with ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+
+  Future signIntegration(String authorization) async {
+    try {
+      await CoachsService.instance.signIntegration(authorization, coach.id);
+    } on Exception {
+      rethrow;
+    }
+
+    coach.hasSignedFicheIntegration = true;
+    notifyListeners();
   }
 }

@@ -52,6 +52,8 @@ class Coach {
   String situation;
   String description;
 
+  bool hasSignedFicheIntegration;
+
   Coach.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm}) :
     id = map['id'] as String,
     coachCard = BuImage("${CoachsService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
@@ -59,7 +61,8 @@ class Coach {
     status = map['status'] as String,
     step = map['step'] as String,
     situation = map['situation'] as String,
-    description = map['description'] as String;
+    description = map['description'] as String,
+    hasSignedFicheIntegration = map['hasSignedFicheIntegration'] as bool;
 
   Map<String, dynamic> toJson() {
     String coachCardString;
@@ -68,14 +71,14 @@ class Coach {
       coachCardString = base64Encode(coachCard.image.bytes);
     }
 
-
+  
     return <String, dynamic>{
       "coachCard": coachCardString,
       "userId": associatedUser.id,
       "status": status,
       "step": step,
       "situation": situation,
-      "description": description
+      "description": description,
     };
   }
 }
