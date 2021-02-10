@@ -62,6 +62,8 @@ class AuthenticationService {
     await preferences.setString("user_discordTag", toSave?.discordTag);
     await preferences.setString("user_username", toSave?.username);
 
+    await preferences.setInt("user_department", toSave?.department);
+
     await preferences.setString("user_role", toSave?.role);
     await preferences.setString("user_token", toSave?.token);
   }
@@ -80,7 +82,8 @@ class AuthenticationService {
       birthdate: DateTime.tryParse(preferences.getString("user_birthdate" ?? "")),
       email: preferences.getString("user_email" ?? ""),
       discordTag: preferences.getString("user_discordTag" ?? ""),
-      username: preferences.getString("user_username" ?? ""), 
+      username: preferences.getString("user_username" ?? ""),
+      department: preferences.getInt("user_department"), 
       role: preferences.getString("user_role" ?? ""), 
       token: preferences.getString("user_token" ?? "")
     );
