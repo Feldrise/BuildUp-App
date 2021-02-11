@@ -7,7 +7,8 @@ class BuCard extends StatelessWidget {
     this.width, 
     this.margin = EdgeInsets.zero,
     this.padding = const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),  
-    @required this.child
+    @required this.child,
+    this.borderColor,
   }) : super(key: key);
 
   final Widget child;
@@ -18,6 +19,8 @@ class BuCard extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
 
+  final Color borderColor;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +30,9 @@ class BuCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
+        border: borderColor != null ? Border.all(
+          color: borderColor,
+        ) : null,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         boxShadow: const [
           BoxShadow(
