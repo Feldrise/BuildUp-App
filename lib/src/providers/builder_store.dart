@@ -48,4 +48,19 @@ class BuilderStore with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future assignCoach(String authorization, String coachId) async {
+    if (_builder == null) {
+      return;
+    }
+
+    try {
+      await BuildersService.instance.assignCoach(authorization, _builder, coachId);
+      _builder.associatedCoach = await BuildersService.instance.getCoachForBuilder(authorization, coachId, _builder.id);
+      
+      notifyListeners();
+    } on Exception {
+      rethrow;
+    }
+  }
 }

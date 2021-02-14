@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:buildup/entities/available_coach.dart';
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
@@ -82,6 +83,29 @@ class CoachsService {
         final BuForm associatedForm = await getFormForCoach(authorization, map['id'] as String);
 
         coachs.add(Coach.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
+      }
+
+      return coachs;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  
+  Future<List<AvailableCoach>> getAvailableCoachs(String authorization) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/available',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonCoachs = jsonDecode(response.body) as List<dynamic>;
+      final List<AvailableCoach> coachs = [];
+
+      for (final map in jsonCoachs) {
+        coachs.add(AvailableCoach.fromMap(map as Map<String, dynamic>));
       }
 
       return coachs;

@@ -25,7 +25,9 @@ mixin BuilderStatus {
 mixin BuilderSteps {
   static const String preselected = "Preselected";
   static const String adminMeeting = "AdminMeeting";
+  static const String adminMeetingDone = "AdminMeetingDone";
   static const String coachMeeting = "CoachMeeting";
+  static const String coachValidated = "CoachValidated";
   static const String active = "Active";
   static const String finished = "Finished";
   static const String abandoned = "Abandoned";
@@ -33,10 +35,12 @@ mixin BuilderSteps {
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
     adminMeeting: "Entretien avec un responsable",
+    adminMeetingDone : "Entretien avec un responsable terminé",
     coachMeeting: "Choix coach",
+    coachValidated: "Coach Validé",
     active: "Actif",
     finished: "Fin programme",
-    abandoned: "Abandon"
+    abandoned: "Abasndon"
   };
 }
 

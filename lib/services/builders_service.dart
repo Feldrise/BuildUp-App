@@ -196,6 +196,24 @@ class BuildersService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+  // POST
+  Future assignCoach(String authorization, BuBuilder toUpdate, String coachId) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/${toUpdate.id}/assign',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "coachId": coachId
+      })
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
   // PUT
   Future updateBuilder(String authorization, BuBuilder toUpdate) async {
     final http.Response response = await http.put(
