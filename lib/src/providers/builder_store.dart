@@ -24,6 +24,9 @@ class BuilderStore with ChangeNotifier {
 
   BuBuilder get builder => _builder;
 
+  void notifyChange() {
+    notifyListeners();
+  }
   
   Future updateBuilder(String authorization, BuBuilder toUpdate, {bool updateUser = false, bool updateProject = false}) async {
     try {
@@ -62,5 +65,16 @@ class BuilderStore with ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+    
+  Future signIntegration(String authorization) async {
+    try {
+      await BuildersService.instance.signIntegration(authorization, builder.id);
+    } on Exception {
+      rethrow;
+    }
+
+    builder.hasSignedFicheIntegration = true;
+    notifyListeners();
   }
 }

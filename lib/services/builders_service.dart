@@ -215,6 +215,19 @@ class BuildersService {
   }
 
   // PUT
+  Future signIntegration(String authorization, String builderId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$builderId/sign_integration',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
   Future updateBuilder(String authorization, BuBuilder toUpdate) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/${toUpdate.id}/update',

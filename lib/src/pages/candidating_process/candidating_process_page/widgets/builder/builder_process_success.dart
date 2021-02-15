@@ -1,6 +1,7 @@
-import 'package:buildup/entities/coach.dart';
+
+import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/common/process_image.dart';
-import 'package:buildup/src/providers/coach_store.dart';
+import 'package:buildup/src/providers/builder_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/utils/constants.dart';
@@ -8,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CoachProcessSuccess extends StatelessWidget {
+class BuilderProcessSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CoachStore>(
-      builder: (context, coachStore, child) {
+    return Consumer<BuilderStore>(
+      builder: (context, builderStore, child) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -23,14 +24,14 @@ class CoachProcessSuccess extends StatelessWidget {
                 BuButton(
                   icon: Icons.download_rounded,
                   text: "Télécharger la fiche", 
-                  onPressed: () async => launch("$kApiBaseUrl/../pdf/coachs/${coachStore.coach.id}.pdf"),
+                  onPressed: () async => launch("$kApiBaseUrl/../pdf/builders/${builderStore.builder.id}.pdf"),
                 ),
                 const SizedBox(width: 8,),
                 BuButton(
                   icon: Icons.arrow_forward,
                   text: "Accéder à mon espace personnel",
                   buttonType: BuButtonType.secondary,
-                  onPressed: () => _goToDashboard(context, coachStore),
+                  onPressed: () => _goToDashboard(context, builderStore),
                 )
               ],
             ),
@@ -42,18 +43,19 @@ class CoachProcessSuccess extends StatelessWidget {
     );
   }
 
-  Future _goToDashboard(BuildContext context, CoachStore coachStore) async {
+  Future _goToDashboard(BuildContext context, BuilderStore builderStore) async {
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Activation de votre espace..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
 
-      coachStore.coach.status = CoachStatus.validated;
-      coachStore.coach.step = CoachSteps.active;
+      builderStore.builder.status = BuilderStatus.validated;
+      builderStore.builder.step = BuilderSteps.active;
 
-      await coachStore.updateCoach(authorization, coachStore.coach);
-      coachStore.notifyChange();
+      await builderStore.updateBuilder(authorization, builderStore.builder);
+      builderStore.notifyChange();
+
     } on Exception {
       // TODO: proper error message
       Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 

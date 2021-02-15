@@ -27,7 +27,7 @@ mixin BuilderSteps {
   static const String adminMeeting = "AdminMeeting";
   static const String adminMeetingDone = "AdminMeetingDone";
   static const String coachMeeting = "CoachMeeting";
-  static const String coachValidated = "CoachValidated";
+  static const String signing = "Signing";
   static const String active = "Active";
   static const String finished = "Finished";
   static const String abandoned = "Abandoned";
@@ -37,7 +37,7 @@ mixin BuilderSteps {
     adminMeeting: "Entretien avec un responsable",
     adminMeetingDone : "Entretien avec un responsable terminé",
     coachMeeting: "Choix coach",
-    coachValidated: "Coach Validé",
+    signing: "Signature",
     active: "Actif",
     finished: "Fin programme",
     abandoned: "Abasndon"
@@ -62,6 +62,8 @@ class BuBuilder {
   String situation;
   String description;
 
+  bool hasSignedFicheIntegration;
+
   BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent}) :
     id = map['id'] as String,
     builderCard = BuImage("${BuildersService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
@@ -69,7 +71,8 @@ class BuBuilder {
     status = map['status'] as String,
     step = map['step'] as String,
     situation = map['situation'] as String,
-    description = map['description'] as String;
+    description = map['description'] as String,
+    hasSignedFicheIntegration = map['hasSignedFicheIntegration'] as bool;
 
   Map<String, dynamic> toJson() {
     String builderCardString;

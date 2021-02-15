@@ -5,7 +5,9 @@ import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/builders_service.dart';
 import 'package:buildup/services/coachs_services.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/available_coach_widget/available_coach_widget.dart';
-import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/coach/coach_process_sucess.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/builder_process_success.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/builder_validated_candidature.dart';
+import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/coach/coach_process_success.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/coach/coach_validated_candidature.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/common/process_image.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/process_widget.dart';
@@ -145,6 +147,33 @@ class CandidatingProcessPage extends StatelessWidget {
           );
         }
 
+        // The builder need to sign
+        if (!builderStore.builder.hasSignedFicheIntegration && builderStore.builder.step == BuilderSteps.signing) {
+          return ProcessWidget(
+            title: "Edition carte et fiche d’intégration", 
+            description: const [
+              Text("La rencontre avec le coach a été réalisée."),
+              Text("Vous pouvez dès à présent remplir votre fiche d’intégration et éditer votre carte."),
+              Text("Pour finaliser votre inscription au programme pour une durée de 3 mois, lisez les documents présentés ci-dessous et n’oubliez pas de signer.")
+            ],
+            index: 6, maxSteps: maxSteps,
+            child: BuilderValidatedCandidature(onSigned: () => _signBuilderIntegration(context, builderStore)),
+          );
+        }
+
+        // The builder is at the end of the process
+        if (builderStore.builder.hasSignedFicheIntegration) {
+          return ProcessWidget(
+            title: "Candidature terminée", 
+            description: const [
+              Text("Votre canditature est officiellement terminée ! Bienvenue dans le programme !"),
+              Text("Vous pouvez dès à présent télécharger votre carte ainsi que votre fiche d’intégration, puis accéder à votre espace personnel."),
+            ],
+            index: 7, maxSteps: maxSteps,
+            child: BuilderProcessSuccess()
+          );
+        }
+
 
         return const Center(child: Text("Etape inconnue..."));
       },
@@ -255,6 +284,23 @@ class CandidatingProcessPage extends StatelessWidget {
       final String authorization = coachStore.coach.associatedUser.authentificationHeader;
 
       await coachStore.signIntegration(authorization);
+    } on Exception {
+      // TODO: proper error message
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      return;
+    }
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+  }
+  
+  Future _signBuilderIntegration(BuildContext context, BuilderStore builderStore) async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Signature et génération du PDF en cours..."); 
+
+    try {
+      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
+
+      await builderStore.signIntegration(authorization);
     } on Exception {
       // TODO: proper error message
       Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
