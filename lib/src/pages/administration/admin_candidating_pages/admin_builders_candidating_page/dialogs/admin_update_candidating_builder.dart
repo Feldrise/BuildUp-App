@@ -98,11 +98,7 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
             Text("état".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: <String, String>{
-                BuilderStatus.candidating: BuilderStatus.detailled[BuilderStatus.candidating],
-                BuilderStatus.validated: BuilderStatus.detailled[BuilderStatus.validated],
-                BuilderStatus.deleted: BuilderStatus.detailled[BuilderStatus.deleted]
-              },
+              items: BuilderStatus.detailled,
               currentValue: _currentStatus,
               onChanged: (newValue) {
                 widget.builder.status = newValue;
@@ -123,14 +119,7 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
             Text("étape".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
             const SizedBox(height: 10,),
             BuDropdown<String>(
-              items: <String, String>{
-                BuilderSteps.preselected: BuilderSteps.detailled[BuilderSteps.preselected],
-                BuilderSteps.adminMeeting: BuilderSteps.detailled[BuilderSteps.adminMeeting],
-                BuilderSteps.coachMeeting: BuilderSteps.detailled[BuilderSteps.coachMeeting],
-                BuilderSteps.active: BuilderSteps.detailled[BuilderSteps.active],
-                BuilderSteps.finished: BuilderSteps.detailled[BuilderSteps.finished],
-                BuilderSteps.abandoned: BuilderSteps.detailled[BuilderSteps.abandoned]
-              },
+              items: BuilderSteps.detailled,
               currentValue: _currentStep,
               onChanged: (newValue) {
                 widget.builder.step = newValue;
