@@ -1,6 +1,8 @@
 
 import 'package:buildup/src/pages/coachs/coach_dashboard_page/widgets/coach_notification_widget.dart';
 import 'package:buildup/src/providers/coach_store.dart';
+import 'package:buildup/src/shared/widgets/general/discord_button.dart';
+import 'package:buildup/src/shared/widgets/general/whatsapp_button.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -72,8 +74,21 @@ class CoachDashboardPage extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: const [
-        Text("Hello Dashboard")
+      children: [
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 309),
+              child: DiscordButton()
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 309),
+              child: WhatsappButton()
+            ),
+          ],
+        )
       ],
     );
   }
