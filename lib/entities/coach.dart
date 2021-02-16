@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/coachs_services.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class Coach {
   final String id;
   final User associatedUser;
   final BuForm associatedForm;
+  final List<CoachRequest> associatedRequest;
 
   BuImage coachCard;
 
@@ -54,7 +56,7 @@ class Coach {
 
   bool hasSignedFicheIntegration;
 
-  Coach.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm}) :
+  Coach.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm, this.associatedRequest}) :
     id = map['id'] as String,
     coachCard = BuImage("${CoachsService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
     candidatingDate = DateTime.tryParse(map['candidatingDate'] as String),

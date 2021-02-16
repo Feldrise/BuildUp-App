@@ -5,6 +5,7 @@ import 'package:buildup/entities/available_coach.dart';
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
@@ -33,8 +34,9 @@ class CoachsService {
     if (response.statusCode == 200) {
       final map = jsonDecode(response.body) as Map<String, dynamic>;
       final BuForm associatedForm = await getFormForCoach(authorization, map['id'] as String);
-
-      return Coach.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm,);
+      final List<CoachRequest> coachRequests = await getCoachRequests(authorization, map['id'] as String);
+      
+      return Coach.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm, associatedRequest: coachRequests);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
@@ -173,6 +175,28 @@ class CoachsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+    Future<List<CoachRequest>> getCoachRequests(String authorization, String coachId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$coachId/coach_requests',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonRequests = jsonDecode(response.body) as List<dynamic>;
+      final List<CoachRequest> coachRequests = [];
+
+      for (final map in jsonRequests) {
+        coachRequests.add(CoachRequest.fromMap(map as Map<String, dynamic>));
+      }
+
+      return coachRequests;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
   // PUT
   Future signIntegration(String authorization, String coachId) async {
     final http.Response response = await http.put(
@@ -206,6 +230,32 @@ class CoachsService {
   Future refuseCoach(String authorization, String coachId) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/$coachId/refuse',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  Future acceptCoachRequest(String authorization, String coachId, String requestId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$coachId/coach_requests/$requestId/accept',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  Future refuseCoachRequest(String authorization, String coachId, String requestId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$coachId/coach_requests/$requestId/refuse',
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },

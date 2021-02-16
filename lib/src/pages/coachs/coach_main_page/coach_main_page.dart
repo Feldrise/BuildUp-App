@@ -1,6 +1,7 @@
 
 import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/coachs/coach_builders_page/caoch_builders_page.dart';
+import 'package:buildup/src/pages/coachs/coach_dashboard_page/coach_dashboard_page.dart';
 import 'package:buildup/src/pages/coachs/coach_profile_page/coach_profile_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/providers/coach_builders_store.dart';
@@ -16,6 +17,7 @@ class CoachMainPage extends StatelessWidget {
       ],
       builder: (context, child) {
         final List<Widget> pages = [
+          const CoachDashboardPage(),
           const CoachProfilPage(),
           Navigator(
             key: GlobalKey<NavigatorState>(),
@@ -36,11 +38,16 @@ class CoachMainPage extends StatelessWidget {
         final List<PageItem> pageItems = [
           PageItem(
             index: 0, 
+            title: "Dashboard", 
+            icon: Icons.home,
+          ),
+          PageItem(
+            index: 1, 
             title: "Profil", 
             icon: Icons.account_circle,
           ),
           PageItem(
-            index: 1, 
+            index: 2, 
             title: "Mes Builders", 
             icon: Icons.supervisor_account,
             suffixWidget: buildersCount > 0 ? Text("$buildersCount") : null
