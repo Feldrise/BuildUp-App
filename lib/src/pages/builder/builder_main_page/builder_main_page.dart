@@ -4,6 +4,7 @@ import 'package:buildup/src/pages/builder/builder_profile_page/builder_profile_p
 import 'package:buildup/src/pages/builder/builder_project_page/builder_project_page.dart';
 import 'package:buildup/src/pages/builder_buildons_page/builder_buildon_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
+import 'package:buildup/src/pages/meeting_reports_page/meeting_reports_page.dart';
 import 'package:buildup/src/providers/builder_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,11 @@ class BuilderMainPage extends StatelessWidget {
     final List<Widget> pages = [
       const BuilderProfilPage(),
       const BuilderProjectPage(),
+      Consumer<BuilderStore>(
+        builder: (context, builderStore, child) {
+          return MeetingRepportsPage(builder: builderStore.builder);
+        }
+      ),
       Navigator(
         key: GlobalKey<NavigatorState>(),
         onGenerateRoute: (route) => MaterialPageRoute<void>(
@@ -36,7 +42,12 @@ class BuilderMainPage extends StatelessWidget {
         icon: Icons.work,
       ),
       PageItem(
-        index: 2, 
+        index: 2,
+        title: "Rapports",
+        icon: Icons.assignment,
+      ),
+      PageItem(
+        index: 3, 
         title: "Build-On", 
         icon: Icons.view_day,
       ),

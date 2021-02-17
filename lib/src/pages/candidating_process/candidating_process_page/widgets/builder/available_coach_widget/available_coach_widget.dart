@@ -1,5 +1,4 @@
 import 'package:buildup/entities/available_coach.dart';
-import 'package:buildup/entities/coach.dart';
 import 'package:buildup/services/coachs_services.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/available_coach_widget/available_coach_card.dart';
 import 'package:buildup/src/providers/builder_store.dart';

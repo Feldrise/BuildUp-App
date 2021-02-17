@@ -4,7 +4,6 @@ import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_info_card.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
-import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +19,6 @@ class CoachProfilPage extends StatelessWidget {
       builder: (context, coachStore, child) {
         return Scaffold(
           backgroundColor: colorScaffoldGrey,
-          appBar: const BuAppBar(
-            title: Text("Profil"),
-          ),
           body: Navigator(
             key: GlobalKey<NavigatorState>(),
             onGenerateRoute: (route) => MaterialPageRoute<void>(

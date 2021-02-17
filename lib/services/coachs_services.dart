@@ -5,6 +5,7 @@ import 'package:buildup/entities/available_coach.dart';
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/meeting_report.dart';
 import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
@@ -132,10 +133,11 @@ class CoachsService {
       for (final map in jsonBuilders) {
         final User associatedUser = await BuildersService.instance.getUserForBuilder(authorization, map['id'] as String);
         final Project associatedProject = await BuildersService.instance.getProjectForBuilder(authorization, UserRoles.coach, map['id'] as String);
+        final List<MeetingReport> associatedMeetingReports = await BuildersService.instance.getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await BuildersService.instance.getFormForBuilder(authorization, map['id'] as String);
         final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
-        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm, associatedCoach: coach, associatedNtfReferent: associatedNtfReferent));
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: coach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);
       }
 

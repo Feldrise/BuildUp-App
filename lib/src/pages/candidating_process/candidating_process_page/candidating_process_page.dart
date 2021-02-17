@@ -2,8 +2,6 @@ import 'package:buildup/entities/available_coach.dart';
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/user.dart';
-import 'package:buildup/services/builders_service.dart';
-import 'package:buildup/services/coachs_services.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/available_coach_widget/available_coach_widget.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/builder_process_success.dart';
 import 'package:buildup/src/pages/candidating_process/candidating_process_page/widgets/builder/builder_validated_candidature.dart';

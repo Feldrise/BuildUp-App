@@ -2,6 +2,7 @@
 import 'package:buildup/entities/builder.dart';
 import 'package:buildup/src/pages/builder_buildons_page/builder_buildon_page.dart';
 import 'package:buildup/src/pages/coachs/coach_builders_page/coach_view_builder_page/coach_view_builder_page.dart';
+import 'package:buildup/src/pages/meeting_reports_page/meeting_reports_page.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
@@ -224,6 +225,9 @@ class CoachBuilderCard extends StatelessWidget {
     }
     else if (route == CoachBuilderCardAction.viewBuildOns) {
       page = BuilderBuildOnsPage(builder: builder);
+    }
+    else if (route == CoachBuilderCardAction.viewRepports) {
+      page = MeetingRepportsPage(builder: builder);
     }
 
     if (page != null) {

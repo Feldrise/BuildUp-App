@@ -5,6 +5,7 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
+import 'package:buildup/entities/meeting_report.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
@@ -35,11 +36,12 @@ class BuildersService {
     if (response.statusCode == 200) {
       final map = jsonDecode(response.body) as Map<String, dynamic>;
       final Project associatedProject = await getProjectForBuilder(authorization, currentUserRole, map['id'] as String);
+      final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
       final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
       final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
       final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
-      final BuBuilder builder = BuBuilder.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent);
+      final BuBuilder builder = BuBuilder.fromMap(map, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent);
       builder.associatedProjects.add(associatedProject);
 
       return builder;
@@ -64,9 +66,10 @@ class BuildersService {
       for (final map in jsonBuilders) {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
         final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
+        final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
 
-        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm));
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm));
         builders.last.associatedProjects.add(associatedProject);
       }
 
@@ -91,11 +94,12 @@ class BuildersService {
       for (final map in jsonBuilders) {
         final User associatedUser = await getUserForBuilder(authorization, map['id'] as String);
         final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
+        final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
         final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
         final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
-        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent));
+        builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);
       }
 
@@ -181,6 +185,28 @@ class BuildersService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+  Future<List<MeetingReport>> getMeetingReportsForBuilder(String authorization, String builderId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$builderId/meeting_reports',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonMeetingReports = jsonDecode(response.body) as List<dynamic>;
+      final List<MeetingReport> meetingReports = [];
+
+      for (final map in jsonMeetingReports) {
+        meetingReports.add(MeetingReport.fromMap(map as Map<String, dynamic>));
+      }
+
+      return meetingReports;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
   Future<BuForm> getFormForBuilder(String authorization, String builderId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/$builderId/form',
@@ -212,6 +238,23 @@ class BuildersService {
     if (response.statusCode != 200) {
       throw PlatformException(code: response.statusCode.toString(), message: response.body);
     }
+  }
+  
+  Future<String> createMeetingReport(String authorization, String builderId, MeetingReport toCreate) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/$builderId/meeting_reports',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(toCreate.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+    
+    throw Exception("Impossible to create the meeting report: ${response.body}");
   }
 
   // PUT
