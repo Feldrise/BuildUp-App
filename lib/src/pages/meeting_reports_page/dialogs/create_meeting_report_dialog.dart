@@ -35,12 +35,14 @@ class CreateMeetingReportDialog extends StatelessWidget {
       BuButton(
         text: "Annuler",      
         buttonType: BuButtonType.secondary,
+        isBig: true,
         onPressed: () => _cancel(context)
       ),
       const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         icon: Icons.save,
         text: "Enregistrer",
+        isBig: true,
         onPressed: () => _save(context),
       )
     ];
