@@ -3,6 +3,7 @@ import 'package:buildup/entities/available_coach.dart';
 import 'package:buildup/src/shared/dialogs/bu_modal_dialog.dart';
 import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
+import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,8 +30,10 @@ class AvailableCoachDialog extends StatelessWidget {
 
   List<Widget> _buildButtons(BuildContext context) {
     return [
+      Container(),
       BuButton(
         text: "Valider",
+        isBig: true,
         onPressed: () => Navigator.pop(context),
       )
     ];
@@ -51,9 +54,15 @@ class AvailableCoachDialog extends StatelessWidget {
           ),
           const SizedBox(height: 16,),
           _buildBigInfo("Description", coach.description),
-          _buildBigInfo("Quelles sont vos compétences ?", coach.competences),
-          _buildBigInfo("Quelles sont, selon vous, les principales perspectives pour qu’un projet fonctionne ?", coach.perpectives),
-          _buildBigInfo("Comment définissez-vous le rôle de Coach ?", coach.coachDefinition)
+          _buildBigInfo("Compétences :", coach.competences),
+          if (coach.questions.length != coach.answers.length) 
+            const BuStatusMessage(
+              title: "Erreur",
+              message: "Impossible d'afficher les réponses du coach...",
+            )
+          else 
+            for (int i = 0; i < coach.questions.length; ++i)
+              _buildBigInfo(coach.questions[i], coach.answers[i])
         ],     
       ),
     );

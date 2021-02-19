@@ -59,6 +59,7 @@ class _AvailableCoachWidgetState extends State<AvailableCoachWidget> {
                       Expanded(child: Container(),),
                       BuButton(
                         text: "Valider mon choix", 
+                        isBig: true,
                         onPressed: _selectedCoach != null && _coachContacted ? () => widget.onCoachValidated(_selectedCoach) : null
                       ),
                     ],

@@ -3,6 +3,7 @@ import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_checkbox.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CoachValidatedCandidature extends StatefulWidget {
@@ -30,9 +31,15 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
         const SizedBox(height: 16,),
         _buildSigningInfo(),
         const SizedBox(height: 16,),
-        BuButton(
-          text: "Terminer", 
-          onPressed: (_hasSigned && _hasApproved) ? _submitSign : null
+        Row(
+          children: [
+            Expanded(child: Container(),),
+            BuButton(
+              text: "Terminer", 
+              isBig: true,
+              onPressed: (_hasSigned && _hasApproved) ? _submitSign : null
+            ),
+          ],
         )
       ],
     );
@@ -48,7 +55,7 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
               children: <TextSpan>[
                 TextSpan(text: coachStore.coach.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", né(e) le "),
-                TextSpan(text: coachStore.coach.associatedUser.birthdate.toString(), style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: DateFormat('dd/MM/yyyy').format(coachStore.coach.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Coach au sein du programme, être prêt à faire évoluer le projet de mon Builder, à lui accorder du temps et de la bienveillance, être à l’écoute de ses problématiques et proposer des solutions et pour finir partager votre expérience avec passion.\n\n"),
                 const TextSpan(text: "J’ai connaissance de l’investissement qui m’est demandé, j’ai la volonté de faire grandir autant personnellement que profesionnellement mon Builder et lui donner les clés pour faire évoluer son projet.\n\n\n"),
                 const TextSpan(text: "Fait le "),

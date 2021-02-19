@@ -2,10 +2,10 @@ const String kApiBaseUrl = "https://192.168.1.19:45455/buildup";
 
 const Map<String, String> kSituations = {
   "Entrepreneur": "Entrepreuneur",
-  "Salarie": "Salarié",
-  "Apprenti": "Apprenti",
-  "Etudiant": "Etudiant",
-  "Lyceen": "Lycéen",
+  "Salarie": "Salarié(e)",
+  "Apprenti": "Apprenti(e)",
+  "Etudiant": "Etudiant(e)",
+  "Lyceen": "Lycéen(ne)",
   "Other": "Autre activité"
 };
 

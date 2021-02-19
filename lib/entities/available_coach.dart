@@ -15,10 +15,10 @@ class AvailableCoach {
 
   String situation;
   String description;
-
   String competences;
-  String perpectives;
-  String coachDefinition;
+
+  List<String> questions;
+  List<String> answers;
 
   String get fullName =>  "$firstName $lastName";
 
@@ -31,8 +31,8 @@ class AvailableCoach {
     this.situation,
     this.description,
     this.competences,
-    this.perpectives,
-    this.coachDefinition
+    this.questions,
+    this.answers
   });
 
   AvailableCoach.fromMap(Map<String, dynamic> map) : 
@@ -47,8 +47,8 @@ class AvailableCoach {
     
     description = map['description'] as String,
     situation = map['situation'] as String,
-
     competences = map['competences'] as String,
-    perpectives = map['perspectives'] as String,
-    coachDefinition = map['coachDefinition'] as String;
+    
+    questions = (map['questions'] as List<dynamic>).cast(),
+    answers = (map['answers'] as List<dynamic>).cast();
 }
