@@ -63,6 +63,34 @@ class BuildOnsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
+  Future<BuildOnStep> getBuildOnStep(String authorization, String buildOnStepId) async {
+    final http.Response response = buildOnStepId != null ?
+      await http.get(
+        '$serviceBaseUrl/steps/$buildOnStepId',
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: authorization,
+        },
+      ) :
+      await http.get(
+        '$serviceBaseUrl/steps/first',
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: authorization,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final map = jsonDecode(response.body) as Map<String, dynamic>;
+
+        return BuildOnStep.fromMap(map);
+      }
+
+      if (response.statusCode == 404) {
+        return null;
+      }
+
+      throw PlatformException(code: response.statusCode.toString(), message: "Error getting the build-on step: ${response.body}");
+  }
+
   Future<List<BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/projects/$projectId/returnings',

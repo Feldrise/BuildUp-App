@@ -1,5 +1,6 @@
 
 import 'package:buildup/entities/page_item.dart';
+import 'package:buildup/src/pages/builder/builder_dashboard_page/builder_dashboard_page.dart';
 import 'package:buildup/src/pages/builder/builder_profile_page/builder_profile_page.dart';
 import 'package:buildup/src/pages/builder/builder_project_page/builder_project_page.dart';
 import 'package:buildup/src/pages/builder_buildons_page/builder_buildon_page.dart';
@@ -13,6 +14,7 @@ class BuilderMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
+      const BuilderDashboardPage(),
       const BuilderProfilPage(),
       const BuilderProjectPage(),
       Consumer<BuilderStore>(
@@ -32,22 +34,27 @@ class BuilderMainPage extends StatelessWidget {
       
     final List<PageItem> pageItems = [
       PageItem(
-        index: 0, 
+        index: 0,
+        title: "Dashboard",
+        icon: Icons.home
+      ),
+      PageItem(
+        index: 1, 
         title: "Profil", 
         icon: Icons.account_circle,
       ),
       PageItem(
-        index: 1, 
+        index: 2, 
         title: "Projet", 
         icon: Icons.work,
       ),
       PageItem(
-        index: 2,
+        index: 3,
         title: "Rapports",
         icon: Icons.assignment,
       ),
       PageItem(
-        index: 3, 
+        index: 4, 
         title: "Build-On", 
         icon: Icons.view_day,
       ),
