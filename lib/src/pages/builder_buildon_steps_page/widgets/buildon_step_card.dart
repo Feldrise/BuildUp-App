@@ -7,6 +7,7 @@ import 'package:buildup/entities/buildons/buildon_step.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/buildons_service.dart';
+import 'package:buildup/src/pages/builder_buildon_steps_page/dialogs/buildon_step_refusing_reason.dart';
 import 'package:buildup/src/pages/builder_buildon_steps_page/dialogs/buildon_step_send_validation_dialog.dart';
 import 'package:buildup/src/providers/buildons_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
@@ -364,6 +365,19 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       return;
     }
 
+    // In the case we refused, we need to collect a reason
+    String reason = "";
+    if (!validate) {
+      reason =  await showDialog<String>(
+        context: context,
+        builder: (context) => BuildOnStepRefusingReason()
+      );
+
+      if (reason == null) {
+        return;
+      }
+    }
+
     final UserStore userStore = Provider.of<UserStore>(context, listen: false);
     
     final GlobalKey<State> keyLoader = GlobalKey<State>();
@@ -408,7 +422,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       widget.project.currentBuildOnStep = widget.nextBuildOnStep;
       widget.project.hasNotification = false;
     } else {
-      await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id);
+      await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id, reason);
       _buildOnReturning.status = BuildOnReturningStatus.refused;
       widget.project.associatedReturnings.remove(_buildOnReturning);
       widget.project.hasNotification = false;

@@ -201,12 +201,14 @@ class BuildOnsService {
   }
 
 
-  Future refuseReturning(String authorization, String projectId, String returningId) async {
+  Future refuseReturning(String authorization, String projectId, String returningId, String reason) async {
     final http.Response response = await http.put(
       '$serviceBaseUrl/projects/$projectId/returnings/$returningId/refuse',
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
       },
+      body: jsonEncode(<String, String>{ "reason": reason })
     );
 
     if (response.statusCode != 200) {
