@@ -1,5 +1,6 @@
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class BuModalDialog extends StatelessWidget {
   const BuModalDialog({
@@ -20,6 +21,7 @@ class BuModalDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+        constraints: const BoxConstraints(maxWidth: 1024),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           border: const Border(
