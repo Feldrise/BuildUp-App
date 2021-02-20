@@ -409,6 +409,9 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       widget.project.hasNotification = false;
     } else {
       await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id);
+      _buildOnReturning.status = BuildOnReturningStatus.refused;
+      widget.project.associatedReturnings.remove(_buildOnReturning);
+      widget.project.hasNotification = false;
     }
 
     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
