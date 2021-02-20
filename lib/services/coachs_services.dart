@@ -159,7 +159,7 @@ class CoachsService {
       return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting user for coach: ${response.body}");
   }
 
   Future<BuForm> getFormForCoach(String authorization, String coachId) async {

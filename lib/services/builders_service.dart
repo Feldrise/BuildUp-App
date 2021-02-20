@@ -47,7 +47,7 @@ class BuildersService {
       return builder;
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting the builder: ${response.body}");
 
   }
 
@@ -76,7 +76,7 @@ class BuildersService {
       return builders;
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting candidating builders: ${response.body}");
   }
 
   Future<List<BuBuilder>> getActiveBuilders(String authorization) async {
@@ -106,7 +106,7 @@ class BuildersService {
       return builders;
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting active builders: ${response.body}");
   }
 
   Future<User> getUserForBuilder(String authorization, String builderId) async {
@@ -121,7 +121,7 @@ class BuildersService {
       return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting the user for the builder: ${response.body}");
   }
 
   
@@ -147,7 +147,7 @@ class BuildersService {
       return null;
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting the coach for the builder: ${response.body}");
   }
 
   Future<Project> getProjectForBuilder(String authorization, String currentUserRole, String builderId) async {
@@ -182,7 +182,7 @@ class BuildersService {
       return Project.fromMap(json, associatedReturnings: buildOnReturnings, hasNotification: hasNotification);
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting the project for the builder: ${response.body}");
   }
 
   Future<List<MeetingReport>> getMeetingReportsForBuilder(String authorization, String builderId) async {
@@ -204,7 +204,7 @@ class BuildersService {
       return meetingReports;
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting meeting reports for the builder: ${response.body}");
   }
 
   Future<BuForm> getFormForBuilder(String authorization, String builderId) async {
@@ -219,7 +219,7 @@ class BuildersService {
       return BuForm.fromList(jsonDecode(response.body) as List<dynamic>);
     }
 
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    throw PlatformException(code: response.statusCode.toString(), message: "Error getting form for builder: ${response.body}");
   }
 
   // POST
