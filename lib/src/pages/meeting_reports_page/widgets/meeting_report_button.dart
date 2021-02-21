@@ -11,7 +11,7 @@ class MeetingReportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => _openSummary(context),
       child: BuCard(
         child: Row(

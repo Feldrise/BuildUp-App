@@ -51,7 +51,7 @@ class AdminBuildOnStepsListView extends StatelessWidget {
       },
       children: [
         for (int i = 0; i < buildOn.steps.length; ++i)
-          GestureDetector(
+          InkWell(
             key: ValueKey(buildOn.steps[i]),
             onTap: () => buildOnStepRequestUpdate(buildOn.steps[i]),
             child: AdminBuildOnStepListTile(

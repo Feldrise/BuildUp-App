@@ -40,7 +40,7 @@ class BuModalDialog extends StatelessWidget {
                 Expanded(
                   child: Text(title, style: Theme.of(context).textTheme.headline4,)
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: () => Navigator.pop(context),
                   child: const Icon(Icons.close, size: 28,),
                 ),

@@ -71,7 +71,7 @@ class _BuTextFieldState extends State<BuTextField> {
               borderSide: const BorderSide(color: Colors.black12,),
               borderRadius: BorderRadius.circular(6.0),
             ),
-            suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : GestureDetector(
+            suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : InkWell(
               onTap: _textVisibilityUpdated,
               child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
             )

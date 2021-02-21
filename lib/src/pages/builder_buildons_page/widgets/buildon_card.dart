@@ -89,7 +89,7 @@ class BuildOnCard extends StatelessWidget {
   }
 
   Widget _buildButton() {
-    return GestureDetector(
+    return InkWell(
       onTap: onOpened,
       child: isSmall 
       ? Row(

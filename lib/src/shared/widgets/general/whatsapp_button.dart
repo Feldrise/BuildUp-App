@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class WhatsappButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => launch("https://whatsapp.new-talents.fr"),
       child: BuCard(
         child: Row(

@@ -131,7 +131,7 @@ class _BuilderInfoCardState extends State<BuilderInfoCard> {
             const Icon(Icons.mail, size: 15,),
             const SizedBox(width: 5,),
             Expanded(
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   launch('mailto:$email');
                 },

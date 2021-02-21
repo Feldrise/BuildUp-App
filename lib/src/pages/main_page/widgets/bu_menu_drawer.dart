@@ -57,7 +57,7 @@ class BuMenuDrawer extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: pageItems.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () {
                       onSelectedPage(pageItems[index]);
                       if (shouldPop) {

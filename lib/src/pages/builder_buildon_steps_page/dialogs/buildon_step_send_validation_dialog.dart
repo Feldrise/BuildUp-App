@@ -43,9 +43,7 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
           _buildProofField(),
         ],
       ),
-      actions: [
-        _buildButtons(context)
-      ],
+      actions: _buildButtons(context)
     );
   }
 
@@ -90,7 +88,7 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () async => launch(widget.buildOnStep.returningLink),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -132,13 +130,14 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
     return const Text("Aucune entrée n'est possible, veuillez en informer votre Coach");
   } 
 
-  Widget _buildButtons(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: BuButton(
+  List<Widget> _buildButtons(BuildContext context) {
+    return [
+      Container(),
+      BuButton(
         text: "Demander une validation",
+        isBig: true,
         onPressed: _canSend ? () => Navigator.pop(context, true) : null,
       ),
-    );
+    ];
   }
 }

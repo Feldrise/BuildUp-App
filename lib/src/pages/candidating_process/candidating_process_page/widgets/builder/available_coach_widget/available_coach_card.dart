@@ -76,7 +76,7 @@ class AvailableCoachCard extends StatelessWidget {
             const Icon(Icons.mail, size: 15,),
             const SizedBox(width: 5,),
             Expanded(
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   launch('mailto:$email');
                 },

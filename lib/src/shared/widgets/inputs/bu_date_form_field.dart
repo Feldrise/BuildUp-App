@@ -26,7 +26,7 @@ class BuDateFormField extends FormField<DateTime> {
       final DateTime currentValue = state.value;
       final String currentValueString = currentValue != null ? DateFormat("dd/MM/yyyy").format(currentValue) : "";
 
-      return GestureDetector(
+      return InkWell(
         onTap: () async {
           DateTime newDate = await showDatePicker(
             context: context,

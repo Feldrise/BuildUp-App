@@ -23,108 +23,95 @@ class BuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Row child = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (icon != null) ...{
-          Icon(icon),
-          const SizedBox(width: 4.0,)
-        },
-        
-        Text(text, textAlign: TextAlign.center,),
-      ],
-    );
-
     final double verticalBigFactor = isBig ? 1.7 : 1.0;
     final double horizontalBigFactor = isBig ? 3.5 : 1.0;
     final padding = EdgeInsets.symmetric(vertical: 15 * verticalBigFactor, horizontal: 20 * horizontalBigFactor);
 
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(60.0),
+      ),
+      primary: colorPrimary,
+      elevation: 0,
+      padding: padding
+    );
+
     if (buttonType == BuButtonType.secondary) {
-      return RaisedButton(
-        padding: padding,
+      buttonStyle = ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: BorderSide(color: Theme.of(context).dividerColor)
         ),
+        primary: Theme.of(context).scaffoldBackgroundColor,
+        onPrimary: colorPrimary,
         elevation: 0,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        textColor: Theme.of(context).primaryColor,
-        onPressed: onPressed,
-        child: child
+        padding: padding,
       );
     }
 
     if (buttonType == BuButtonType.secondaryGrey) {
-      return RaisedButton(
-        padding: padding,
+      buttonStyle = ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: BorderSide(color: Theme.of(context).dividerColor)
         ),
+        primary: Theme.of(context).scaffoldBackgroundColor,
+        onPrimary: colorBlueGrey,
         elevation: 0,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        textColor: colorBlueGrey,
-        onPressed: onPressed,
-        child: child
+        padding: padding,
       );
     }
-    
+
     if (buttonType == BuButtonType.coloredSecondary) {
-      return RaisedButton(
-        padding: padding,
+      buttonStyle = ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: colorSecondary)
         ),
+        primary: Theme.of(context).scaffoldBackgroundColor,
+        onPrimary: colorSecondary,
         elevation: 0,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        textColor: colorSecondary,
-        onPressed: onPressed,
-        child: child
+        padding: padding,
       );
     }
 
     if (buttonType == BuButtonType.outlineRed) {
-      return RaisedButton(
-        padding: padding,
+      buttonStyle = ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: Color(0xffe01c1c))
         ),
+        primary: Theme.of(context).scaffoldBackgroundColor,
+        onPrimary: const Color(0xffe01c1c),
         elevation: 0,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        textColor: const Color(0xffe01c1c),
-        onPressed: onPressed,
-        child: child
+        padding: padding,
       );
     }
 
     if (buttonType == BuButtonType.outlineGreen) {
-      return RaisedButton(
-        padding: padding,
+      buttonStyle = ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
           side: const BorderSide(color: Color(0xff17ba63))
         ),
+        primary: Theme.of(context).scaffoldBackgroundColor,
+        onPrimary: const Color(0xff17ba63),
         elevation: 0,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        textColor: const Color(0xff17ba63),
-        onPressed: onPressed,
-        child: child
+        padding: padding,
       );
     }
 
-    return RaisedButton(
-        padding: padding,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(60.0)
-      ),
-      elevation: 0,
-      color: Theme.of(context).primaryColor,
-      textColor: Colors.white,
-      onPressed: onPressed,
-      child: child
-    );
-   
+    return icon == null ?
+      ElevatedButton(
+        style: buttonStyle,
+        onPressed: onPressed, 
+        child: Text(text),
+      ) :
+      ElevatedButton.icon(
+        style: buttonStyle,
+        onPressed: onPressed, 
+        label: Text(text),
+        icon: Icon(icon),
+      );   
   }
 }

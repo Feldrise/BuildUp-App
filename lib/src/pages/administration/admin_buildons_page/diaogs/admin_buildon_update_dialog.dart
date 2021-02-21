@@ -41,7 +41,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
                 Expanded(
                   child: Text("Configurer le Build-On", style: Theme.of(context).textTheme.headline5,),
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: onClosed,
                   child: const Icon(Icons.close, size: 32,)
                 )
@@ -55,7 +55,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: _updateSteps,
                     child: Row(
                       children: const [

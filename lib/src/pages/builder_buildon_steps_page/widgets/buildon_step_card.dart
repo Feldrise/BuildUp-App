@@ -254,7 +254,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       type: BuStatusMessageType.success,
       title: "Document envoyé :",
       children: [
-        GestureDetector(
+        InkWell(
           onTap: () => _downloadFile(context),
           child: summaryWidget
         )
@@ -272,7 +272,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
 
           return Align(
             alignment: Alignment.bottomRight,
-            child: GestureDetector(
+            child: InkWell(
               onTap: () => _askValidation(context),
               child: const Text("Demander validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
             ),
@@ -289,7 +289,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
 
         return Align(
           alignment: Alignment.bottomRight,
-          child: GestureDetector(
+          child: InkWell(
             onTap: () => _processValidation(context),
             child: const Text("Procéder à la validation d'étape >", textAlign: TextAlign.end, style: TextStyle(color: colorPrimary),)
           ),

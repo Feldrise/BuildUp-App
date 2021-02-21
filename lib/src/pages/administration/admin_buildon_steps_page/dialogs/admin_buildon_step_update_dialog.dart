@@ -64,7 +64,7 @@ class _AdminBuildOnStepUpdateDialogState extends State<AdminBuildOnStepUpdateDia
                 Expanded(
                   child: Text("Configurer l'étape", style: Theme.of(context).textTheme.headline5,),
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: widget.onClosed,
                   child: const Icon(Icons.close, size: 32,)
                 )

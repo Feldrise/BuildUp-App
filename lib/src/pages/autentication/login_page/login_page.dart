@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               Expanded(
-                                child: GestureDetector(
+                                child: InkWell(
                                   child: Text("Mot de passe oublié ?", textAlign: TextAlign.end, style: Theme.of(context).textTheme.caption),
                                 ),
                               )

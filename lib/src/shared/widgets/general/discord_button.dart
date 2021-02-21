@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DiscordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => launch("https://discord.new-talents.fr"),
       child: BuCard(
         child: Row(

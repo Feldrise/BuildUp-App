@@ -47,7 +47,7 @@ class BuildOnStepProcessValidationDialog extends StatelessWidget {
     }
 
     if (buildOnReturning.type == BuildOnReturningType.file) {
-      return  GestureDetector(
+      return  InkWell(
         onTap: onDownload,
         child: Row(
           children: [

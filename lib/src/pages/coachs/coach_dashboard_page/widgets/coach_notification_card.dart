@@ -21,7 +21,7 @@ class CoachNotificationCard extends StatelessWidget {
             child: Text(notification.content),
           ),
           const SizedBox(width: 8),
-          GestureDetector(
+          InkWell(
             onTap: onMarkedAsRead,
             child: const Icon(Icons.visibility, size: 18,),
           )

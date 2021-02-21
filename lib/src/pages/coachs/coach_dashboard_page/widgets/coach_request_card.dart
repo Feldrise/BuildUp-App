@@ -44,11 +44,11 @@ class CoachRequestCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        FlatButton(
+                        TextButton(
                           onPressed: onRefused,
                           child: const Text("REFUSER", style: TextStyle(color: colorTextError)),
                         ),
-                        FlatButton(
+                        TextButton(
                           onPressed: onAccepted,
                           child: const Text("ACCEPTER", style: TextStyle(color: colorTextSuccess,)),
                         )

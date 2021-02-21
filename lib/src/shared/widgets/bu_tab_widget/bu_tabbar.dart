@@ -28,7 +28,7 @@ class BuTabBar extends StatelessWidget {
                 const SizedBox(width: 35,),
 
               for (int i = 0; i < tabItems.length; ++i) 
-                GestureDetector(
+                InkWell(
                   onTap: () => onSelectedTab(tabItems[i]),
                   child: BuTabItem(
                     item: tabItems[i],

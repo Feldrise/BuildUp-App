@@ -47,7 +47,7 @@ class AdminBuildOnsListView extends StatelessWidget {
           },
           children: [
             for (final buildOn in buildOnsStore.loadedBuildOns)
-              GestureDetector(
+              InkWell(
                 key: ValueKey(buildOn),
                 onTap: () => buildOnRequestUpdate(buildOn),
                 child: AdminBuildOnListTile(

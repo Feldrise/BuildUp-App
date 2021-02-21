@@ -32,7 +32,7 @@ class AdminDeleteCandidatingBuilderDialog extends StatelessWidget {
                 Expanded(
                   child: Text("Supprimer la candidature", style: Theme.of(context).textTheme.headline4,)
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: () => Navigator.pop(context, false),
                   child: const Icon(Icons.close, size: 28,),
                 ),
