@@ -6,6 +6,7 @@ import 'package:buildup/entities/builder.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/meeting_report.dart';
+import 'package:buildup/entities/notification/coach_notification.dart';
 import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
@@ -36,8 +37,9 @@ class CoachsService {
       final map = jsonDecode(response.body) as Map<String, dynamic>;
       final BuForm associatedForm = await getFormForCoach(authorization, map['id'] as String);
       final List<CoachRequest> coachRequests = await getCoachRequests(authorization, map['id'] as String);
+      final List<CoachNotification> coachNotifications = await getCoachNotifications(authorization, map['id'] as String);
       
-      return Coach.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm, associatedRequest: coachRequests);
+      return Coach.fromMap(map, associatedUser: associatedUser, associatedForm: associatedForm, associatedRequest: coachRequests, associatedNotifications: coachNotifications);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
@@ -177,7 +179,7 @@ class CoachsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-    Future<List<CoachRequest>> getCoachRequests(String authorization, String coachId) async {
+  Future<List<CoachRequest>> getCoachRequests(String authorization, String coachId) async {
     final http.Response response = await http.get(
       '$serviceBaseUrl/$coachId/coach_requests',
       headers: <String, String>{
@@ -194,6 +196,28 @@ class CoachsService {
       }
 
       return coachRequests;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
+
+  Future<List<CoachNotification>> getCoachNotifications(String authorization, String coachId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$coachId/notifications',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonNotifications = jsonDecode(response.body) as List<dynamic>;
+      final List<CoachNotification> notifications = [];
+
+      for (final map in jsonNotifications) {
+        notifications.add(CoachNotification.fromMap(map as Map<String, dynamic>));
+      }
+
+      return notifications;
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
@@ -265,6 +289,19 @@ class CoachsService {
 
     if (response.statusCode != 200) {
       throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  Future markNotificationAsRead(String authorization, String coachId, String notificationId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$coachId/notifications/$notificationId/read',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: "Error marking the notification as read: ${response.body}");
     }
   }
 

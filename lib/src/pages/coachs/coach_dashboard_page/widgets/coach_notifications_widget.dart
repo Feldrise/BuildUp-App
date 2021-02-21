@@ -1,11 +1,13 @@
+import 'package:buildup/entities/notification/coach_notification.dart';
 import 'package:buildup/entities/notification/coach_request.dart';
+import 'package:buildup/src/pages/coachs/coach_dashboard_page/widgets/coach_notification_card.dart';
 import 'package:buildup/src/pages/coachs/coach_dashboard_page/widgets/coach_request_card.dart';
 import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CoachNotificationWidget extends StatelessWidget {
+class CoachNotificationsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CoachStore>(
@@ -24,6 +26,15 @@ class CoachNotificationWidget extends StatelessWidget {
                   request: coachRequest, 
                   onAccepted: () => _acceptCoachRequest(context, coachStore, coachRequest), 
                   onRefused: () => _refuseCoachRequest(context, coachStore, coachRequest)
+                ),
+            const SizedBox(height: 16,),
+            if (coachStore.coach.associatedNotifications?.isEmpty) 
+              const Text("Vous n'avez pas de nouvelle notification")
+            else 
+              for (final notification in coachStore.coach.associatedNotifications)
+                CoachNotificationCard(
+                  notification: notification, 
+                  onMarkedAsRead: () => _markNotificationAsRead(context, coachStore, notification)
                 )
           ],
         );
@@ -64,4 +75,22 @@ class CoachNotificationWidget extends StatelessWidget {
 
     Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
   }
+
+  Future _markNotificationAsRead(BuildContext context, CoachStore coachStore, CoachNotification notification) async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+    Dialogs.showLoadingDialog(context, keyLoader, "Acceptation de la demande..."); 
+
+    try {
+      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+
+      await coachStore.markNotificationAsRead(authorization, notification);
+    } on Exception {
+      // TODO: proper error message
+      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      return;
+    }
+
+    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+  }
+
 }

@@ -1,5 +1,6 @@
 
 import 'package:buildup/entities/coach.dart';
+import 'package:buildup/entities/notification/coach_notification.dart';
 import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/coachs_services.dart';
@@ -76,6 +77,20 @@ class CoachStore with ChangeNotifier {
       await CoachsService.instance.refuseCoachRequest(authorization, coach.id, request.id);
 
       coach.associatedRequest.remove(request);
+      notifyListeners();
+    } on Exception {
+      rethrow;
+    }
+
+    coach.hasSignedFicheIntegration = true;
+    notifyListeners();
+  }
+
+  Future markNotificationAsRead(String authorization, CoachNotification notification) async {
+    try {
+      await CoachsService.instance.markNotificationAsRead(authorization, coach.id, notification.id);
+
+      coach.associatedNotifications.remove(notification);
       notifyListeners();
     } on Exception {
       rethrow;

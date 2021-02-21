@@ -1,5 +1,5 @@
 
-import 'package:buildup/src/pages/coachs/coach_dashboard_page/widgets/coach_notification_widget.dart';
+import 'package:buildup/src/pages/coachs/coach_dashboard_page/widgets/coach_notifications_widget.dart';
 import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/shared/widgets/general/discord_button.dart';
 import 'package:buildup/src/shared/widgets/general/whatsapp_button.dart';
@@ -37,7 +37,7 @@ class CoachDashboardPage extends StatelessWidget {
                             if (constraints.maxWidth < 900) {
                               return Column(
                                 children: [
-                                  CoachNotificationWidget(),
+                                  CoachNotificationsWidget(),
                                   const SizedBox(height: 16,),
                                   _buildDashboardMainColumn(context, coachStore)
                                 ],
@@ -51,7 +51,7 @@ class CoachDashboardPage extends StatelessWidget {
                                   ),
                                   ConstrainedBox(
                                     constraints: const BoxConstraints(maxWidth: 350),
-                                    child: CoachNotificationWidget(),
+                                    child: CoachNotificationsWidget(),
                                   )
                                 ],
                               );
