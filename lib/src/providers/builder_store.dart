@@ -1,4 +1,5 @@
 import 'package:buildup/entities/builder.dart';
+import 'package:buildup/entities/notification/builder_notification.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/builders_service.dart';
 import 'package:buildup/services/users_service.dart';
@@ -75,6 +76,19 @@ class BuilderStore with ChangeNotifier {
     }
 
     builder.hasSignedFicheIntegration = true;
+    notifyListeners();
+  }
+
+  Future markNotificationAsRead(String authorization, BuilderNotification notification) async {
+    try {
+      await BuildersService.instance.markNotificationAsRead(authorization, builder.id, notification.id);
+
+      builder.associatedNotifications.remove(notification);
+      notifyListeners();
+    } on Exception {
+      rethrow;
+    }
+    
     notifyListeners();
   }
 }

@@ -6,6 +6,7 @@ import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/entities/coach.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/meeting_report.dart';
+import 'package:buildup/entities/notification/builder_notification.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
@@ -41,7 +42,9 @@ class BuildersService {
       final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
       final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
-      final BuBuilder builder = BuBuilder.fromMap(map, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent);
+      final List<BuilderNotification> builderNotifications = await getBuilderNotifications(authorization, map['id'] as String);
+      
+      final BuBuilder builder = BuBuilder.fromMap(map, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent, associatedNotifications: builderNotifications);
       builder.associatedProjects.add(associatedProject);
 
       return builder;
@@ -222,6 +225,28 @@ class BuildersService {
     throw PlatformException(code: response.statusCode.toString(), message: "Error getting form for builder: ${response.body}");
   }
 
+  Future<List<BuilderNotification>> getBuilderNotifications(String authorization, String builderId) async {
+    final http.Response response = await http.get(
+      '$serviceBaseUrl/$builderId/notifications',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonNotifications = jsonDecode(response.body) as List<dynamic>;
+      final List<BuilderNotification> notifications = [];
+
+      for (final map in jsonNotifications) {
+        notifications.add(BuilderNotification.fromMap(map as Map<String, dynamic>));
+      }
+
+      return notifications;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: "Failed to get builder notifications: ${response.body}");
+  }
+
   // POST
   Future assignCoach(String authorization, BuBuilder toUpdate, String coachId) async {
     final http.Response response = await http.post(
@@ -312,6 +337,19 @@ class BuildersService {
 
     if (response.statusCode != 200) {
       throw PlatformException(code: response.statusCode.toString(), message: response.body);
+    }
+  }
+
+  Future markNotificationAsRead(String authorization, String builderId, String notificationId) async {
+    final http.Response response = await http.put(
+      '$serviceBaseUrl/$builderId/notifications/$notificationId/read',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: authorization,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: "Error marking the notification as read: ${response.body}");
     }
   }
 

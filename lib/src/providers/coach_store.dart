@@ -96,7 +96,6 @@ class CoachStore with ChangeNotifier {
       rethrow;
     }
 
-    coach.hasSignedFicheIntegration = true;
     notifyListeners();
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:buildup/entities/bu_image.dart';
 import 'package:buildup/entities/forms/bu_form.dart';
 import 'package:buildup/entities/meeting_report.dart';
+import 'package:buildup/entities/notification/builder_notification.dart';
 import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
@@ -52,6 +53,8 @@ class BuBuilder {
   final List<MeetingReport> associatedMeetingReports;
   final BuForm associatedForm;
 
+  final List<BuilderNotification> associatedNotifications;
+
   BuImage builderCard;
 
   Coach associatedCoach;
@@ -66,7 +69,7 @@ class BuBuilder {
 
   bool hasSignedFicheIntegration;
 
-  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedMeetingReports, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent}) :
+  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedMeetingReports, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent, this.associatedNotifications}) :
     id = map['id'] as String,
     builderCard = BuImage("${BuildersService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
     programEndDate = DateTime.tryParse(map['programEndDate'] as String),

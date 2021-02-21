@@ -78,7 +78,7 @@ class CoachNotificationsWidget extends StatelessWidget {
 
   Future _markNotificationAsRead(BuildContext context, CoachStore coachStore, CoachNotification notification) async {
     final GlobalKey<State> keyLoader = GlobalKey<State>();
-    Dialogs.showLoadingDialog(context, keyLoader, "Acceptation de la demande..."); 
+    Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour..."); 
 
     try {
       final String authorization = coachStore.coach.associatedUser.authentificationHeader;
