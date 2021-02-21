@@ -58,7 +58,7 @@ class _AdminActivePageState extends State<AdminActivePage> {
           }
 
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

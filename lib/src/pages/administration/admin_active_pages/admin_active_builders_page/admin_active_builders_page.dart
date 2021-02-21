@@ -52,26 +52,28 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
                     );
                   }
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          child: Wrap(
-                            children: [
-                              for (final builder in activeBuildersStore.builders) 
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                  child: AdminActiveBuilderCard(
-                                    builder: builder,
-                                    width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
-                                  ),
-                                )
-                            ],
-                          ),
-                        );
-                      },
-                    )
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                      child: SingleChildScrollView(
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Wrap(
+                              children: [
+                                for (final builder in activeBuildersStore.builders) 
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                    child: AdminActiveBuilderCard(
+                                      builder: builder,
+                                      width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
+                                    ),
+                                  )
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    ),
                   );
                 }, 
               )
