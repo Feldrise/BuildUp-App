@@ -1,3 +1,4 @@
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:buildup/utils/colors.dart';
@@ -23,9 +24,7 @@ class BuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double verticalBigFactor = isBig ? 1.7 : 1.0;
-    final double horizontalBigFactor = isBig ? 3.5 : 1.0;
-    final padding = EdgeInsets.symmetric(vertical: 15 * verticalBigFactor, horizontal: 20 * horizontalBigFactor);
+    final padding = EdgeInsets.symmetric(vertical: ScreenUtils.instance.buttonVerticalPadding, horizontal: ScreenUtils.instance.buttonHorizontalPadding);
 
     ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -17,10 +18,13 @@ class BuModalDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Dialog(
+      insetPadding: EdgeInsets.symmetric(vertical: 32, horizontal: horizontalPadding),
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 32, horizontal: horizontalPadding),
         constraints: const BoxConstraints(maxWidth: 1024),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -51,13 +55,19 @@ class BuModalDialog extends StatelessWidget {
             const SizedBox(height: 30,),
             Flexible(child: SingleChildScrollView(child: content)),
             const SizedBox(height: 40,),
-            if (MediaQuery.of(context).size.width > 476) Row(
+            if (MediaQuery.of(context).size.width > ScreenUtils.instance.breakpointTablet) Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: actions,
             ) 
             else Column(
               mainAxisSize: MainAxisSize.min,
-              children: actions,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final widget in actions) ...{ 
+                  widget,
+                  const SizedBox(height: 15,)
+                }
+              ]
             )
           ]
         )

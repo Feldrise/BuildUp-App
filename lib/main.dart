@@ -18,6 +18,7 @@ import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,6 +92,8 @@ class MyApp extends StatelessWidget {
             future: Provider.of<UserStore>(context).loggedUser,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                ScreenUtils.instance.setValues(context);
+                
                 if (snapshot.hasError) {
                   return Center(child: Text("Erreur lors du chargement de l'application : ${snapshot.error.toString()}"),);
                 }

@@ -4,6 +4,7 @@ import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_b
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -21,52 +22,59 @@ class _AdminBuildersCandidatingPageState extends State<AdminBuildersCandidatingP
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return RefreshIndicator(
       onRefresh: () => _refresh(context),
       child: Stack(
         children: [
           ListView(), // Here to make the RefreshIndicator working
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (_hasError)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-                  child: BuStatusMessage(
-                    title: "Erreur",
-                    message: _statusMessage,
+          SingleChildScrollView(
+                      child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_hasError)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+                    child: BuStatusMessage(
+                      title: "Erreur",
+                      message: _statusMessage,
+                    ),
                   ),
-                ),
-              Consumer<CandidatingBuilderStore>(
-                builder: (context, candidatingBuildersStore, child) {
-                  if (!candidatingBuildersStore.hasData) {
-                    return const Align(
-                      alignment: Alignment.topCenter,
+                Consumer<CandidatingBuilderStore>(
+                  builder: (context, candidatingBuildersStore, child) {
+                    if (!candidatingBuildersStore.hasData) {
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+                          child: const BuStatusMessage(
+                            type: BuStatusMessageType.info,
+                            message: "Il n'y a aucun builder candidatant pour le moment",
+                          ),
+                        ),
+                      );
+                    }
+                    
+                    return Flexible(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: BuStatusMessage(
-                          type: BuStatusMessageType.info,
-                          message: "Il n'y a aucun builder candidatant pour le moment",
+                        padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final BuBuilder builder in candidatingBuildersStore.builders) ...{
+                              AdminCandidatingBuilderCard(builder: builder),
+                              const SizedBox(height: 20,)
+                            }
+                          ],
                         ),
                       ),
                     );
-                  }
-                  
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        for (final BuBuilder builder in candidatingBuildersStore.builders) ...{
-                          AdminCandidatingBuilderCard(builder: builder),
-                          const SizedBox(height: 15,)
-                        }
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
