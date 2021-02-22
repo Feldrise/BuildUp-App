@@ -10,6 +10,7 @@ import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/bu_tab_widget/bu_tab_widget.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,8 @@ class _AdminActivePageState extends State<AdminActivePage> {
   
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       body: FutureBuilder<void>(
@@ -58,7 +61,7 @@ class _AdminActivePageState extends State<AdminActivePage> {
           }
 
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

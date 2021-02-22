@@ -10,6 +10,7 @@ import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,8 @@ class MeetingRepportsPage extends StatefulWidget {
 class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       appBar: BuAppBar(
@@ -33,7 +36,7 @@ class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
       body: widget.builder.associatedMeetingReports.isEmpty 
       ? const Center(child: BuStatusMessage(message: "Vous n'avez pas encore de rapport...", type: BuStatusMessageType.info,),) 
       : Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

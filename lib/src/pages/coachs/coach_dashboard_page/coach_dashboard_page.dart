@@ -4,6 +4,7 @@ import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/shared/widgets/general/discord_button.dart';
 import 'package:buildup/src/shared/widgets/general/whatsapp_button.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,8 @@ class CoachDashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Consumer<CoachStore>(
       builder: (context, coachStore, child) {
         return Scaffold(
@@ -25,7 +28,7 @@ class CoachDashboardPage extends StatelessWidget {
               builder: (context) {
                 return SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(30),
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,

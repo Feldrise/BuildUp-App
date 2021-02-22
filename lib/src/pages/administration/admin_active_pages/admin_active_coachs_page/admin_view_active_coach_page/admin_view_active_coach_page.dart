@@ -6,6 +6,7 @@ import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/admin_active_member_form_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,8 @@ class AdminViewActiveCoachPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       appBar: BuAppBar(
@@ -31,7 +34,7 @@ class AdminViewActiveCoachPage extends StatelessWidget {
           builder: (context) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                 child: Column(
                   children: [
                     CoachProfileCard(coach: coach, onSaveProfile: (coach) => _saveCoachProfile(context, coach),),

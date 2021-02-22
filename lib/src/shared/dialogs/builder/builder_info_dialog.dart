@@ -13,6 +13,7 @@ import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -50,8 +51,10 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
   }
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Container(
-      padding: const EdgeInsets.all(30),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
       color: colorScaffoldGrey,
       child: BuCard(
         padding: EdgeInsets.zero,
@@ -62,7 +65,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
             title: Text("Modifier les informations Builder de ${widget.builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,

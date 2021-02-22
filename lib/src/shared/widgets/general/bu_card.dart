@@ -6,7 +6,7 @@ class BuCard extends StatelessWidget {
     this.height, 
     this.width, 
     this.margin = EdgeInsets.zero,
-    this.padding = const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),  
+    this.padding = const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),  
     @required this.child,
     this.borderColor,
   }) : super(key: key);

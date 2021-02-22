@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisSize: MainAxisSize.min,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [  
+                          const SizedBox(height: 15,),
                           Image.asset("assets/icons/icon_buildup.png", height: 56,),
                           const SizedBox(height: 5.0,),
                           Text("Bienvenue ! ", textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline3,),

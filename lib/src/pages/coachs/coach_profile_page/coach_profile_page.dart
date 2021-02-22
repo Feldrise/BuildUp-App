@@ -5,6 +5,7 @@ import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_info_card.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,8 @@ class CoachProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Consumer<CoachStore>(
       builder: (context, coachStore, child) {
         return Scaffold(
@@ -26,7 +29,7 @@ class CoachProfilPage extends StatelessWidget {
               builder: (context) {
                 return SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(30),
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                     child: Column(
                       children: [
                         CoachProfileCard(

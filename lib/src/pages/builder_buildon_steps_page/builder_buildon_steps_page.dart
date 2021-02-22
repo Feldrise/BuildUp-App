@@ -8,6 +8,7 @@ import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/src/shared/widgets/general/bu_stepper.dart';
 import 'package:buildup/src/pages/builder_buildon_steps_page/widgets/buildon_step_card.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 
 class BuilderBuildOnStepsPage extends StatelessWidget {
@@ -25,6 +26,8 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       appBar: BuAppBar(
@@ -41,7 +44,7 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
             ),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     final List<BuildOnStep> buildOnSteps = buildOn.steps;

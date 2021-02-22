@@ -4,6 +4,7 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return RefreshIndicator(
       onRefresh: _refresh,
       child: Stack(
@@ -31,7 +34,7 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
             children: [
               if (_hasError)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                   child: BuStatusMessage(
                     title: "Erreur",
                     message: _statusMessage,
@@ -40,11 +43,11 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
               Consumer<ActiveBuildersStore>(
                 builder: (context, activeBuildersStore, child) {
                   if (!activeBuildersStore.hasData) {
-                    return const Align(
+                    return Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: BuStatusMessage(
+                        padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+                        child: const BuStatusMessage(
                           type: BuStatusMessageType.info,
                           message: "Il n'y a aucun builder actif pour le moment",
                         ),
@@ -54,20 +57,19 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
 
                   return Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                      padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                       child: SingleChildScrollView(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             return Wrap(
+                              spacing: 15,
+                              runSpacing: 15,
                               children: [
                                 for (final builder in activeBuildersStore.builders) 
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                    child: AdminActiveBuilderCard(
-                                      builder: builder,
-                                      width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
-                                    ),
-                                  )
+                                  AdminActiveBuilderCard(
+                                    builder: builder,
+                                    width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
+                                  ),
                               ],
                             );
                           },

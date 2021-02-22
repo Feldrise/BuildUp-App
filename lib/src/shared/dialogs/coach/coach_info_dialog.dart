@@ -8,6 +8,7 @@ import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,8 +49,10 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Container(
-      padding: const EdgeInsets.all(30),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
       color: colorScaffoldGrey,
       child: BuCard(
         padding: EdgeInsets.zero,

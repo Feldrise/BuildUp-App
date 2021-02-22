@@ -8,6 +8,7 @@ import 'package:buildup/src/shared/widgets/builder/builder_profile_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_project_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       appBar: BuAppBar(
@@ -33,7 +36,7 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
           builder: (context) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                 child: Column(
                   children: [
                     BuilderProfileCard(builder: builder, onSaveProfile: (builder) => _saveBuilderProfile(context, builder)),

@@ -9,6 +9,7 @@ import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
 import 'package:buildup/src/shared/widgets/general/bu_stepper.dart';
 import 'package:buildup/src/pages/builder_buildons_page/widgets/buildon_card.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,8 @@ class BuilderBuildOnsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Consumer<BuildOnsStore>(
       builder: (context, buildOnsStore, child) {
         return Scaffold(
@@ -28,7 +31,7 @@ class BuilderBuildOnsPage extends StatelessWidget {
             title: Text("Build-Ons de ${builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
             child: FutureBuilder(
               future: buildOnsStore.buildons(Provider.of<UserStore>(context).authentificationHeader),
               builder: (context, snapshot) {

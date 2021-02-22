@@ -3,6 +3,7 @@ import 'package:buildup/src/pages/administration/admin_active_pages/admin_active
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,8 @@ class _AdminActiveCoachsPageState extends State<AdminActiveCoachsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return RefreshIndicator(
       onRefresh: _refresh,
       child: Stack(
@@ -30,7 +33,7 @@ class _AdminActiveCoachsPageState extends State<AdminActiveCoachsPage> {
             children: [
               if (_hasError)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                   child: BuStatusMessage(
                     title: "Erreur",
                     message: _statusMessage,
@@ -39,11 +42,11 @@ class _AdminActiveCoachsPageState extends State<AdminActiveCoachsPage> {
               Consumer<ActiveCoachsStore>(
                 builder: (context, activeCoachsStore, child) {
                   if (!activeCoachsStore.hasData) {
-                    return const Align(
+                    return Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: BuStatusMessage(
+                        padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+                        child: const BuStatusMessage(
                           type: BuStatusMessageType.info,
                           message: "Il n'y a aucun coach actif pour le moment",
                         ),
@@ -53,20 +56,19 @@ class _AdminActiveCoachsPageState extends State<AdminActiveCoachsPage> {
 
                   return Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+                      padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return SingleChildScrollView(
                             child: Wrap(
+                              spacing: 15,
+                              runSpacing: 15,
                               children: [
                                 for (final coach in activeCoachsStore.coachs) 
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                    child: AdminActiveCoachCard(
-                                      coach: coach,
-                                      width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
-                                    ),
-                                  )
+                                  AdminActiveCoachCard(
+                                    coach: coach,
+                                    width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,
+                                  ),
                               ],
                             ),
                           );

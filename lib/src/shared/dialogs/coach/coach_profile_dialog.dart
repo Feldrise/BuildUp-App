@@ -11,6 +11,7 @@ import 'package:buildup/src/shared/widgets/inputs/bu_image_picker.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_textinput.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/constants.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -76,6 +77,8 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Container(
       padding: const EdgeInsets.all(30),
       color: colorScaffoldGrey,
@@ -88,7 +91,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
             title: Text("Modifier le profil de ${widget.coach.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
