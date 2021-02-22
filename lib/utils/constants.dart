@@ -1,4 +1,4 @@
-const String kApiBaseUrl = "https://192.168.1.6:45455/buildup";
+const String kApiBaseUrl = "https://api.new-talents.fr/buildup";
 
 const Map<String, String> kSituations = {
   "Entrepreneur": "Entrepreuneur",
