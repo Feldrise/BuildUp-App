@@ -59,7 +59,7 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
                 const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Coach au sein du programme, être prêt à faire évoluer le projet de mon Builder, à lui accorder du temps et de la bienveillance, être à l’écoute de ses problématiques et proposer des solutions et pour finir partager votre expérience avec passion.\n\n"),
                 const TextSpan(text: "J’ai connaissance de l’investissement qui m’est demandé, j’ai la volonté de faire grandir autant personnellement que profesionnellement mon Builder et lui donner les clés pour faire évoluer son projet.\n\n\n"),
                 const TextSpan(text: "Fait le "),
-                TextSpan(text: DateTime.now().toString(), style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: DateFormat('dd/MM/yyyy').format(DateTime.now()), style: const TextStyle(color: colorPrimary)),
                 
               ],
             ),

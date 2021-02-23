@@ -101,7 +101,7 @@ class _AvailableCoachWidgetState extends State<AvailableCoachWidget> {
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: AvailableCoachCard(
                   coach: coach,
-                  width: constraints.maxWidth > 505 ? 260 : constraints.maxWidth,
+                  width: constraints.maxWidth > 505 ? 300 : constraints.maxWidth,
                   isSelected: coach == _selectedCoach,
                   onCoachSelected: (coach) {
                     setState(() {

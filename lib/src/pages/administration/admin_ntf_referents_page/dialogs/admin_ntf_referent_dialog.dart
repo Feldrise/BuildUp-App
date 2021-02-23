@@ -199,7 +199,6 @@ class _AdminNtfReferentDialogState extends State<AdminNtfReferentDialog> {
         onPressed: () => Navigator.pop(context, false),
         isBig: true,
       ),
-      const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         text: "Valider",
         onPressed: _validate,

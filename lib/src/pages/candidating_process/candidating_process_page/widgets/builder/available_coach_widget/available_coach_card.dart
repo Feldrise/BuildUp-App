@@ -26,11 +26,11 @@ class AvailableCoachCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BuCard(
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 15),
       width: width,
       borderColor: isSelected ? colorPrimary : null,
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           Center(
@@ -49,17 +49,21 @@ class AvailableCoachCard extends StatelessWidget {
           const SizedBox(height: 24),
           _buildContactWidget(coach.email, coach.discordTag),
           const SizedBox(height: 24),
-          BuButton(
-            icon: Icons.info_outline,
-            text: "Plus d'informations", 
-            buttonType: BuButtonType.secondaryGrey,
-            onPressed: () => _showMoreInfo(context)
+          Flexible(
+            child: BuButton(
+              icon: Icons.info_outline,
+              text: "Plus d'informations", 
+              buttonType: BuButtonType.secondaryGrey,
+              onPressed: () => _showMoreInfo(context)
+            ),
           ),
           const SizedBox(height: 8,),
-          BuButton(
-            text: "Choisir le coach",
-            buttonType: BuButtonType.secondary,
-            onPressed: () => onCoachSelected(coach),
+          Flexible(
+            child: BuButton(
+              text: "Choisir le coach",
+              buttonType: BuButtonType.secondary,
+              onPressed: () => onCoachSelected(coach),
+            ),
           ),
         ],
       )

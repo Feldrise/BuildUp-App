@@ -48,6 +48,7 @@ class CoachRequestCard extends StatelessWidget {
                           onPressed: onRefused,
                           child: const Text("REFUSER", style: TextStyle(color: colorTextError)),
                         ),
+                        const SizedBox(width: 8),
                         TextButton(
                           onPressed: onAccepted,
                           child: const Text("ACCEPTER", style: TextStyle(color: colorTextSuccess,)),

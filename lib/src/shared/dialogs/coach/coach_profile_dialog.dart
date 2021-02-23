@@ -80,7 +80,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     final horizontalPadding = ScreenUtils.instance.horizontalPadding;
 
     return Container(
-      padding: const EdgeInsets.all(30),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
       color: colorScaffoldGrey,
       child: BuCard(
         padding: EdgeInsets.zero,

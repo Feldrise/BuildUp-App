@@ -34,7 +34,6 @@ class AdminActiveCoachDeleteDialog extends StatelessWidget {
         text: "Annuler",
         onPressed: () => Navigator.pop(context, false),
       ),
-      const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         icon: Icons.delete,
         text: "Supprimer",

@@ -14,12 +14,15 @@ import 'package:buildup/src/providers/coach_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/dialogs/dialogs.dart';
 import 'package:buildup/utils/colors.dart';
+import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CandidatingProcessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = ScreenUtils.instance.horizontalPadding;
+
     return Scaffold(
       backgroundColor: colorScaffoldGrey,
       body: SingleChildScrollView(
@@ -28,7 +31,7 @@ class CandidatingProcessPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.all(32.0),
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
               child: Consumer<UserStore>(
                 builder: (context, userStore, child) {
                   if (userStore.user.role == UserRoles.builder) {
@@ -122,7 +125,7 @@ class CandidatingProcessPage extends StatelessWidget {
             title: "Candidature validée", 
             description: const [
               Text("Votre candidature a été validée."),
-              Text("Vous pouvez dès à présent remplir votre fiche d’intégration.")
+              Text("Vous pouvez dès maintenant choisir un coach et prendre contact avec lui avec les moyens de contact mis à votre disposition. Après avoir échangé avec lui, validez votre choix.")
             ],
             index: 4, maxSteps: maxSteps,
             child: AvailableCoachWidget(

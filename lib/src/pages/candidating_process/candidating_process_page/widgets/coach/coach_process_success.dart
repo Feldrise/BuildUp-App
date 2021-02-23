@@ -17,15 +17,16 @@ class CoachProcessSuccess extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8.0,
+              runSpacing: 8.0,
               children: [
                 BuButton(
                   icon: Icons.download_rounded,
                   text: "Télécharger la fiche", 
                   onPressed: () async => launch("$kApiBaseUrl/../pdf/coachs/${coachStore.coach.id}.pdf"),
                 ),
-                const SizedBox(width: 8,),
                 BuButton(
                   icon: Icons.arrow_forward,
                   text: "Accéder à mon espace personnel",

@@ -94,8 +94,8 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
             buildOnReturning: returning,
             project: builder.associatedProjects.first,
             isSmall: isSmall,
-            nextBuildOn: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn.id : buildOn.id,
-            nextBuildOnStep: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn.steps.first.id : buildOnSteps[buildOnSteps.indexOf(buildOnStep) + 1].id,
+            nextBuildOn: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn?.id : buildOn.id,
+            nextBuildOnStep: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn?.steps?.first?.id : buildOnSteps[buildOnSteps.indexOf(buildOnStep) + 1].id,
           ),
           color: color
         )

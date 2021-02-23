@@ -18,15 +18,16 @@ class BuilderProcessSuccess extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 BuButton(
                   icon: Icons.download_rounded,
                   text: "Télécharger la fiche", 
                   onPressed: () async => launch("$kApiBaseUrl/../pdf/builders/${builderStore.builder.id}.pdf"),
                 ),
-                const SizedBox(width: 8,),
                 BuButton(
                   icon: Icons.arrow_forward,
                   text: "Accéder à mon espace personnel",

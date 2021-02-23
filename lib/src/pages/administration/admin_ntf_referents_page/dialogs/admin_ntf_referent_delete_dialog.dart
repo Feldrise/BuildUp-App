@@ -67,7 +67,6 @@ class AdminNtfReferentDeleteDialog extends StatelessWidget {
         onPressed: () => Navigator.pop(context, false),
         isBig: true,
       ),
-      const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         icon: Icons.delete,
         text: "Supprimer",

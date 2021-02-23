@@ -32,7 +32,6 @@ class BuildOnStepRefusingReason extends StatelessWidget {
         isBig: true,
         onPressed: () => _cancel(context)
       ),
-      const SizedBox(width: 8.0, height: 8.0,),
       BuButton(
         icon: Icons.save,
         text: "Refuser",
