@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
               thickness: 1
             ),
 
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+            visualDensity: VisualDensity.compact
           ),
           home: FutureBuilder(
             future: Provider.of<UserStore>(context).loggedUser,
