@@ -65,7 +65,7 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
       ),
       buildInfo("étape", Text(CoachSteps.detailled[widget.coach.step] ?? "Inconnue")),
       buildInfo("Date", Text(DateFormat("dd/MM/yyyy").format(widget.coach.candidatingDate))),
-      buildInfo("Sitaution", Text(widget.coach.situation)),
+      buildInfo("Situation", Text(widget.coach.situation)),
       buildInfo("Email", Text(widget.coach.associatedUser.email)),
       buildInfo("Tag Discord", Text(widget.coach.associatedUser.discordTag))
     ];

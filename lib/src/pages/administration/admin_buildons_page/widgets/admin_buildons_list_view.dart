@@ -30,7 +30,7 @@ class AdminBuildOnsListView extends StatelessWidget {
               const BuStatusMessage(
                 type: BuStatusMessageType.info,
                 title: "Liste vide",
-                message: "Il n'y a actuellement aucun Build-On. Créez-en un !",
+                message: "Il n'y a actuellement aucun Build On. Créez-en un !",
               ),
               Expanded(
                 child: Container(),

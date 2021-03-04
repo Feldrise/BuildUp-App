@@ -39,7 +39,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text("Configurer le Build-On", style: Theme.of(context).textTheme.headline5,),
+                  child: Text("Configurer le Build On", style: Theme.of(context).textTheme.headline5,),
                 ),
                 InkWell(
                   onTap: onClosed,
@@ -94,7 +94,7 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
                         children: [
                           BuTextInput(
                             controller: TextEditingController()..text = buildOn.name, 
-                            labelText: "Nom du Build-On", 
+                            labelText: "Nom du Build On", 
                             hintText: "Nom",
                             validator: (value) {
                               if (value.isEmpty) {

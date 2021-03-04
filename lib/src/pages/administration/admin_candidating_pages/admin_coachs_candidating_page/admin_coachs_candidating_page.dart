@@ -49,7 +49,7 @@ class _AdminCoachsCandidatingPageState extends State<AdminCoachsCandidatingPage>
                           padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                           child: const BuStatusMessage(
                             type: BuStatusMessageType.info,
-                            message: "Il n'y a aucun coach candidatant pour le moment",
+                            message: "Aucune candidature disponible",
                           ),
                         ),
                       );

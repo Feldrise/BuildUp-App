@@ -39,7 +39,7 @@ mixin AdminActiveBuilderCardAction {
   static const Map<String, String> detailled = {
     viewProfile: "Profil",
     viewRepports: "Rapports",
-    viewBuildOns: "Build-Ons",
+    viewBuildOns: "Builds On",
     delete: "Supprimer"
   };
 }

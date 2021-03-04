@@ -88,7 +88,7 @@ class BuildOnsService {
         return null;
       }
 
-      throw PlatformException(code: response.statusCode.toString(), message: "Error getting the build-on step: ${response.body}");
+      throw PlatformException(code: response.statusCode.toString(), message: "Error getting the build on step: ${response.body}");
   }
 
   Future<List<BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {

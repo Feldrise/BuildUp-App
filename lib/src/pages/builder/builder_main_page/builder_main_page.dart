@@ -55,7 +55,7 @@ class BuilderMainPage extends StatelessWidget {
       ),
       PageItem(
         index: 4, 
-        title: "Build-On", 
+        title: "Builds On", 
         icon: Icons.view_day,
       ),
     ];

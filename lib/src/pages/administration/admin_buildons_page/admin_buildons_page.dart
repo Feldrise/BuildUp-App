@@ -132,7 +132,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
           if (snaphsot.hasError) {
             return Center(
               child: BuStatusMessage(
-                title: "Erreur lors de la récupération des build-ons",
+                title: "Erreur lors de la récupération des Builds On",
                 message: snaphsot.error.toString(),
               ),
             );
@@ -176,7 +176,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                   child: CircularProgressIndicator()
                 ),
                 SizedBox(height: 30,),
-                Text("Récupération des données des build-ons")
+                Text("Récupération des données des Builds On")
               ]
             ),
           ),
@@ -188,7 +188,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   Future _buildOnRequestStepsUpdate(BuildOn buildOn) async {
     final BuildOnsStore buildOnsStore = Provider.of<BuildOnsStore>(context, listen: false);
     
-    // Avoid saving build-ons if they are not loaded
+    // Avoid saving Builds On if they are not loaded
     if (buildOnsStore.loadedBuildOns == null) {
       return;
     }
@@ -237,7 +237,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   void _addNewBuildOn(BuildOnsStore buildOnsStore) {
-    // Avoid adding build-ons if they are not loaded
+    // Avoid adding Builds On if they are not loaded
     if (buildOnsStore.loadedBuildOns == null) {
       return;
     }
@@ -278,7 +278,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
       setState(() {
         _isUpToDate = true;
         _hasError = false;
-        _statusMessage = "Les build-ons ont été correctement enregistrés";
+        _statusMessage = "Les Builds On ont été correctement enregistrés";
       });
 
       Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
@@ -286,7 +286,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
     } on Exception catch(e) {
       setState(() {
         _hasError = true;
-        _statusMessage = "Impossible d'enregistrer les Build-ons : ${e.toString()}";
+        _statusMessage = "Impossible d'enregistrer les Builds On : ${e.toString()}";
       });
     }
     

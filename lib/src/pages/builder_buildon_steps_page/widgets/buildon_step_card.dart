@@ -147,11 +147,11 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
           else if (_buildOnReturning.status == BuildOnReturningStatus.validated)
             _buildBadgeValidated()
           else if (_buildOnReturning.status == BuildOnReturningStatus.waiting)
-            _buildBadgeWaiting()
+            Flexible(child: _buildBadgeWaiting())
           else if (_buildOnReturning.status == BuildOnReturningStatus.waitingCoach)
-          _buildBadgeWaitingCoach()
+          Flexible(child: _buildBadgeWaitingCoach())
           else if (_buildOnReturning.status == BuildOnReturningStatus.waitingAdmin)
-          _buildBadgeWaitingAdmin()
+          Flexible(child: _buildBadgeWaitingAdmin())
         ],
       ),
       const SizedBox(height: 15),
@@ -194,7 +194,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       children: const [
         Icon(Icons.watch_later, color: Color(0xfff4bd21),),
         SizedBox(width: 5),
-        Text("En attente de validation", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
+        Flexible(child: Text("En attente de validation", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21))))
       ],
     );
   }
@@ -205,7 +205,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       children: const [
         Icon(Icons.watch_later, color: Color(0xfff4bd21),),
         SizedBox(width: 5),
-        Text("En attente de validation du Coach", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
+        Flexible(child: Text("En attente de validation du Coach", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21))))
       ],
     );
   }
@@ -216,7 +216,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       children: const [
         Icon(Icons.watch_later, color: Color(0xfff4bd21),),
         SizedBox(width: 5),
-        Text("En attente de validation d'un responsable", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21)))
+        Flexible(child: Text("En attente de validation d'un responsable", style: TextStyle(fontSize: 14, color: Color(0xfff4bd21))))
       ],
     );
   }

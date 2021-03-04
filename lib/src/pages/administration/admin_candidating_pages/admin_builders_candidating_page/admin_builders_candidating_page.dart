@@ -50,7 +50,7 @@ class _AdminBuildersCandidatingPageState extends State<AdminBuildersCandidatingP
                           padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
                           child: const BuStatusMessage(
                             type: BuStatusMessageType.info,
-                            message: "Il n'y a aucun builder candidatant pour le moment",
+                            message: "Aucune candidature disponible",
                           ),
                         ),
                       );

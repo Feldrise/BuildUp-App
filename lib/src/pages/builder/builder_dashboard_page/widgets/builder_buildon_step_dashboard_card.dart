@@ -17,7 +17,7 @@ class BuilderBuildOnDashboardCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Mon avancée Build-On", style: Theme.of(context).textTheme.headline6,),
+              Text("Mon avancée Build On", style: Theme.of(context).textTheme.headline6,),
               const SizedBox(height: 15,),
               Flexible(child: _buildCoachInfos(builderStore)),
               const SizedBox(height: 15,),

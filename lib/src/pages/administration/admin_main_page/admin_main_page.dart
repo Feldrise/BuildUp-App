@@ -72,7 +72,7 @@ class AdminMainPage extends StatelessWidget {
           ),
           PageItem(
             index: 2,
-            title: "Gestion des Build-On",
+            title: "Gestion des Builds On",
             icon: Icons.build
           ),
           PageItem(

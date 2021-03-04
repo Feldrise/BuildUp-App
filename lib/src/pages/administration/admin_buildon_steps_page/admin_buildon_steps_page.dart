@@ -136,7 +136,7 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
           if (snaphsot.hasError) {
             return Center(
               child: BuStatusMessage(
-                title: "Erreur lors de la récupération des build-ons",
+                title: "Erreur lors de la récupération des Builds On",
                 message: snaphsot.error.toString(),
               ),
             );
@@ -181,7 +181,7 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
                   child: CircularProgressIndicator()
                 ),
                 SizedBox(height: 30,),
-                Text("Récupération des données des build-ons")
+                Text("Récupération des données des Builds On")
               ]
             ),
           ),

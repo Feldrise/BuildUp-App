@@ -28,7 +28,7 @@ class BuilderBuildOnsPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: colorScaffoldGrey,
           appBar: BuAppBar(
-            title: Text("Build-Ons de ${builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
+            title: Text("Builds On de ${builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
@@ -77,7 +77,7 @@ class BuilderBuildOnsPage extends StatelessWidget {
                           child: CircularProgressIndicator()
                         ),
                         SizedBox(height: 30,),
-                        Text("Récupération des build-ons")
+                        Text("Récupération des Builds On")
                       ]
                     ),
                   ),

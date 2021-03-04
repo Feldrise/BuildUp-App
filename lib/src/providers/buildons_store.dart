@@ -35,7 +35,7 @@ class BuildOnsStore with ChangeNotifier {
       final synced = await BuildOnsService.instance.syncBuildOns(authorization, _buildOns);
 
       if (synced.length != _buildOns.length) {
-        throw Exception("Quelques build-ons se sont perdu en route...");
+        throw Exception("Quelques Builds On se sont perdus en route...");
       }
 
       for (int i = 0; i < synced.length; ++i) {
@@ -56,7 +56,7 @@ class BuildOnsStore with ChangeNotifier {
       final synced = await BuildOnsService.instance.syncBuildOnSteps(authorization, buildOn.id, buildOn.steps);
 
       if (synced.length != buildOn.steps.length) {
-        throw Exception("Quelques étapes du build-ons se sont perdu en route...");
+        throw Exception("Quelques étapes du Builds On se sont perdus en route...");
       }
 
       for (int i = 0; i < synced.length; ++i) {
