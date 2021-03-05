@@ -15,18 +15,22 @@ import 'package:provider/provider.dart';
 class AdminMainPage extends StatelessWidget {
   final List<Widget> pages = [
     AdminCandidatingPage(),
-    Navigator(
-      key: AppManager.instance.adminActiveKey,
-      onGenerateRoute: (route) => MaterialPageRoute<void>(
-        settings: route,
-        builder: (context) => AdminActivePage()
+    ClipRect(
+          child: Navigator(
+        key: AppManager.instance.adminActiveKey,
+        onGenerateRoute: (route) => MaterialPageRoute<void>(
+          settings: route,
+          builder: (context) => AdminActivePage()
+        ),
       ),
     ),
-    Navigator(
-      key: AppManager.instance.adminBuildUpKey,
-      onGenerateRoute: (route) => MaterialPageRoute<void>(
-        settings: route,
-        builder: (context) => AdminBuildOnsPage()
+    ClipRect(
+          child: Navigator(
+        key: AppManager.instance.adminBuildUpKey,
+        onGenerateRoute: (route) => MaterialPageRoute<void>(
+          settings: route,
+          builder: (context) => AdminBuildOnsPage()
+        ),
       ),
     ),
     AdminNtfReferentsPage()

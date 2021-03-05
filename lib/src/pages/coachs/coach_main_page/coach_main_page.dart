@@ -20,11 +20,13 @@ class CoachMainPage extends StatelessWidget {
         final List<Widget> pages = [
           const CoachDashboardPage(),
           const CoachProfilPage(),
-          Navigator(
-            key: AppManager.instance.coachBuildersKey,
-            onGenerateRoute: (route) => MaterialPageRoute<void>(
-              settings: route,
-              builder: (context) => const CoachBuildersPage()
+          ClipRect(
+                      child: Navigator(
+              key: AppManager.instance.coachBuildersKey,
+              onGenerateRoute: (route) => MaterialPageRoute<void>(
+                settings: route,
+                builder: (context) => const CoachBuildersPage()
+              ),
             ),
           ),
         ];

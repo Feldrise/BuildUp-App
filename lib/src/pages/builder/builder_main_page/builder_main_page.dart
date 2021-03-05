@@ -23,11 +23,13 @@ class BuilderMainPage extends StatelessWidget {
           return MeetingRepportsPage(builder: builderStore.builder);
         }
       ),
-      Navigator(
-        key: AppManager.instance.builderBuildOnsKey,
-        onGenerateRoute: (route) => MaterialPageRoute<void>(
-          settings: route,
-          builder: (context) => BuilderBuildOnsPage(builder: Provider.of<BuilderStore>(context).builder)
+      ClipRect(
+              child: Navigator(
+          key: AppManager.instance.builderBuildOnsKey,
+          onGenerateRoute: (route) => MaterialPageRoute<void>(
+            settings: route,
+            builder: (context) => BuilderBuildOnsPage(builder: Provider.of<BuilderStore>(context).builder)
+          ),
         ),
       ),
       
