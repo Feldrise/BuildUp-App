@@ -35,7 +35,7 @@ class BuilderDashboardPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text("“Je suis une citation” _- Guillaume Pas Ordinair", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText)),
+                        const Text("“Laissez tout vous arriver. Beauté et terreur. Continuez juste à le faire. Aucun sentiment n’est définitif.” _- Rainer Maria Rilke", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText, fontStyle: FontStyle.italic)),
                         const SizedBox(height: 24,),
                         LayoutBuilder(
                           builder: (context, constraints) {

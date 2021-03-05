@@ -62,8 +62,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Candidature refusée", 
             description: [
-              Text("Votre candidature a malehreusement été refusée..."),
-              Text("N’hésitez pas à vous rapprocher de l’équipe pour comprendre pourquoi !")
+              Text("Ta candidature a malehreusement été refusée..."),
+              Text("N’hésite pas à te rapprocher de l’équipe pour en connaitre les raisons !")
             ],
             index: 4, maxSteps: 4,
             child: ProcessImage(imageName: "refused",),
@@ -75,7 +75,7 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Candidature en cours d'examen", 
             description: [
-              Text("Votre candidature est actuellement en cours d’examen."),
+              Text("Ta candidature est actuellement en cours d’examen."),
               Text("Nous reviendrons vers vous le plus vite possible afin de prendre contact.")
             ],
             index: 1, maxSteps: maxSteps,
@@ -88,13 +88,13 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Une prise de contact a été effectuée", 
             description: [
-              const Text("L’équipe a pris contact avec vous afin de convenir d’une date d’entretien."),
+              const Text("L’équipe a pris contact avec toi par mail afin de convenir d’une date d’entretien."),
               RichText(
                 text: TextSpan(
-                  text: "Si vous n’avez pas été contacté, ",
+                  text: "Si tu n’as pas été contacté, ",
                   style: Theme.of(context).textTheme.bodyText2,
                   children: const <TextSpan>[
-                    TextSpan(text: 'merci de vous rapprocher de l’équipe New-Talents.', style: TextStyle(color: colorPrimary)),
+                    TextSpan(text: 'merci de te rapprocher de l’équipe New Talents.', style: TextStyle(color: colorPrimary)),
                   ],
                 ),
               )
@@ -110,7 +110,7 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Entretien réalisé", 
             description: [
-              Text("L’entretien avec l’équipe New-Talents a été réalisé."),
+              Text("L'entretien avec un responsable Builders a été réalisé !"),
               Text("Nous vous donnerons une réponse dès que possible.")
             ],
             index: 3, maxSteps: maxSteps,
@@ -124,8 +124,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Candidature validée", 
             description: const [
-              Text("Votre candidature a été validée."),
-              Text("Vous pouvez dès maintenant choisir un coach et prendre contact avec lui avec les moyens de contact mis à votre disposition. Après avoir échangé avec lui, validez votre choix.")
+              Text("Ta candidature a été accepté !"),
+              Text("Tu peux dès à présent choisir ton Coach. Tu peux les contacter directement et choisir celle ou celui avec qui tu te sens le mieux."),
             ],
             index: 4, maxSteps: maxSteps,
             child: AvailableCoachWidget(
@@ -141,7 +141,7 @@ class CandidatingProcessPage extends StatelessWidget {
             title: "En attente validation du coach", 
             description: [
               Text("La rencontre avec le coach a été réalisée."),
-              Text("Nous vous donnerons une réponse dès que possible.")
+              Text("Tu dois maintenant attendre que le Coach valide ton choix.")
             ],
             index: 5, maxSteps: maxSteps,
             child: ProcessImage(imageName: "waiting_coach"),
@@ -153,9 +153,9 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Edition carte et fiche d’intégration", 
             description: const [
-              Text("La rencontre avec le coach a été réalisée."),
-              Text("Vous pouvez dès à présent remplir votre fiche d’intégration et éditer votre carte."),
-              Text("Pour finaliser votre inscription au programme pour une durée de 3 mois, lisez les documents présentés ci-dessous et n’oubliez pas de signer.")
+              Text("Le Coach que tu as choisi a décidé de t'accepter !"),
+              Text("Tu peux dès à présent remplir ta fiche d'intégration et éditer ta carte Builder."),
+              Text("Pour finaliser ton inscription au programme Build Up d'une durée de 3 mois, lis les informations présentées ci-dessous et n'oublie pas de signer !"),
             ],
             index: 6, maxSteps: maxSteps,
             child: BuilderValidatedCandidature(onSigned: () => _signBuilderIntegration(context, builderStore)),
@@ -167,8 +167,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Candidature terminée", 
             description: const [
-              Text("Votre canditature est officiellement terminée ! Bienvenue dans le programme !"),
-              Text("Vous pouvez dès à présent télécharger votre carte ainsi que votre fiche d’intégration, puis accéder à votre espace personnel."),
+              Text("Ta canditature est officiellement terminée ! Bienvenue dans le programme !"),
+              Text("Tu peux dès à présent télécharger ta fiche d’intégration, puis accéder à ton espace personnel."),
             ],
             index: 7, maxSteps: maxSteps,
             child: BuilderProcessSuccess()
@@ -190,8 +190,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Candidature refusée", 
             description: [
-              Text("Votre candidature a malehreusement été refusée..."),
-              Text("N’hésitez pas à vous rapprocher de l’équipe pour comprendre pourquoi !")
+              Text("Ta candidature a malehreusement été refusée..."),
+              Text("N’hésite pas à te rapprocher de l’équipe pour en connaitre les raisons !")
             ],
             index: 4, maxSteps: 4,
             child: ProcessImage(imageName: "refused",),
@@ -203,8 +203,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Candidature en cours d'examen", 
             description: [
-              Text("Votre candidature est actuellement en cours d’examen."),
-              Text("Nous reviendrons vers vous le plus vite possible afin de prendre contact.")
+              Text("Ta candidature est actuellement en cours d’examen."),
+              Text("Nous reviendrons vers toi le plus vite possible afin de prendre contact.")
             ],
             index: 1, maxSteps: maxSteps,
             child: ProcessImage(imageName: "preselected",),
@@ -216,13 +216,13 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Une prise de contact a été effectuée", 
             description: [
-              const Text("L’équipe a pris contact avec vous afin de convenir d’une date d’entretien."),
+              const Text("L’équipe a pris contact avec toi par mail afin de convenir d’une date d’entretien."),
               RichText(
                 text: TextSpan(
-                  text: "Si vous n’avez pas été contacté, ",
+                  text: "Si tu n’as pas été contacté, ",
                   style: Theme.of(context).textTheme.bodyText2,
                   children: const <TextSpan>[
-                    TextSpan(text: 'merci de vous rapprocher de l’équipe New-Talents.', style: TextStyle(color: colorPrimary)),
+                    TextSpan(text: 'merci de te rapprocher de l’équipe New Talents.', style: TextStyle(color: colorPrimary)),
                   ],
                 ),
               )
@@ -237,8 +237,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return const ProcessWidget(
             title: "Entretien réalisé", 
             description: [
-              Text("L’entretien avec l’équipe New-Talents a été réalisé."),
-              Text("Nous vous donnerons une réponse dès que possible.")
+              Text("L’entretien avec un responsable Coach a été réalisé."),
+              Text("Nous te donnerons une réponse dès que possible.")
             ],
             index: 3, maxSteps: maxSteps,
             child: ProcessImage(imageName: "meeting_done"),
@@ -248,11 +248,11 @@ class CandidatingProcessPage extends StatelessWidget {
         // The coach need to sign
         if (!coachStore.coach.hasSignedFicheIntegration && coachStore.coach.step == CoachSteps.signing) {
           return ProcessWidget(
-            title: "Candidature validée : édition carte et fiche d’intégration", 
+            title: "Candidature validée : signature de la fiche d’intégration", 
             description: const [
-              Text("Votre candidature a été validée."),
-              Text("Vous pouvez dès à présent remplir votre fiche d’intégration et éditer votre carte."),
-              Text("Pour finaliser votre inscription au programme pour une durée d’une année, lisez les documents présentés ci-dessous et n’oubliez pas de signer.")
+              Text("Ta candidature a été validée."),
+              Text("Tu peux dès à présent signer ta fiche d’intégration."),
+              Text("Pour finaliser ton inscription au programme pour une durée d’une année, lis les documents présentés ci-dessous et n’oublie pas de signer.")
             ],
             index: 4, maxSteps: maxSteps,
             child: CoachValidatedCandidature(onSigned: () => _signCoachIntegration(context, coachStore)),
@@ -264,8 +264,8 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Candidature terminée", 
             description: const [
-              Text("Votre canditature est officiellement terminée ! Bienvenue dans le programme !"),
-              Text("Vous pouvez dès à présent télécharger votre carte ainsi que votre fiche d’intégration, puis accéder à votre espace personnel."),
+              Text("Ta canditature est officiellement terminée ! Bienvenue dans le programme !"),
+              Text("Tu peux dès à présent télécharger ta fiche d’intégration, puis accéder à ton espace personnel."),
             ],
             index: 5, maxSteps: maxSteps,
             child: CoachProcessSuccess()

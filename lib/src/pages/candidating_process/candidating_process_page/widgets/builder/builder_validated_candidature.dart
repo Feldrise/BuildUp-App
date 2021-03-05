@@ -57,11 +57,10 @@ class _BuilderValidatedCandidatureState extends State<BuilderValidatedCandidatur
                 TextSpan(text: builderStore.builder.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", né(e) le "),
                 TextSpan(text: DateFormat('dd/MM/yyyy').format(builderStore.builder.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
-                const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Builder au sein du programme, être prêt à faire évoluer mon projet et ma personnalité suivant les conseils de mon Coach et ceux de l’équipe NTF et enfin être conscient que le programme implique présence et une activité constante durant les trois prochains mois.\n\n"),
+                const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Builder au sein du programme, être prêt à faire évoluer mon projet et ma personnalité suivant les conseils de mon Coach et ceux de l’équipe NTF et enfin être conscient que le programme implique une présence et une activité constante durant les trois prochains mois.\n\n"),
                 const TextSpan(text: "J’ai connaissance de l’investissement qui m’est demandé, j’ai la volonté d’aller plus loin et d’être toujours à l’écoute de mon Coach avec bienveillance, sourire et bonne humeur.\n\n\n"),
                 const TextSpan(text: "Fait le "),
                 TextSpan(text: DateFormat('dd/MM/yyyy').format(DateTime.now()), style: const TextStyle(color: colorPrimary)),
-                
               ],
             ),
           );
