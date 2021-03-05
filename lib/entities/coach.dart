@@ -30,8 +30,8 @@ mixin CoachSteps {
 
   static const Map<String, String> detailled = {
     preselected: "Présélectionné",
-    meeting: "Entretient avec un responsable",
-    meetingDone: "Entretient avec un responsable réalisé",
+    meeting: "Entretien avec un responsable",
+    meetingDone: "Entretien avec un responsable réalisé",
     signing: "Signature",
     active: "Actif",
     stopped: "Arrêté"
