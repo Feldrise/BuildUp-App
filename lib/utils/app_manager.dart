@@ -26,52 +26,52 @@ class AppManager {
   // nested navigators status.
   Future<bool> showCloseAppConfirmation(BuildContext context) {
     // Check a Lower Navigator First
-    if (coachProfileKey.currentState.canPop()) {
+    if (coachProfileKey.currentState != null && coachProfileKey.currentState.canPop()) {
       coachProfileKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (coachBuilderKey.currentState.canPop()) {
+    if (coachBuilderKey.currentState != null && coachBuilderKey.currentState.canPop()) {
       coachBuilderKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (builderProfilKey.currentState.canPop()) {
+    if (builderProfilKey.currentState != null && builderProfilKey.currentState.canPop()) {
       builderProfilKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (builderProjectKey.currentState.canPop()) {
+    if (builderProjectKey.currentState != null && builderProjectKey.currentState.canPop()) {
       builderProjectKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (coachBuildersKey.currentState.canPop()) {
+    if (coachBuildersKey.currentState != null && coachBuildersKey.currentState.canPop()) {
       coachBuildersKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (adminActiveBuilderKey.currentState.canPop()) {
+    if (adminActiveBuilderKey.currentState != null && adminActiveBuilderKey.currentState.canPop()) {
       adminActiveBuilderKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (adminActiveCoachKey.currentState.canPop()) {
+    if (adminActiveCoachKey.currentState != null && adminActiveCoachKey.currentState.canPop()) {
       adminActiveCoachKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (adminBuildUpKey.currentState.canPop()) {
+    if (adminBuildUpKey.currentState != null && adminBuildUpKey.currentState.canPop()) {
       adminBuildUpKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (adminActiveKey.currentState.canPop()) {
+    if (adminActiveKey.currentState != null && adminActiveKey.currentState.canPop()) {
       adminActiveKey.currentState.pop();
       return Future.value(false);
     }
 
-    if (builderBuildOnsKey.currentState.canPop()) {
+    if (builderBuildOnsKey.currentState != null && builderBuildOnsKey.currentState.canPop()) {
       builderBuildOnsKey.currentState.pop();
       return Future.value(false);
     }
