@@ -7,6 +7,7 @@ import 'package:buildup/src/shared/widgets/builder/builder_info_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_profile_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_project_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class AdminViewActiveBuilderPage extends StatelessWidget {
         title: Text("Builder : ${builder.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
       ),
       body: Navigator(
-        key: GlobalKey<NavigatorState>(),
+        key: AppManager.instance.adminActiveBuilderKey,
         onGenerateRoute: (route) => MaterialPageRoute<void>(
           settings: route,
           builder: (context) {

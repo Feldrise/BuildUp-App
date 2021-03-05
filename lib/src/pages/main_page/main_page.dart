@@ -1,6 +1,7 @@
 import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/main_page/widgets/bu_menu_drawer.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -24,50 +25,56 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const double withForShowedDrawer = 732;
-
-        return Row(
-          children: [
-            if (constraints.maxWidth > withForShowedDrawer) 
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: _isMenuBarMinimified ? 68 : 300,
-                child: BuMenuDrawer(
-                  pageItems: widget.pageItems,
-                  currentPageIndex: _currentIndex,
-                  onSelectedPage: _selectedPage,
-                  shouldPop: false,
-                  isMinimified: _isMenuBarMinimified,
-                ),
-              ),
-
-            Expanded(
-              child: Scaffold(
-                appBar: BuAppBar(
-                  title: Text(widget.pageItems[_currentIndex].title),
-                  showMinimifier: constraints.maxWidth > withForShowedDrawer,
-                  onMinimified: () {
-                    setState(() {
-                      _isMenuBarMinimified = !_isMenuBarMinimified;
-                    });
-                  },
-                ),
-                drawer: (constraints.maxWidth <= withForShowedDrawer) 
-                ? BuMenuDrawer(
-                  pageItems: widget.pageItems,
-                  currentPageIndex: _currentIndex,
-                  onSelectedPage: _selectedPage,
-                  shouldPop: true,
-                )
-                : null,
-                body: widget.pages[_currentIndex],
-              ),
-            ),
-          ],
-        );
+    return WillPopScope(
+      onWillPop: () {
+        // show confirmation
+        return AppManager.instance.showCloseAppConfirmation(context);
       },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          const double withForShowedDrawer = 732;
+
+          return Row(
+            children: [
+              if (constraints.maxWidth > withForShowedDrawer) 
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  width: _isMenuBarMinimified ? 68 : 300,
+                  child: BuMenuDrawer(
+                    pageItems: widget.pageItems,
+                    currentPageIndex: _currentIndex,
+                    onSelectedPage: _selectedPage,
+                    shouldPop: false,
+                    isMinimified: _isMenuBarMinimified,
+                  ),
+                ),
+
+              Expanded(
+                child: Scaffold(
+                  appBar: BuAppBar(
+                    title: Text(widget.pageItems[_currentIndex].title),
+                    showMinimifier: constraints.maxWidth > withForShowedDrawer,
+                    onMinimified: () {
+                      setState(() {
+                        _isMenuBarMinimified = !_isMenuBarMinimified;
+                      });
+                    },
+                  ),
+                  drawer: (constraints.maxWidth <= withForShowedDrawer) 
+                  ? BuMenuDrawer(
+                    pageItems: widget.pageItems,
+                    currentPageIndex: _currentIndex,
+                    onSelectedPage: _selectedPage,
+                    shouldPop: true,
+                  )
+                  : null,
+                  body: widget.pages[_currentIndex],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 

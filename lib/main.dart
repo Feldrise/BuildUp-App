@@ -17,6 +17,7 @@ import 'package:buildup/src/providers/ntf_referents_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Build Up',
+          navigatorKey: AppManager.instance.appNavigatorKey,
           theme: ThemeData(
             primaryColor: colorPrimary,
             

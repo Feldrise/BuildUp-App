@@ -7,6 +7,7 @@ import 'package:buildup/src/pages/builder_buildons_page/builder_buildon_page.dar
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/pages/meeting_reports_page/meeting_reports_page.dart';
 import 'package:buildup/src/providers/builder_store.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class BuilderMainPage extends StatelessWidget {
         }
       ),
       Navigator(
-        key: GlobalKey<NavigatorState>(),
+        key: AppManager.instance.builderBuildOnsKey,
         onGenerateRoute: (route) => MaterialPageRoute<void>(
           settings: route,
           builder: (context) => BuilderBuildOnsPage(builder: Provider.of<BuilderStore>(context).builder)

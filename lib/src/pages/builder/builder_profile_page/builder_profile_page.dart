@@ -5,6 +5,7 @@ import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_info_card.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class BuilderProfilPage extends StatelessWidget {
             title: Text("Profil"),
           ),
           body: Navigator(
-            key: GlobalKey<NavigatorState>(),
+            key: AppManager.instance.builderProfilKey,
             onGenerateRoute: (route) => MaterialPageRoute<void>(
               settings: route,
               builder: (context) {

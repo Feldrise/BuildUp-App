@@ -5,6 +5,7 @@ import 'package:buildup/src/shared/widgets/coach/coach_info_card.dart';
 import 'package:buildup/src/shared/widgets/coach/coach_profile_card.dart';
 import 'package:buildup/src/shared/widgets/general/admin_active_member_form_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class AdminViewActiveCoachPage extends StatelessWidget {
         title: Text("Coach : ${coach.associatedUser.fullName}", style: Theme.of(context).textTheme.headline5,),
       ),
       body: Navigator(
-        key: GlobalKey<NavigatorState>(),
+        key: AppManager.instance.adminActiveCoachKey,
         onGenerateRoute: (route) => MaterialPageRoute<void>(
           settings: route,
           builder: (context) {

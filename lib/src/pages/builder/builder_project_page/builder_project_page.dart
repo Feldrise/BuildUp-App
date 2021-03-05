@@ -4,6 +4,7 @@ import 'package:buildup/src/providers/builder_store.dart';
 import 'package:buildup/src/providers/user_store.dart';
 import 'package:buildup/src/shared/widgets/builder/builder_project_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_appbar.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:buildup/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class BuilderProjectPage extends StatelessWidget {
             title: Text("Projet"),
           ),
           body: Navigator(
-            key: GlobalKey<NavigatorState>(),
+            key: AppManager.instance.builderProjectKey,
             onGenerateRoute: (route) => MaterialPageRoute<void>(
               settings: route,
               builder: (context) {

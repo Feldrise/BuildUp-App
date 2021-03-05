@@ -23,52 +23,44 @@ class BuilderDashboardPage extends StatelessWidget {
       builder: (context, builderStore, child) {
         return Scaffold(
           backgroundColor: colorScaffoldGrey,
-          body: Navigator(
-            key: GlobalKey<NavigatorState>(),
-            onGenerateRoute: (route) => MaterialPageRoute<void>(
-              settings: route,
-              builder: (context) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text("“Laissez tout vous arriver. Beauté et terreur. Continuez juste à le faire. Aucun sentiment n’est définitif.” _- Rainer Maria Rilke", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText, fontStyle: FontStyle.italic)),
-                        const SizedBox(height: 24,),
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            if (constraints.maxWidth < 900) {
-                              return Column(
-                                children: [
-                                  BuilderNotificationWidget(),
-                                  const SizedBox(height: 16,),
-                                  _buildDashboardMainColumn(context, builderStore)
-                                ],
-                              );
-                            }
-                            else {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: _buildDashboardMainColumn(context, builderStore),
-                                  ),
-                                  ConstrainedBox(
-                                    constraints: const BoxConstraints(maxWidth: 350),
-                                    child: BuilderNotificationWidget(),
-                                  )
-                                ],
-                              );
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              }
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text("“Laissez tout vous arriver. Beauté et terreur. Continuez juste à le faire. Aucun sentiment n’est définitif.” _- Rainer Maria Rilke", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText, fontStyle: FontStyle.italic)),
+                  const SizedBox(height: 24,),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth < 900) {
+                        return Column(
+                          children: [
+                            BuilderNotificationWidget(),
+                            const SizedBox(height: 16,),
+                            _buildDashboardMainColumn(context, builderStore)
+                          ],
+                        );
+                      }
+                      else {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _buildDashboardMainColumn(context, builderStore),
+                            ),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 350),
+                              child: BuilderNotificationWidget(),
+                            )
+                          ],
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
             ),
           )
         );

@@ -5,6 +5,7 @@ import 'package:buildup/src/pages/coachs/coach_dashboard_page/coach_dashboard_pa
 import 'package:buildup/src/pages/coachs/coach_profile_page/coach_profile_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/providers/coach_builders_store.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class CoachMainPage extends StatelessWidget {
           const CoachDashboardPage(),
           const CoachProfilPage(),
           Navigator(
-            key: GlobalKey<NavigatorState>(),
+            key: AppManager.instance.coachBuildersKey,
             onGenerateRoute: (route) => MaterialPageRoute<void>(
               settings: route,
               builder: (context) => const CoachBuildersPage()

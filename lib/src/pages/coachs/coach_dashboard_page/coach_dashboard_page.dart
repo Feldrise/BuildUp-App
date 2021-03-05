@@ -21,51 +21,43 @@ class CoachDashboardPage extends StatelessWidget {
       builder: (context, coachStore, child) {
         return Scaffold(
           backgroundColor: colorScaffoldGrey,
-          body: Navigator(
-            key: GlobalKey<NavigatorState>(),
-            onGenerateRoute: (route) => MaterialPageRoute<void>(
-              settings: route,
-              builder: (context) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text("“Je suis une citation” _- Guillaume Pas Ordinair", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText)),
-                        const SizedBox(height: 24,),
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            if (constraints.maxWidth < 900) {
-                              return Column(
-                                children: [
-                                  CoachNotificationsWidget(),
-                                  const SizedBox(height: 16,),
-                                  _buildDashboardMainColumn(context, coachStore)
-                                ],
-                              );
-                            }
-                            else {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: _buildDashboardMainColumn(context, coachStore),
-                                  ),
-                                  ConstrainedBox(
-                                    constraints: const BoxConstraints(maxWidth: 350),
-                                    child: CoachNotificationsWidget(),
-                                  )
-                                ],
-                              );
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              }
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text("“Je suis une citation” _- Guillaume Pas Ordinair", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: colorGreyText)),
+                  const SizedBox(height: 24,),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth < 900) {
+                        return Column(
+                          children: [
+                            CoachNotificationsWidget(),
+                            const SizedBox(height: 16,),
+                            _buildDashboardMainColumn(context, coachStore)
+                          ],
+                        );
+                      }
+                      else {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: _buildDashboardMainColumn(context, coachStore),
+                            ),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 350),
+                              child: CoachNotificationsWidget(),
+                            )
+                          ],
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
             ),
           )
         );

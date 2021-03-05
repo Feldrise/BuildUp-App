@@ -8,6 +8,7 @@ import 'package:buildup/src/providers/active_builers_store.dart';
 import 'package:buildup/src/providers/active_coachs_store.dart';
 import 'package:buildup/src/providers/candidating_builders_store.dart';
 import 'package:buildup/src/providers/candidating_coachs_store.dart';
+import 'package:buildup/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,14 +16,14 @@ class AdminMainPage extends StatelessWidget {
   final List<Widget> pages = [
     AdminCandidatingPage(),
     Navigator(
-      key: GlobalKey<NavigatorState>(),
+      key: AppManager.instance.adminActiveKey,
       onGenerateRoute: (route) => MaterialPageRoute<void>(
         settings: route,
         builder: (context) => AdminActivePage()
       ),
     ),
     Navigator(
-      key: GlobalKey<NavigatorState>(),
+      key: AppManager.instance.adminBuildUpKey,
       onGenerateRoute: (route) => MaterialPageRoute<void>(
         settings: route,
         builder: (context) => AdminBuildOnsPage()
