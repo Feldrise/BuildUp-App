@@ -47,3 +47,4 @@ app.*.map.json
 pubspec.lock
 keytools/
 .vscode/settings.json
+ios/Podfile.lock
