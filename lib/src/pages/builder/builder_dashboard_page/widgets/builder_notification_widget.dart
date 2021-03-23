@@ -19,11 +19,13 @@ class BuilderNotificationWidget extends StatelessWidget {
             if (builderStore.builder.associatedNotifications?.isEmpty) 
               const Text("Vous n'avez pas de nouvelle notification")
             else 
-              for (final notification in builderStore.builder.associatedNotifications)
+              for (final notification in builderStore.builder.associatedNotifications) ...{
                 BuilderNotificationCard(
                   notification: notification, 
                   onMarkedAsRead: () => _markNotificationAsRead(context, builderStore, notification)
-                )
+                ),
+                const SizedBox(height: 10,)
+              }
           ],
         );
       },

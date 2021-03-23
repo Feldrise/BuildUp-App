@@ -31,11 +31,13 @@ class CoachNotificationsWidget extends StatelessWidget {
             if (coachStore.coach.associatedNotifications?.isEmpty) 
               const Text("Vous n'avez pas de nouvelle notification")
             else 
-              for (final notification in coachStore.coach.associatedNotifications)
+              for (final notification in coachStore.coach.associatedNotifications) ...{
                 CoachNotificationCard(
                   notification: notification, 
                   onMarkedAsRead: () => _markNotificationAsRead(context, coachStore, notification)
-                )
+                ),
+                const SizedBox(height: 10,)
+              }
           ],
         );
       },
