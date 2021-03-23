@@ -14,6 +14,23 @@ class UsersService {
 
   static final UsersService instance = UsersService._privateConstructor();
 
+  Future notifyAll(String authorization, String content) async {
+    final http.Response response = await http.post(
+      '$serviceBaseUrl/notify/all',
+      headers: <String, String> {
+        HttpHeaders.authorizationHeader: authorization,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "content": content
+      })
+    );
+
+    if (response.statusCode != 200) {
+      throw PlatformException(code: response.statusCode.toString(), message: "Impossible to notify users : ${response.body}");
+    }
+  }
+
   // PUT
   Future updateUser(String authorization, User toUpdate) async {
     final http.Response response = await http.put(

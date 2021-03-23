@@ -2,6 +2,7 @@ import 'package:buildup/entities/page_item.dart';
 import 'package:buildup/src/pages/administration/admin_active_pages/admin_active_page.dart';
 import 'package:buildup/src/pages/administration/admin_buildons_page/admin_buildons_page.dart';
 import 'package:buildup/src/pages/administration/admin_candidating_pages/admin_candidating_page.dart';
+import 'package:buildup/src/pages/administration/admin_notifications_page/admin_notifications_page.dart';
 import 'package:buildup/src/pages/administration/admin_ntf_referents_page/admin_ntf_referents_page.dart';
 import 'package:buildup/src/pages/main_page/main_page.dart';
 import 'package:buildup/src/providers/active_builers_store.dart';
@@ -33,7 +34,8 @@ class AdminMainPage extends StatelessWidget {
         ),
       ),
     ),
-    AdminNtfReferentsPage()
+    AdminNtfReferentsPage(),
+    AdminNotificationsPage(),
   ];
 
   @override
@@ -84,6 +86,11 @@ class AdminMainPage extends StatelessWidget {
             index: 3,
             title: "Gestion des référents",
             icon: Icons.supervisor_account
+          ),
+          PageItem(
+            index: 4,
+            title: "Envoyer une notification",
+            icon: Icons.send
           )
         ];
 

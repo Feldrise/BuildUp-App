@@ -124,7 +124,7 @@ class CandidatingProcessPage extends StatelessWidget {
           return ProcessWidget(
             title: "Candidature validée", 
             description: const [
-              Text("Ta candidature a été accepté !"),
+              Text("Ta candidature a été acceptée !"),
               Text("Tu peux dès à présent choisir ton Coach. Tu peux les contacter directement et choisir celle ou celui avec qui tu te sens le mieux."),
             ],
             index: 4, maxSteps: maxSteps,
