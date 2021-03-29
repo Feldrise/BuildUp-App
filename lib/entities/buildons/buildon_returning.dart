@@ -37,15 +37,15 @@ class BuildOnReturning {
   String type;
   String status;
 
-  BuFile file;
+  BuFile? file;
   String comment;
 
   BuildOnReturning(this.id, {
-    this.buildOnStepId,
-    this.type,
-    this.status,
+    required this.buildOnStepId,
+    required this.type,
+    required this.status,
+    required this.comment,
     this.file,
-    this.comment
   });
 
   BuildOnReturning.fromMap(Map<String, dynamic> map) : 
@@ -65,7 +65,7 @@ class BuildOnReturning {
       "buildOnStepId": buildOnStepId,
       "type": type,
       "fileName": file?.fileName,
-      "file": file?.data != null ? base64Encode(file.data) : null,
+      "file": file?.data != null ? base64Encode(file!.data!) : null,
       "comment": comment
     };
   }

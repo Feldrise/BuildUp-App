@@ -6,7 +6,6 @@ import 'package:buildup/entities/notification/coach_notification.dart';
 import 'package:buildup/entities/notification/coach_request.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/coachs_services.dart';
-import 'package:flutter/material.dart';
 
 mixin CoachStatus {
   static const String candidating = "Candidating";
@@ -42,10 +41,10 @@ mixin CoachSteps {
 class Coach {
   final String id;
   final User associatedUser;
-  final BuForm associatedForm;
+  final BuForm? associatedForm;
 
-  final List<CoachRequest> associatedRequest;
-  final List<CoachNotification> associatedNotifications;
+  final List<CoachRequest>? associatedRequest;
+  final List<CoachNotification>? associatedNotifications;
 
   BuImage coachCard;
 
@@ -59,10 +58,10 @@ class Coach {
 
   bool hasSignedFicheIntegration;
 
-  Coach.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedForm, this.associatedRequest, this.associatedNotifications}) :
+  Coach.fromMap(Map<String, dynamic> map, { required this.associatedUser, this.associatedForm, this.associatedRequest, this.associatedNotifications}) :
     id = map['id'] as String,
     coachCard = BuImage("${CoachsService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
-    candidatingDate = DateTime.tryParse(map['candidatingDate'] as String),
+    candidatingDate = DateTime.tryParse(map['candidatingDate'] as String) ?? DateTime.now(),
     status = map['status'] as String,
     step = map['step'] as String,
     situation = map['situation'] as String,
@@ -70,10 +69,10 @@ class Coach {
     hasSignedFicheIntegration = map['hasSignedFicheIntegration'] as bool;
 
   Map<String, dynamic> toJson() {
-    String coachCardString;
+    String? coachCardString;
 
     if (!coachCard.isImageEvenWithServer && coachCard.image != null) {
-      coachCardString = base64Encode(coachCard.image.bytes);
+      coachCardString = base64Encode(coachCard.image!.bytes);
     }
 
   

@@ -18,36 +18,36 @@ mixin UserRoles {
 class User {
   final String id;
 
-  BuImage profilePicture;
+  BuImage? profilePicture;
 
   String firstName;
   String lastName;
   DateTime birthdate;
 
   String email;
-  String discordTag;
+  String? discordTag;
   String username;
 
   String role;
-  String token;
+  String? token;
   
   int department;
 
-  String newPassword;
+  String? newPassword;
   
   String get fullName =>  "$firstName $lastName";
   String get authentificationHeader => "Bearer $token";
 
   User(this.id, {
     this.profilePicture,
-    this.firstName,
-    this.lastName,
-    this.birthdate,
-    this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.birthdate,
+    required this.email,
     this.discordTag,
-    this.department,
-    this.username,
-    this.role,
+    required this.department,
+    required this.username,
+    required this.role,
     this.token
   });
 
@@ -56,7 +56,7 @@ class User {
     profilePicture = BuImage("${UsersService.instance.serviceBaseUrl}/${map['id'] as String}/profile_picture"),
     firstName = map['firstName'] as String,
     lastName = map['lastName'] as String,
-    birthdate = DateTime.tryParse(map['birthdate'] as String),
+    birthdate = DateTime.tryParse(map['birthdate'] as String) ?? DateTime.now(),
 
     email = map['email'] as String,
     discordTag = map['discordTag'] as String,
@@ -69,10 +69,10 @@ class User {
 
   
   Map<String, dynamic> toJson() {
-    String profilePictureString;
+    String? profilePictureString;
 
-    if (!profilePicture.isImageEvenWithServer && profilePicture.image != null) {
-      profilePictureString = base64Encode(profilePicture.image.bytes);
+    if (profilePicture != null && (!profilePicture!.isImageEvenWithServer && profilePicture!.image != null)) {
+      profilePictureString = base64Encode(profilePicture!.image!.bytes);
     }
 
     return <String, dynamic>{

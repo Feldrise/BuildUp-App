@@ -16,7 +16,7 @@ class UsersService {
 
   Future notifyAll(String authorization, String content) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/notify/all',
+      Uri.parse('$serviceBaseUrl/notify/all'),
       headers: <String, String> {
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -34,7 +34,7 @@ class UsersService {
   // PUT
   Future updateUser(String authorization, User toUpdate) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/${toUpdate.id}/update',
+      Uri.parse('$serviceBaseUrl/${toUpdate.id}/update'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',

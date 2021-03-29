@@ -5,14 +5,14 @@ class BuImage {
   String source;
 
   bool isImageEvenWithServer = false;
-  MemoryImage image;
+  MemoryImage? image;
 
   BuImage(this.source,{
     this.isImageEvenWithServer = false,
     this.image
   });
   
-  Future<ImageProvider<dynamic>> loadImageFromSource(String authorization) async {
+  Future<ImageProvider<dynamic>?> loadImageFromSource(String authorization) async {
     if (isImageEvenWithServer || image != null) {
       return image;
     }

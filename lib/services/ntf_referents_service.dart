@@ -17,7 +17,7 @@ class NtfReferentsService {
   //GET 
   Future<List<NtfReferent>> getAllReferents(String authorization) async {
     final http.Response response = await http.get(
-      serviceBaseUrl,
+      Uri.parse(serviceBaseUrl),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -37,13 +37,9 @@ class NtfReferentsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<NtfReferent> getReferent(String authorization, String id) async {
-    if (id == null) {
-      return null;
-    }
-
+  Future<NtfReferent?> getReferent(String authorization, String id) async {
     final http.Response response = await http.get(
-      "$serviceBaseUrl/$id",
+      Uri.parse("$serviceBaseUrl/$id"),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -63,7 +59,7 @@ class NtfReferentsService {
   // POST
   Future<String> addReferent(String authorization, NtfReferent toAdd) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/add',
+      Uri.parse('$serviceBaseUrl/add'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -81,7 +77,7 @@ class NtfReferentsService {
   // PUT  
   Future updateReferent(String authorization, NtfReferent toUpdate) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/${toUpdate.id}/update',
+      Uri.parse('$serviceBaseUrl/${toUpdate.id}/update'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -97,7 +93,7 @@ class NtfReferentsService {
   // Delete
   Future deleteReferent(String authorization, String id) async {
     final http.Response response = await http.delete(
-      '$serviceBaseUrl/$id/delete',
+      Uri.parse('$serviceBaseUrl/$id/delete'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },

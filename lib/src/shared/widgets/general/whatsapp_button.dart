@@ -7,7 +7,7 @@ class WhatsappButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => launch("https://whatsapp.new-talents.fr"),
+      onTap: () => launch("http://whatsapp.new-talents.fr"),
       child: BuCard(
         child: Row(
          children: [

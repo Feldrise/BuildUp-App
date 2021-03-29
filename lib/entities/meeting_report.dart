@@ -1,5 +1,5 @@
 class MeetingReport {
-  String id;
+  String? id;
 
   DateTime date;
   DateTime nextMeetingDate;
@@ -10,8 +10,8 @@ class MeetingReport {
   String comments;
 
   MeetingReport(this.id,{
-    this.date,
-    this.nextMeetingDate,
+    required this.date,
+    required this.nextMeetingDate,
     this.objectif = "",
     this.evolution = "",
     this.whatsNext = "",
@@ -20,8 +20,8 @@ class MeetingReport {
 
   MeetingReport.fromMap(Map<String, dynamic> map) : 
     id = map['id'] as String,
-    date = DateTime.tryParse(map['date'] as String),
-    nextMeetingDate = DateTime.tryParse(map['nextMeetingDate'] as String),
+    date = DateTime.tryParse(map['date'] as String) ?? DateTime.now(),
+    nextMeetingDate = DateTime.tryParse(map['nextMeetingDate'] as String) ?? DateTime.now(),
     objectif  = map['objectif'] as String,
     evolution = map['evolution'] as String,
     whatsNext = map['whatsNext'] as String,

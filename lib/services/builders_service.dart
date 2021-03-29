@@ -28,7 +28,7 @@ class BuildersService {
   // GET
   Future<BuBuilder> getBuilder(String authorization, String currentUserRole, User associatedUser) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/${associatedUser.id}',
+      Uri.parse('$serviceBaseUrl/${associatedUser.id}'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -39,8 +39,8 @@ class BuildersService {
       final Project associatedProject = await getProjectForBuilder(authorization, currentUserRole, map['id'] as String);
       final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
       final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
-      final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
-      final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+      final Coach? associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+      final NtfReferent? associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
       final List<BuilderNotification> builderNotifications = await getBuilderNotifications(authorization, map['id'] as String);
       
@@ -56,7 +56,7 @@ class BuildersService {
 
   Future<List<BuBuilder>> getCandidatingBuilders(String authorization) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/candidating',
+      Uri.parse('$serviceBaseUrl/candidating'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -84,7 +84,7 @@ class BuildersService {
 
   Future<List<BuBuilder>> getActiveBuilders(String authorization) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/active',
+      Uri.parse('$serviceBaseUrl/active'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -99,8 +99,8 @@ class BuildersService {
         final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
         final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
-        final Coach associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
-        final NtfReferent associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+        final Coach? associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+        final NtfReferent? associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
         builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);
@@ -114,7 +114,7 @@ class BuildersService {
 
   Future<User> getUserForBuilder(String authorization, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/user',
+      Uri.parse('$serviceBaseUrl/$builderId/user'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -128,13 +128,9 @@ class BuildersService {
   }
 
   
-  Future<Coach> getCoachForBuilder(String authorization, String coachId, String builderId) async {
-    if (coachId == null) {
-      return null;
-    }
-
+  Future<Coach?> getCoachForBuilder(String authorization, String coachId, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/coach',
+      Uri.parse('$serviceBaseUrl/$builderId/coach'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -143,7 +139,7 @@ class BuildersService {
     if (response.statusCode == 200) {
       final User coachUser = await CoachsService.instance.getUserForCoach(authorization, coachId);
       
-      return Coach.fromMap(jsonDecode(response.body) as Map<String, dynamic>, associatedForm: null, associatedUser: coachUser);
+      return Coach.fromMap(jsonDecode(response.body) as Map<String, dynamic>, associatedUser: coachUser);
     }
 
     if (response.statusCode == 404) {
@@ -155,7 +151,7 @@ class BuildersService {
 
   Future<Project> getProjectForBuilder(String authorization, String currentUserRole, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/project',
+      Uri.parse('$serviceBaseUrl/$builderId/project'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -190,7 +186,7 @@ class BuildersService {
 
   Future<List<MeetingReport>> getMeetingReportsForBuilder(String authorization, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/meeting_reports',
+      Uri.parse('$serviceBaseUrl/$builderId/meeting_reports'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -212,7 +208,7 @@ class BuildersService {
 
   Future<BuForm> getFormForBuilder(String authorization, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/form',
+      Uri.parse('$serviceBaseUrl/$builderId/form'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -227,7 +223,7 @@ class BuildersService {
 
   Future<List<BuilderNotification>> getBuilderNotifications(String authorization, String builderId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$builderId/notifications',
+      Uri.parse('$serviceBaseUrl/$builderId/notifications'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -250,7 +246,7 @@ class BuildersService {
   // POST
   Future assignCoach(String authorization, BuBuilder toUpdate, String coachId) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/${toUpdate.id}/assign',
+      Uri.parse('$serviceBaseUrl/${toUpdate.id}/assign'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -267,7 +263,7 @@ class BuildersService {
   
   Future<String> createMeetingReport(String authorization, String builderId, MeetingReport toCreate) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/$builderId/meeting_reports',
+      Uri.parse('$serviceBaseUrl/$builderId/meeting_reports'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -285,7 +281,7 @@ class BuildersService {
   // PUT
   Future signIntegration(String authorization, String builderId) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/$builderId/sign_integration',
+      Uri.parse('$serviceBaseUrl/$builderId/sign_integration'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -298,7 +294,7 @@ class BuildersService {
 
   Future updateBuilder(String authorization, BuBuilder toUpdate) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/${toUpdate.id}/update',
+      Uri.parse('$serviceBaseUrl/${toUpdate.id}/update'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -313,7 +309,7 @@ class BuildersService {
 
   Future refuseBuilder(String authorization, String builderId) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/$builderId/refuse',
+      Uri.parse('$serviceBaseUrl/$builderId/refuse'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -327,7 +323,7 @@ class BuildersService {
   
   Future updateProject(String authorization, BuBuilder toUpdate) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/${toUpdate.id}/projects/${toUpdate.associatedProjects.first.id}/update',
+      Uri.parse('$serviceBaseUrl/${toUpdate.id}/projects/${toUpdate.associatedProjects.first.id}/update'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -342,7 +338,7 @@ class BuildersService {
 
   Future markNotificationAsRead(String authorization, String builderId, String notificationId) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/$builderId/notifications/$notificationId/read',
+      Uri.parse('$serviceBaseUrl/$builderId/notifications/$notificationId/read'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },

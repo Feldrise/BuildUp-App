@@ -53,12 +53,12 @@ class BuBuilder {
   final List<MeetingReport> associatedMeetingReports;
   final BuForm associatedForm;
 
-  final List<BuilderNotification> associatedNotifications;
+  final List<BuilderNotification>? associatedNotifications;
 
   BuImage builderCard;
 
-  Coach associatedCoach;
-  NtfReferent associatedNtfReferent;
+  Coach? associatedCoach;
+  NtfReferent? associatedNtfReferent;
 
   DateTime programEndDate;
   String status;
@@ -69,10 +69,10 @@ class BuBuilder {
 
   bool hasSignedFicheIntegration;
 
-  BuBuilder.fromMap(Map<String, dynamic> map, { @required this.associatedUser, @required this.associatedMeetingReports, @required this.associatedForm, this.associatedCoach, this.associatedNtfReferent, this.associatedNotifications}) :
+  BuBuilder.fromMap(Map<String, dynamic> map, { required this.associatedUser, required this.associatedMeetingReports, required this.associatedForm, this.associatedCoach, this.associatedNtfReferent, this.associatedNotifications}) :
     id = map['id'] as String,
     builderCard = BuImage("${BuildersService.instance.serviceBaseUrl}/${map['id'] as String}/card"),
-    programEndDate = DateTime.tryParse(map['programEndDate'] as String),
+    programEndDate = DateTime.tryParse(map['programEndDate'] as String) ?? DateTime.now().add(const Duration(days: 75)),
     status = map['status'] as String,
     step = map['step'] as String,
     situation = map['situation'] as String,
@@ -80,10 +80,10 @@ class BuBuilder {
     hasSignedFicheIntegration = map['hasSignedFicheIntegration'] as bool;
 
   Map<String, dynamic> toJson() {
-    String builderCardString;
+    String? builderCardString;
 
     if (!builderCard.isImageEvenWithServer && builderCard.image != null) {
-      builderCardString = base64Encode(builderCard.image.bytes);
+      builderCardString = base64Encode(builderCard.image!.bytes);
     }
 
     return <String, dynamic>{
@@ -91,7 +91,7 @@ class BuBuilder {
       "userId": associatedUser.id,
       "coachId": associatedCoach?.id,
       "ntfReferentId": associatedNtfReferent?.id,
-      "programEndDate": programEndDate?.toIso8601String(),
+      "programEndDate": programEndDate.toIso8601String(),
       "status": status,
       "step": step,
       "situation": situation,

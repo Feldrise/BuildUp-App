@@ -6,7 +6,7 @@ class DiscordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => launch("https://discord.new-talents.fr"),
+      onTap: () => launch("http://discord.new-talents.fr"),
       child: BuCard(
         child: Row(
          children: [

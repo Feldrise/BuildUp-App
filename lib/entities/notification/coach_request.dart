@@ -17,9 +17,9 @@ class CoachRequest {
   String status;
 
   CoachRequest(this.id, {
-    this.coachId,
-    this.builderId,
-    this.status,
+    required this.coachId,
+    required this.builderId,
+    required this.status,
   });
 
   CoachRequest.fromMap(Map<String, dynamic> map) : 

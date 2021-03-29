@@ -16,13 +16,13 @@ class AuthenticationService {
 
   static final AuthenticationService instance = AuthenticationService._privateConstructor();
 
-  Future<User> getLoggedUser() {
+  Future<User?> getLoggedUser() {
     return _getUserFromSettings();
   }
 
   Future<User> login(String username, String password, {bool remember = false}) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/login',
+      Uri.parse('$serviceBaseUrl/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -46,46 +46,57 @@ class AuthenticationService {
   }
 
   Future logout() async {
-    await _saveUserToSettings(null);
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.remove("user_id");
+    await preferences.remove("user_firstName");
+    await preferences.remove("user_lastName");
+    await preferences.remove("user_birthdate");
+    await preferences.remove("user_email");
+    await preferences.remove("user_discordTag");
+    await preferences.remove("user_username"); 
+    await preferences.remove("user_department");
+    await preferences.remove("user_role");
+    await preferences.remove("user_token");
   }
 
   Future _saveUserToSettings(User toSave) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    await preferences.setString("user_id", toSave?.id);
+    await preferences.setString("user_id", toSave.id);
     
-    await preferences.setString("user_firstName", toSave?.firstName);
-    await preferences.setString("user_lastName", toSave?.lastName);
-    await preferences.setString("user_birthdate", toSave?.birthdate?.toIso8601String());
+    await preferences.setString("user_firstName", toSave.firstName);
+    await preferences.setString("user_lastName", toSave.lastName);
+    await preferences.setString("user_birthdate", toSave.birthdate.toIso8601String());
 
-    await preferences.setString("user_email", toSave?.email);
-    await preferences.setString("user_discordTag", toSave?.discordTag);
-    await preferences.setString("user_username", toSave?.username);
+    await preferences.setString("user_email", toSave.email);
+    if(toSave.discordTag != null) { await preferences.setString("user_discordTag", toSave.discordTag!); }
+    await preferences.setString("user_username", toSave.username); 
 
-    await preferences.setInt("user_department", toSave?.department);
+    await preferences.setInt("user_department", toSave.department);
 
-    await preferences.setString("user_role", toSave?.role);
-    await preferences.setString("user_token", toSave?.token);
+    await preferences.setString("user_role", toSave.role);
+    if(toSave.token != null) { await preferences.setString("user_token", toSave.token!); }
   }
 
-  Future<User> _getUserFromSettings() async {
+  Future<User?> _getUserFromSettings() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    final String id = preferences.getString("user_id");
+    final String? id = preferences.getString("user_id");
     
     if (id == null) { return null; }
     
     final User user = User(
-      preferences.getString("user_id"),
-      firstName:  preferences.getString("user_firstName" ?? ""),
-      lastName: preferences.getString("user_lastName" ?? ""),
-      birthdate: DateTime.tryParse(preferences.getString("user_birthdate" ?? "")),
-      email: preferences.getString("user_email" ?? ""),
-      discordTag: preferences.getString("user_discordTag" ?? ""),
-      username: preferences.getString("user_username" ?? ""),
-      department: preferences.getInt("user_department"), 
-      role: preferences.getString("user_role" ?? ""), 
-      token: preferences.getString("user_token" ?? "")
+      id,
+      firstName:  preferences.getString("user_firstName") ?? "",
+      lastName: preferences.getString("user_lastName") ?? "",
+      birthdate: DateTime.tryParse(preferences.getString("user_birthdate") ?? "") ?? DateTime.now(),
+      email: preferences.getString("user_email") ?? "",
+      discordTag: preferences.getString("user_discordTag"),
+      username: preferences.getString("user_username") ?? "",
+      department: preferences.getInt("user_department") ?? 0, 
+      role: preferences.getString("user_role") ?? "", 
+      token: preferences.getString("user_token") ?? ""
     );
 
     user.profilePicture = BuImage("${UsersService.instance.serviceBaseUrl}/${user.id}/profile_picture");

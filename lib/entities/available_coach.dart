@@ -23,16 +23,16 @@ class AvailableCoach {
   String get fullName =>  "$firstName $lastName";
 
   AvailableCoach(this.id, {
-    this.profilePicture,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.discordTag,
-    this.situation,
-    this.description,
-    this.competences,
-    this.questions,
-    this.answers
+    required this.profilePicture,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.discordTag,
+    required this.situation,
+    required this.description,
+    required this.competences,
+    required this.questions,
+    required this.answers
   });
 
   AvailableCoach.fromMap(Map<String, dynamic> map) : 

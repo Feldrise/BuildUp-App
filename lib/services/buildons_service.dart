@@ -19,7 +19,7 @@ class BuildOnsService {
   // GET
   Future<List<BuildOn>> getAllBuildOns(String authorization) async {
     final http.Response response = await http.get(
-      serviceBaseUrl,
+      Uri.parse(serviceBaseUrl),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -43,7 +43,7 @@ class BuildOnsService {
 
   Future<List<BuildOnStep>> getBuildOnSteps(String authorization, String buildOnId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/$buildOnId/steps',
+      Uri.parse('$serviceBaseUrl/$buildOnId/steps'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -63,16 +63,16 @@ class BuildOnsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<BuildOnStep> getBuildOnStep(String authorization, String buildOnStepId) async {
+  Future<BuildOnStep?> getBuildOnStep(String authorization, String? buildOnStepId) async {
     final http.Response response = buildOnStepId != null ?
       await http.get(
-        '$serviceBaseUrl/steps/$buildOnStepId',
+        Uri.parse('$serviceBaseUrl/steps/$buildOnStepId'),
         headers: <String, String>{
           HttpHeaders.authorizationHeader: authorization,
         },
       ) :
       await http.get(
-        '$serviceBaseUrl/steps/first',
+        Uri.parse('$serviceBaseUrl/steps/first'),
         headers: <String, String>{
           HttpHeaders.authorizationHeader: authorization,
         },
@@ -93,7 +93,7 @@ class BuildOnsService {
 
   Future<List<BuildOnReturning>> getReturningsForProject(String authorization, String projectId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/projects/$projectId/returnings',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/returnings'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -116,7 +116,7 @@ class BuildOnsService {
   // POST
   Future<List<BuildOn>> syncBuildOns(String authorization, List<BuildOn> toSync) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/sync',
+      Uri.parse('$serviceBaseUrl/sync'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -132,7 +132,7 @@ class BuildOnsService {
       final List<BuildOn> buildOns = [];
 
       for (final map in jsonBuildOns) {
-        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>,));
+        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>, steps: []));
       }
 
       return buildOns;
@@ -143,7 +143,7 @@ class BuildOnsService {
 
    Future<List<BuildOn>> syncBuildOnSteps(String authorization, String buildOnId, List<BuildOnStep> toSync) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/$buildOnId/steps/sync',
+      Uri.parse('$serviceBaseUrl/$buildOnId/steps/sync'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -159,7 +159,7 @@ class BuildOnsService {
       final List<BuildOn> buildOns = [];
 
       for (final map in jsonBuildOns) {
-        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>,));
+        buildOns.add(BuildOn.fromMap(map as Map<String, dynamic>, steps: []));
       }
 
       return buildOns;
@@ -172,7 +172,7 @@ class BuildOnsService {
   // RETURNINGS
   Future<String> sendReturning(String authorization, String projectId, BuildOnReturning returning) async {
     final http.Response response = await http.post(
-      '$serviceBaseUrl/projects/$projectId/returning',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/returning'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',
@@ -189,7 +189,7 @@ class BuildOnsService {
 
   Future<Uint8List> downloadReturningContent(String authorization, String projectId, String returningId) async {
     final http.Response response = await http.get(
-      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/file',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/returnings/$returningId/file'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -204,7 +204,7 @@ class BuildOnsService {
 
   Future acceptReturnging(String authorization, String projectId, String returningId) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/accept',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/returnings/$returningId/accept'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -217,7 +217,7 @@ class BuildOnsService {
 
   Future validateBuildOnStep(String authorization, String projectId, String buildOnStepId) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/projects/$projectId/validate/$buildOnStepId',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/validate/$buildOnStepId'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },
@@ -231,7 +231,7 @@ class BuildOnsService {
 
   Future refuseReturning(String authorization, String projectId, String returningId, String reason) async {
     final http.Response response = await http.put(
-      '$serviceBaseUrl/projects/$projectId/returnings/$returningId/refuse',
+      Uri.parse('$serviceBaseUrl/projects/$projectId/returnings/$returningId/refuse'),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
         'Content-Type': 'application/json; charset=UTF-8',

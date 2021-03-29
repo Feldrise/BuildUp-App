@@ -10,9 +10,9 @@ class ImagesService {
   static final ImagesService instance = ImagesService._privateConstructor();
 
   // GET
-  Future<Uint8List> downloadImage(String authorization, String source) async {
+  Future<Uint8List?> downloadImage(String authorization, String source) async {
     final http.Response response = await http.get(
-      source,
+      Uri.parse(source),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: authorization,
       },

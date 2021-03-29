@@ -52,14 +52,14 @@ class Project {
   bool hasNotification;
   Map<String, BuildOnReturning> associatedReturnings;
 
-  Project.fromMap(Map<String, dynamic> map, {this.associatedReturnings, this.hasNotification = false}) : 
+  Project.fromMap(Map<String, dynamic> map, {required this.associatedReturnings, this.hasNotification = false}) : 
     id = map['id'] as String,
     name = map['name'] as String,
     categorie = map['categorie'] as String,
     description = map['description'] as String,
     keywords = map['keywords'] as String,
     team = map['team'] as String,
-    launchDate = DateTime.tryParse(map['launchDate'] as String),
+    launchDate = DateTime.tryParse(map['launchDate'] as String) ?? DateTime.now(),
     isLucrative = map['isLucratif'] as bool,
     isDeclared = map['isDeclared'] as bool,
     currentBuildOn = map['currentBuildOn'] as String,

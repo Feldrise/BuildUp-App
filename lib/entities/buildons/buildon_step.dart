@@ -5,7 +5,7 @@ import 'package:buildup/entities/buildons/buildon_returning.dart';
 import 'package:buildup/services/buildons_service.dart';
 
 class BuildOnStep {
-  String id;
+  String? id;
 
   BuImage image;
 
@@ -34,10 +34,10 @@ class BuildOnStep {
     returningLink = map['returningLink'] as String;
 
   Map<String, dynamic> toJson() {
-    String imageString;
+    String? imageString;
 
     if (!image.isImageEvenWithServer && image.image != null) {
-      imageString = base64Encode(image.image.bytes);
+      imageString = base64Encode(image.image!.bytes);
     }
 
     return <String, dynamic>{

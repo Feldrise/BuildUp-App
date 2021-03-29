@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class PageItem {
   PageItem({
-    @required this.index, 
-    @required this.title, 
-    @required this.icon,
+    required this.index, 
+    required this.title, 
+    required this.icon,
     this.suffixWidget
   });
 
@@ -12,5 +12,5 @@ class PageItem {
   final String title;
   final IconData icon;
 
-  final Widget suffixWidget;
+  final Widget? suffixWidget;
 }
