@@ -128,9 +128,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
     final bool shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) => AdminNtfReferentDeleteDialog(ntfReferent: ntfReferent)
-    );
+    ) ?? false;
 
-    if (shouldDelete != null && shouldDelete) {
+    if (shouldDelete) {
       final GlobalKey<State> keyLoader = GlobalKey<State>();
       Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
 
@@ -155,7 +155,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop();
+      }
     }
   }
   
@@ -163,9 +165,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
     final bool shouldUpdate = await showDialog<bool>(
       context: context,
       builder: (context) => AdminNtfReferentDialog(ntfReferent: ntfReferent)
-    );
+    ) ?? false;
 
-    if (shouldUpdate != null && shouldUpdate) {
+    if (shouldUpdate) {
       final GlobalKey<State> keyLoader = GlobalKey<State>();
       Dialogs.showLoadingDialog(context, keyLoader, "Enregistrement en cours"); 
 
@@ -190,7 +192,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop();
+      }
     }
   }
 
@@ -207,9 +211,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
     final bool shouldAdd = await showDialog<bool>(
       context: context,
       builder: (context) => AdminNtfReferentDialog(ntfReferent: newReferent)
-    );
+    ) ?? false;
 
-    if (shouldAdd != null && shouldAdd) {
+    if (shouldAdd) {
       final GlobalKey<State> keyLoader = GlobalKey<State>();
       Dialogs.showLoadingDialog(context, keyLoader, "Enregistrement en cours"); 
 
@@ -234,7 +238,9 @@ class _AdminNtfReferentsPageState extends State<AdminNtfReferentsPage> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop();
+      }
     }
   }
 }

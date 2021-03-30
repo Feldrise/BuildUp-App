@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CoachValidatedCandidature extends StatefulWidget {
-  const CoachValidatedCandidature({Key key, @required this.onSigned}) : super(key: key);
+  const CoachValidatedCandidature({Key? key, required this.onSigned}) : super(key: key);
 
   final Function() onSigned;
 
@@ -53,9 +53,9 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
             text: 'Je soussigné(e) Mr/Mme ',
             style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
-                TextSpan(text: coachStore.coach.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: coachStore.coach!.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", né(e) le "),
-                TextSpan(text: DateFormat('dd/MM/yyyy').format(coachStore.coach.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: DateFormat('dd/MM/yyyy').format(coachStore.coach!.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Coach au sein du programme, être prêt à faire évoluer le projet de mon Builder, à lui accorder du temps et de la bienveillance, être à l’écoute de ses problématiques et proposer des solutions et pour finir partager votre expérience avec passion.\n\n"),
                 const TextSpan(text: "J’ai connaissance de l’investissement qui m’est demandé, j’ai la volonté de faire grandir autant personnellement que profesionnellement mon Builder et lui donner les clés pour faire évoluer son projet.\n\n\n"),
                 const TextSpan(text: "Fait le "),
@@ -94,7 +94,7 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
             value: _hasApproved, 
             onChanged: (value) {
               setState(() {
-                _hasApproved = value;
+                _hasApproved = value ?? false;
               });
             }, 
             text: "Lu et approuvé"
@@ -104,7 +104,7 @@ class _CoachValidatedCandidatureState extends State<CoachValidatedCandidature> {
             value: _hasSigned, 
             onChanged: (value) {
               setState(() {
-                _hasSigned = value;
+                _hasSigned = value ?? false;
               });
             }, 
             text: "En cochant cette case, je signe le document présenté ci-contre et j’atteste de mon engagement au programme ainsi que la véracité des informations présentées."

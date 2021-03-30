@@ -18,20 +18,20 @@ class CoachNotificationsWidget extends StatelessWidget {
           children: [
             Text("Actualités", style: Theme.of(context).textTheme.headline4),
             const SizedBox(height: 16,),
-            if (coachStore.coach.associatedRequest?.isEmpty) 
+            if (coachStore.coach!.associatedRequest == null || coachStore.coach!.associatedRequest!.isEmpty) 
               const Text("Vous n'avez pas de nouvelle demande de builder")
             else 
-              for (final coachRequest in coachStore.coach.associatedRequest) 
+              for (final coachRequest in coachStore.coach!.associatedRequest!) 
                 CoachRequestCard(
                   request: coachRequest, 
                   onAccepted: () => _acceptCoachRequest(context, coachStore, coachRequest), 
                   onRefused: () => _refuseCoachRequest(context, coachStore, coachRequest)
                 ),
             const SizedBox(height: 16,),
-            if (coachStore.coach.associatedNotifications?.isEmpty) 
+            if (coachStore.coach!.associatedNotifications == null || coachStore.coach!.associatedNotifications!.isEmpty) 
               const Text("Vous n'avez pas de nouvelle notification")
             else 
-              for (final notification in coachStore.coach.associatedNotifications) ...{
+              for (final notification in coachStore.coach!.associatedNotifications!) ...{
                 CoachNotificationCard(
                   notification: notification, 
                   onMarkedAsRead: () => _markNotificationAsRead(context, coachStore, notification)
@@ -49,16 +49,21 @@ class CoachNotificationsWidget extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Acceptation de la demande..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = coachStore.coach!.associatedUser.authentificationHeader;
 
       await coachStore.acceptCoachRequest(authorization, coachRequest);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 
   Future _refuseCoachRequest(BuildContext context, CoachStore coachStore, CoachRequest coachRequest) async {
@@ -66,16 +71,21 @@ class CoachNotificationsWidget extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Acceptation de la demande..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = coachStore.coach!.associatedUser.authentificationHeader;
 
       await coachStore.refuseCoachRequest(authorization, coachRequest);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+      
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 
   Future _markNotificationAsRead(BuildContext context, CoachStore coachStore, CoachNotification notification) async {
@@ -83,16 +93,21 @@ class CoachNotificationsWidget extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = coachStore.coach!.associatedUser.authentificationHeader;
 
       await coachStore.markNotificationAsRead(authorization, notification);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 
 }

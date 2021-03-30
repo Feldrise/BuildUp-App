@@ -26,7 +26,7 @@ class BuilderProcessSuccess extends StatelessWidget {
                 BuButton(
                   icon: Icons.download_rounded,
                   text: "Télécharger la fiche", 
-                  onPressed: () async => launch("$kApiBaseUrl/../pdf/builders/${builderStore.builder.id}.pdf"),
+                  onPressed: () async => launch("$kApiBaseUrl/../pdf/builders/${builderStore.builder!.id}.pdf"),
                 ),
                 BuButton(
                   icon: Icons.arrow_forward,
@@ -49,20 +49,25 @@ class BuilderProcessSuccess extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Activation de votre espace..."); 
 
     try {
-      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
+      final String authorization = builderStore.builder!.associatedUser.authentificationHeader;
 
-      builderStore.builder.status = BuilderStatus.validated;
-      builderStore.builder.step = BuilderSteps.active;
+      builderStore.builder!.status = BuilderStatus.validated;
+      builderStore.builder!.step = BuilderSteps.active;
 
-      await builderStore.updateBuilder(authorization, builderStore.builder);
+      await builderStore.updateBuilder(authorization, builderStore.builder!);
       builderStore.notifyChange();
 
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

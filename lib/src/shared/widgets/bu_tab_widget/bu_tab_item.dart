@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class BuTabItem extends StatelessWidget {
   const BuTabItem({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
     this.isActive = false
   }) : super(key: key);
 

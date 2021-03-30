@@ -7,17 +7,17 @@ enum BuButtonType { primary, secondary, secondaryGrey, coloredSecondary, outline
 
 class BuButton extends StatelessWidget {
   const BuButton({
-    Key key,
+    Key? key,
     this.icon,
-    @required this.text,
-    @required this.onPressed,
+    required this.text,
+    required this.onPressed,
     this.buttonType = BuButtonType.primary,
     this.isBig = false,
   }) : super(key: key);
 
-  final IconData icon;
+  final IconData? icon;
   final String text;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   final BuButtonType buttonType;
   final bool isBig;

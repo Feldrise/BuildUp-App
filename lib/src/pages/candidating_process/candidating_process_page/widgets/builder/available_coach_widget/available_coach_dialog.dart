@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AvailableCoachDialog extends StatelessWidget {
-  const AvailableCoachDialog({Key key, @required this.coach}) : super(key: key);
+  const AvailableCoachDialog({Key? key, required this.coach}) : super(key: key);
 
   final AvailableCoach coach;
 

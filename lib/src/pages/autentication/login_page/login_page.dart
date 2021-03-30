@@ -7,6 +7,7 @@ import 'package:buildup/src/shared/widgets/general/bu_button.dart';
 import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/inputs/bu_checkbox.dart';
 import 'package:buildup/src/shared/widgets/general/bu_status_message.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -79,17 +80,18 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: BuCheckBox(
-                                  value: _rememberMe,
-                                  text: "Se souvenir de moi",
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _rememberMe = newValue;
-                                    });
-                                  },
+                              if (kIsWeb) 
+                                Expanded(
+                                  child: BuCheckBox(
+                                    value: _rememberMe,
+                                    text: "Se souvenir de moi",
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _rememberMe = newValue ?? false;
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
                               Expanded(
                                 child: InkWell(
                                   child: Text("Mot de passe oublié ?", textAlign: TextAlign.end, style: Theme.of(context).textTheme.caption),
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       final String username = _emailTextController.text;
       final String password = _passwordTextController.text;
 
-      final User loggedUser = await AuthenticationService.instance.login(username, password, remember: _rememberMe);
+      final User loggedUser = await AuthenticationService.instance.login(username, password, remember: !kIsWeb || _rememberMe);
 
       setState(() {
         _hasError = false;
@@ -143,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
     } on PlatformException catch(e) {
       setState(() {
         _hasError = true;
-        _statusMessage = e.message;
+        _statusMessage = e.message ?? "";
       });
     } on Exception catch(e) {
       setState(() {
@@ -152,6 +154,8 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

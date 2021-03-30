@@ -20,7 +20,7 @@ class BuilderReferentDashboardCard extends StatelessWidget {
             children: [
               Text("Mon Référent", style: Theme.of(context).textTheme.headline6,),
               const SizedBox(height: 15,),
-              if (builderStore.builder.associatedNtfReferent == null) 
+              if (builderStore.builder!.associatedNtfReferent == null) 
                 const Text("Vous n'avez pas encore de référent...")
               else ...{
                 Flexible(child: _buildCoachInfos(builderStore)),
@@ -58,7 +58,7 @@ class BuilderReferentDashboardCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4,),
                 Flexible(
-                  child: Text(builderStore.builder.associatedNtfReferent.name),
+                  child: Text(builderStore.builder!.associatedNtfReferent!.name),
                 )
               ],
             ),
@@ -68,7 +68,7 @@ class BuilderReferentDashboardCard extends StatelessWidget {
   }
 
   Widget _buildEmailWidget(BuilderStore builderStore) {
-    final String email = builderStore.builder.associatedNtfReferent.email;
+    final String email = builderStore.builder!.associatedNtfReferent!.email;
 
     return Row(
       children: [
@@ -92,7 +92,7 @@ class BuilderReferentDashboardCard extends StatelessWidget {
         const Icon(Icons.switch_account, size: 15,),
         const SizedBox(width: 5,),
         Expanded(
-          child: Text(builderStore.builder.associatedNtfReferent.discordTag)
+          child: Text(builderStore.builder!.associatedNtfReferent!.discordTag)
         )
       ],
     );

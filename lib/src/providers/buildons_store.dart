@@ -3,7 +3,7 @@ import 'package:buildup/services/buildons_service.dart';
 import 'package:flutter/material.dart';
 
 class BuildOnsStore with ChangeNotifier {
-  List<BuildOn> _buildOns;
+  List<BuildOn>? _buildOns;
 
   void clear() {
     _buildOns = null;
@@ -15,33 +15,41 @@ class BuildOnsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  void reorder({int oldIndex, int newIndex}) {
-    final item = _buildOns.removeAt(oldIndex);
-    _buildOns.insert(newIndex < oldIndex ? newIndex: newIndex - 1, item);
+  void reorder({required int oldIndex, required int newIndex}) {
+    if (_buildOns == null) {
+      return;
+    }
+
+    final item = _buildOns!.removeAt(oldIndex);
+    _buildOns!.insert(newIndex < oldIndex ? newIndex: newIndex - 1, item);
 
     notifyListeners();
   }
 
-  List<BuildOn> get loadedBuildOns => _buildOns;
+  List<BuildOn>? get loadedBuildOns => _buildOns;
 
   Future<List<BuildOn>> buildons(String authorization) async {
     return _buildOns ??= await BuildOnsService.instance.getAllBuildOns(authorization);
   }
 
-  bool get hasData => _buildOns != null && _buildOns.isNotEmpty;
+  bool get hasData => _buildOns != null && _buildOns!.isNotEmpty;
 
   Future syncBuildOns(String authorization) async {
-    try {
-      final synced = await BuildOnsService.instance.syncBuildOns(authorization, _buildOns);
+    if (_buildOns == null) {
+      return;
+    }
 
-      if (synced.length != _buildOns.length) {
+    try {
+      final synced = await BuildOnsService.instance.syncBuildOns(authorization, _buildOns!);
+
+      if (synced.length != _buildOns!.length) {
         throw Exception("Quelques Builds On se sont perdus en route...");
       }
 
       for (int i = 0; i < synced.length; ++i) {
-        _buildOns[i].id = synced[i].id;
-        if (_buildOns[i].image.image != null) {
-          _buildOns[i].image.isImageEvenWithServer = true;
+        _buildOns![i].id = synced[i].id;
+        if (_buildOns![i].image.image != null) {
+          _buildOns![i].image.isImageEvenWithServer = true;
         }
       }
 

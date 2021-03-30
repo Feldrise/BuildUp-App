@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class BuMenuDrawer extends StatelessWidget {
   const BuMenuDrawer({
-    Key key, 
-    @required this.onSelectedPage, 
-    @required this.shouldPop,
-    @required this.currentPageIndex, 
-    @required this.pageItems,
+    Key? key, 
+    required this.onSelectedPage, 
+    required this.shouldPop,
+    required this.currentPageIndex, 
+    required this.pageItems,
     this.isMinimified = false
   }) : super(key: key);
 

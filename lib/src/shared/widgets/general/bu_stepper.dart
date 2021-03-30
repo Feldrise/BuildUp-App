@@ -7,16 +7,16 @@ class BuStepperChild {
 
   const BuStepperChild({
     this.color = const Color(0xffaeb5b7),
-    this.widget 
+    required this.widget 
   });
 }
 
 class BuStepper extends StatelessWidget {
   const BuStepper({
-    Key key, 
-    @required this.children, 
+    Key? key, 
+    required this.children, 
     this.showLocked = true,
-  }) : assert(children != null), super(key: key);
+  }) : super(key: key);
 
   final List<BuStepperChild> children;
 
@@ -37,7 +37,7 @@ class BuStepper extends StatelessWidget {
     );
   }
 
-  Widget _buildRound(Widget widget, {Color color}) {
+  Widget _buildRound(Widget widget, {required Color color}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -78,7 +78,7 @@ class BuStepper extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicator(BuStepperChild previous, BuStepperChild current, {@required int index}) {
+  Widget _buildIndicator(BuStepperChild? previous, BuStepperChild current, {required int index}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -110,7 +110,7 @@ class BuStepper extends StatelessWidget {
     );
   } 
 
-  Widget _buildStep(BuStepperChild previous, BuStepperChild current, {@required int index}) {
+  Widget _buildStep(BuStepperChild? previous, BuStepperChild current, {required int index}) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

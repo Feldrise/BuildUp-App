@@ -88,6 +88,7 @@ class AuthenticationService {
     
     final User user = User(
       id,
+      profilePicture: BuImage("${UsersService.instance.serviceBaseUrl}/$id/profile_picture"),
       firstName:  preferences.getString("user_firstName") ?? "",
       lastName: preferences.getString("user_lastName") ?? "",
       birthdate: DateTime.tryParse(preferences.getString("user_birthdate") ?? "") ?? DateTime.now(),

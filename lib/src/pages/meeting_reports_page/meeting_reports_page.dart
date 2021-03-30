@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MeetingRepportsPage extends StatefulWidget {
-  const MeetingRepportsPage({Key key, @required this.builder}) : super(key: key);
+  const MeetingRepportsPage({Key? key, required this.builder}) : super(key: key);
   
   final BuBuilder builder;
 
@@ -55,7 +55,7 @@ class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
           ],
         ),
       ),
-      floatingActionButton: Provider.of<UserStore>(context).user.role != UserRoles.coach ? null :
+      floatingActionButton: Provider.of<UserStore>(context).user!.role != UserRoles.coach ? null :
         FloatingActionButton(
           backgroundColor: colorPrimary,
           onPressed: _createMeetingReport,
@@ -65,7 +65,7 @@ class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
   }
 
   Future _createMeetingReport() async {
-    final MeetingReport toCreate = await showDialog(
+    final MeetingReport? toCreate = await showDialog(
       context: context,
       builder: (context) => CreateMeetingReportDialog()
     );
@@ -78,7 +78,7 @@ class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
     Dialogs.showLoadingDialog(context, keyLoader, "Création du rapport en cours..."); 
 
     try {
-      final String authorization = Provider.of<UserStore>(context, listen: false).user.authentificationHeader;
+      final String authorization = Provider.of<UserStore>(context, listen: false).user!.authentificationHeader;
       toCreate.id = await BuildersService.instance.createMeetingReport(authorization, widget.builder.id, toCreate);
 
       setState(() {
@@ -86,10 +86,15 @@ class _MeetingRepportsPageState extends State<MeetingRepportsPage> {
       });
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

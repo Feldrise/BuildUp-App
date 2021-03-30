@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 
 class BuilderProjectCard extends StatefulWidget {
   const BuilderProjectCard({
-    Key key, 
-    @required this.builder,
+    Key? key, 
+    required this.builder,
     this.onSaveProject,
   }) : super(key: key);
 
   final BuBuilder builder;
 
-  final Function(BuBuilder) onSaveProject;
+  final Function(BuBuilder)? onSaveProject;
 
   @override
   _BuilderProjectCardState createState() => _BuilderProjectCardState();
@@ -94,7 +94,7 @@ class _BuilderProjectCardState extends State<BuilderProjectCard> {
       CupertinoPageRoute(
         builder: (context) => BuilderProjectDialog(
           builder: widget.builder,
-          onSaveProject: widget.onSaveProject,
+          onSaveProject: widget.onSaveProject!,
         )
       )
     );

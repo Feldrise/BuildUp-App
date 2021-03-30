@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BuImagePicker extends StatefulWidget {
-  const BuImagePicker({Key key, @required this.image, this.onUpdated, this.isCircular = false}) : super(key: key);
+  const BuImagePicker({Key? key, required this.image, this.onUpdated, this.isCircular = false}) : super(key: key);
 
   final BuImage image;
 
-  final Function() onUpdated;
+  final Function()? onUpdated;
 
   final bool isCircular;
 
@@ -63,7 +63,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(constraint.maxWidth / 2), 
                   child: Image(
-                    image: widget.image.image,
+                    image: widget.image.image!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -122,7 +122,7 @@ class _BuImagePickerState extends State<BuImagePicker> {
         children: [
           Positioned.fill(
             child: Image(
-              image: widget.image.image,
+              image: widget.image.image!,
               fit: BoxFit.cover,
             ),
           ),
@@ -143,18 +143,22 @@ class _BuImagePickerState extends State<BuImagePicker> {
   }
 
   Future _selectImage() async {
-    final FilePickerResult result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image
     );
 
     if (result != null) {
       final PlatformFile file = result.files.first;
-      widget.image.image = MemoryImage(file.bytes);
+      if (file.bytes == null) {
+        return;
+      }
+
+      widget.image.image = MemoryImage(file.bytes!);
       widget.image.isImageEvenWithServer = false;
       setState(() {});
 
       if (widget.onUpdated != null) {
-        widget.onUpdated();
+        widget.onUpdated!();
       }
     }
   }

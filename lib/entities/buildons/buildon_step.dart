@@ -25,7 +25,7 @@ class BuildOnStep {
     returningLink = "";
 
   BuildOnStep.fromMap(Map<String, dynamic> map) :
-    id = map['id'] as String,
+    id = map['id'] as String?,
     image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/steps/${map['id'] as String}/image"),
     name = map['name'] as String,
     description = map['description'] as String,

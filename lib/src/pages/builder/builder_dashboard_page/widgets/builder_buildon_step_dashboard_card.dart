@@ -31,8 +31,8 @@ class BuilderBuildOnDashboardCard extends StatelessWidget {
   Widget _buildCoachInfos(BuilderStore builderStore) {
     return FutureBuilder(
       future: BuildOnsService.instance.getBuildOnStep(
-        builderStore.builder.associatedUser.authentificationHeader,
-        builderStore.builder.associatedProjects.first.currentBuildOnStep
+        builderStore.builder!.associatedUser.authentificationHeader,
+        builderStore.builder!.associatedProjects.first.currentBuildOnStep
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {

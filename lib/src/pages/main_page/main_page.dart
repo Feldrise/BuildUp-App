@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({
-    Key key,
-    @required this.pageItems,
-    @required this.pages
+    Key? key,
+    required this.pageItems,
+    required this.pages
   }) : assert(pageItems.length == pages.length, "You don't have the same pageItems number than the pages number"), super(key: key);
 
   final List<PageItem> pageItems;
@@ -26,9 +26,9 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
+      onWillPop: () async {
         // show confirmation
-        return AppManager.instance.showCloseAppConfirmation(context);
+        return (await AppManager.instance.showCloseAppConfirmation(context)) ?? false;
       },
       child: LayoutBuilder(
         builder: (context, constraints) {

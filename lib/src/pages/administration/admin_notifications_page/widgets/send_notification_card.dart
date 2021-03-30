@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class SendNotificationCard extends StatefulWidget {
   const SendNotificationCard({
-    Key key, 
-    @required this.onSendNotification
+    Key? key, 
+    required this.onSendNotification
   }) : super(key: key);
 
   final Function(String) onSendNotification;
@@ -78,7 +78,7 @@ class _SendNotificationCardState extends State<SendNotificationCard> {
   }
 
   Future _sendNotification() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       await widget.onSendNotification(_notificationTextController.text);
 
       setState(() {

@@ -14,14 +14,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BuilderInfoCard extends StatefulWidget {
   const BuilderInfoCard({
-    Key key, 
-    @required this.builder,
+    Key? key, 
+    required this.builder,
     this.onSaveInfo,
   }) : super(key: key);
 
   final BuBuilder builder;
 
-  final Function(BuBuilder) onSaveInfo;
+  final Function(BuBuilder)? onSaveInfo;
 
   @override
   _BuilderInfoCardState createState() => _BuilderInfoCardState();
@@ -77,25 +77,25 @@ class _BuilderInfoCardState extends State<BuilderInfoCard> {
           children: [
             Wrap(
               children: [
-                if (Provider.of<UserStore>(context).user.role != UserRoles.builder)
+                if (Provider.of<UserStore>(context).user!.role != UserRoles.builder)
                   _buildSmallInfo("Etape actuelle", _buildCurrentStep()),
                 _buildSmallInfo("Fin du programme", Text(DateFormat("dd/MM/yyyy").format(widget.builder.programEndDate)))
               ]
             ),
             Wrap(
               children: [
-                _buildSmallInfo("Coach assigné", Text(widget.builder.associatedCoach != null ? widget.builder.associatedCoach.associatedUser.fullName : "Pas de coach")),
-                _buildSmallInfo("Référent assigné", Text(widget.builder.associatedNtfReferent != null ? widget.builder.associatedNtfReferent.name : "Pas de référent")),
+                _buildSmallInfo("Coach assigné", Text(widget.builder.associatedCoach != null ? widget.builder.associatedCoach!.associatedUser.fullName : "Pas de coach")),
+                _buildSmallInfo("Référent assigné", Text(widget.builder.associatedNtfReferent != null ? widget.builder.associatedNtfReferent!.name : "Pas de référent")),
               ]
             ),
             const SizedBox(height: 15,),
             Wrap(
               children: [
                 if (widget.builder.associatedCoach != null)
-                  _buildSmallInfo("Contact coach", _buildContactWidget(widget.builder.associatedCoach.associatedUser.email, widget.builder.associatedCoach.associatedUser.discordTag)),
+                  _buildSmallInfo("Contact coach", _buildContactWidget(widget.builder.associatedCoach!.associatedUser.email, widget.builder.associatedCoach!.associatedUser.discordTag ?? "Inconnue")),
 
                 if (widget.builder.associatedNtfReferent != null) 
-                  _buildSmallInfo("Contact Référent", _buildContactWidget(widget.builder.associatedNtfReferent.email, widget.builder.associatedNtfReferent.discordTag))
+                  _buildSmallInfo("Contact Référent", _buildContactWidget(widget.builder.associatedNtfReferent!.email, widget.builder.associatedNtfReferent!.discordTag))
                 
               ]
             )
@@ -223,7 +223,7 @@ class _BuilderInfoCardState extends State<BuilderInfoCard> {
       CupertinoPageRoute(
         builder: (context) => BuilderInfoDialog(
           builder: widget.builder,
-          onSaveInfo: widget.onSaveInfo,
+          onSaveInfo: widget.onSaveInfo!,
         )
       )
     );

@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 
 class AdminBuildOnUpdateDialog extends StatelessWidget {
   const AdminBuildOnUpdateDialog({
-    Key key,
-    @required this.buildOn,
-    @required this.onUpdated,
-    @required this.onRequestUpdateSteps,
-    @required this.onClosed,
-    @required this.formKey,
+    Key? key,
+    required this.buildOn,
+    required this.onUpdated,
+    required this.onRequestUpdateSteps,
+    required this.onClosed,
+    required this.formKey,
   }) : super(key: key);
 
   final BuildOn buildOn;
@@ -25,10 +25,6 @@ class AdminBuildOnUpdateDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (buildOn == null) {
-      return Container();
-    }
-
     return BuCard(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(

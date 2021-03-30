@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class ProcessWidget extends StatelessWidget {
   const ProcessWidget({
-    Key key,
-    @required this.title,
-    @required this.description,
-    @required this.index,
-    @required this.maxSteps,
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.index,
+    required this.maxSteps,
     this.child,
   }) : super(key: key);
   
@@ -18,7 +18,7 @@ class ProcessWidget extends StatelessWidget {
   final int index;
   final int maxSteps;
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class ProcessWidget extends StatelessWidget {
           ),
           const SizedBox(height: 32,),
           if (child != null) 
-            child
+            child!
         ],
       )
     );

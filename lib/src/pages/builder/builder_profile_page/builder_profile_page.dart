@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class BuilderProfilPage extends StatelessWidget {
   const BuilderProfilPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -38,11 +38,11 @@ class BuilderProfilPage extends StatelessWidget {
                     child: Column(
                       children: [
                         BuilderProfileCard(
-                          builder: builderStore.builder,
+                          builder: builderStore.builder!,
                           onSaveProfile: (builder) => _saveBuilderProfile(context, builder),
                         ),
                         const SizedBox(height: 30),
-                        BuilderInfoCard(builder: builderStore.builder)
+                        BuilderInfoCard(builder: builderStore.builder!)
                       ],
                     ),
                   ),

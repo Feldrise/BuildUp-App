@@ -9,17 +9,17 @@ import 'package:provider/provider.dart';
 
 class AdminBuildOnStepsListView extends StatelessWidget {
   const AdminBuildOnStepsListView({
-    Key key,
-    @required this.buildOn,
-    @required this.buildOnStepRequestUpdate,
-    @required this.activeBuildOnStep,
-    @required this.onUpdated,
+    Key? key,
+    required this.buildOn,
+    required this.buildOnStepRequestUpdate,
+    required this.activeBuildOnStep,
+    required this.onUpdated,
   }) : super(key: key);
 
   final BuildOn buildOn;
 
   final Function(BuildOnStep) buildOnStepRequestUpdate;
-  final BuildOnStep activeBuildOnStep;
+  final BuildOnStep? activeBuildOnStep;
 
   final Function() onUpdated;
 

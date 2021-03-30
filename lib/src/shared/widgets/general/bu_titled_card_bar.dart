@@ -5,11 +5,11 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class BuTitledCardBar extends StatelessWidget {
-  const BuTitledCardBar({Key key, @required this.title, this.onModified}) : super(key: key);
+  const BuTitledCardBar({Key? key, required this.title, this.onModified}) : super(key: key);
 
   final String title;
 
-  final Function() onModified;
+  final Function()? onModified;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class BuTitledCardBar extends StatelessWidget {
                 child: BuButton(
                   icon: Icons.edit,
                   text: "Modifier",
-                  onPressed: onModified,
+                  onPressed: onModified!,
                 ),
               )
             else if (onModified != null)

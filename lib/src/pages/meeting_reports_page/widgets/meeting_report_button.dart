@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MeetingReportButton extends StatelessWidget {
-  const MeetingReportButton({Key key, @required this.meetingReport}) : super(key: key);
+  const MeetingReportButton({Key? key, required this.meetingReport}) : super(key: key);
 
   final MeetingReport meetingReport;
 

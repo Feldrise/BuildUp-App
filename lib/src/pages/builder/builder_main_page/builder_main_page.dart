@@ -20,7 +20,7 @@ class BuilderMainPage extends StatelessWidget {
       const BuilderProjectPage(),
       Consumer<BuilderStore>(
         builder: (context, builderStore, child) {
-          return MeetingRepportsPage(builder: builderStore.builder);
+          return MeetingRepportsPage(builder: builderStore.builder!);
         }
       ),
       ClipRect(
@@ -28,7 +28,7 @@ class BuilderMainPage extends StatelessWidget {
           key: AppManager.instance.builderBuildOnsKey,
           onGenerateRoute: (route) => MaterialPageRoute<void>(
             settings: route,
-            builder: (context) => BuilderBuildOnsPage(builder: Provider.of<BuilderStore>(context).builder)
+            builder: (context) => BuilderBuildOnsPage(builder: Provider.of<BuilderStore>(context).builder!)
           ),
         ),
       ),

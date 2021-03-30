@@ -21,7 +21,7 @@ class BuildOn {
     steps = [];
 
   BuildOn.fromMap(Map<String, dynamic> map, {required this.steps}) :
-    id = map['id'] as String,
+    id = map['id'] as String?,
     image = BuImage("${BuildOnsService.instance.serviceBaseUrl}/${map['id'] as String}/image"),
     name = map['name'] as String,
     description = map['description'] as String;

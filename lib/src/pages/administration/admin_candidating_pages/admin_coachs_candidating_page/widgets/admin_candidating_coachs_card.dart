@@ -17,8 +17,8 @@ import 'package:provider/provider.dart';
 
 class AdminCandidatingCoachCard extends StatefulWidget {
   const AdminCandidatingCoachCard({
-    Key key, 
-    @required this.coach
+    Key? key, 
+    required this.coach
   }) : super(key: key);
   
   final Coach coach;
@@ -67,7 +67,7 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
       buildInfo("Date", Text(DateFormat("dd/MM/yyyy").format(widget.coach.candidatingDate))),
       buildInfo("Situation", Text(widget.coach.situation)),
       buildInfo("Email", Text(widget.coach.associatedUser.email)),
-      buildInfo("Tag Discord", Text(widget.coach.associatedUser.discordTag))
+      buildInfo("Tag Discord", Text(widget.coach.associatedUser.discordTag ?? "Inconnue"))
     ];
   }
 
@@ -142,7 +142,7 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
     );
   }
 
-  Widget buildWrappedInfo(Widget info, {bool showTable}) {
+  Widget buildWrappedInfo(Widget info, {required bool showTable}) {
     if (showTable) {
       return Container(
         padding: const EdgeInsets.only(top: 8.0, left: 10, bottom: 8.0, right: 50),
@@ -182,9 +182,9 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
     final bool updated = await showDialog(
       context: context,
       builder: (context) => AdminUpdateCandidatingCoachDialog(coach: widget.coach,)
-    );
+    ) ?? false;
 
-    if (updated != null && updated) {
+    if (updated) {
       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
       final GlobalKey<State> keyLoader = GlobalKey<State>();
@@ -204,7 +204,9 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 
@@ -212,9 +214,9 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
     final bool delete = await showDialog(
       context: context,
       builder: (context) => AdminDeleteCandidatingCoachDialog(coach: widget.coach,)
-    );
+    ) ?? false;
 
-    if (delete != null && delete) {
+    if (delete) {
       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
       final GlobalKey<State> keyLoader = GlobalKey<State>();
@@ -234,7 +236,9 @@ class _AdminCandidatingCoachCardState extends State<AdminCandidatingCoachCard> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 }

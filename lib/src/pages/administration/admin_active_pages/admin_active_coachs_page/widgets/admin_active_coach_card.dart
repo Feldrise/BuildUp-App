@@ -33,7 +33,7 @@ mixin AdminActiveCoachCardAction {
 }
 
 class AdminActiveCoachCard extends StatelessWidget {
-  const AdminActiveCoachCard({Key key, @required this.coach, this.width}) : super(key: key);
+  const AdminActiveCoachCard({Key? key, required this.coach, this.width = 64}) : super(key: key);
 
   final Coach coach;
 
@@ -140,7 +140,7 @@ class AdminActiveCoachCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveCoachCardAction.detailled[AdminActiveCoachCardAction.viewProfile],
+              AdminActiveCoachCardAction.detailled[AdminActiveCoachCardAction.viewProfile]!,
               style: TextStyle(fontSize: 12, color: AdminActiveCoachCardAction.color[AdminActiveCoachCardAction.viewProfile]),
             )
           ],
@@ -157,7 +157,7 @@ class AdminActiveCoachCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveCoachCardAction.detailled[AdminActiveCoachCardAction.delete],
+              AdminActiveCoachCardAction.detailled[AdminActiveCoachCardAction.delete]!,
               style: TextStyle(fontSize: 12, color: AdminActiveCoachCardAction.color[AdminActiveCoachCardAction.delete]),
             )
           ],
@@ -168,12 +168,12 @@ class AdminActiveCoachCard extends StatelessWidget {
 
   Future _navigate(BuildContext context, String route) async {
     if (route == AdminActiveCoachCardAction.delete) {
-      final bool delete = await showDialog<bool>(
+      final bool delete = await showDialog<bool?>(
         context: context,
         builder: (context) => AdminActiveCoachDeleteDialog(coach: coach)
-      );
+      ) ?? false;
 
-      if (delete != null && delete) {
+      if (delete) {
         final GlobalKey<State> keyLoader = GlobalKey<State>();
         Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
 
@@ -182,16 +182,21 @@ class AdminActiveCoachCard extends StatelessWidget {
 
           await Provider.of<ActiveCoachsStore>(context, listen: false).refuseCoach(authorization, coach);
         } on Exception {
-          Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+          if (keyLoader.currentContext != null) {
+            Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+          }
           return;
         }
 
-        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+        if (keyLoader.currentContext != null) {
+          Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+        }
+
         return;
       }
     }
 
-    Widget page;
+    Widget? page;
 
     if (route == AdminActiveCoachCardAction.viewProfile) {
       page = AdminViewActiveCoachPage(coach: coach);
@@ -201,7 +206,7 @@ class AdminActiveCoachCard extends StatelessWidget {
       await Navigator.push<void>(
         context,
         MaterialPageRoute(
-          builder: (context) => page
+          builder: (context) => page!
         )
         // PageRouteBuilder(
         //   pageBuilder: (context, animation, anotherAnimation) => page,

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CoachBuildersPage extends StatelessWidget {
-  const CoachBuildersPage({Key key,}) : super(key: key);
+  const CoachBuildersPage({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class CoachBuildersPage extends StatelessWidget {
               children: [
                 ListView(), // Here to make the RefreshIndicator working
                 FutureBuilder(
-                  future: coachBuildersStore.builders(userStore.authentificationHeader, coachStore.coach),
+                  future: coachBuildersStore.builders(userStore.authentificationHeader, coachStore.coach!),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasError) {

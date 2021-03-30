@@ -45,7 +45,7 @@ mixin AdminActiveBuilderCardAction {
 }
 
 class AdminActiveBuilderCard extends StatelessWidget {
-  const AdminActiveBuilderCard({Key key, @required this.builder, this.width}) : super(key: key);
+  const AdminActiveBuilderCard({Key? key, required this.builder, this.width = 64}) : super(key: key);
 
   final BuBuilder builder;
 
@@ -183,7 +183,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewProfile],
+              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewProfile]!,
               style: TextStyle(fontSize: 12, color: AdminActiveBuilderCardAction.color[AdminActiveBuilderCardAction.viewProfile]),
             )
           ],
@@ -200,7 +200,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewRepports],
+              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewRepports]!,
               style: TextStyle(fontSize: 12, color: AdminActiveBuilderCardAction.color[AdminActiveBuilderCardAction.viewRepports]),
             )
           ],
@@ -217,7 +217,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewBuildOns],
+              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.viewBuildOns]!,
               style: TextStyle(fontSize: 12, color: AdminActiveBuilderCardAction.color[AdminActiveBuilderCardAction.viewBuildOns]),
             )
           ],
@@ -234,7 +234,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.delete],
+              AdminActiveBuilderCardAction.detailled[AdminActiveBuilderCardAction.delete]!,
               style: TextStyle(fontSize: 12, color: AdminActiveBuilderCardAction.color[AdminActiveBuilderCardAction.delete]),
             )
           ],
@@ -245,12 +245,12 @@ class AdminActiveBuilderCard extends StatelessWidget {
 
   Future _navigate(BuildContext context, String route) async {
     if (route == AdminActiveBuilderCardAction.delete) {
-      final bool delete = await showDialog<bool>(
+      final bool delete = await showDialog<bool?>(
         context: context,
         builder: (context) => AdminActiveBuilderDeleteDialog(builder: builder)
-      );
+      ) ?? false;
 
-      if (delete != null && delete) {
+      if (delete) {
         final GlobalKey<State> keyLoader = GlobalKey<State>();
         Dialogs.showLoadingDialog(context, keyLoader, "Suppression en cours"); 
 
@@ -259,16 +259,21 @@ class AdminActiveBuilderCard extends StatelessWidget {
 
           await Provider.of<ActiveBuildersStore>(context, listen: false).refuseBuilder(authorization, builder);
         } on Exception {
-          Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+          if (keyLoader.currentContext != null) {
+            Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop(); 
+          }
           return;
         }
 
-        Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+        if (keyLoader.currentContext != null) {
+          Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop(); 
+        }
+
         return;
       }
     }
 
-    Widget page;
+    Widget? page;
 
     if (route == AdminActiveBuilderCardAction.viewProfile) {
       page = AdminViewActiveBuilderPage(builder: builder);
@@ -284,7 +289,7 @@ class AdminActiveBuilderCard extends StatelessWidget {
       await Navigator.push<void>(
         context,
         MaterialPageRoute(
-          builder: (context) => page
+          builder: (context) => page!
         )
       );
     }

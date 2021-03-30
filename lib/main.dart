@@ -25,7 +25,7 @@ import 'package:provider/provider.dart';
 
 class DebugHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext context){
+  HttpClient createHttpClient(SecurityContext? context){
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
@@ -152,7 +152,7 @@ class MyApp extends StatelessWidget {
               );
             }
 
-            final BuBuilder builder = Provider.of<BuilderStore>(context, listen: false).builder;
+            final BuBuilder builder = Provider.of<BuilderStore>(context, listen: false).builder!;
             
             if (builder.status == BuilderStatus.candidating ||
                 builder.status == BuilderStatus.deleted) {
@@ -192,7 +192,7 @@ class MyApp extends StatelessWidget {
               );
             }
 
-            final Coach coach = Provider.of<CoachStore>(context, listen: false).coach;
+            final Coach coach = Provider.of<CoachStore>(context, listen: false).coach!;
 
             if (coach.status == CoachStatus.candidating ||
                 coach.status == CoachStatus.deleted) {

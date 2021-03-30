@@ -8,8 +8,8 @@ enum BuildOnImageRoundedCorner { onlyTopLeft, onlyTop, none }
 
 class BuildOnImageWidget extends StatelessWidget {
   const BuildOnImageWidget({
-    Key key, 
-    @required this.image,
+    Key? key, 
+    required this.image,
     this.corners = BuildOnImageRoundedCorner.onlyTopLeft,  
   }) : super(key: key);
 
@@ -58,7 +58,7 @@ class BuildOnImageWidget extends StatelessWidget {
         topRight: (corners == BuildOnImageRoundedCorner.onlyTopLeft) ? Radius.zero : const Radius.circular(8)
       ),
       child: Image(
-        image: image.image,
+        image: image.image!,
         fit: BoxFit.cover,
       ),
     );

@@ -5,7 +5,7 @@ enum BuStatusMessageType { error, success, info }
 
 class BuStatusMessage extends StatelessWidget {
   const BuStatusMessage({
-    Key key, 
+    Key? key, 
     this.type = BuStatusMessageType.error, 
     this.title, 
     this.message, 
@@ -13,15 +13,15 @@ class BuStatusMessage extends StatelessWidget {
   }) : super(key: key);
   
   final BuStatusMessageType type;
-  final String title;
-  final String message;
-  final List<Widget> children;
+  final String? title;
+  final String? message;
+  final List<Widget>? children;
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor;
-    Color borderColor;
-    Color textColor;
+    late Color backgroundColor;
+    late Color borderColor;
+    late Color textColor;
 
     if (type == BuStatusMessageType.error) {
       backgroundColor = colorError;
@@ -33,7 +33,7 @@ class BuStatusMessage extends StatelessWidget {
       borderColor = colorBorderSuccess;
       textColor = colorTextSuccess;
     }
-    else if (type == BuStatusMessageType.info) {
+    else /* if (type == BuStatusMessageType.info) */ {
       backgroundColor = colorInfo;
       borderColor = colorBorderInfo;
       textColor = colorTextInfo;
@@ -55,21 +55,21 @@ class BuStatusMessage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (title != null && title.isNotEmpty) ...{
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold),),
+            if (title != null && title!.isNotEmpty) ...{
+              Text(title!, style: const TextStyle(fontWeight: FontWeight.bold),),
               const SizedBox(height: 15,),
             },
             
-            if (message != null && message.isNotEmpty) ...{
-              Text(message),
+            if (message != null && message!.isNotEmpty) ...{
+              Text(message!),
               const SizedBox(height: 15,)
             },
 
-            if (children != null && children.isNotEmpty) ...{
+            if (children != null && children!.isNotEmpty) ...{
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: children,
+                children: children!,
               ),
               const SizedBox(height: 15,)
             }

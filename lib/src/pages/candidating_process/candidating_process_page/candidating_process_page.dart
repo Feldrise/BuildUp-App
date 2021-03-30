@@ -34,10 +34,10 @@ class CandidatingProcessPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: horizontalPadding),
               child: Consumer<UserStore>(
                 builder: (context, userStore, child) {
-                  if (userStore.user.role == UserRoles.builder) {
+                  if (userStore.user!.role == UserRoles.builder) {
                     return _buildBuilderCandidatingProcess();
                   }
-                  else if(userStore.user.role == UserRoles.coach) {
+                  else if(userStore.user!.role == UserRoles.coach) {
                     return _buildCoachCandidatingProcess();
                   }
                   else {
@@ -58,7 +58,7 @@ class CandidatingProcessPage extends StatelessWidget {
     return Consumer<BuilderStore>(
       builder: (context, builderStore, child) {
         // The builder has been refused
-        if (builderStore.builder.status == BuilderStatus.deleted) {
+        if (builderStore.builder!.status == BuilderStatus.deleted) {
           return const ProcessWidget(
             title: "Candidature refusée", 
             description: [
@@ -71,7 +71,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The builder just candidated
-        if (builderStore.builder.step == BuilderSteps.preselected) {
+        if (builderStore.builder!.step == BuilderSteps.preselected) {
           return const ProcessWidget(
             title: "Candidature en cours d'examen", 
             description: [
@@ -84,7 +84,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // We fixed an appointment with the coach
-        if (builderStore.builder.step == BuilderSteps.adminMeeting) {
+        if (builderStore.builder!.step == BuilderSteps.adminMeeting) {
           return ProcessWidget(
             title: "Une prise de contact a été effectuée", 
             description: [
@@ -106,7 +106,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The meeting is done
-        if (builderStore.builder.step == BuilderSteps.adminMeetingDone) {
+        if (builderStore.builder!.step == BuilderSteps.adminMeetingDone) {
           return const ProcessWidget(
             title: "Entretien réalisé", 
             description: [
@@ -119,8 +119,8 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The builder has to choose his coach
-        if (builderStore.builder.step == BuilderSteps.coachMeeting &&
-            builderStore.builder.associatedCoach == null) {
+        if (builderStore.builder!.step == BuilderSteps.coachMeeting &&
+            builderStore.builder!.associatedCoach == null) {
           return ProcessWidget(
             title: "Candidature validée", 
             description: const [
@@ -135,8 +135,8 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The builder waits for coach validation
-        if (builderStore.builder.step == BuilderSteps.coachMeeting &&
-            builderStore.builder.associatedCoach != null) {
+        if (builderStore.builder!.step == BuilderSteps.coachMeeting &&
+            builderStore.builder!.associatedCoach != null) {
           return const ProcessWidget(
             title: "En attente validation du coach", 
             description: [
@@ -149,7 +149,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The builder need to sign
-        if (!builderStore.builder.hasSignedFicheIntegration && builderStore.builder.step == BuilderSteps.signing) {
+        if (!builderStore.builder!.hasSignedFicheIntegration && builderStore.builder!.step == BuilderSteps.signing) {
           return ProcessWidget(
             title: "Edition carte et fiche d’intégration", 
             description: const [
@@ -163,7 +163,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The builder is at the end of the process
-        if (builderStore.builder.hasSignedFicheIntegration) {
+        if (builderStore.builder!.hasSignedFicheIntegration) {
           return ProcessWidget(
             title: "Candidature terminée", 
             description: const [
@@ -186,7 +186,7 @@ class CandidatingProcessPage extends StatelessWidget {
     return Consumer<CoachStore>(
       builder: (context, coachStore, child) {
         // The coach has been refused
-        if (coachStore.coach.status == CoachStatus.deleted) {
+        if (coachStore.coach!.status == CoachStatus.deleted) {
           return const ProcessWidget(
             title: "Candidature refusée", 
             description: [
@@ -199,7 +199,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The coach just candidated
-        if (coachStore.coach.step == CoachSteps.preselected) {
+        if (coachStore.coach!.step == CoachSteps.preselected) {
           return const ProcessWidget(
             title: "Candidature en cours d'examen", 
             description: [
@@ -212,7 +212,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // We fixed an appointment with the coach
-        if (coachStore.coach.step == CoachSteps.meeting) {
+        if (coachStore.coach!.step == CoachSteps.meeting) {
           return ProcessWidget(
             title: "Une prise de contact a été effectuée", 
             description: [
@@ -233,7 +233,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The meeting is done
-        if (coachStore.coach.step == CoachSteps.meetingDone) {
+        if (coachStore.coach!.step == CoachSteps.meetingDone) {
           return const ProcessWidget(
             title: "Entretien réalisé", 
             description: [
@@ -246,7 +246,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
 
         // The coach need to sign
-        if (!coachStore.coach.hasSignedFicheIntegration && coachStore.coach.step == CoachSteps.signing) {
+        if (!coachStore.coach!.hasSignedFicheIntegration && coachStore.coach!.step == CoachSteps.signing) {
           return ProcessWidget(
             title: "Candidature validée : signature de la fiche d’intégration", 
             description: const [
@@ -260,7 +260,7 @@ class CandidatingProcessPage extends StatelessWidget {
         }
         
         // The coach is at the end of the process
-        if (coachStore.coach.hasSignedFicheIntegration) {
+        if (coachStore.coach!.hasSignedFicheIntegration) {
           return ProcessWidget(
             title: "Candidature terminée", 
             description: const [
@@ -282,16 +282,21 @@ class CandidatingProcessPage extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Signature et génération du PDF en cours..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = coachStore.coach!.associatedUser.authentificationHeader;
 
       await coachStore.signIntegration(authorization);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
   
   Future _signBuilderIntegration(BuildContext context, BuilderStore builderStore) async {
@@ -299,16 +304,20 @@ class CandidatingProcessPage extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Signature et génération du PDF en cours..."); 
 
     try {
-      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
+      final String authorization = builderStore.builder!.associatedUser.authentificationHeader;
 
       await builderStore.signIntegration(authorization);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 
   Future _selectCoachForBuilder(BuildContext context, BuilderStore builderStore, AvailableCoach availableCoach) async {
@@ -316,15 +325,20 @@ class CandidatingProcessPage extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Validation du coach..."); 
 
     try {
-      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
+      final String authorization = builderStore.builder!.associatedUser.authentificationHeader;
 
       await builderStore.assignCoach(authorization, availableCoach.id);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

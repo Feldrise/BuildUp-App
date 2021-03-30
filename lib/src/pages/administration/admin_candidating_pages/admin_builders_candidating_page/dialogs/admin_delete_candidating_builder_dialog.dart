@@ -5,7 +5,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminDeleteCandidatingBuilderDialog extends StatelessWidget {
-  const AdminDeleteCandidatingBuilderDialog({Key key, @required this.builder}) : super(key: key);
+  const AdminDeleteCandidatingBuilderDialog({Key? key, required this.builder}) : super(key: key);
 
   final BuBuilder builder;
 

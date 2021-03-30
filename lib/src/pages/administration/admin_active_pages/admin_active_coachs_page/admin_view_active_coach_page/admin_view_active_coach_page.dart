@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class AdminViewActiveCoachPage extends StatelessWidget {
   const AdminViewActiveCoachPage({
-    Key key,
-    @required this.coach
+    Key? key,
+    required this.coach
   }) : super(key: key);
 
   final Coach coach;
@@ -42,7 +42,8 @@ class AdminViewActiveCoachPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     CoachInfoCard(coach: coach, onSaveInfo: (coach) => _saveCoachInfo(context, coach),),
                     const SizedBox(height: 30),
-                    MemberFormCard(form: coach.associatedForm,)
+                    if (coach.associatedForm != null)
+                      MemberFormCard(form: coach.associatedForm!,)
                   ],
                 ),
               ),

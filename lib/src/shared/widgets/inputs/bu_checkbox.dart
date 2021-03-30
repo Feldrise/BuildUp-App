@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class BuCheckBox extends StatelessWidget {
   const BuCheckBox({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
-    @required this.text
+    Key? key,
+    required this.value,
+    required this.onChanged,
+    required this.text
   }) : super(key: key);
 
 
   final bool value;
-  final Function(bool) onChanged;
+  final Function(bool?) onChanged;
   
   final String text;
 

@@ -8,8 +8,8 @@ class AdminBuildOnListTile extends StatelessWidget {
   final bool isActive;
 
   const AdminBuildOnListTile({
-    Key key,
-    @required this.buildOn, 
+    Key? key,
+    required this.buildOn, 
     this.isActive = false
   }) : super(key: key);
 

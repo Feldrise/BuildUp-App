@@ -18,7 +18,7 @@ mixin UserRoles {
 class User {
   final String id;
 
-  BuImage? profilePicture;
+  BuImage profilePicture;
 
   String firstName;
   String lastName;
@@ -39,7 +39,7 @@ class User {
   String get authentificationHeader => "Bearer $token";
 
   User(this.id, {
-    this.profilePicture,
+    required this.profilePicture,
     required this.firstName,
     required this.lastName,
     required this.birthdate,
@@ -59,20 +59,20 @@ class User {
     birthdate = DateTime.tryParse(map['birthdate'] as String) ?? DateTime.now(),
 
     email = map['email'] as String,
-    discordTag = map['discordTag'] as String,
+    discordTag = map['discordTag'] as String?,
     username = map['username'] as String,
 
     department = map['department'] as int,
 
     role = map['role'] as String,
-    token = map['token'] as String;
+    token = map['token'] as String?;
 
   
   Map<String, dynamic> toJson() {
     String? profilePictureString;
 
-    if (profilePicture != null && (!profilePicture!.isImageEvenWithServer && profilePicture!.image != null)) {
-      profilePictureString = base64Encode(profilePicture!.image!.bytes);
+    if (!profilePicture.isImageEvenWithServer && profilePicture.image != null) {
+      profilePictureString = base64Encode(profilePicture.image!.bytes);
     }
 
     return <String, dynamic>{

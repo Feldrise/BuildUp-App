@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MeetingReportSummaryDialog extends StatelessWidget {
-  const MeetingReportSummaryDialog({Key key, @required this.meetingReport}) : super(key: key); 
+  const MeetingReportSummaryDialog({Key? key, required this.meetingReport}) : super(key: key); 
 
   final MeetingReport meetingReport;
 
@@ -48,7 +48,7 @@ class MeetingReportSummaryDialog extends StatelessWidget {
         RichText(
           text: TextSpan(
             text: "Date prévue pour le prochain entretien : ",
-            style: Theme.of(context).textTheme.bodyText2.merge(const TextStyle(fontWeight: FontWeight.bold)),
+            style: Theme.of(context).textTheme.bodyText2!.merge(const TextStyle(fontWeight: FontWeight.bold)),
             children: <TextSpan>[
               TextSpan(
                 text: DateFormat('dd/MM/yyyy').format(meetingReport.nextMeetingDate),

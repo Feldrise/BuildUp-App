@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class BuilderDashboardPage extends StatelessWidget {
   const BuilderDashboardPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -14,9 +14,9 @@ import 'package:flutter/services.dart';
 
 class CoachInfoDialog extends StatefulWidget {
   const CoachInfoDialog({
-    Key key,
-    @required this.coach,
-    @required this.onSaveInfo
+    Key? key,
+    required this.coach,
+    required this.onSaveInfo
   }) : super(key: key);
 
   final Coach coach;
@@ -31,7 +31,7 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
   bool _hasError = false;
   String _statusMessage = "";
 
-  String _currentStep;
+  late String _currentStep;
 
   @override
   void initState() {
@@ -152,16 +152,16 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
                 height: 200,
                 child: BuDropdown<String>(
                   items: <String, String>{
-                    CoachSteps.preselected: CoachSteps.detailled[CoachSteps.preselected],
-                    CoachSteps.meeting: CoachSteps.detailled[CoachSteps.meeting],
-                    CoachSteps.active: CoachSteps.detailled[CoachSteps.active],
-                    CoachSteps.stopped: CoachSteps.detailled[CoachSteps.stopped],
+                    CoachSteps.preselected: CoachSteps.detailled[CoachSteps.preselected]!,
+                    CoachSteps.meeting: CoachSteps.detailled[CoachSteps.meeting]!,
+                    CoachSteps.active: CoachSteps.detailled[CoachSteps.active]!,
+                    CoachSteps.stopped: CoachSteps.detailled[CoachSteps.stopped]!,
                   },
                   currentValue: _currentStep,
                   onChanged: (newValue) {
-                    widget.coach.step = newValue;
+                    widget.coach.step = newValue ?? "Unknown";
                     setState(() {
-                      _currentStep = newValue;
+                      _currentStep = newValue ?? "Unknown";
                     });
                   },
                 ),
@@ -202,6 +202,8 @@ class _CoachInfoDialogState extends State<CoachInfoDialog> {
       });
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

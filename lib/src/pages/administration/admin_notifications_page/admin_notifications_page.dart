@@ -63,7 +63,7 @@ class _AdminNotificationsPageState extends State<AdminNotificationsPage> {
     on PlatformException catch(e) {
       setState(() {
         _hasError = true;
-        _statusMessage = e.message;
+        _statusMessage = e.message ?? "";
       });
     }
     on Exception catch(e) {

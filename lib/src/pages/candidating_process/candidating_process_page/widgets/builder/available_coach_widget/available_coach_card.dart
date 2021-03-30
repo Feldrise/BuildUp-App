@@ -9,17 +9,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AvailableCoachCard extends StatelessWidget {
   const AvailableCoachCard({
-    Key key, 
-    @required this.coach,
+    Key? key, 
+    required this.coach,
     this.isSelected = false,
     this.width,
-    @required this.onCoachSelected,
+    required this.onCoachSelected,
   }) : super(key: key);
 
   final AvailableCoach coach;
   final bool isSelected;
 
-  final double width;
+  final double? width;
 
   final Function(AvailableCoach) onCoachSelected;
 

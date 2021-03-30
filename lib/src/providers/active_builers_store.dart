@@ -5,11 +5,11 @@ import 'package:buildup/services/users_service.dart';
 import 'package:flutter/material.dart';
 
 class ActiveBuildersStore with ChangeNotifier {
-  List<BuBuilder> _builders;
+  List<BuBuilder>? _builders;
 
   void clear() {
     if (_builders != null) {
-      _builders.clear();
+      _builders!.clear();
     }
     notifyListeners();
   }
@@ -18,13 +18,14 @@ class ActiveBuildersStore with ChangeNotifier {
     notifyListeners();
   }
 
-  List<BuBuilder> get builders => _builders;
-  set builders(List<BuBuilder> newBuilders) {
+  List<BuBuilder>? get builders => _builders;
+
+  set builders(List<BuBuilder>? newBuilders) {
     _builders = newBuilders;
     notifyListeners();
   }
 
-  bool get hasData => _builders != null && _builders.isNotEmpty;
+  bool get hasData => _builders != null && _builders!.isNotEmpty;
 
   Future updateBuilder(String authorization, BuBuilder toUpdate, {bool updateUser = false, bool updateProject = false}) async {
     try {
@@ -44,8 +45,9 @@ class ActiveBuildersStore with ChangeNotifier {
 
       if (toUpdate.step != BuilderSteps.adminMeeting &&
           toUpdate.step != BuilderSteps.coachMeeting &&
-          toUpdate.step != BuilderSteps.active) {
-        _builders.remove(toUpdate);
+          toUpdate.step != BuilderSteps.active &&
+          _builders != null) {
+        _builders!.remove(toUpdate);
       }
 
       notifyListeners();
@@ -58,7 +60,9 @@ class ActiveBuildersStore with ChangeNotifier {
   Future refuseBuilder(String authorization, BuBuilder toRefuse) async {
     await BuildersService.instance.refuseBuilder(authorization, toRefuse.id);
 
-    _builders.remove(toRefuse);
+    if (_builders == null) {
+      _builders!.remove(toRefuse);
+    }
     notifyListeners();
   }
 

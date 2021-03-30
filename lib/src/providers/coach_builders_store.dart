@@ -5,11 +5,11 @@ import 'package:buildup/services/coachs_services.dart';
 import 'package:flutter/material.dart';
 
 class CoachBuildersStore with ChangeNotifier {
-  List<BuBuilder> _builders;
+  List<BuBuilder>? _builders;
 
   void clear() {
     if (_builders != null) {
-      _builders.clear();
+      _builders!.clear();
       _builders = null;
     }
     notifyListeners();
@@ -23,8 +23,8 @@ class CoachBuildersStore with ChangeNotifier {
     return _builders ??= await CoachsService.instance.getBuildersForCoach(authorization, coach); 
   }
 
-  List<BuBuilder> get loadedBuilders => _builders;
+  List<BuBuilder>? get loadedBuilders => _builders;
 
-  bool get hasData => _builders != null && _builders.isNotEmpty;
+  bool get hasData => _builders != null && _builders!.isNotEmpty;
 
 }

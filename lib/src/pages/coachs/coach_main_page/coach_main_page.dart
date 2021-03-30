@@ -35,7 +35,7 @@ class CoachMainPage extends StatelessWidget {
 
         int buildersCount = 0;
         if (coachBuildersStore.loadedBuilders != null) {
-            buildersCount = coachBuildersStore.loadedBuilders.length;
+            buildersCount = coachBuildersStore.loadedBuilders!.length;
         }
           
         final List<PageItem> pageItems = [

@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 
 class BuildOnStepProcessValidationDialog extends StatelessWidget {
   const BuildOnStepProcessValidationDialog({
-    Key key, 
-    @required this.buildOnStep,
+    Key? key, 
+    required this.buildOnStep,
     this.buildOnReturning,
-    this.onDownload
+    required this.onDownload
     
   }) : super(key: key);
 
   final BuildOnStep buildOnStep;
-  final BuildOnReturning buildOnReturning;
+  final BuildOnReturning? buildOnReturning;
   final Function() onDownload;
 
   @override
@@ -46,12 +46,12 @@ class BuildOnStepProcessValidationDialog extends StatelessWidget {
       return const Text("Aucun rendu n'a actuellement été fournis à cette étape", style: TextStyle(fontStyle: FontStyle.italic));
     }
 
-    if (buildOnReturning.type == BuildOnReturningType.file) {
+    if (buildOnReturning!.type == BuildOnReturningType.file) {
       return  InkWell(
         onTap: onDownload,
         child: Row(
           children: [
-            Text(buildOnReturning.file.fileName, style: const TextStyle(decoration: TextDecoration.underline,),),
+            Text(buildOnReturning!.file!.fileName, style: const TextStyle(decoration: TextDecoration.underline,),),
             const SizedBox(width: 10,),
             const Icon(Icons.file_download, size: 16,)
           ],
@@ -59,11 +59,11 @@ class BuildOnStepProcessValidationDialog extends StatelessWidget {
       );
     }
 
-    if (buildOnReturning.type == BuildOnReturningType.comment) {
-      return Text(buildOnReturning.comment);
+    if (buildOnReturning!.type == BuildOnReturningType.comment) {
+      return Text(buildOnReturning!.comment);
     }
 
-    if (buildOnReturning.type == BuildOnReturningType.link) {
+    if (buildOnReturning!.type == BuildOnReturningType.link) {
       return const Text("Le rendu de cette étape est externe", style: TextStyle(fontStyle: FontStyle.italic));
     }
 

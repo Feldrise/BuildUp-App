@@ -2,7 +2,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class BuNotificationDot extends StatelessWidget {
-  const BuNotificationDot({Key key}) : super(key: key);
+  const BuNotificationDot({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -10,9 +10,9 @@ class AdminBuildOnStepListTile extends StatelessWidget {
   final bool isActive;
 
   const AdminBuildOnStepListTile({
-    Key key,
-    @required this.buildOnStep, 
-    @required this.index,
+    Key? key,
+    required this.buildOnStep, 
+    required this.index,
     this.isActive = false
   }) : super(key: key);
 

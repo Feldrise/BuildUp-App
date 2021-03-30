@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AdminCoachsCandidatingPage extends StatefulWidget {
-  const AdminCoachsCandidatingPage({Key key}) : super(key: key);
+  const AdminCoachsCandidatingPage({Key? key}) : super(key: key);
 
   @override
   _AdminCoachsCandidatingPageState createState() => _AdminCoachsCandidatingPageState();
@@ -61,7 +61,7 @@ class _AdminCoachsCandidatingPageState extends State<AdminCoachsCandidatingPage>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            for (final coach in candidatingCoachsStore.coachs) ...{
+                            for (final coach in candidatingCoachsStore.coachs!) ...{
                               AdminCandidatingCoachCard(coach: coach,),
                               const SizedBox(height: 15,)
                             }

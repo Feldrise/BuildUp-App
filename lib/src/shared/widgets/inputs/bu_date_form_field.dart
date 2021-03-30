@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 
 class BuDateFormField extends FormField<DateTime> {
   BuDateFormField({
-    Key key,
-    @required BuildContext context,
-    FormFieldSetter<DateTime> onSave,
-    Function(DateTime) onChanged,
-    FormFieldValidator<DateTime> validator,
-    DateTime initialValue,
-    @required DateTime firstDate,
-    @required DateTime lastDate,
-    SelectableDayPredicate selectableDayPredicate,
+    Key? key,
+    required BuildContext context,
+    FormFieldSetter<DateTime>? onSave,
+    Function(DateTime)? onChanged,
+    FormFieldValidator<DateTime>? validator,
+    DateTime? initialValue,
+    required DateTime firstDate,
+    required DateTime lastDate,
+    SelectableDayPredicate? selectableDayPredicate,
     String label = "Date",
     AutovalidateMode autovalidateMode = AutovalidateMode.disabled
   }) : super(
@@ -23,12 +23,12 @@ class BuDateFormField extends FormField<DateTime> {
     initialValue: initialValue,
     autovalidateMode: autovalidateMode,
     builder: (FormFieldState<DateTime> state) {
-      final DateTime currentValue = state.value;
+      final DateTime? currentValue = state.value;
       final String currentValueString = currentValue != null ? DateFormat("dd/MM/yyyy").format(currentValue) : "";
 
       return InkWell(
         onTap: () async {
-          DateTime newDate = await showDatePicker(
+          DateTime? newDate = await showDatePicker(
             context: context,
             firstDate: firstDate,
             lastDate: lastDate,
@@ -40,7 +40,10 @@ class BuDateFormField extends FormField<DateTime> {
           if (newDate != null) {
             state.reset();
             newDate = newDate.add(const Duration(seconds: 1));
-            onChanged(newDate);
+            
+            if (onChanged != null) {
+              onChanged(newDate);
+            }
             state.didChange(newDate);
           }
         },

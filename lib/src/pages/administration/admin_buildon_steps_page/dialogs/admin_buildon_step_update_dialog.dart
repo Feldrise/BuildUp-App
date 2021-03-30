@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 
 class AdminBuildOnStepUpdateDialog extends StatefulWidget {
   const AdminBuildOnStepUpdateDialog({
-    Key key,
-    @required this.buildOnStep,
-    @required this.onUpdated,
-    @required this.onClosed,
-    @required this.formKey,
+    Key? key,
+    required this.buildOnStep,
+    required this.onUpdated,
+    required this.onClosed,
+    required this.formKey,
   }) : super(key: key);
 
   final BuildOnStep buildOnStep;
@@ -33,25 +33,17 @@ class _AdminBuildOnStepUpdateDialogState extends State<AdminBuildOnStepUpdateDia
   void initState() {
     super.initState();
 
-    if (widget.buildOnStep != null) {
-      _returningType = widget.buildOnStep.returningType;
-    }
+    _returningType = widget.buildOnStep.returningType;
   }
 
   @override
   void didUpdateWidget(covariant AdminBuildOnStepUpdateDialog oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.buildOnStep != null) {
-      _returningType = widget.buildOnStep.returningType;
-    }
+    _returningType = widget.buildOnStep.returningType;
   }
   @override
   Widget build(BuildContext context) {
-    if (widget.buildOnStep == null) {
-      return Container();
-    }
-
     return BuCard(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -128,16 +120,12 @@ class _AdminBuildOnStepUpdateDialogState extends State<AdminBuildOnStepUpdateDia
                               Text("étape actuelle".toUpperCase(), style: const TextStyle(fontSize: 14, color: Color(0xff919191)),),
                               const SizedBox(height: 10,),
                               BuDropdown<String>(
-                                items: <String, String>{
-                                  BuildOnReturningType.file: BuildOnReturningType.detailled[BuildOnReturningType.file],
-                                  BuildOnReturningType.link: BuildOnReturningType.detailled[BuildOnReturningType.link],
-                                  BuildOnReturningType.comment: BuildOnReturningType.detailled[BuildOnReturningType.comment],
-                                },
+                                items: BuildOnReturningType.detailled,
                                 currentValue: _returningType,
                                 onChanged: (newValue) {
-                                  widget.buildOnStep.returningType = newValue;
+                                  widget.buildOnStep.returningType = newValue ?? "Inconnue";
                                   setState(() {
-                                    _returningType = newValue;
+                                    _returningType = newValue ?? "Inconnue";
                                   });
 
                                   widget.onUpdated();

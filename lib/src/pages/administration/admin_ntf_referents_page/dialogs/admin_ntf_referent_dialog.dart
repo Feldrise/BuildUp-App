@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 
 class AdminNtfReferentDialog extends StatefulWidget {
   const AdminNtfReferentDialog({
-    Key key, 
-    @required this.ntfReferent
+    Key? key, 
+    required this.ntfReferent
   }) : super(key: key);
 
   final NtfReferent ntfReferent;
@@ -208,8 +208,8 @@ class _AdminNtfReferentDialogState extends State<AdminNtfReferentDialog> {
   }
 
   void _validate() {
-    if (_formKey.currentState.validate()) { 
-      _formKey.currentState.save();
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) { 
+      _formKey.currentState!.save();
 
       Navigator.of(context).pop(true);
     }

@@ -46,8 +46,8 @@ class Project {
   bool isLucrative;
   bool isDeclared;
 
-  String currentBuildOn;
-  String currentBuildOnStep;
+  String? currentBuildOn;
+  String? currentBuildOnStep;
 
   bool hasNotification;
   Map<String, BuildOnReturning> associatedReturnings;
@@ -62,8 +62,8 @@ class Project {
     launchDate = DateTime.tryParse(map['launchDate'] as String) ?? DateTime.now(),
     isLucrative = map['isLucratif'] as bool,
     isDeclared = map['isDeclared'] as bool,
-    currentBuildOn = map['currentBuildOn'] as String,
-    currentBuildOnStep = map['currentBuildOnStep'] as String;
+    currentBuildOn = map['currentBuildOn'] as String?,
+    currentBuildOnStep = map['currentBuildOnStep'] as String?;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

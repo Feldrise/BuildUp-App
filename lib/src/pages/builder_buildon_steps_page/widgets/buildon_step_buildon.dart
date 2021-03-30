@@ -3,7 +3,7 @@ import 'package:buildup/src/shared/widgets/buildons/buildon_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class BuildOnStepBuildOn extends StatelessWidget {
-  const BuildOnStepBuildOn({Key key, @required this.buildOn}) : super(key: key);
+  const BuildOnStepBuildOn({Key? key, required this.buildOn}) : super(key: key);
 
   final BuildOn buildOn;
 

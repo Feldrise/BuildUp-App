@@ -36,11 +36,11 @@ mixin CoachBuilderCardAction {
 }
 
 class CoachBuilderCard extends StatelessWidget {
-  const CoachBuilderCard({Key key, @required this.builder, this.width}) : super(key: key);
+  const CoachBuilderCard({Key? key, required this.builder, this.width}) : super(key: key);
 
   final BuBuilder builder;
 
-  final double width;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +174,7 @@ class CoachBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewProfile],
+              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewProfile]!,
               style: TextStyle(fontSize: 12, color: CoachBuilderCardAction.color[CoachBuilderCardAction.viewProfile]),
             )
           ],
@@ -191,7 +191,7 @@ class CoachBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewRepports],
+              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewRepports]!,
               style: TextStyle(fontSize: 12, color: CoachBuilderCardAction.color[CoachBuilderCardAction.viewRepports]),
             )
           ],
@@ -208,7 +208,7 @@ class CoachBuilderCard extends StatelessWidget {
             ),
             const SizedBox(width: 3,),
             Text(
-              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewBuildOns],
+              CoachBuilderCardAction.detailled[CoachBuilderCardAction.viewBuildOns]!,
               style: TextStyle(fontSize: 12, color: CoachBuilderCardAction.color[CoachBuilderCardAction.viewBuildOns]),
             )
           ],
@@ -218,7 +218,7 @@ class CoachBuilderCard extends StatelessWidget {
   }
 
   Future _navigate(BuildContext context, String route) async {
-    Widget page;
+    Widget? page;
 
     if (route == CoachBuilderCardAction.viewProfile) {
       page = CoachViewBuilderPage(builder: builder);
@@ -234,7 +234,7 @@ class CoachBuilderCard extends StatelessWidget {
       await Navigator.push<void>(
         context,
         MaterialPageRoute(
-          builder: (context) => page
+          builder: (context) => page!
         )
       );
     }

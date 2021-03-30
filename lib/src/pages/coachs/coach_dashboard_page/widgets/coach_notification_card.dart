@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class CoachNotificationCard extends StatelessWidget {
   const CoachNotificationCard({
-    Key key, 
-    @required this.notification,
-    @required this.onMarkedAsRead,
+    Key? key, 
+    required this.notification,
+    required this.onMarkedAsRead,
   }) : super(key: key);
   
   final CoachNotification notification;

@@ -8,7 +8,6 @@ import 'package:buildup/entities/ntf_referent.dart';
 import 'package:buildup/entities/project.dart';
 import 'package:buildup/entities/user.dart';
 import 'package:buildup/services/builders_service.dart';
-import 'package:flutter/material.dart';
 
 import 'coach.dart';
 

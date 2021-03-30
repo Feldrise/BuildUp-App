@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 class BuFile {
-  String id;
+  String? id;
   String fileName;
   Uint8List? data;
   

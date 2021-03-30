@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AdminActiveBuildersPage extends StatefulWidget {
-  const AdminActiveBuildersPage({Key key,}) : super(key: key);
+  const AdminActiveBuildersPage({Key? key,}) : super(key: key);
 
   @override
   _AdminActiveBuildersPageState createState() => _AdminActiveBuildersPageState();
@@ -65,7 +65,7 @@ class _AdminActiveBuildersPageState extends State<AdminActiveBuildersPage> {
                               spacing: 15,
                               runSpacing: 15,
                               children: [
-                                for (final builder in activeBuildersStore.builders) 
+                                for (final builder in activeBuildersStore.builders!) 
                                   AdminActiveBuilderCard(
                                     builder: builder,
                                     width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,

@@ -11,14 +11,14 @@ import 'package:intl/intl.dart';
 
 class BuilderProfileCard extends StatefulWidget {
   const BuilderProfileCard({
-    Key key, 
-    @required this.builder,
+    Key? key, 
+    required this.builder,
     this.onSaveProfile
   }) : super(key: key);
   
   final BuBuilder builder;
 
-  final Function(BuBuilder) onSaveProfile;
+  final Function(BuBuilder)? onSaveProfile;
 
   @override
   _BuilderProfileCardState createState() => _BuilderProfileCardState();
@@ -74,9 +74,9 @@ class _BuilderProfileCardState extends State<BuilderProfileCard> {
         child: Wrap(
           children: [
             _buildSmallInfo("Date de naissance", DateFormat("dd/MM/yyyy").format(widget.builder.associatedUser.birthdate)),
-            _buildSmallInfo("Département", kFrenchDepartment[widget.builder.associatedUser.department]),
+            _buildSmallInfo("Département", kFrenchDepartment[widget.builder.associatedUser.department]!),
             _buildSmallInfo("Situation", kSituations[widget.builder.situation] ?? "Inconnue"),
-            _buildSmallInfo("Tag Disocrd", widget.builder.associatedUser.discordTag),
+            _buildSmallInfo("Tag Disocrd", widget.builder.associatedUser.discordTag ?? "Inconnue"),
             _buildSmallInfo("Email", widget.builder.associatedUser.email),
           ],
         ),
@@ -125,7 +125,7 @@ class _BuilderProfileCardState extends State<BuilderProfileCard> {
         CupertinoPageRoute(
           builder: (context) => BuilderProfileDialog(
             builder: widget.builder,
-            onSaveBuilderProfile: widget.onSaveProfile,
+            onSaveBuilderProfile: widget.onSaveProfile!,
           )
         )
       );

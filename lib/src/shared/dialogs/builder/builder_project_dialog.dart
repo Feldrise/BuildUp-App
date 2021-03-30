@@ -15,9 +15,9 @@ import 'package:flutter/services.dart';
 
 class BuilderProjectDialog extends StatefulWidget {
   const BuilderProjectDialog({
-    Key key, 
-    @required this.builder,
-    @required this.onSaveProject,
+    Key? key, 
+    required this.builder,
+    required this.onSaveProject,
   }) : super(key: key);
 
   final BuBuilder builder;
@@ -36,9 +36,9 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
   final TextEditingController _descriptionTextController = TextEditingController();
   final TextEditingController _teamTextController = TextEditingController();
 
-  String _currentCategorie;
-  bool _currentIsLucrative;
-  bool _currentIsDeclared;
+  late String _currentCategorie;
+  late bool _currentIsLucrative;
+  late bool _currentIsDeclared;
 
   String _statusMessage = "";
   bool _hasError = false;
@@ -217,7 +217,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                 currentValue: _currentCategorie,
                 onChanged: (value) {
                   setState(() {
-                    _currentCategorie = value;
+                    _currentCategorie = value ?? "Inconnue";
                   });
                 }
               ),
@@ -229,7 +229,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                 firstDate: DateTime.fromMillisecondsSinceEpoch(0), 
                 lastDate: DateTime.now().add(const Duration(days: 356 * 5)),
                 initialValue: widget.builder.associatedProjects.first.launchDate,
-                onSave: (value) =>  widget.builder.associatedProjects.first.launchDate = value,
+                onSave: (value) =>  widget.builder.associatedProjects.first.launchDate = value ?? DateTime.now(),
               )
             )
           ]
@@ -252,7 +252,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                     groupValue: _currentIsLucrative,
                     onChanged: (value) {
                       setState(() {
-                        _currentIsLucrative = value;
+                        _currentIsLucrative = value ?? true;
                       });
                     },
                   ),
@@ -269,7 +269,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                     groupValue: _currentIsLucrative,
                     onChanged: (value) {
                       setState(() {
-                        _currentIsLucrative = value;
+                        _currentIsLucrative = value ?? false;
                       });
                     },
                   ),
@@ -290,7 +290,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                     groupValue: _currentIsDeclared,
                     onChanged: (value) {
                       setState(() {
-                        _currentIsDeclared = value;
+                        _currentIsDeclared = value ?? true;
                       });
                     },
                   ),
@@ -307,7 +307,7 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
                     groupValue: _currentIsDeclared,
                     onChanged: (value) {
                       setState(() {
-                        _currentIsDeclared = value;
+                        _currentIsDeclared = value ?? false;
                       });
                     },
                   ),
@@ -344,8 +344,12 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
   }
 
   Future _save() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState == null) {
+      return;
+    }
+
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       widget.builder.associatedProjects.first.categorie = _currentCategorie;
       widget.builder.associatedProjects.first.isLucrative = _currentIsLucrative;
       widget.builder.associatedProjects.first.isDeclared = _currentIsDeclared;
@@ -372,7 +376,9 @@ class _BuilderProjectDialogState extends State<BuilderProjectDialog> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 }

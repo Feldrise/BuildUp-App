@@ -53,7 +53,7 @@ class AdminMainPage extends StatelessWidget {
 
         int candidatingNumber = 0;
         if (candidatingBuilderStore.builders != null && candidatingCoachsStore.coachs != null) {
-          candidatingNumber = candidatingBuilderStore.builders.length + candidatingCoachsStore.coachs.length;
+          candidatingNumber = candidatingBuilderStore.builders!.length + candidatingCoachsStore.coachs!.length;
         }
 
         final ActiveCoachsStore activeCoachsStore = Provider.of<ActiveCoachsStore>(context);
@@ -61,7 +61,7 @@ class AdminMainPage extends StatelessWidget {
 
         int activeNumber = 0;
         if (activeBuildersStore.builders != null && activeCoachsStore.coachs != null) {
-          activeNumber = activeBuildersStore.builders.length + activeCoachsStore.coachs.length;
+          activeNumber = activeBuildersStore.builders!.length + activeCoachsStore.coachs!.length;
         }
         
         final List<PageItem> pageItems = [

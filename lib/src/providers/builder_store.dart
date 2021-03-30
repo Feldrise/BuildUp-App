@@ -6,7 +6,7 @@ import 'package:buildup/services/users_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class BuilderStore with ChangeNotifier {
-  BuBuilder _builder;
+  BuBuilder? _builder;
 
   Future loadBuilderFromUser(User associatedUser) async {
     if (_builder != null) {
@@ -23,7 +23,7 @@ class BuilderStore with ChangeNotifier {
     notifyListeners();
   }
 
-  BuBuilder get builder => _builder;
+  BuBuilder? get builder => _builder;
 
   void notifyChange() {
     notifyListeners();
@@ -59,8 +59,8 @@ class BuilderStore with ChangeNotifier {
     }
 
     try {
-      await BuildersService.instance.assignCoach(authorization, _builder, coachId);
-      _builder.associatedCoach = await BuildersService.instance.getCoachForBuilder(authorization, coachId, _builder.id);
+      await BuildersService.instance.assignCoach(authorization, _builder!, coachId);
+      _builder!.associatedCoach = await BuildersService.instance.getCoachForBuilder(authorization, coachId, _builder!.id);
       
       notifyListeners();
     } on Exception {
@@ -69,21 +69,29 @@ class BuilderStore with ChangeNotifier {
   }
     
   Future signIntegration(String authorization) async {
+    if (_builder == null) {
+      return;
+    }
+
     try {
-      await BuildersService.instance.signIntegration(authorization, builder.id);
+      await BuildersService.instance.signIntegration(authorization, builder!.id);
     } on Exception {
       rethrow;
     }
 
-    builder.hasSignedFicheIntegration = true;
+    builder!.hasSignedFicheIntegration = true;
     notifyListeners();
   }
 
   Future markNotificationAsRead(String authorization, BuilderNotification notification) async {
-    try {
-      await BuildersService.instance.markNotificationAsRead(authorization, builder.id, notification.id);
+    if (_builder == null && _builder!.associatedNotifications != null) {
+      return;
+    }
 
-      builder.associatedNotifications.remove(notification);
+    try {
+      await BuildersService.instance.markNotificationAsRead(authorization, builder!.id, notification.id);
+
+      builder!.associatedNotifications!.remove(notification);
       notifyListeners();
     } on Exception {
       rethrow;

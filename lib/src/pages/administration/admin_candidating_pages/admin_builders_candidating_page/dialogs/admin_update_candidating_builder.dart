@@ -6,7 +6,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminUpdateCandidatingBuilderDialog extends StatefulWidget {
-  const AdminUpdateCandidatingBuilderDialog({Key key, @required this.builder}) : super(key: key);
+  const AdminUpdateCandidatingBuilderDialog({Key? key, required this.builder}) : super(key: key);
 
   final BuBuilder builder;
 
@@ -15,8 +15,8 @@ class AdminUpdateCandidatingBuilderDialog extends StatefulWidget {
 }
 
 class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandidatingBuilderDialog> {
-  String _currentStatus;
-  String _currentStep;
+  late String _currentStatus;
+  late String _currentStep;
 
   @override
   void initState() {
@@ -69,9 +69,9 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
               items: BuilderStatus.detailled,
               currentValue: _currentStatus,
               onChanged: (newValue) {
-                widget.builder.status = newValue;
+                widget.builder.status = newValue ?? "Inconnue";
                 setState(() {
-                  _currentStatus = newValue;
+                  _currentStatus = newValue ?? "Iconnue";
                 });
               },
             )
@@ -90,9 +90,9 @@ class _AdminUpdateCandidatingBuilderDialogState extends State<AdminUpdateCandida
               items: BuilderSteps.detailled,
               currentValue: _currentStep,
               onChanged: (newValue) {
-                widget.builder.step = newValue;
+                widget.builder.step = newValue ?? "Iconuue";
                 setState(() {
-                  _currentStep = newValue;
+                  _currentStep = newValue ?? "Iconnue";
                 });
               },
             )

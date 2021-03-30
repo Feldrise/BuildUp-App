@@ -6,7 +6,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminUpdateCandidatingCoachDialog extends StatefulWidget {
-  const AdminUpdateCandidatingCoachDialog({Key key, @required this.coach}) : super(key: key);
+  const AdminUpdateCandidatingCoachDialog({Key? key, required this.coach}) : super(key: key);
 
   final Coach coach;
 
@@ -15,8 +15,8 @@ class AdminUpdateCandidatingCoachDialog extends StatefulWidget {
 }
 
 class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidatingCoachDialog> {
-  String _currentStatus;
-  String _currentStep;
+  late String _currentStatus;
+  late String _currentStep;
 
   @override
   void initState() {
@@ -69,9 +69,9 @@ class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidati
               items: CoachStatus.detailled,
               currentValue: _currentStatus,
               onChanged: (newValue) {
-                widget.coach.status = newValue;
+                widget.coach.status = newValue ?? "Inconnue";
                 setState(() {
-                  _currentStatus = newValue;
+                  _currentStatus = newValue ?? "Iconnue";
                 });
               },
             )
@@ -90,9 +90,9 @@ class _AdminUpdateCandidatingCoachDialogState extends State<AdminUpdateCandidati
               items: CoachSteps.detailled,
               currentValue: _currentStep,
               onChanged: (newValue) {
-                widget.coach.step = newValue;
+                widget.coach.step = newValue ?? "Iconnue";
                 setState(() {
-                  _currentStep = newValue;
+                  _currentStep = newValue ?? "Iconnue";
                 });
               },
             )

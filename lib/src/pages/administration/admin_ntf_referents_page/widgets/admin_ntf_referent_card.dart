@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class AdminNtfReferentCard extends StatelessWidget {
   const AdminNtfReferentCard({
-    Key key, 
-    @required this.ntfReferent,
-    @required this.onUpdate,
-    @required this.onDelete,
+    Key? key, 
+    required this.ntfReferent,
+    required this.onUpdate,
+    required this.onDelete,
   }) : super(key: key);
 
   final NtfReferent ntfReferent;

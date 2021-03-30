@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BuilderProfileDialog extends StatefulWidget {
-  const BuilderProfileDialog({Key key, @required this.builder, @required this.onSaveBuilderProfile}) : super(key: key); 
+  const BuilderProfileDialog({Key? key, required this.builder, required this.onSaveBuilderProfile}) : super(key: key); 
   
   final BuBuilder builder;
 
@@ -39,8 +39,8 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
 
   final TextEditingController _descriptionTextControler = TextEditingController();
 
-  String _currentSituation;
-  int _currentDepartment;
+  late String _currentSituation;
+  late int _currentDepartment;
 
   bool _hasError = false;
   String _statusMessage = "";
@@ -53,7 +53,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
     _lastNameTextController.text = widget.builder.associatedUser.lastName;
 
     _emailTextController.text = widget.builder.associatedUser.email;
-    _discordTagTextController.text = widget.builder.associatedUser.discordTag;
+    _discordTagTextController.text = widget.builder.associatedUser.discordTag ?? "";
     _descriptionTextControler.text = widget.builder.description;
 
     _currentSituation = widget.builder.situation;
@@ -68,7 +68,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
     _lastNameTextController.text = widget.builder.associatedUser.lastName;
 
     _emailTextController.text = widget.builder.associatedUser.email;
-    _discordTagTextController.text = widget.builder.associatedUser.discordTag;
+    _discordTagTextController.text = widget.builder.associatedUser.discordTag ?? "";
     _descriptionTextControler.text = widget.builder.description;
 
     _currentSituation = widget.builder.situation;
@@ -310,7 +310,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
               return null;
             },
             onSave: (value) {
-              widget.builder.associatedUser.birthdate = value;
+              widget.builder.associatedUser.birthdate = value ?? DateTime.now();
             },
           ),
         ),
@@ -322,7 +322,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
             currentValue: _currentDepartment,
             onChanged: (value) {
               setState(() {
-                _currentDepartment = value;
+                _currentDepartment = value ?? 0;
               });
             }
           ),
@@ -335,7 +335,7 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
             currentValue: _currentSituation,
             onChanged: (value) {
               setState(() {
-                _currentSituation = value;
+                _currentSituation = value ?? "Inconnue";
               });
             }
           ),
@@ -473,8 +473,12 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
   }
 
   Future _save() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState == null) {
+      return;
+    }
+
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       widget.builder.situation = _currentSituation;
       widget.builder.associatedUser.department = _currentDepartment;
       
@@ -500,7 +504,9 @@ class _BuilderProfileDialogState extends State<BuilderProfileDialog> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ import 'package:buildup/services/users_service.dart';
 import 'package:flutter/foundation.dart';
 
 class CoachStore with ChangeNotifier {
-  Coach _coach;
+  Coach? _coach;
 
   Future loadCoachFromUser(User associatedUser) async {
     if (_coach != null) {
@@ -25,7 +25,7 @@ class CoachStore with ChangeNotifier {
     notifyListeners();
   }
 
-  Coach get coach => _coach;
+  Coach? get coach => _coach;
 
   void notifyChange() {
     notifyListeners();
@@ -48,49 +48,63 @@ class CoachStore with ChangeNotifier {
   }
 
   Future signIntegration(String authorization) async {
+    if (_coach == null) {
+      return;
+    }
+
     try {
-      await CoachsService.instance.signIntegration(authorization, coach.id);
+      await CoachsService.instance.signIntegration(authorization, coach!.id);
     } on Exception {
       rethrow;
     }
 
-    coach.hasSignedFicheIntegration = true;
+    coach!.hasSignedFicheIntegration = true;
     notifyListeners();
   }
 
   Future acceptCoachRequest(String authorization, CoachRequest request) async {
-    try {
-      await CoachsService.instance.acceptCoachRequest(authorization, coach.id, request.id);
+    if (_coach == null && _coach!.associatedRequest == null) {
+      return;
+    }
 
-      coach.associatedRequest.remove(request);
+    try {
+      await CoachsService.instance.acceptCoachRequest(authorization, coach!.id, request.id);
+
+      coach!.associatedRequest!.remove(request);
       notifyListeners();
     } on Exception {
       rethrow;
     }
 
-    coach.hasSignedFicheIntegration = true;
     notifyListeners();
   }
 
   Future refuseCoachRequest(String authorization, CoachRequest request) async {
-    try {
-      await CoachsService.instance.refuseCoachRequest(authorization, coach.id, request.id);
+    if (_coach == null && _coach!.associatedRequest == null) {
+      return;
+    }
 
-      coach.associatedRequest.remove(request);
+    try {
+      await CoachsService.instance.refuseCoachRequest(authorization, coach!.id, request.id);
+
+      coach!.associatedRequest!.remove(request);
       notifyListeners();
     } on Exception {
       rethrow;
     }
 
-    coach.hasSignedFicheIntegration = true;
     notifyListeners();
   }
 
   Future markNotificationAsRead(String authorization, CoachNotification notification) async {
-    try {
-      await CoachsService.instance.markNotificationAsRead(authorization, coach.id, notification.id);
+    if (_coach == null && _coach!.associatedNotifications == null) {
+      return;
+    }
 
-      coach.associatedNotifications.remove(notification);
+    try {
+      await CoachsService.instance.markNotificationAsRead(authorization, coach!.id, notification.id);
+
+      coach!.associatedNotifications!.remove(notification);
       notifyListeners();
     } on Exception {
       rethrow;

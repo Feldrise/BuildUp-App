@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 
 class CoachViewBuilderPage extends StatelessWidget {
   const CoachViewBuilderPage({
-    Key key,
-    @required this.builder
+    Key? key,
+    required this.builder
   }) : super(key: key);
 
   final BuBuilder builder;

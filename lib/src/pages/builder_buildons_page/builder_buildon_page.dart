@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BuilderBuildOnsPage extends StatelessWidget {
-  const BuilderBuildOnsPage({Key key, @required this.builder}) : super(key: key);
+  const BuilderBuildOnsPage({Key? key, required this.builder}) : super(key: key);
   
   final BuBuilder builder;
 
@@ -90,10 +90,10 @@ class BuilderBuildOnsPage extends StatelessWidget {
     );
   }
 
-  List<BuStepperChild> _buildStepperChildren(BuildContext context, List<BuildOn> buildOns, {bool isSmall}) {
+  List<BuStepperChild> _buildStepperChildren(BuildContext context, List<BuildOn> buildOns, {required bool isSmall}) {
     final List<BuStepperChild> result = [];
 
-    final String currentBuildOn = builder.associatedProjects.first.currentBuildOn ?? buildOns.first.id;
+    final String currentBuildOn = builder.associatedProjects.first.currentBuildOn ?? buildOns.first.id!;
 
     for (final buildOn in buildOns) {
       bool hasNotification = builder.associatedProjects.first.hasNotification;

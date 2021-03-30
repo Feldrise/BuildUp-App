@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BuImageWidget extends StatelessWidget {
-  const BuImageWidget({Key key, @required this.image, this.isCircular = false}) : super(key: key);
+  const BuImageWidget({Key? key, required this.image, this.isCircular = false}) : super(key: key);
 
   final BuImage image;
   final bool isCircular;
@@ -43,7 +43,7 @@ class BuImageWidget extends StatelessWidget {
         return ClipRRect(
           borderRadius: BorderRadius.circular(isCircular ? constraint.maxWidth / 2 : 0),
           child: Image(
-            image: image.image,
+            image: image.image!,
             fit: BoxFit.cover,
           ),
         );

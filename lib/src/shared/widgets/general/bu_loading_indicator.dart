@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BuLoadingIndicator extends StatelessWidget {
-  const BuLoadingIndicator({Key key, @required this.message}) : super(key: key);
+  const BuLoadingIndicator({Key? key, required this.message}) : super(key: key);
 
   final String message;
 

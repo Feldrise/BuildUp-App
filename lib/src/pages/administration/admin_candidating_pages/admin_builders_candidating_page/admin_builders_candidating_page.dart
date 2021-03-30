@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AdminBuildersCandidatingPage extends StatefulWidget {
-  const AdminBuildersCandidatingPage({Key key}) : super(key: key);
+  const AdminBuildersCandidatingPage({Key? key}) : super(key: key);
 
   @override
   _AdminBuildersCandidatingPageState createState() => _AdminBuildersCandidatingPageState();
@@ -63,7 +63,7 @@ class _AdminBuildersCandidatingPageState extends State<AdminBuildersCandidatingP
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            for (final BuBuilder builder in candidatingBuildersStore.builders) ...{
+                            for (final BuBuilder builder in candidatingBuildersStore.builders!) ...{
                               AdminCandidatingBuilderCard(builder: builder),
                               const SizedBox(height: 20,)
                             }

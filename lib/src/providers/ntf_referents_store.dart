@@ -3,7 +3,7 @@ import 'package:buildup/services/ntf_referents_service.dart';
 import 'package:flutter/material.dart';
 
 class NtfReferentsStore with ChangeNotifier {
-  List<NtfReferent> _ntfReferents;
+  List<NtfReferent>? _ntfReferents;
 
   void clear() {
     _ntfReferents = null;
@@ -15,19 +15,23 @@ class NtfReferentsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  List<NtfReferent> get loadedNtfReferents => _ntfReferents;
+  List<NtfReferent>? get loadedNtfReferents => _ntfReferents;
 
   Future<List<NtfReferent>> ntfReferents(String authorization) async {
     return _ntfReferents ??= await NtfReferentsService.instance.getAllReferents(authorization);
   }
 
-  bool get hasData => _ntfReferents != null && _ntfReferents.isNotEmpty;
+  bool get hasData => _ntfReferents != null && _ntfReferents!.isNotEmpty;
 
   Future addReferent(String authorization, NtfReferent toAdd) async {
+    if (_ntfReferents == null) {
+      return;
+    }
+
     try {
       toAdd.id = await NtfReferentsService.instance.addReferent(authorization, toAdd);
 
-      _ntfReferents.add(toAdd);
+      _ntfReferents!.add(toAdd);
     }
     on Exception {
       rethrow;
@@ -48,10 +52,14 @@ class NtfReferentsStore with ChangeNotifier {
   }
   
   Future removeReferent(String authorization, NtfReferent toRemove) async {
-    try {
-      await NtfReferentsService.instance.deleteReferent(authorization, toRemove.id);
+    if (_ntfReferents == null || toRemove.id == null) {
+      return;
+    }
 
-      _ntfReferents.remove(toRemove);
+    try {
+      await NtfReferentsService.instance.deleteReferent(authorization, toRemove.id!);
+
+      _ntfReferents!.remove(toRemove);
     }
     on Exception {
       rethrow;

@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 
 class AdminViewActiveBuilderPage extends StatelessWidget {
   const AdminViewActiveBuilderPage({
-    Key key,
-    @required this.builder
+    Key? key,
+    required this.builder
   }) : super(key: key);
 
   final BuBuilder builder;

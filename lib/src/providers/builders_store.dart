@@ -2,15 +2,23 @@ import 'package:buildup/entities/builder.dart';
 import 'package:flutter/material.dart';
 
 class BuildersStore with ChangeNotifier {
-  final List<BuBuilder> _builders = [];
+  final List<BuBuilder>? _builders = [];
 
   void clear() {
-    _builders.clear();
+    if (_builders == null) {
+      return;
+    }
+
+    _builders!.clear();
     notifyListeners();
   }
 
   void addBuilder(BuBuilder toAdd) {
-    _builders.add(toAdd);
+    if (_builders == null) {
+      return;
+    }
+
+    _builders!.add(toAdd);
     notifyListeners();
   }
 
@@ -19,9 +27,13 @@ class BuildersStore with ChangeNotifier {
   }
 
   List<BuBuilder> get candidatingBuilder {
-    List<BuBuilder> result;
+    if (_builders == null) {
+      return [];
+    }
 
-    for (final builder in _builders) {
+    final List<BuBuilder> result = [];
+
+    for (final builder in _builders!) {
       if (builder.status == BuilderStatus.candidating) {
         result.add(builder);
       }

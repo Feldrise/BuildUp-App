@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AdminBuildOnStepsPage extends StatefulWidget {
-  const AdminBuildOnStepsPage({Key key, @required this.buildOn}) : super(key: key);
+  const AdminBuildOnStepsPage({Key? key, required this.buildOn}) : super(key: key);
   
   final BuildOn buildOn;
 
@@ -23,7 +23,7 @@ class AdminBuildOnStepsPage extends StatefulWidget {
 }
 
 class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
-  BuildOnStep _activeBuildOnStep;
+  BuildOnStep? _activeBuildOnStep;
 
   bool _hasError = false;
   bool _isUpToDate = true;
@@ -70,16 +70,17 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
                   Expanded(
                     child: buildCenterWidget(buildOnsStore, userStore),
                   ),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: _activeBuildOnStep != null ? panelWidth : 0.0,
-                    child: AdminBuildOnStepUpdateDialog(
-                      formKey: _formKey,
-                      buildOnStep: _activeBuildOnStep, 
-                      onUpdated: _haveUpdate, 
-                      onClosed: _closeActiveBuildOn
+                  if (_activeBuildOnStep != null) 
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      width: panelWidth,
+                      child: AdminBuildOnStepUpdateDialog(
+                        formKey: _formKey,
+                        buildOnStep: _activeBuildOnStep!, 
+                        onUpdated: _haveUpdate, 
+                        onClosed: _closeActiveBuildOn
+                      )
                     )
-                  )
                 ],
               ),
               floatingActionButton: Visibility(
@@ -243,11 +244,15 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
   }
 
   Future _save(BuildOnsStore buildOnsStore) async {
-    if (!_formKey.currentState.validate()) {
+    if (_formKey.currentState == null) {
       return;
     }
 
-    _formKey.currentState.save();
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
 
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
@@ -268,6 +273,8 @@ class _AdminBuildOnStepsPageState extends State<AdminBuildOnStepsPage> {
       });
     }
     
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

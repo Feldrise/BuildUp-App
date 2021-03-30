@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class BuTextField extends StatefulWidget {
   const BuTextField({
-    Key key,
+    Key? key,
     this.obscureText = false,
     this.inputType = TextInputType.text,
-    @required this.controller,
-    @required this.labelText,
-    @required this.onChanged,
+    required this.controller,
+    required this.labelText,
+    required this.onChanged,
     this.suffixIcon,
     this.hintText,
     this.maxLines = 1,
@@ -17,9 +17,9 @@ class BuTextField extends StatefulWidget {
   final TextEditingController controller;
   final Function(String) onChanged;
 
-  final IconData suffixIcon;
+  final IconData? suffixIcon;
+  final String? hintText;
   final String labelText;
-  final String hintText;
 
   final TextInputType inputType;
   final int maxLines;
@@ -31,7 +31,7 @@ class BuTextField extends StatefulWidget {
 }
 
 class _BuTextFieldState extends State<BuTextField> {
-  bool _obscureText;
+  bool _obscureText = false;
 
   @override
   void initState() {

@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 class CoachRequestCard extends StatelessWidget {
   const CoachRequestCard({
-    Key key, 
-    @required this.request,
-    @required this.onAccepted, 
-    @required this.onRefused
+    Key? key, 
+    required this.request,
+    required this.onAccepted, 
+    required this.onRefused
   }) : super(key: key);
 
   final CoachRequest request;
@@ -26,7 +26,7 @@ class CoachRequestCard extends StatelessWidget {
       builder: (context, coachStore, child) {
         return BuCard(
           child: FutureBuilder(
-            future: BuildersService.instance.getUserForBuilder(coachStore.coach.associatedUser.authentificationHeader, request.builderId),
+            future: BuildersService.instance.getUserForBuilder(coachStore.coach!.associatedUser.authentificationHeader, request.builderId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {

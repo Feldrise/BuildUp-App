@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BuilderValidatedCandidature extends StatefulWidget {
-  const BuilderValidatedCandidature({Key key, @required this.onSigned}) : super(key: key);
+  const BuilderValidatedCandidature({Key? key, required this.onSigned}) : super(key: key);
 
   final Function() onSigned;
 
@@ -54,9 +54,9 @@ class _BuilderValidatedCandidatureState extends State<BuilderValidatedCandidatur
             text: 'Je soussigné(e) Mr/Mme ',
             style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
-                TextSpan(text: builderStore.builder.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: builderStore.builder!.associatedUser.fullName, style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", né(e) le "),
-                TextSpan(text: DateFormat('dd/MM/yyyy').format(builderStore.builder.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
+                TextSpan(text: DateFormat('dd/MM/yyyy').format(builderStore.builder!.associatedUser.birthdate), style: const TextStyle(color: colorPrimary)),
                 const TextSpan(text: ", atteste sur l’honneur avoir pris connaissance des engagements relatifs au rôle de Builder au sein du programme, être prêt à faire évoluer mon projet et ma personnalité suivant les conseils de mon Coach et ceux de l’équipe NTF et enfin être conscient que le programme implique une présence et une activité constante durant les trois prochains mois.\n\n"),
                 const TextSpan(text: "J’ai connaissance de l’investissement qui m’est demandé, j’ai la volonté d’aller plus loin et d’être toujours à l’écoute de mon Coach avec bienveillance, sourire et bonne humeur.\n\n\n"),
                 const TextSpan(text: "Fait le "),
@@ -96,7 +96,7 @@ class _BuilderValidatedCandidatureState extends State<BuilderValidatedCandidatur
             value: _hasApproved, 
             onChanged: (value) {
               setState(() {
-                _hasApproved = value;
+                _hasApproved = value ?? false;
               });
             }, 
             text: "Lu et approuvé"
@@ -106,7 +106,7 @@ class _BuilderValidatedCandidatureState extends State<BuilderValidatedCandidatur
             value: _hasSigned, 
             onChanged: (value) {
               setState(() {
-                _hasSigned = value;
+                _hasSigned = value ?? false;
               });
             }, 
             text: "En cochant cette case, je signe le document présenté ci-contre et j’atteste de mon engagement au programme ainsi que la véracité des informations présentées."

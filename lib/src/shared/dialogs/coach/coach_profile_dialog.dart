@@ -16,11 +16,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CoachProfileDialog extends StatefulWidget {
-  const CoachProfileDialog({Key key, @required this.coach, this.onSaveCoachProfile}) : super(key: key); 
+  const CoachProfileDialog({Key? key, required this.coach, this.onSaveCoachProfile}) : super(key: key); 
   
   final Coach coach;
 
-  final Function(Coach) onSaveCoachProfile;
+  final Function(Coach)? onSaveCoachProfile;
 
   @override
   _CoachProfileDialogState createState() => _CoachProfileDialogState();
@@ -39,8 +39,8 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
 
   final TextEditingController _descriptionTextControler = TextEditingController();
 
-  String _currentSituation;
-  int _currentDepartment;
+  late String _currentSituation;
+  late int _currentDepartment;
 
   bool _hasError = false;
   String _statusMessage = "";
@@ -53,7 +53,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     _lastNameTextController.text = widget.coach.associatedUser.lastName;
 
     _emailTextController.text = widget.coach.associatedUser.email;
-    _discordTagTextController.text = widget.coach.associatedUser.discordTag;
+    _discordTagTextController.text = widget.coach.associatedUser.discordTag ?? "";
     _descriptionTextControler.text = widget.coach.description;
 
     _currentSituation = widget.coach.situation;
@@ -68,7 +68,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
     _lastNameTextController.text = widget.coach.associatedUser.lastName;
 
     _emailTextController.text = widget.coach.associatedUser.email;
-    _discordTagTextController.text = widget.coach.associatedUser.discordTag;
+    _discordTagTextController.text = widget.coach.associatedUser.discordTag ?? "";
     _descriptionTextControler.text = widget.coach.description;
 
     _currentSituation = widget.coach.situation;
@@ -310,7 +310,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
               return null;
             },
             onSave: (value) {
-              widget.coach.associatedUser.birthdate = value;
+              widget.coach.associatedUser.birthdate = value ?? DateTime.now();
             },
           ),
         ),
@@ -322,7 +322,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
             currentValue: _currentDepartment,
             onChanged: (value) {
               setState(() {
-                _currentDepartment = value;
+                _currentDepartment = value ?? 0;
               });
             }
           ),
@@ -335,7 +335,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
             currentValue: _currentSituation,
             onChanged: (value) {
               setState(() {
-                _currentSituation = value;
+                _currentSituation = value ?? "Iconnue";
               });
             }
           ),
@@ -473,8 +473,12 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
   }
 
   Future _save() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (widget.onSaveCoachProfile == null || _formKey.currentState == null) {
+      return;
+    } 
+
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       widget.coach.situation = _currentSituation;
       widget.coach.associatedUser.department = _currentDepartment;
       
@@ -482,7 +486,7 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
       Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour des informations..."); 
 
       try {
-        await widget.onSaveCoachProfile(widget.coach);
+        await widget.onSaveCoachProfile!(widget.coach);
         
         setState(() {
           _hasError = false;
@@ -500,7 +504,9 @@ class _CoachProfileDialogState extends State<CoachProfileDialog> {
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 }

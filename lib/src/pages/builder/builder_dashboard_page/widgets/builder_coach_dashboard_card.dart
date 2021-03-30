@@ -11,6 +11,12 @@ class BuilderCoachDashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BuilderStore>(
       builder: (context, builderStore, child) {
+        if (builderStore.builder!.associatedCoach == null) {
+          return const BuCard(
+            child: Text("Vous n'avez pas de coach"),
+          );
+        }
+
         return BuCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -18,10 +24,14 @@ class BuilderCoachDashboardCard extends StatelessWidget {
             children: [
               Text("Mon Coach", style: Theme.of(context).textTheme.headline6,),
               const SizedBox(height: 15,),
-              Flexible(child: _buildCoachInfos(builderStore)),
-              const SizedBox(height: 15,),
-              Flexible(child: _buildEmailWidget(builderStore)),
-              Flexible(child: _buildeDiscordWidget(builderStore),)
+              if (builderStore.builder!.associatedCoach == null) 
+                const Text("Vous n'avez pas de coach")
+              else ...{
+                Flexible(child: _buildCoachInfos(builderStore)),
+                const SizedBox(height: 15,),
+                Flexible(child: _buildEmailWidget(builderStore)),
+                Flexible(child: _buildeDiscordWidget(builderStore),)
+              }
             ],
           ),
         );
@@ -37,7 +47,7 @@ class BuilderCoachDashboardCard extends StatelessWidget {
             width: 48,
             height: 48,
             child: BuImageWidget(
-              image: builderStore.builder.associatedCoach.associatedUser.profilePicture,
+              image: builderStore.builder!.associatedCoach!.associatedUser.profilePicture,
               isCircular: true,
             ),
           ),
@@ -52,7 +62,7 @@ class BuilderCoachDashboardCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4,),
                 Flexible(
-                  child: Text(builderStore.builder.associatedCoach.associatedUser.fullName),
+                  child: Text(builderStore.builder!.associatedCoach!.associatedUser.fullName),
                 )
               ],
             ),
@@ -62,7 +72,7 @@ class BuilderCoachDashboardCard extends StatelessWidget {
   }
 
   Widget _buildEmailWidget(BuilderStore builderStore) {
-    final String email = builderStore.builder.associatedCoach.associatedUser.email;
+    final String email = builderStore.builder!.associatedCoach!.associatedUser.email;
 
     return Row(
       children: [
@@ -86,7 +96,7 @@ class BuilderCoachDashboardCard extends StatelessWidget {
         const Icon(Icons.switch_account, size: 15,),
         const SizedBox(width: 5,),
         Expanded(
-          child: Text(builderStore.builder.associatedCoach.associatedUser.discordTag)
+          child: Text(builderStore.builder!.associatedCoach!.associatedUser.discordTag ?? "Inconnue")
         )
       ],
     );

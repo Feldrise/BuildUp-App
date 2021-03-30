@@ -6,7 +6,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminActiveCoachDeleteDialog extends StatelessWidget {
-  const AdminActiveCoachDeleteDialog({Key key, @required this.coach}) : super(key: key);
+  const AdminActiveCoachDeleteDialog({Key? key, required this.coach}) : super(key: key);
 
   final Coach coach;
 

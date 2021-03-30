@@ -5,11 +5,11 @@ import 'package:buildup/services/users_service.dart';
 import 'package:flutter/material.dart';
 
 class ActiveCoachsStore with ChangeNotifier {
-  List<Coach> _coachs;
+  List<Coach>? _coachs;
 
   void clear() {
     if (_coachs != null) {
-      _coachs.clear();
+      _coachs!.clear();
     }
     notifyListeners();
   }
@@ -18,13 +18,13 @@ class ActiveCoachsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Coach> get coachs => _coachs;
-  set coachs(List<Coach> newCoachs) {
+  List<Coach>? get coachs => _coachs;
+  set coachs(List<Coach>? newCoachs) {
     _coachs = newCoachs;
     notifyListeners();
   }
 
-  bool get hasData => _coachs != null && _coachs.isNotEmpty;
+  bool get hasData => _coachs != null && _coachs!.isNotEmpty;
 
   Future updateCoach(String authorization, Coach toUpdate, {bool updateUser = false}) async {
     try {
@@ -40,7 +40,10 @@ class ActiveCoachsStore with ChangeNotifier {
 
       if (toUpdate.step != CoachSteps.meeting &&
           toUpdate.step != CoachSteps.active ) {
-        _coachs.remove(toUpdate);
+          
+        if (_coachs != null) {
+          _coachs!.remove(toUpdate);
+        }
       }
 
       notifyListeners();
@@ -53,7 +56,9 @@ class ActiveCoachsStore with ChangeNotifier {
   Future refuseCoach(String authorization, Coach toRefuse) async {
     await CoachsService.instance.refuseCoach(authorization, toRefuse.id);
 
-    _coachs.remove(toRefuse);
+    if (_coachs != null) {
+      _coachs!.remove(toRefuse);
+    }
     notifyListeners();
   }
 

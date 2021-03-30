@@ -32,7 +32,7 @@ mixin BuildOnReturningStatus {
 }
 
 class BuildOnReturning {
-  String id;
+  String? id;
   String buildOnStepId;
   String type;
   String status;
@@ -49,13 +49,13 @@ class BuildOnReturning {
   });
 
   BuildOnReturning.fromMap(Map<String, dynamic> map) : 
-    id = map['id'] as String,
+    id = map['id'] as String?,
     buildOnStepId = map['buildOnStepId'] as String,
     type = map['type'] as String,
     status = map['status'] as String,
     comment = map['comment'] as String {
-    file = BuFile(
-      map['fileId'] as String,
+    file = ((map['fileName'] as String?) == null || (map['fileId'] as String?) == null) ? null : BuFile(
+      map['fileId'] as String?,
       fileName: map['fileName'] as String,
     );
   }

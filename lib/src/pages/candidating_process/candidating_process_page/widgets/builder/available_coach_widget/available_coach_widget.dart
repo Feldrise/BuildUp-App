@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AvailableCoachWidget extends StatefulWidget {
-  const AvailableCoachWidget({Key key, @required this.onCoachValidated}) : super(key: key);
+  const AvailableCoachWidget({Key? key, required this.onCoachValidated}) : super(key: key);
 
   final Function(AvailableCoach) onCoachValidated;
 
@@ -18,17 +18,17 @@ class AvailableCoachWidget extends StatefulWidget {
 }
 
 class _AvailableCoachWidgetState extends State<AvailableCoachWidget> {
-  AvailableCoach _selectedCoach;
+  AvailableCoach? _selectedCoach;
   bool _coachContacted = false;
 
-  List<AvailableCoach> _availableCoachs;
+  List<AvailableCoach>? _availableCoachs;
   
   @override
   Widget build(BuildContext context) {
     return Consumer<BuilderStore>(
       builder: (context, builderStore, child) {
         return FutureBuilder(
-          future: getAvailableCoachs(builderStore.builder.associatedUser.authentificationHeader),
+          future: getAvailableCoachs(builderStore.builder!.associatedUser.authentificationHeader),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
@@ -48,7 +48,7 @@ class _AvailableCoachWidgetState extends State<AvailableCoachWidget> {
                     value: _coachContacted, 
                     onChanged: (value) {
                       setState(() {
-                        _coachContacted = value;
+                        _coachContacted = value ?? false;
                       });
                     }, 
                     text: "En cochant cette case, j’atteste avoir contacté le coach et obtenu son approbation."
@@ -60,7 +60,7 @@ class _AvailableCoachWidgetState extends State<AvailableCoachWidget> {
                       BuButton(
                         text: "Valider mon choix", 
                         isBig: true,
-                        onPressed: _selectedCoach != null && _coachContacted ? () => widget.onCoachValidated(_selectedCoach) : null
+                        onPressed: _selectedCoach != null && _coachContacted ? () => widget.onCoachValidated(_selectedCoach!) : null
                       ),
                     ],
                   )

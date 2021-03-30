@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 
 class AdminCandidatingBuilderCard extends StatefulWidget {
   const AdminCandidatingBuilderCard({
-    Key key, 
-    @required this.builder
+    Key? key, 
+    required this.builder
   }) : super(key: key);
   
   final BuBuilder builder;
@@ -66,7 +66,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
       //     buildInfo("étape", Text(builder.step ?? "Inconnue"))
       //   ],
       // ),
-      buildInfo(
+      _buildInfo(
         "état", 
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -77,12 +77,12 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
           ],
         )
       ),
-      buildInfo("étape", Text(BuilderSteps.detailled[widget.builder.step] ?? "Inconnue")),
+      _buildInfo("étape", Text(BuilderSteps.detailled[widget.builder.step] ?? "Inconnue")),
       // TODO replace by the candidating date
-      buildInfo("Date", const Text("20/08/2020")),
-      buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
-      buildInfo("Email", Text(widget.builder.associatedUser.email)),
-      buildInfo("Tag Discord", Text(widget.builder.associatedUser.discordTag))
+      _buildInfo("Date", const Text("20/08/2020")),
+      _buildInfo("Projet", Text(widget.builder.associatedProjects.first.name)),
+      _buildInfo("Email", Text(widget.builder.associatedUser.email)),
+      _buildInfo("Tag Discord", Text(widget.builder.associatedUser.discordTag ?? "Inconnue"))
     ];
   }
 
@@ -135,7 +135,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
                 children: [
                   for (final widget in infos()) 
                     // widget,
-                    buildWrappedInfo(widget, showTable: showTable)
+                    _buildWrappedInfo(widget, showTable: showTable)
                 ],
               )
             ],
@@ -145,7 +145,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     );
   }
 
-  Widget buildInfo(String title, Widget info) {
+  Widget _buildInfo(String title, Widget info) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +157,7 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     );
   }
 
-  Widget buildWrappedInfo(Widget info, {bool showTable}) {
+  Widget _buildWrappedInfo(Widget info, {required bool showTable}) {
     if (showTable) {
       return Container(
         padding: const EdgeInsets.only(top: 8.0, left: 10, bottom: 8.0, right: 50),
@@ -194,12 +194,12 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
   }
 
   Future _editBuilder() async {
-    final bool updated = await showDialog(
+    final bool updated = await showDialog<bool?>(
       context: context,
       builder: (context) => AdminUpdateCandidatingBuilderDialog(builder: widget.builder,)
-    );
+    ) ?? false;
 
-    if (updated != null && updated) {
+    if (updated) {
       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
       final GlobalKey<State> keyLoader = GlobalKey<State>();
@@ -219,7 +219,9 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 
@@ -227,9 +229,9 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
     final bool delete = await showDialog(
       context: context,
       builder: (context) => AdminDeleteCandidatingBuilderDialog(builder: widget.builder,)
-    );
+    ) ?? false;
 
-    if (delete != null && delete) {
+    if (delete) {
       final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
       final GlobalKey<State> keyLoader = GlobalKey<State>();
@@ -249,7 +251,9 @@ class _AdminCandidatingBuilderCardState extends State<AdminCandidatingBuilderCar
         });
       }
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
     }
   }
 }

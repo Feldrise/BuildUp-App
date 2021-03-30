@@ -20,9 +20,9 @@ import 'package:provider/provider.dart';
 
 class BuilderInfoDialog extends StatefulWidget {
   const BuilderInfoDialog({
-    Key key, 
-    @required this.builder,
-    @required this.onSaveInfo
+    Key? key, 
+    required this.builder,
+    required this.onSaveInfo
   }) : super(key: key);
 
   final BuBuilder builder;
@@ -37,16 +37,16 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
   String _statusMessage = "";
   bool _hasError = false;
 
-  String _assignedCoach;
-  String _assignedReferent;
-  String _currentStep; 
+  late String _assignedCoach;
+  late String _assignedReferent;
+  late String _currentStep; 
 
   @override
   void initState() {
     super.initState();
 
-    _assignedCoach = widget.builder.associatedCoach != null ? widget.builder.associatedCoach.id : "";
-    _assignedReferent = widget.builder.associatedNtfReferent != null ? widget.builder.associatedNtfReferent.id : "";
+    _assignedCoach = widget.builder.associatedCoach != null ? widget.builder.associatedCoach!.id : "";
+    _assignedReferent = widget.builder.associatedNtfReferent != null && widget.builder.associatedNtfReferent!.id != null ? widget.builder.associatedNtfReferent!.id! : "";
     _currentStep = widget.builder.step;
   }
   @override
@@ -171,12 +171,12 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
                 currentValue: _assignedCoach,
                 items: <String, String> {
                   "": "Pas de Coach",
-                  for (Coach coach in Provider.of<ActiveCoachsStore>(context).coachs)
+                  for (Coach coach in Provider.of<ActiveCoachsStore>(context).coachs ?? [])
                     coach.id: coach.associatedUser.fullName
                 },
                 onChanged: (value) {
                   setState(() {
-                    _assignedCoach = value;
+                    _assignedCoach = value ?? "";
                   });
                 },
               )
@@ -188,17 +188,10 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
               child: BuDropdown<String>(
                 label: "Etape actuelle",
                 currentValue: _currentStep,
-                items: <String, String>{
-                  BuilderSteps.preselected: BuilderSteps.detailled[BuilderSteps.preselected],
-                  BuilderSteps.adminMeeting: BuilderSteps.detailled[BuilderSteps.adminMeeting],
-                  BuilderSteps.coachMeeting: BuilderSteps.detailled[BuilderSteps.coachMeeting],
-                  BuilderSteps.active: BuilderSteps.detailled[BuilderSteps.active],
-                  BuilderSteps.finished: BuilderSteps.detailled[BuilderSteps.finished],
-                  BuilderSteps.abandoned: BuilderSteps.detailled[BuilderSteps.abandoned]
-                },
+                items: BuilderSteps.detailled,
                 onChanged: (value) {
                   setState(() {
-                    _currentStep = value;
+                    _currentStep = value ?? "Inconnue";
                   });
                 },
               )
@@ -226,11 +219,11 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
                     items: <String, String> {
                       "": "Pas de référent",
                       for (NtfReferent referent in ntfReferents)
-                        referent.id: referent.name
+                        referent.id!: referent.name
                     },
                     onChanged: (value) {
                       setState(() {
-                        _assignedReferent = value;
+                        _assignedReferent = value ?? "";
                       });
                     },
                   );
@@ -272,7 +265,7 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
   Future _save() async {
     final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
 
-    final List<Coach> coachs = Provider.of<ActiveCoachsStore>(context, listen: false).coachs;
+    final List<Coach> coachs = Provider.of<ActiveCoachsStore>(context, listen: false).coachs ?? [];
     final List<NtfReferent> ntfReferents = await Provider.of<NtfReferentsStore>(context, listen: false).ntfReferents(authorization);
     
     if (_assignedCoach.isEmpty) {
@@ -323,6 +316,8 @@ class _BuilderInfoDialogState extends State<BuilderInfoDialog> {
       });
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

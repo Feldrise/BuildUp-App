@@ -24,66 +24,66 @@ class AppManager {
 
   // Because we are calling this from the main widget we have to check
   // nested navigators status.
-  Future<bool> showCloseAppConfirmation(BuildContext context) {
+  Future<bool?> showCloseAppConfirmation(BuildContext context) {
     // Check a Lower Navigator First
-    if (coachProfileKey.currentState != null && coachProfileKey.currentState.canPop()) {
-      coachProfileKey.currentState.pop();
+    if (coachProfileKey.currentState != null && coachProfileKey.currentState!.canPop()) {
+      coachProfileKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (coachBuilderKey.currentState != null && coachBuilderKey.currentState.canPop()) {
-      coachBuilderKey.currentState.pop();
+    if (coachBuilderKey.currentState != null && coachBuilderKey.currentState!.canPop()) {
+      coachBuilderKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (builderProfilKey.currentState != null && builderProfilKey.currentState.canPop()) {
-      builderProfilKey.currentState.pop();
+    if (builderProfilKey.currentState != null && builderProfilKey.currentState!.canPop()) {
+      builderProfilKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (builderProjectKey.currentState != null && builderProjectKey.currentState.canPop()) {
-      builderProjectKey.currentState.pop();
+    if (builderProjectKey.currentState != null && builderProjectKey.currentState!.canPop()) {
+      builderProjectKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (coachBuildersKey.currentState != null && coachBuildersKey.currentState.canPop()) {
-      coachBuildersKey.currentState.pop();
+    if (coachBuildersKey.currentState != null && coachBuildersKey.currentState!.canPop()) {
+      coachBuildersKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (adminActiveBuilderKey.currentState != null && adminActiveBuilderKey.currentState.canPop()) {
-      adminActiveBuilderKey.currentState.pop();
+    if (adminActiveBuilderKey.currentState != null && adminActiveBuilderKey.currentState!.canPop()) {
+      adminActiveBuilderKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (adminActiveCoachKey.currentState != null && adminActiveCoachKey.currentState.canPop()) {
-      adminActiveCoachKey.currentState.pop();
+    if (adminActiveCoachKey.currentState != null && adminActiveCoachKey.currentState!.canPop()) {
+      adminActiveCoachKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (adminBuildUpKey.currentState != null && adminBuildUpKey.currentState.canPop()) {
-      adminBuildUpKey.currentState.pop();
+    if (adminBuildUpKey.currentState != null && adminBuildUpKey.currentState!.canPop()) {
+      adminBuildUpKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (adminActiveKey.currentState != null && adminActiveKey.currentState.canPop()) {
-      adminActiveKey.currentState.pop();
+    if (adminActiveKey.currentState != null && adminActiveKey.currentState!.canPop()) {
+      adminActiveKey.currentState!.pop();
       return Future.value(false);
     }
 
-    if (builderBuildOnsKey.currentState != null && builderBuildOnsKey.currentState.canPop()) {
-      builderBuildOnsKey.currentState.pop();
+    if (builderBuildOnsKey.currentState != null && builderBuildOnsKey.currentState!.canPop()) {
+      builderBuildOnsKey.currentState!.pop();
       return Future.value(false);
     }
 
     // Check current context navigator Main App Navigator
-    if (appNavigatorKey.currentState.canPop()) {
-      appNavigatorKey.currentState.pop();
+    if (appNavigatorKey.currentState!.canPop()) {
+      appNavigatorKey.currentState!.pop();
       return Future.value(false);
     }
 
     // SHOW CLOSE APP CONFIRMATION DIALOG
-    return showDialog(
+    return showDialog<bool?>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirmation'),

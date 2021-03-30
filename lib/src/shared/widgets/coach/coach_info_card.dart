@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 
 class CoachInfoCard extends StatelessWidget {
   const CoachInfoCard({
-    Key key, 
-    @required this.coach,
+    Key? key, 
+    required this.coach,
     this.onSaveInfo
   }) : super(key: key);
   
   final Coach coach;
 
-  final Function(Coach) onSaveInfo;
+  final Function(Coach)? onSaveInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,7 @@ class CoachInfoCard extends StatelessWidget {
       CupertinoPageRoute(
         builder: (context) => CoachInfoDialog(
           coach: coach,
-          onSaveInfo: onSaveInfo,
+          onSaveInfo: onSaveInfo!,
         )
       ),
     );

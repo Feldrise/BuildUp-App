@@ -141,7 +141,7 @@ class BuildOnsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-   Future<List<BuildOn>> syncBuildOnSteps(String authorization, String buildOnId, List<BuildOnStep> toSync) async {
+   Future<List<BuildOn>> syncBuildOnSteps(String authorization, String? buildOnId, List<BuildOnStep> toSync) async {
     final http.Response response = await http.post(
       Uri.parse('$serviceBaseUrl/$buildOnId/steps/sync'),
       headers: <String, String>{

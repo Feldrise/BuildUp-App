@@ -25,22 +25,22 @@ import 'package:universal_html/html.dart' as html;
 
 class BuildOnStepCard extends StatefulWidget {
   const BuildOnStepCard({
-    Key key,
-    @required this.project,
-    @required this.buildOnStep,
-    @required this.buildOnReturning,
-    this.nextBuildOnStep,
-    this.nextBuildOn,
+    Key? key,
+    required this.project,
+    required this.buildOnStep,
+    required this.buildOnReturning,
+    required this.nextBuildOnStep,
+    required this.nextBuildOn,
     this.isSmall = false
   }) : super(key: key);
 
   final Project project;
   final BuildOnStep buildOnStep;
   
-  final BuildOnReturning buildOnReturning;
+  final BuildOnReturning? buildOnReturning;
 
-  final String nextBuildOn;
-  final String nextBuildOnStep;
+  final String? nextBuildOn;
+  final String? nextBuildOnStep;
 
   final bool isSmall;
 
@@ -49,7 +49,7 @@ class BuildOnStepCard extends StatefulWidget {
 }
 
 class _BuildOnStepCardState extends State<BuildOnStepCard> {
-  BuildOnReturning _buildOnReturning;
+  BuildOnReturning? _buildOnReturning;
 
   bool _hasError = false;
   String _statusMessage = "";
@@ -144,13 +144,13 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
           Flexible(child: Text(widget.buildOnStep.name, style: Theme.of(context).textTheme.headline5)),
           if (_buildOnReturning == null)
             _buildBadgeCurrent()
-          else if (_buildOnReturning.status == BuildOnReturningStatus.validated)
+          else if (_buildOnReturning!.status == BuildOnReturningStatus.validated)
             _buildBadgeValidated()
-          else if (_buildOnReturning.status == BuildOnReturningStatus.waiting)
+          else if (_buildOnReturning!.status == BuildOnReturningStatus.waiting)
             Flexible(child: _buildBadgeWaiting())
-          else if (_buildOnReturning.status == BuildOnReturningStatus.waitingCoach)
+          else if (_buildOnReturning!.status == BuildOnReturningStatus.waitingCoach)
           Flexible(child: _buildBadgeWaitingCoach())
-          else if (_buildOnReturning.status == BuildOnReturningStatus.waitingAdmin)
+          else if (_buildOnReturning!.status == BuildOnReturningStatus.waitingAdmin)
           Flexible(child: _buildBadgeWaitingAdmin())
         ],
       ),
@@ -167,14 +167,14 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
         ),
         const SizedBox(height: 15),
       }
-      else if (_buildOnReturning.status == BuildOnReturningStatus.validated) ...{
+      else if (_buildOnReturning!.status == BuildOnReturningStatus.validated) ...{
         _buildValidatedInfo(context),
         const SizedBox(height: 15),
       },
       if (_buildOnReturning == null || 
-          _buildOnReturning.status == BuildOnReturningStatus.waiting ||
-          _buildOnReturning.status == BuildOnReturningStatus.waitingCoach ||
-          _buildOnReturning.status == BuildOnReturningStatus.waitingAdmin) 
+          _buildOnReturning!.status == BuildOnReturningStatus.waiting ||
+          _buildOnReturning!.status == BuildOnReturningStatus.waitingCoach ||
+          _buildOnReturning!.status == BuildOnReturningStatus.waitingAdmin) 
         _buildValidationButton(context)
     ];
   }
@@ -234,17 +234,17 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
   Widget _buildValidatedInfo(BuildContext context) {
     Widget summaryWidget = Container();
 
-    if (_buildOnReturning.type == BuildOnReturningType.file) {
+    if (_buildOnReturning!.type == BuildOnReturningType.file) {
       summaryWidget = Row(
         children: [
-          Text(_buildOnReturning.file.fileName, style: const TextStyle(decoration: TextDecoration.underline, color: Color(0xff155724)),),
+          Text(_buildOnReturning!.file!.fileName, style: const TextStyle(decoration: TextDecoration.underline, color: Color(0xff155724)),),
           const SizedBox(width: 10,),
           const Icon(Icons.file_download, size: 16, color: Color(0xff155724),)
         ],
       );
     }
-    else if (_buildOnReturning.type == BuildOnReturningType.comment) {
-      summaryWidget = Text("Commentaire : ${_buildOnReturning.comment}", style: const TextStyle(color: Color(0xff155724)),);
+    else if (_buildOnReturning!.type == BuildOnReturningType.comment) {
+      summaryWidget = Text("Commentaire : ${_buildOnReturning!.comment}", style: const TextStyle(color: Color(0xff155724)),);
     }
     else {
       summaryWidget = const Text("Le retour attendu était externe", style: TextStyle(color: Color(0xff155724)),);
@@ -265,7 +265,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
   Widget _buildValidationButton(BuildContext context) {
     return Consumer<UserStore>(
       builder: (context, userStore, child) {
-        if (userStore.user.role == UserRoles.builder) {
+        if (userStore.user!.role == UserRoles.builder) {
           if (_buildOnReturning != null) {
             return Container();
           }
@@ -279,11 +279,11 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
           );
         }
 
-        if (userStore.user.role == UserRoles.admin && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingCoach) {
+        if (userStore.user!.role == UserRoles.admin && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingCoach) {
           return Container();
         }
         
-        if (userStore.user.role == UserRoles.coach && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingAdmin) {
+        if (userStore.user!.role == UserRoles.coach && widget.buildOnReturning?.status == BuildOnReturningStatus.waitingAdmin) {
           return Container();
         }
 
@@ -301,7 +301,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
   Future _askValidation(BuildContext context) async {
     final buildOnReturning = BuildOnReturning(
       null,
-      buildOnStepId: widget.buildOnStep.id,
+      buildOnStepId: widget.buildOnStep.id!,
       type: widget.buildOnStep.returningType,
       file: BuFile(null),
       comment: "",
@@ -314,9 +314,9 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
         buildOnStep: widget.buildOnStep, 
         buildOnReturning: buildOnReturning, 
       )
-    );
+    ) ?? false;
 
-    if (send == null) {
+    if (!send) {
       return;
     }
 
@@ -328,7 +328,7 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
     if (send) {
       try {
         buildOnReturning.id = await BuildOnsService.instance.sendReturning(authorization, widget.project.id, buildOnReturning);
-        widget.project.associatedReturnings[widget.buildOnStep.id] = _buildOnReturning;
+        widget.project.associatedReturnings[widget.buildOnStep.id!] = buildOnReturning;
 
         _buildOnReturning = buildOnReturning;
 
@@ -351,12 +351,15 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       }
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
+
     Provider.of<BuildOnsStore>(context, listen: false).clear();
   }
 
   Future _processValidation(BuildContext context) async {
-    final bool validate = await showDialog<bool>(
+    final bool? validate = await showDialog<bool>(
       context: context,
       builder: (context) => BuildOnStepProcessValidationDialog(buildOnStep: widget.buildOnStep, buildOnReturning: _buildOnReturning, onDownload: () => _downloadFile(context),)
     );
@@ -366,9 +369,9 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
     }
 
     // In the case we refused, we need to collect a reason
-    String reason = "";
+    String? reason;
     if (!validate) {
-      reason =  await showDialog<String>(
+      reason =  await showDialog<String?>(
         context: context,
         builder: (context) => BuildOnStepRefusingReason()
       );
@@ -385,32 +388,32 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
 
     if (validate) {
       if (_buildOnReturning != null) {
-        await BuildOnsService.instance.acceptReturnging(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id);
+        await BuildOnsService.instance.acceptReturnging(userStore.authentificationHeader, widget.project.id, _buildOnReturning!.id!);
       }
       else {
-        await BuildOnsService.instance.validateBuildOnStep(userStore.authentificationHeader, widget.project.id, widget.buildOnStep.id);
+        await BuildOnsService.instance.validateBuildOnStep(userStore.authentificationHeader, widget.project.id, widget.buildOnStep.id!);
       }
 
       if (_buildOnReturning != null) {
-        if (_buildOnReturning.status != BuildOnReturningStatus.waiting) {
-          _buildOnReturning.status = BuildOnReturningStatus.validated;
+        if (_buildOnReturning!.status != BuildOnReturningStatus.waiting) {
+          _buildOnReturning!.status = BuildOnReturningStatus.validated;
         }
         else {
-           _buildOnReturning.status = userStore.user.role == UserRoles.admin ? BuildOnReturningStatus.waitingCoach : BuildOnReturningStatus.waitingAdmin;
+           _buildOnReturning!.status = userStore.user!.role == UserRoles.admin ? BuildOnReturningStatus.waitingCoach : BuildOnReturningStatus.waitingAdmin;
         }
       }
       else {
-        if (userStore.user.role == UserRoles.admin) {
-            widget.project.associatedReturnings[widget.buildOnStep.id] = BuildOnReturning(null,
-            buildOnStepId: widget.buildOnStep.id,
+        if (userStore.user!.role == UserRoles.admin) {
+            widget.project.associatedReturnings[widget.buildOnStep.id!] = BuildOnReturning(null,
+            buildOnStepId: widget.buildOnStep.id!,
             type: BuildOnReturningType.comment,
             status: BuildOnReturningStatus.waitingCoach,
             comment: "Vous n'avez pas fournis de preuve pour cette étape"
           );
         }
-        else if (userStore.user.role == UserRoles.coach) {
-            widget.project.associatedReturnings[widget.buildOnStep.id] = BuildOnReturning(null,
-            buildOnStepId: widget.buildOnStep.id,
+        else if (userStore.user!.role == UserRoles.coach) {
+            widget.project.associatedReturnings[widget.buildOnStep.id!] = BuildOnReturning(null,
+            buildOnStepId: widget.buildOnStep.id!,
             type: BuildOnReturningType.comment,
             status: BuildOnReturningStatus.waitingAdmin,
             comment: "Vous n'avez pas fournis de preuve pour cette étape"
@@ -422,13 +425,15 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
       widget.project.currentBuildOnStep = widget.nextBuildOnStep;
       widget.project.hasNotification = false;
     } else {
-      await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning.id, reason);
-      _buildOnReturning.status = BuildOnReturningStatus.refused;
+      await BuildOnsService.instance.refuseReturning(userStore.authentificationHeader, widget.project.id, _buildOnReturning!.id!, reason!);
+      _buildOnReturning!.status = BuildOnReturningStatus.refused;
       widget.project.associatedReturnings.remove(_buildOnReturning);
       widget.project.hasNotification = false;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
     Provider.of<BuildOnsStore>(context, listen: false).clear();
     Navigator.of(context).pop();
   }
@@ -440,17 +445,19 @@ class _BuildOnStepCardState extends State<BuildOnStepCard> {
 
     final String authorization = Provider.of<UserStore>(context, listen: false).authentificationHeader;
     
-    final rawData = await BuildOnsService.instance.downloadReturningContent(authorization, widget.project.id, _buildOnReturning.id);
+    final rawData = await BuildOnsService.instance.downloadReturningContent(authorization, widget.project.id, _buildOnReturning!.id!);
     final content = base64Encode(rawData);
 
     if (kIsWeb) {
       html.AnchorElement()
         ..href = "data:application/octet-stream;charset=utf-16le;base64,$content"
-        ..setAttribute("download", _buildOnReturning.file.fileName)
+        ..setAttribute("download", _buildOnReturning!.file!.fileName)
         ..click();
     }
     // TODO non web version
     
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProcessImage extends StatelessWidget {
-  const ProcessImage({Key key, @required this.imageName}) : super(key: key);
+  const ProcessImage({Key? key, required this.imageName}) : super(key: key);
 
   final String imageName;
 

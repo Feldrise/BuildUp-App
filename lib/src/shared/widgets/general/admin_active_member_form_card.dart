@@ -5,7 +5,7 @@ import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:flutter/material.dart';
 
 class MemberFormCard extends StatelessWidget {
-  const MemberFormCard({Key key, @required this.form}) : super(key: key);
+  const MemberFormCard({Key? key, required this.form}) : super(key: key);
   
   final BuForm form;
 

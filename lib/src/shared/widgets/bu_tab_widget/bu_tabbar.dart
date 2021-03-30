@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class BuTabBar extends StatelessWidget {
   const BuTabBar({
-    Key key, 
-    @required this.onSelectedTab, 
-    @required this.currentTabIndex, 
-    @required this.tabItems
+    Key? key, 
+    required this.onSelectedTab, 
+    required this.currentTabIndex, 
+    required this.tabItems
   }) : super(key: key);
 
   final ValueChanged<TabItem> onSelectedTab;

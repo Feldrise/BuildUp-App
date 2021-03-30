@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class BuTextInput extends StatefulWidget {
   const BuTextInput({
-    Key key,
+    Key? key,
     this.formKey,
     this.obscureText = false,
     this.inputType = TextInputType.text,
-    @required this.controller,
-    @required this.validator,
-    @required this.labelText,
+    required this.controller,
+    required this.validator,
+    required this.labelText,
     this.suffixIcon,
     this.hintText,
     this.maxLines = 1,
@@ -17,17 +17,17 @@ class BuTextInput extends StatefulWidget {
     this.readOnly = false,
   }) : super(key: key);
 
-  final Key formKey;
+  final Key? formKey;
 
   final bool obscureText;
   final TextEditingController controller;
-  final String Function(String) validator;
-  final Function(String) onSaved;
-  final Function(String) onChanged;
+  final String? Function(String)? validator;
+  final Function(String)? onSaved;
+  final Function(String?)? onChanged;
 
-  final IconData suffixIcon;
+  final IconData? suffixIcon;
+  final String? hintText;
   final String labelText;
-  final String hintText;
 
   final TextInputType inputType;
   final int maxLines;
@@ -39,7 +39,7 @@ class BuTextInput extends StatefulWidget {
 }
 
 class _BuTextInputState extends State<BuTextInput> {
-  bool _obscureText;
+  bool _obscureText = false;
 
   @override
   void initState() {
@@ -85,11 +85,11 @@ class _BuTextInputState extends State<BuTextInput> {
                 child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
               )
             ),
-            validator: widget.validator,
-            onSaved: widget.onSaved,
+            validator: widget.validator == null ? null : (value) => widget.validator!(value ?? ""),
+            onSaved: widget.onSaved != null ? (value) => widget.onSaved!(value ?? "") : null,
             onChanged: (value) {
               if (widget.onChanged != null) {
-                widget.onChanged(value);
+                widget.onChanged!(value);
               }
             }
         ),

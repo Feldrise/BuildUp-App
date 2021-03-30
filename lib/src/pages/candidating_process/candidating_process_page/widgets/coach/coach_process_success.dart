@@ -25,7 +25,7 @@ class CoachProcessSuccess extends StatelessWidget {
                 BuButton(
                   icon: Icons.download_rounded,
                   text: "Télécharger la fiche", 
-                  onPressed: () async => launch("$kApiBaseUrl/../pdf/coachs/${coachStore.coach.id}.pdf"),
+                  onPressed: () async => launch("$kApiBaseUrl/../pdf/coachs/${coachStore.coach!.id}.pdf"),
                 ),
                 BuButton(
                   icon: Icons.arrow_forward,
@@ -48,19 +48,24 @@ class CoachProcessSuccess extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Activation de votre espace..."); 
 
     try {
-      final String authorization = coachStore.coach.associatedUser.authentificationHeader;
+      final String authorization = coachStore.coach!.associatedUser.authentificationHeader;
 
-      coachStore.coach.status = CoachStatus.validated;
-      coachStore.coach.step = CoachSteps.active;
+      coachStore.coach!.status = CoachStatus.validated;
+      coachStore.coach!.step = CoachSteps.active;
 
-      await coachStore.updateCoach(authorization, coachStore.coach);
+      await coachStore.updateCoach(authorization, coachStore.coach!);
       coachStore.notifyChange();
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!,rootNavigator: true).pop(); 
+    }
   }
 }

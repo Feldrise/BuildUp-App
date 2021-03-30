@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class BuilderProjectPage extends StatelessWidget {
   const BuilderProjectPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -37,7 +37,7 @@ class BuilderProjectPage extends StatelessWidget {
                     child: Column(
                       children: [
                         BuilderProjectCard(
-                          builder: builderStore.builder,
+                          builder: builderStore.builder!,
                           onSaveProject: (builder) => _saveBuilderProject(context, builder),
                         ),
                       ],

@@ -3,11 +3,11 @@ import 'package:buildup/services/builders_service.dart';
 import 'package:flutter/material.dart';
 
 class CandidatingBuilderStore with ChangeNotifier {
-  List<BuBuilder> _builders;
+  List<BuBuilder>? _builders;
 
   void clear() {
     if (_builders != null) {
-      _builders.clear();
+      _builders!.clear();
     }
     notifyListeners();
   }
@@ -16,18 +16,21 @@ class CandidatingBuilderStore with ChangeNotifier {
     notifyListeners();
   }
 
-  List<BuBuilder> get builders => _builders;
-  set builders(List<BuBuilder> newBuilder) {
+  List<BuBuilder>? get builders => _builders;
+  set builders(List<BuBuilder>? newBuilder) {
     _builders = newBuilder;
     notifyListeners();
   }
 
-  bool get hasData => _builders != null && _builders.isNotEmpty;
+  bool get hasData => _builders != null && _builders!.isNotEmpty;
 
   Future refuseBuilder(String authorization, BuBuilder toRefuse) async {
     await BuildersService.instance.refuseBuilder(authorization, toRefuse.id);
 
-    _builders.remove(toRefuse);
+    if (_builders != null) {
+      _builders!.remove(toRefuse);
+    }
+
     notifyListeners();
   }
 
@@ -40,8 +43,8 @@ class CandidatingBuilderStore with ChangeNotifier {
       
     await BuildersService.instance.updateBuilder(authorization, toUpdate);
 
-    if (toUpdate.status != BuilderStatus.candidating) {
-      _builders.remove(toUpdate);
+    if (_builders != null && toUpdate.status != BuilderStatus.candidating) {
+      _builders!.remove(toUpdate);
     }
 
     notifyListeners();

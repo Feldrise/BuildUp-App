@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AdminViewCandidatingCoachDialog extends StatelessWidget {
-  const AdminViewCandidatingCoachDialog({Key key, @required this.coach}) : super(key: key);
+  const AdminViewCandidatingCoachDialog({Key? key, required this.coach}) : super(key: key);
 
   final Coach coach;
 
@@ -32,19 +32,21 @@ class AdminViewCandidatingCoachDialog extends StatelessWidget {
           Wrap(
             children: [
               _buildSmallInfo("Situation", coach.situation),
-              _buildSmallInfo("Tag Discord", coach.associatedUser.discordTag),
+              _buildSmallInfo("Tag Discord", coach.associatedUser.discordTag ?? "Inconnue"),
               _buildSmallInfo("Email", coach.associatedUser.email)
             ],
           ),
           const SizedBox(height: 10,),
           _buildBigInfo("Description :", coach.description),
           const SizedBox(height: 15,),
-          _buildTitle("Réponses au formulaire"),
-          for (final qa in coach.associatedForm.qas) ...{
-            const SizedBox(height: 10,),
-            _buildBigInfo(qa.question, qa.answer),
+          if (coach.associatedForm != null) ...{
+            _buildTitle("Réponses au formulaire"),
+            for (final qa in coach.associatedForm!.qas) ...{
+              const SizedBox(height: 10,),
+              _buildBigInfo(qa.question, qa.answer),
+            },
+            const SizedBox(height: 60,),
           },
-          const SizedBox(height: 60,),
         ],
       ),
       actions: _buildButtons(context),

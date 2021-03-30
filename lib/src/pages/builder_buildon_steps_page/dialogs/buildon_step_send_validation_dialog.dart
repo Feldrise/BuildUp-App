@@ -12,9 +12,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BuildOnStepSendValidationDialog extends StatefulWidget {
   const BuildOnStepSendValidationDialog({
-    Key key, 
-    @required this.buildOnStep,
-    this.buildOnReturning,
+    Key? key, 
+    required this.buildOnStep,
+    required this.buildOnReturning,
   }) : super(key: key);
 
   final BuildOnStep buildOnStep;
@@ -50,7 +50,7 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
   Widget _buildProofField() {
     if (widget.buildOnStep.returningType == BuildOnReturningType.file) {
       return BuFilePicker(
-        file: widget.buildOnReturning.file,
+        file: widget.buildOnReturning.file!,
         onUpdated: () {
           setState(() {
             _canSend = true;
@@ -94,7 +94,7 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.link, size: 16, color: Theme.of(context).textTheme.bodyText1.color),
+                Icon(Icons.link, size: 16, color: Theme.of(context).textTheme.bodyText1!.color),
                 const SizedBox(width: 5,),
                 Text(
                   widget.buildOnStep.returningLink,
@@ -118,7 +118,7 @@ class _BuildOnStepSendValidationDialogState extends State<BuildOnStepSendValidat
               text: "Je confirme avoir rempli ma preuve via le lien présenté ci-dessus.",
               onChanged: (value) {
                 setState(() {
-                  _canSend = value;
+                  _canSend = value ?? false;
                 });
               },
             ),

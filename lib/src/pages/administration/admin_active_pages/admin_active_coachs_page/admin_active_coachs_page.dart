@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AdminActiveCoachsPage extends StatefulWidget {
-  const AdminActiveCoachsPage({Key key,}) : super(key: key);
+  const AdminActiveCoachsPage({Key? key,}) : super(key: key);
 
   @override
   _AdminActiveCoachsPageState createState() => _AdminActiveCoachsPageState();
@@ -64,7 +64,7 @@ class _AdminActiveCoachsPageState extends State<AdminActiveCoachsPage> {
                               spacing: 15,
                               runSpacing: 15,
                               children: [
-                                for (final coach in activeCoachsStore.coachs) 
+                                for (final coach in activeCoachsStore.coachs!) 
                                   AdminActiveCoachCard(
                                     coach: coach,
                                     width: constraints.maxWidth > 500 ? 250 : constraints.maxWidth,

@@ -19,7 +19,7 @@ class AdminBuildOnsPage extends StatefulWidget {
 }
 
 class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
-  BuildOn _activeBuildOn;
+  BuildOn? _activeBuildOn;
 
   bool _hasError = false;
   bool _isUpToDate = true;
@@ -69,13 +69,13 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: _activeBuildOn != null ? panelWidth : 0.0,
-                    child: AdminBuildOnUpdateDialog(
+                    child: _activeBuildOn != null ? AdminBuildOnUpdateDialog(
                       formKey: _formKey,
-                      buildOn: _activeBuildOn, 
+                      buildOn: _activeBuildOn!, 
                       onUpdated: _haveUpdate, 
                       onRequestUpdateSteps: _buildOnRequestStepsUpdate,
                       onClosed: _closeActiveBuildOn
-                    )
+                    ) : Container()
                   )
                 ],
               ),
@@ -243,7 +243,7 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
     }
 
     final BuildOn newBuildOn = BuildOn();
-    buildOnsStore.loadedBuildOns.add(newBuildOn);
+    buildOnsStore.loadedBuildOns!.add(newBuildOn);
     buildOnsStore.buildonUpdated();
 
     setState(() {
@@ -262,11 +262,15 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
   }
 
   Future<bool> _save(BuildOnsStore buildOnsStore) async {
-    if (!_formKey.currentState.validate()) {
+    if (_formKey.currentState == null) {
       return false;
     }
 
-    _formKey.currentState.save();
+    if (!_formKey.currentState!.validate()) {
+      return false;
+    }
+
+    _formKey.currentState!.save();
 
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.showLoadingDialog(context, keyLoader, "Veuillez patienter, l'ensemble de vos modifications sont en cours d'enregistrement..."); 
@@ -281,7 +285,9 @@ class _AdminBuildOnsPageState extends State<AdminBuildOnsPage> {
         _statusMessage = "Les Builds On ont été correctement enregistrés";
       });
 
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop(); 
+      }
       return true;
     } on Exception catch(e) {
       setState(() {

@@ -13,14 +13,14 @@ import 'package:flutter/material.dart';
 
 class BuilderBuildOnStepsPage extends StatelessWidget {
   const BuilderBuildOnStepsPage({
-    Key key,
-    @required this.builder,
-    @required this.buildOn,
+    Key? key,
+    required this.builder,
+    required this.buildOn,
     this.nextBuildOn,  
   }) : super(key: key);
   
   final BuBuilder builder;
-  final BuildOn nextBuildOn;
+  final BuildOn? nextBuildOn;
 
   final BuildOn buildOn;
 
@@ -69,13 +69,13 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
     );
   }
 
-  List<BuStepperChild> _buildStepperChildren(List<BuildOnStep> buildOnSteps, {bool isSmall}) {
+  List<BuStepperChild> _buildStepperChildren(List<BuildOnStep> buildOnSteps, {required bool isSmall}) {
     final List<BuStepperChild> result = [];
 
-    final String currentBuildOnStep = builder.associatedProjects.first.currentBuildOnStep ?? buildOnSteps.first.id;
+    final String currentBuildOnStep = builder.associatedProjects.first.currentBuildOnStep ?? buildOnSteps.first.id!;
 
     for (final buildOnStep in buildOnSteps) {
-      final BuildOnReturning returning = builder.associatedProjects.first.associatedReturnings[buildOnStep.id];
+      final BuildOnReturning? returning = builder.associatedProjects.first.associatedReturnings[buildOnStep.id];
       Color color = const Color(0xff17ba63);
 
       if (returning == null) {
@@ -87,6 +87,7 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
         color = const Color(0xfff4bd2a);
       }
 
+
       result.add(
         BuStepperChild(
           widget: BuildOnStepCard(
@@ -94,8 +95,8 @@ class BuilderBuildOnStepsPage extends StatelessWidget {
             buildOnReturning: returning,
             project: builder.associatedProjects.first,
             isSmall: isSmall,
-            nextBuildOn: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn?.id : buildOn.id,
-            nextBuildOnStep: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn?.steps?.first?.id : buildOnSteps[buildOnSteps.indexOf(buildOnStep) + 1].id,
+            nextBuildOn: buildOnSteps.last.id == buildOnStep.id && nextBuildOn != null ? nextBuildOn!.id! : buildOn.id!,
+            nextBuildOnStep: buildOnSteps.last.id == buildOnStep.id ? nextBuildOn?.steps.first.id! : buildOnSteps[buildOnSteps.indexOf(buildOnStep) + 1].id,
           ),
           color: color
         )

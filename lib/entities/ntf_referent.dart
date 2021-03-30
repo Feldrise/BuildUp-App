@@ -1,5 +1,5 @@
 class NtfReferent {
-  String id;
+  String? id;
   
   String firstName;
   String lastName;
@@ -16,7 +16,7 @@ class NtfReferent {
   });
 
   NtfReferent.fromMap(Map<String, dynamic> map) :
-    id = map['id'] as String,
+    id = map['id'] as String?,
     firstName = map['firstName'] as String,
     lastName = map['lastName'] as String,
     email = map['email'] as String,

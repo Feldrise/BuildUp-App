@@ -3,9 +3,9 @@ import 'package:buildup/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 
 class UserStore with ChangeNotifier {
-  User _user;
+  User? _user;
 
-  Future<User> get loggedUser async {
+  Future<User?> get loggedUser async {
     return _user ??= await AuthenticationService.instance.getLoggedUser();
   }
 
@@ -22,9 +22,9 @@ class UserStore with ChangeNotifier {
     notifyListeners();
   }
 
-  User get user => _user;
+  User? get user => _user;
 
-  String get id => _user.id;
-  String get authentificationHeader => _user.authentificationHeader;
+  String? get id => (_user != null) ? _user!.id : null;
+  String get authentificationHeader => (_user != null) ? _user!.authentificationHeader : "Invalid";
 
 }

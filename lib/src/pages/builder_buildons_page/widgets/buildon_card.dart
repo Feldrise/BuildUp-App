@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 
 class BuildOnCard extends StatelessWidget {
   const BuildOnCard({
-    Key key,
-    @required this.buildOn,
-    @required this.onOpened,
+    Key? key,
+    required this.buildOn,
+    required this.onOpened,
     this.isSmall = false
   }) : super(key: key);
 

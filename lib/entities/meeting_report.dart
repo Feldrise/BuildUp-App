@@ -19,7 +19,7 @@ class MeetingReport {
   });
 
   MeetingReport.fromMap(Map<String, dynamic> map) : 
-    id = map['id'] as String,
+    id = map['id'] as String?,
     date = DateTime.tryParse(map['date'] as String) ?? DateTime.now(),
     nextMeetingDate = DateTime.tryParse(map['nextMeetingDate'] as String) ?? DateTime.now(),
     objectif  = map['objectif'] as String,

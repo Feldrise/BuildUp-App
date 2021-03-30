@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class BuPageItem extends StatelessWidget {
   const BuPageItem({
-    Key key,
-    @required this.item, 
-    this.isActive,
+    Key? key,
+    required this.item, 
+    this.isActive = false,
     this.isMinimified = false
   }) : super(key: key);
 
@@ -41,7 +41,7 @@ class BuPageItem extends StatelessWidget {
                   ),
                   if (item.suffixWidget != null) 
                     Expanded(
-                      child: item.suffixWidget,
+                      child: item.suffixWidget!,
                     )
                 }
               ],
@@ -62,7 +62,7 @@ class BuPageItem extends StatelessWidget {
               child: Center(
                 child: DefaultTextStyle(
                   style: const TextStyle(color: Colors.white, fontSize: 12),
-                  child: item.suffixWidget,
+                  child: item.suffixWidget!,
                 ),
               ),
             ),

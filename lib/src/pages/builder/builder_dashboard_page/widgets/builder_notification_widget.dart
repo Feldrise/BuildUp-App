@@ -16,10 +16,10 @@ class BuilderNotificationWidget extends StatelessWidget {
           children: [
             Text("Actualités", style: Theme.of(context).textTheme.headline4),
             const SizedBox(height: 16,),
-            if (builderStore.builder.associatedNotifications?.isEmpty) 
+            if (builderStore.builder!.associatedNotifications == null || builderStore.builder!.associatedNotifications!.isEmpty) 
               const Text("Vous n'avez pas de nouvelle notification")
             else 
-              for (final notification in builderStore.builder.associatedNotifications) ...{
+              for (final notification in builderStore.builder!.associatedNotifications!) ...{
                 BuilderNotificationCard(
                   notification: notification, 
                   onMarkedAsRead: () => _markNotificationAsRead(context, builderStore, notification)
@@ -37,15 +37,20 @@ class BuilderNotificationWidget extends StatelessWidget {
     Dialogs.showLoadingDialog(context, keyLoader, "Mise à jour..."); 
 
     try {
-      final String authorization = builderStore.builder.associatedUser.authentificationHeader;
+      final String authorization = builderStore.builder!.associatedUser.authentificationHeader;
 
       await builderStore.markNotificationAsRead(authorization, notification);
     } on Exception {
       // TODO: proper error message
-      Navigator.of(keyLoader.currentContext,rootNavigator: true).pop(); 
+      if (keyLoader.currentContext != null) {
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop(); 
+      }
+
       return;
     }
 
-    Navigator.of(keyLoader.currentContext,rootNavigator: true).pop();
+    if (keyLoader.currentContext != null) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop(); 
+    }
   }
 }

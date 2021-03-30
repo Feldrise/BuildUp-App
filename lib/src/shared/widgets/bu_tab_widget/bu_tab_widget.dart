@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class BuTabWidget extends StatefulWidget {
   const BuTabWidget({
-    Key key, 
-    @required this.tabItems,
-    @required this.pages
+    Key? key, 
+    required this.tabItems,
+    required this.pages
   }) : assert(tabItems.length == pages.length, "You don't have the same tabItems number than the pages number"), super(key: key);
 
   final List<TabItem> tabItems;

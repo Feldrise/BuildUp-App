@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class BuilderNotificationCard extends StatelessWidget {
   const BuilderNotificationCard({
-    Key key, 
-    @required this.notification,
-    @required this.onMarkedAsRead,
+    Key? key, 
+    required this.notification,
+    required this.onMarkedAsRead,
   }) : super(key: key);
   
   final BuilderNotification notification;

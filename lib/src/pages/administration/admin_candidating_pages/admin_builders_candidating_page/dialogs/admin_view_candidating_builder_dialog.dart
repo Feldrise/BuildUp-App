@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AdminViewCandidatingBuilderDialog extends StatelessWidget {
-  const AdminViewCandidatingBuilderDialog({Key key, @required this.builder}) : super(key: key);
+  const AdminViewCandidatingBuilderDialog({Key? key, required this.builder}) : super(key: key);
 
   final BuBuilder builder;
 
@@ -32,7 +32,7 @@ class AdminViewCandidatingBuilderDialog extends StatelessWidget {
           Wrap(
             children: [
               buildSmallInfo("Situation", builder.situation),
-              buildSmallInfo("Tag Discord", builder.associatedUser.discordTag),
+              buildSmallInfo("Tag Discord", builder.associatedUser.discordTag ?? "Inconnue"),
               buildSmallInfo("Email", builder.associatedUser.email)
             ],
           ),

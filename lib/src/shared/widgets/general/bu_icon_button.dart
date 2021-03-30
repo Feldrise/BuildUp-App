@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class BuIconButton extends StatelessWidget {
   const BuIconButton({
-    Key key,
-    @required this.icon,
-    @required this.onPressed, 
+    Key? key,
+    required this.icon,
+    required this.onPressed, 
     this.iconSize = 16,
     this.backgroundColor = const Color(0xffebeced)
   }) : super(key: key);
 
   final IconData icon;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   final double iconSize;
   final Color backgroundColor;

@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 
 class AdminBuildOnsListView extends StatelessWidget {
   const AdminBuildOnsListView({
-    Key key,
-    @required this.buildOnRequestUpdate,
-    @required this.activeBuildOn,
-    @required this.onUpdated,
+    Key? key,
+    required this.buildOnRequestUpdate,
+    required this.activeBuildOn,
+    required this.onUpdated,
   }) : super(key: key);
 
   final Function(BuildOn) buildOnRequestUpdate;
-  final BuildOn activeBuildOn;
+  final BuildOn? activeBuildOn;
 
   final Function() onUpdated;
 
@@ -22,7 +22,7 @@ class AdminBuildOnsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BuildOnsStore>(
       builder: (context, buildOnsStore, child) {
-        if (buildOnsStore.loadedBuildOns.isEmpty) {
+        if (buildOnsStore.loadedBuildOns == null || buildOnsStore.loadedBuildOns!.isEmpty) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +46,7 @@ class AdminBuildOnsListView extends StatelessWidget {
             onUpdated();
           },
           children: [
-            for (final buildOn in buildOnsStore.loadedBuildOns)
+            for (final buildOn in buildOnsStore.loadedBuildOns!)
               InkWell(
                 key: ValueKey(buildOn),
                 onTap: () => buildOnRequestUpdate(buildOn),

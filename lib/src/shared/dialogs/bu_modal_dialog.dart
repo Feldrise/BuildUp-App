@@ -5,10 +5,10 @@ import 'package:flutter/rendering.dart';
 
 class BuModalDialog extends StatelessWidget {
   const BuModalDialog({
-    Key key, 
-    @required this.title, 
-    @required this.content, 
-    @required this.actions
+    Key? key, 
+    required this.title, 
+    required this.content, 
+    required this.actions
   }) : super(key: key);
 
   final String title;

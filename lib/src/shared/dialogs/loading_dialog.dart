@@ -3,7 +3,7 @@ import 'package:buildup/src/shared/widgets/general/bu_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoadingDialog extends StatelessWidget {
-  const LoadingDialog({Key key, this.statusMessage}) : super(key: key);
+  const LoadingDialog({Key? key, this.statusMessage = ""}) : super(key: key);
 
   final String statusMessage;
 

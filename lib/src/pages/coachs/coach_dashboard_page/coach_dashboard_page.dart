@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class CoachDashboardPage extends StatelessWidget {
   const CoachDashboardPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

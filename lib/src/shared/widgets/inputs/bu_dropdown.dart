@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class BuDropdown<T> extends StatelessWidget {
   const BuDropdown({
-    Key key,
-    @required this.items, 
-    @required this.currentValue, 
-    @required this.onChanged,
+    Key? key,
+    required this.items, 
+    required this.currentValue, 
+    required this.onChanged,
     this.label,
   }) : super(key: key);
 
   final Map<T, String> items;
   final T currentValue;
 
-  final String label;
+  final String? label;
 
-  final Function(T) onChanged;
+  final Function(T?) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class BuDropdown<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (label != null) ...{
-          Text(label.toUpperCase(), style: const TextStyle(color: Colors.black54, fontSize: 12),),
+          Text(label!.toUpperCase(), style: const TextStyle(color: Colors.black54, fontSize: 12),),
           const SizedBox(height: 10.0,),
         },
         Container(
@@ -45,7 +45,7 @@ class BuDropdown<T> extends StatelessWidget {
               for (final key in items.keys) 
                 DropdownMenuItem(
                   value: key,
-                  child: Text(items[key]),
+                  child: Text(items[key] ?? "Uknonw"),
                 )
             ],
           ),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
-    Key key, 
-    @required this.formKey, 
-    @required this.emailTextController,
-    @required this.passwordTextController,
+    Key? key, 
+    required this.formKey, 
+    required this.emailTextController,
+    required this.passwordTextController,
   }) : super(key: key);
 
   final GlobalKey<FormState> formKey;

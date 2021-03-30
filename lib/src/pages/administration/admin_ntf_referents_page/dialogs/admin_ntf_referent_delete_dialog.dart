@@ -5,7 +5,7 @@ import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminNtfReferentDeleteDialog extends StatelessWidget {
-  const AdminNtfReferentDeleteDialog({Key key, @required this.ntfReferent}) : super(key: key);
+  const AdminNtfReferentDeleteDialog({Key? key, required this.ntfReferent}) : super(key: key);
 
   final NtfReferent ntfReferent;
 

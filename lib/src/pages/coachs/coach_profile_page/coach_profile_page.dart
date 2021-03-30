@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class CoachProfilPage extends StatelessWidget {
   const CoachProfilPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -33,11 +33,11 @@ class CoachProfilPage extends StatelessWidget {
                     child: Column(
                       children: [
                         CoachProfileCard(
-                          coach: coachStore.coach,
+                          coach: coachStore.coach!,
                           onSaveProfile: (coach) => _saveCoachProfile(context, coach),
                         ),
                         const SizedBox(height: 30),
-                        CoachInfoCard(coach: coachStore.coach),
+                        CoachInfoCard(coach: coachStore.coach!),
                     
                       ],
                     ),

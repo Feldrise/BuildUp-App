@@ -39,8 +39,8 @@ class BuildersService {
       final Project associatedProject = await getProjectForBuilder(authorization, currentUserRole, map['id'] as String);
       final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
       final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
-      final Coach? associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
-      final NtfReferent? associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+      final Coach? associatedCoach = (map['coachId'] as String?) == null ? null : await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+      final NtfReferent? associatedNtfReferent = (map['ntfReferentId'] as String?) == null ? null : await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
       final List<BuilderNotification> builderNotifications = await getBuilderNotifications(authorization, map['id'] as String);
       
@@ -99,8 +99,8 @@ class BuildersService {
         final Project associatedProject = await getProjectForBuilder(authorization, UserRoles.admin, map['id'] as String);
         final List<MeetingReport> associatedMeetingReports = await getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await getFormForBuilder(authorization, map['id'] as String);
-        final Coach? associatedCoach = await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
-        final NtfReferent? associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+        final Coach? associatedCoach = (map['coachId'] as String?) == null ? null : await getCoachForBuilder(authorization, map['coachId'] as String, map['id'] as String);
+        final NtfReferent? associatedNtfReferent = (map['ntfReferentId'] as String?) == null ? null : await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
         builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: associatedCoach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);

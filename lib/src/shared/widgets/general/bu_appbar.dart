@@ -1,11 +1,12 @@
 import 'package:buildup/src/shared/widgets/general/bu_icon_button.dart';
+import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class BuAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BuAppBar({
-    Key key, 
-    this.backgroundColor,
-    @required this.title,
+    Key? key, 
+    this.backgroundColor = Colors.white,
+    required this.title,
     this.actions,
     this.preferredSize = const Size.fromHeight(64),
     this.showMinimifier = false,
@@ -14,12 +15,12 @@ class BuAppBar extends StatelessWidget implements PreferredSizeWidget {
   
   final Widget title;
 
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   final Color backgroundColor;
 
   final bool showMinimifier;
-  final Function() onMinimified;
+  final Function()? onMinimified;
 
   @override
   final Size preferredSize;

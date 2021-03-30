@@ -13,7 +13,11 @@ class CreateMeetingReportDialog extends StatelessWidget {
   final TextEditingController _whatsNextController = TextEditingController();
   final TextEditingController _commentsController = TextEditingController();
 
-  final MeetingReport _meetingReport = MeetingReport(null); 
+  final MeetingReport _meetingReport = MeetingReport(
+    null,
+    date: DateTime.now(),
+    nextMeetingDate: DateTime.now(),
+  ); 
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +101,7 @@ class CreateMeetingReportDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildTextArea({String description, TextEditingController editingController, Function(String) onSaved}) {
+  Widget _buildTextArea({required String description, required TextEditingController editingController, required Function(String) onSaved}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: BuTextInput(
@@ -123,8 +127,8 @@ class CreateMeetingReportDialog extends StatelessWidget {
   } 
 
   void _save(BuildContext context) {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _meetingReport.date = DateTime.now();
 
       Navigator.of(context).pop(_meetingReport);

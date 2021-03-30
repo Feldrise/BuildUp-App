@@ -72,7 +72,7 @@ class BuildOnStepRefusingReason extends StatelessWidget {
   } 
 
   void _save(BuildContext context) {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       Navigator.of(context).pop(_reasonController.text);
     }
   }
