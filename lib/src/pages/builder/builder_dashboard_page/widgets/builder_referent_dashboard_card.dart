@@ -5,6 +5,7 @@ import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -89,7 +90,7 @@ class BuilderReferentDashboardCard extends StatelessWidget {
   Widget _buildeDiscordWidget(BuilderStore builderStore) {
     return Row(
       children: [
-        const Icon(Icons.switch_account, size: 15,),
+        const Icon(FontAwesomeIcons.discord, size: 15,),
         const SizedBox(width: 5,),
         Expanded(
           child: Text(builderStore.builder!.associatedNtfReferent!.discordTag)

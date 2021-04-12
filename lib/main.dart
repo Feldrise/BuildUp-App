@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Build Up',
           navigatorKey: AppManager.instance.appNavigatorKey,
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: colorPrimary,
             
