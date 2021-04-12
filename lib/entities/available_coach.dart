@@ -12,6 +12,7 @@ class AvailableCoach {
 
   String email;
   String discordTag;
+  String linkedIn;
 
   String situation;
   String description;
@@ -28,6 +29,7 @@ class AvailableCoach {
     required this.lastName,
     required this.email,
     required this.discordTag,
+    required this.linkedIn,
     required this.situation,
     required this.description,
     required this.competences,
@@ -44,6 +46,7 @@ class AvailableCoach {
 
     email = map['email'] as String,
     discordTag = map['discordTag'] as String,
+    linkedIn = (map['linkedIn'] as String?) ?? "Inconnu",
     
     description = map['description'] as String,
     situation = map['situation'] as String,

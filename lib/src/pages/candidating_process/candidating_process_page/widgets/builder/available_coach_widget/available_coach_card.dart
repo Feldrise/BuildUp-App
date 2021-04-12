@@ -5,6 +5,7 @@ import 'package:buildup/src/shared/widgets/general/bu_card.dart';
 import 'package:buildup/src/shared/widgets/general/bu_image_widget.dart';
 import 'package:buildup/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AvailableCoachCard extends StatelessWidget {
@@ -47,7 +48,7 @@ class AvailableCoachCard extends StatelessWidget {
           Text(coach.fullName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
           Text(coach.situation, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12, color: colorGreyText)),
           const SizedBox(height: 24),
-          _buildContactWidget(coach.email, coach.discordTag),
+          _buildContactWidget(coach.email, coach.discordTag, coach.linkedIn),
           const SizedBox(height: 24),
           Flexible(
             child: BuButton(
@@ -70,7 +71,7 @@ class AvailableCoachCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContactWidget(String email, String discordTag) {
+  Widget _buildContactWidget(String email, String discordTag, String linkedin) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,10 +92,24 @@ class AvailableCoachCard extends StatelessWidget {
         ),
         Row(
           children: [
-            const Icon(Icons.switch_account, size: 15,),
+            const Icon(FontAwesomeIcons.discord, size: 15,),
             const SizedBox(width: 5,),
             Expanded(
               child: Text(discordTag)
+            )
+          ],
+        ),
+        Row(
+          children: [
+            const Icon(FontAwesomeIcons.linkedin, size: 15,),
+            const SizedBox(width: 5,),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  launch('https://linkedin.com/in/$linkedin');
+                },
+                child: Text(linkedin, style: const TextStyle(color: colorPrimary))
+              ),
             )
           ],
         )
