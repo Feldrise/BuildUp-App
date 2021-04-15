@@ -137,7 +137,7 @@ class CoachsService {
         final Project associatedProject = await BuildersService.instance.getProjectForBuilder(authorization, UserRoles.coach, map['id'] as String);
         final List<MeetingReport> associatedMeetingReports = await BuildersService.instance.getMeetingReportsForBuilder(authorization, map['id'] as String);
         final BuForm associatedForm = await BuildersService.instance.getFormForBuilder(authorization, map['id'] as String);
-        final NtfReferent? associatedNtfReferent = await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
+        final NtfReferent? associatedNtfReferent = (map['ntfReferentId'] as String?) == null ? null : await NtfReferentsService.instance.getReferent(authorization, map['ntfReferentId'] as String);
 
         builders.add(BuBuilder.fromMap(map as Map<String, dynamic>, associatedUser: associatedUser, associatedMeetingReports: associatedMeetingReports, associatedForm: associatedForm, associatedCoach: coach, associatedNtfReferent: associatedNtfReferent));
         builders.last.associatedProjects.add(associatedProject);
