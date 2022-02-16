@@ -2,6 +2,7 @@
 
 > Ceci est l'application Build Up, le back end derrière est disponible sur [ce repository](https://github.com/Feldrise/BuildUp)
 
+[![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-squar)](https://gitmoji.dev/)
 ![Made with](https://img.shields.io/badge/Made%20With-LOVE-%23fa4b4b?style=flat-square)
 ![Language](https://img.shields.io/badge/Language-Flutter-%233776AB?style=flat-square)
 [![Codemagic build status](https://api.codemagic.io/apps/606771f7c7451c5c96fa68b4/606772960be8c6411b0097c1/status_badge.svg)](https://codemagic.io/apps/606771f7c7451c5c96fa68b4/606772960be8c6411b0097c1/latest_build)
@@ -17,14 +18,4 @@ Le prinicipal objectif est de fournir un accompagnement personnalisé aux jeunes
 Nous partons du principe qu’aujourd’hui, un jeune doit pouvoir bénéficier d’un appui humain, matériel et bienveillant dans la viabilisation de son ou ses idées.
 
 ## La structure de l'application
-### Les pages
-L'application repose globalement sur une page principale qui permet de naviguer parmis les autres pages. Il y a 3 vues en fonctions du rôle de l'utilisateur :
- - La vue administrateur
- - La vue Builders
- - La vue Coachs
-
- ### Les services
- Afin de communiquer avec le Back End, l'application reprend la même architecture de service. La documentation du Back End [se trouve ici](https://api.new-talents.fr/documentation)
-
- ### Les entités
- De la même manière que les services, l'application reprend les même modèles de données que le Back End a quelques combinaisons prêtes. Par exemple, plutôt que de garder uniquement l'identifiant d'un objet utilisateur, les entités Builder et Coach on directement une entitée utilisateur associée
+> Pour le moment, l'application est une réécriture complète pour supporter [le backend GraphQL](https://github.com/Feldrise/BuildUp-API/tree/graphql)
