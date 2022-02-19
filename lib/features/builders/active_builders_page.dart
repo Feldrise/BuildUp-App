@@ -43,6 +43,8 @@ class ActiveBuildersPage extends StatelessWidget {
             builders.add(User.fromJson(map as Map<String, dynamic>));
           }
 
+          if (builders.isEmpty) return _buildEmptyInfo(context);
+
           return GridView(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 255,
@@ -58,6 +60,27 @@ class ActiveBuildersPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildEmptyInfo(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.no_accounts, 
+          size: 92,
+          color: Theme.of(context).textTheme.caption!.color
+        ),
+        const SizedBox(height: 8,),
+        Text(
+          "Il n'y a aucun builder actif pour le moment",
+          style: TextStyle(
+            color: Theme.of(context).textTheme.caption!.color
+          ),
+        )
+      ],
     );
   }
 }

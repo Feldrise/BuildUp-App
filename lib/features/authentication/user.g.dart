@@ -15,6 +15,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       builder: json['builder'] == null
           ? null
           : BuBuilder.fromJson(json['builder'] as Map<String, dynamic>),
+      coach: json['coach'] == null
+          ? null
+          : Coach.fromJson(json['coach'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -24,4 +27,5 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'role': instance.role,
       'step': instance.step,
       'builder': instance.builder,
+      'coach': instance.coach,
     };

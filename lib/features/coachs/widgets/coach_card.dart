@@ -3,13 +3,13 @@ import 'package:buildup/features/authentication/user.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 
-class BuilderCard extends StatelessWidget {
-  const BuilderCard({
+class CoachCard extends StatelessWidget {
+  const CoachCard({
     Key? key,
-    required this.builder
+    required this.coach
   }) : super(key: key);
 
-  final User builder;
+  final User coach;
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +73,14 @@ class BuilderCard extends StatelessWidget {
 
       // The name
       Text(
-        "${builder.firstName} ${builder.lastName}", 
+        "${coach.firstName} ${coach.lastName}", 
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.headline6,
       ),
 
       // The project name
       Text(
-        builder.builder!.project!.name,
+        coach.coach!.situation,
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.caption,
       )

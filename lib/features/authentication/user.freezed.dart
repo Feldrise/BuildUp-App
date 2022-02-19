@@ -28,7 +28,8 @@ class _$UserTearOff {
       required String lastName,
       required String role,
       required String step,
-      BuBuilder? builder}) {
+      BuBuilder? builder,
+      Coach? coach}) {
     return _User(
       email: email,
       firstName: firstName,
@@ -36,6 +37,7 @@ class _$UserTearOff {
       role: role,
       step: step,
       builder: builder,
+      coach: coach,
     );
   }
 
@@ -55,6 +57,7 @@ mixin _$User {
   String get role => throw _privateConstructorUsedError;
   String get step => throw _privateConstructorUsedError;
   BuBuilder? get builder => throw _privateConstructorUsedError;
+  Coach? get coach => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -71,9 +74,11 @@ abstract class $UserCopyWith<$Res> {
       String lastName,
       String role,
       String step,
-      BuBuilder? builder});
+      BuBuilder? builder,
+      Coach? coach});
 
   $BuBuilderCopyWith<$Res>? get builder;
+  $CoachCopyWith<$Res>? get coach;
 }
 
 /// @nodoc
@@ -92,6 +97,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? role = freezed,
     Object? step = freezed,
     Object? builder = freezed,
+    Object? coach = freezed,
   }) {
     return _then(_value.copyWith(
       email: email == freezed
@@ -118,6 +124,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.builder
           : builder // ignore: cast_nullable_to_non_nullable
               as BuBuilder?,
+      coach: coach == freezed
+          ? _value.coach
+          : coach // ignore: cast_nullable_to_non_nullable
+              as Coach?,
     ));
   }
 
@@ -129,6 +139,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
     return $BuBuilderCopyWith<$Res>(_value.builder!, (value) {
       return _then(_value.copyWith(builder: value));
+    });
+  }
+
+  @override
+  $CoachCopyWith<$Res>? get coach {
+    if (_value.coach == null) {
+      return null;
+    }
+
+    return $CoachCopyWith<$Res>(_value.coach!, (value) {
+      return _then(_value.copyWith(coach: value));
     });
   }
 }
@@ -144,10 +165,13 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String lastName,
       String role,
       String step,
-      BuBuilder? builder});
+      BuBuilder? builder,
+      Coach? coach});
 
   @override
   $BuBuilderCopyWith<$Res>? get builder;
+  @override
+  $CoachCopyWith<$Res>? get coach;
 }
 
 /// @nodoc
@@ -167,6 +191,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? role = freezed,
     Object? step = freezed,
     Object? builder = freezed,
+    Object? coach = freezed,
   }) {
     return _then(_User(
       email: email == freezed
@@ -193,6 +218,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.builder
           : builder // ignore: cast_nullable_to_non_nullable
               as BuBuilder?,
+      coach: coach == freezed
+          ? _value.coach
+          : coach // ignore: cast_nullable_to_non_nullable
+              as Coach?,
     ));
   }
 }
@@ -206,7 +235,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       required this.lastName,
       required this.role,
       required this.step,
-      this.builder});
+      this.builder,
+      this.coach});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -222,10 +252,12 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   final String step;
   @override
   final BuBuilder? builder;
+  @override
+  final Coach? coach;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(email: $email, firstName: $firstName, lastName: $lastName, role: $role, step: $step, builder: $builder)';
+    return 'User(email: $email, firstName: $firstName, lastName: $lastName, role: $role, step: $step, builder: $builder, coach: $coach)';
   }
 
   @override
@@ -238,7 +270,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('lastName', lastName))
       ..add(DiagnosticsProperty('role', role))
       ..add(DiagnosticsProperty('step', step))
-      ..add(DiagnosticsProperty('builder', builder));
+      ..add(DiagnosticsProperty('builder', builder))
+      ..add(DiagnosticsProperty('coach', coach));
   }
 
   @override
@@ -251,7 +284,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
             const DeepCollectionEquality().equals(other.role, role) &&
             const DeepCollectionEquality().equals(other.step, step) &&
-            const DeepCollectionEquality().equals(other.builder, builder));
+            const DeepCollectionEquality().equals(other.builder, builder) &&
+            const DeepCollectionEquality().equals(other.coach, coach));
   }
 
   @override
@@ -262,7 +296,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(lastName),
       const DeepCollectionEquality().hash(role),
       const DeepCollectionEquality().hash(step),
-      const DeepCollectionEquality().hash(builder));
+      const DeepCollectionEquality().hash(builder),
+      const DeepCollectionEquality().hash(coach));
 
   @JsonKey(ignore: true)
   @override
@@ -282,7 +317,8 @@ abstract class _User implements User {
       required String lastName,
       required String role,
       required String step,
-      BuBuilder? builder}) = _$_User;
+      BuBuilder? builder,
+      Coach? coach}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -298,6 +334,8 @@ abstract class _User implements User {
   String get step;
   @override
   BuBuilder? get builder;
+  @override
+  Coach? get coach;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
