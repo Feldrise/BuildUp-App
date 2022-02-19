@@ -46,7 +46,7 @@ class ActiveBuildersPage extends StatelessWidget {
           return GridView(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 255,
-              // childAspectRatio: 8/10,
+              childAspectRatio: 8/10,
               mainAxisSpacing: 16,
               crossAxisSpacing: 16
             ),

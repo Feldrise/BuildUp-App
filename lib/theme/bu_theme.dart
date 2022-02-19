@@ -31,6 +31,7 @@ class BuTheme {
         headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextBlack),
         headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Palette.colorTextBlack),
         bodyText2: TextStyle(fontSize: 16, color: Palette.colorTextBlack),
+        caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Palette.colorIconsBlack),
         button: TextStyle(fontSize: 16),
       ),
 

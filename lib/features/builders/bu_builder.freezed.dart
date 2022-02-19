@@ -22,9 +22,10 @@ BuBuilder _$BuBuilderFromJson(Map<String, dynamic> json) {
 class _$BuBuilderTearOff {
   const _$BuBuilderTearOff();
 
-  _BuBuilder call({required String description}) {
+  _BuBuilder call({required String description, Project? project}) {
     return _BuBuilder(
       description: description,
+      project: project,
     );
   }
 
@@ -39,6 +40,7 @@ const $BuBuilder = _$BuBuilderTearOff();
 /// @nodoc
 mixin _$BuBuilder {
   String get description => throw _privateConstructorUsedError;
+  Project? get project => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +52,9 @@ mixin _$BuBuilder {
 abstract class $BuBuilderCopyWith<$Res> {
   factory $BuBuilderCopyWith(BuBuilder value, $Res Function(BuBuilder) then) =
       _$BuBuilderCopyWithImpl<$Res>;
-  $Res call({String description});
+  $Res call({String description, Project? project});
+
+  $ProjectCopyWith<$Res>? get project;
 }
 
 /// @nodoc
@@ -64,13 +68,29 @@ class _$BuBuilderCopyWithImpl<$Res> implements $BuBuilderCopyWith<$Res> {
   @override
   $Res call({
     Object? description = freezed,
+    Object? project = freezed,
   }) {
     return _then(_value.copyWith(
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      project: project == freezed
+          ? _value.project
+          : project // ignore: cast_nullable_to_non_nullable
+              as Project?,
     ));
+  }
+
+  @override
+  $ProjectCopyWith<$Res>? get project {
+    if (_value.project == null) {
+      return null;
+    }
+
+    return $ProjectCopyWith<$Res>(_value.project!, (value) {
+      return _then(_value.copyWith(project: value));
+    });
   }
 }
 
@@ -80,7 +100,10 @@ abstract class _$BuBuilderCopyWith<$Res> implements $BuBuilderCopyWith<$Res> {
           _BuBuilder value, $Res Function(_BuBuilder) then) =
       __$BuBuilderCopyWithImpl<$Res>;
   @override
-  $Res call({String description});
+  $Res call({String description, Project? project});
+
+  @override
+  $ProjectCopyWith<$Res>? get project;
 }
 
 /// @nodoc
@@ -95,12 +118,17 @@ class __$BuBuilderCopyWithImpl<$Res> extends _$BuBuilderCopyWithImpl<$Res>
   @override
   $Res call({
     Object? description = freezed,
+    Object? project = freezed,
   }) {
     return _then(_BuBuilder(
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      project: project == freezed
+          ? _value.project
+          : project // ignore: cast_nullable_to_non_nullable
+              as Project?,
     ));
   }
 }
@@ -108,17 +136,19 @@ class __$BuBuilderCopyWithImpl<$Res> extends _$BuBuilderCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_BuBuilder with DiagnosticableTreeMixin implements _BuBuilder {
-  const _$_BuBuilder({required this.description});
+  const _$_BuBuilder({required this.description, this.project});
 
   factory _$_BuBuilder.fromJson(Map<String, dynamic> json) =>
       _$$_BuBuilderFromJson(json);
 
   @override
   final String description;
+  @override
+  final Project? project;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BuBuilder(description: $description)';
+    return 'BuBuilder(description: $description, project: $project)';
   }
 
   @override
@@ -126,7 +156,8 @@ class _$_BuBuilder with DiagnosticableTreeMixin implements _BuBuilder {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BuBuilder'))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('project', project));
   }
 
   @override
@@ -135,12 +166,15 @@ class _$_BuBuilder with DiagnosticableTreeMixin implements _BuBuilder {
         (other.runtimeType == runtimeType &&
             other is _BuBuilder &&
             const DeepCollectionEquality()
-                .equals(other.description, description));
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.project, project));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(description));
+      runtimeType,
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(project));
 
   @JsonKey(ignore: true)
   @override
@@ -154,13 +188,16 @@ class _$_BuBuilder with DiagnosticableTreeMixin implements _BuBuilder {
 }
 
 abstract class _BuBuilder implements BuBuilder {
-  const factory _BuBuilder({required String description}) = _$_BuBuilder;
+  const factory _BuBuilder({required String description, Project? project}) =
+      _$_BuBuilder;
 
   factory _BuBuilder.fromJson(Map<String, dynamic> json) =
       _$_BuBuilder.fromJson;
 
   @override
   String get description;
+  @override
+  Project? get project;
   @override
   @JsonKey(ignore: true)
   _$BuBuilderCopyWith<_BuBuilder> get copyWith =>

@@ -20,12 +20,13 @@ class BuilderCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Flexible(child: _buildHeader()),
-          const SizedBox(height: 24,),
+          const SizedBox(height: 12,),
 
           ..._buildInfos(context),
-          const SizedBox(height: 24,),
 
-          Flexible(
+          Expanded(child: Container()),
+          Align(
+            alignment: Alignment.bottomCenter,
             child: OutlinedButton(
               onPressed: _onProfileClicked,
               child: Row(
@@ -77,6 +78,13 @@ class BuilderCard extends StatelessWidget {
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.headline6,
       ),
+
+      // The project name
+      Text(
+        builder.builder!.project!.name,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.caption,
+      )
     ];
   }
 
