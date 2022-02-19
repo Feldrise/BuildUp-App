@@ -13,7 +13,8 @@ query GetLoggedUser {
     email,
     firstName,
     lastName,
-    role
+    role,
+    step,
   }
 }
 ''';

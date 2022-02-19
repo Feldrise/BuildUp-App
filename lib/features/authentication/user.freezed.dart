@@ -23,13 +23,19 @@ class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      {required String firstName,
+      {required String email,
+      required String firstName,
       required String lastName,
-      required String role}) {
+      required String role,
+      required String step,
+      BuBuilder? builder}) {
     return _User(
+      email: email,
       firstName: firstName,
       lastName: lastName,
       role: role,
+      step: step,
+      builder: builder,
     );
   }
 
@@ -43,9 +49,12 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
+  String get email => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
+  String get step => throw _privateConstructorUsedError;
+  BuBuilder? get builder => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +65,15 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String firstName, String lastName, String role});
+  $Res call(
+      {String email,
+      String firstName,
+      String lastName,
+      String role,
+      String step,
+      BuBuilder? builder});
+
+  $BuBuilderCopyWith<$Res>? get builder;
 }
 
 /// @nodoc
@@ -69,11 +86,18 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? email = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? role = freezed,
+    Object? step = freezed,
+    Object? builder = freezed,
   }) {
     return _then(_value.copyWith(
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -86,7 +110,26 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      step: step == freezed
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as String,
+      builder: builder == freezed
+          ? _value.builder
+          : builder // ignore: cast_nullable_to_non_nullable
+              as BuBuilder?,
     ));
+  }
+
+  @override
+  $BuBuilderCopyWith<$Res>? get builder {
+    if (_value.builder == null) {
+      return null;
+    }
+
+    return $BuBuilderCopyWith<$Res>(_value.builder!, (value) {
+      return _then(_value.copyWith(builder: value));
+    });
   }
 }
 
@@ -95,7 +138,16 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({String firstName, String lastName, String role});
+  $Res call(
+      {String email,
+      String firstName,
+      String lastName,
+      String role,
+      String step,
+      BuBuilder? builder});
+
+  @override
+  $BuBuilderCopyWith<$Res>? get builder;
 }
 
 /// @nodoc
@@ -109,11 +161,18 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? email = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? role = freezed,
+    Object? step = freezed,
+    Object? builder = freezed,
   }) {
     return _then(_User(
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -126,6 +185,14 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      step: step == freezed
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as String,
+      builder: builder == freezed
+          ? _value.builder
+          : builder // ignore: cast_nullable_to_non_nullable
+              as BuBuilder?,
     ));
   }
 }
@@ -134,20 +201,31 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_User with DiagnosticableTreeMixin implements _User {
   const _$_User(
-      {required this.firstName, required this.lastName, required this.role});
+      {required this.email,
+      required this.firstName,
+      required this.lastName,
+      required this.role,
+      required this.step,
+      this.builder});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
+  @override
+  final String email;
   @override
   final String firstName;
   @override
   final String lastName;
   @override
   final String role;
+  @override
+  final String step;
+  @override
+  final BuBuilder? builder;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(firstName: $firstName, lastName: $lastName, role: $role)';
+    return 'User(email: $email, firstName: $firstName, lastName: $lastName, role: $role, step: $step, builder: $builder)';
   }
 
   @override
@@ -155,9 +233,12 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'User'))
+      ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('firstName', firstName))
       ..add(DiagnosticsProperty('lastName', lastName))
-      ..add(DiagnosticsProperty('role', role));
+      ..add(DiagnosticsProperty('role', role))
+      ..add(DiagnosticsProperty('step', step))
+      ..add(DiagnosticsProperty('builder', builder));
   }
 
   @override
@@ -165,17 +246,23 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _User &&
+            const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.role, role));
+            const DeepCollectionEquality().equals(other.role, role) &&
+            const DeepCollectionEquality().equals(other.step, step) &&
+            const DeepCollectionEquality().equals(other.builder, builder));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(role));
+      const DeepCollectionEquality().hash(role),
+      const DeepCollectionEquality().hash(step),
+      const DeepCollectionEquality().hash(builder));
 
   @JsonKey(ignore: true)
   @override
@@ -190,18 +277,27 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required String firstName,
+      {required String email,
+      required String firstName,
       required String lastName,
-      required String role}) = _$_User;
+      required String role,
+      required String step,
+      BuBuilder? builder}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
+  @override
+  String get email;
   @override
   String get firstName;
   @override
   String get lastName;
   @override
   String get role;
+  @override
+  String get step;
+  @override
+  BuBuilder? get builder;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

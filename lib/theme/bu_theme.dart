@@ -64,6 +64,14 @@ class BuTheme {
         )
       ),
 
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(60.0),
+          ),
+        )
+      ),
+
       visualDensity: VisualDensity.standard
     );
 
