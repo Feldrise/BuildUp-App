@@ -18,10 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AppUserStateTearOff {
   const _$AppUserStateTearOff();
 
-  _AppUserState call({String? token, User? user}) {
+  _AppUserState call({String? token}) {
     return _AppUserState(
       token: token,
-      user: user,
     );
   }
 }
@@ -32,7 +31,6 @@ const $AppUserState = _$AppUserStateTearOff();
 /// @nodoc
 mixin _$AppUserState {
   String? get token => throw _privateConstructorUsedError;
-  User? get user => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppUserStateCopyWith<AppUserState> get copyWith =>
@@ -44,9 +42,7 @@ abstract class $AppUserStateCopyWith<$Res> {
   factory $AppUserStateCopyWith(
           AppUserState value, $Res Function(AppUserState) then) =
       _$AppUserStateCopyWithImpl<$Res>;
-  $Res call({String? token, User? user});
-
-  $UserCopyWith<$Res>? get user;
+  $Res call({String? token});
 }
 
 /// @nodoc
@@ -60,29 +56,13 @@ class _$AppUserStateCopyWithImpl<$Res> implements $AppUserStateCopyWith<$Res> {
   @override
   $Res call({
     Object? token = freezed,
-    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
     ));
-  }
-
-  @override
-  $UserCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value));
-    });
   }
 }
 
@@ -93,10 +73,7 @@ abstract class _$AppUserStateCopyWith<$Res>
           _AppUserState value, $Res Function(_AppUserState) then) =
       __$AppUserStateCopyWithImpl<$Res>;
   @override
-  $Res call({String? token, User? user});
-
-  @override
-  $UserCopyWith<$Res>? get user;
+  $Res call({String? token});
 }
 
 /// @nodoc
@@ -112,17 +89,12 @@ class __$AppUserStateCopyWithImpl<$Res> extends _$AppUserStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = freezed,
-    Object? user = freezed,
   }) {
     return _then(_AppUserState(
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
     ));
   }
 }
@@ -130,16 +102,14 @@ class __$AppUserStateCopyWithImpl<$Res> extends _$AppUserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AppUserState with DiagnosticableTreeMixin implements _AppUserState {
-  const _$_AppUserState({this.token, this.user});
+  const _$_AppUserState({this.token});
 
   @override
   final String? token;
-  @override
-  final User? user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppUserState(token: $token, user: $user)';
+    return 'AppUserState(token: $token)';
   }
 
   @override
@@ -147,8 +117,7 @@ class _$_AppUserState with DiagnosticableTreeMixin implements _AppUserState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AppUserState'))
-      ..add(DiagnosticsProperty('token', token))
-      ..add(DiagnosticsProperty('user', user));
+      ..add(DiagnosticsProperty('token', token));
   }
 
   @override
@@ -156,15 +125,12 @@ class _$_AppUserState with DiagnosticableTreeMixin implements _AppUserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AppUserState &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality().equals(other.user, user));
+            const DeepCollectionEquality().equals(other.token, token));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(user));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(token));
 
   @JsonKey(ignore: true)
   @override
@@ -173,12 +139,10 @@ class _$_AppUserState with DiagnosticableTreeMixin implements _AppUserState {
 }
 
 abstract class _AppUserState implements AppUserState {
-  const factory _AppUserState({String? token, User? user}) = _$_AppUserState;
+  const factory _AppUserState({String? token}) = _$_AppUserState;
 
   @override
   String? get token;
-  @override
-  User? get user;
   @override
   @JsonKey(ignore: true)
   _$AppUserStateCopyWith<_AppUserState> get copyWith =>

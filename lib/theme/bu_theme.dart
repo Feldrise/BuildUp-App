@@ -13,12 +13,14 @@ class BuTheme {
         accentColor: Palette.colorPrimary,
         backgroundColor: Palette.colorLightGrey1,
         cardColor: Palette.colorWhite,
-        errorColor: Palette.colorError
+        errorColor: Palette.colorError,
       ),
 
+      primaryColor: Palette.colorPrimary,
       cardColor: Palette.colorWhite,
       errorColor: Palette.colorError,
       scaffoldBackgroundColor: Palette.colorLightGrey1,
+      dividerColor: Palette.colorDivider,
 
       // Text
       textTheme: const TextTheme(
@@ -67,26 +69,26 @@ class BuTheme {
 
   } 
   
-  static ElevatedButtonThemeData themeButtonSecondary(BuildContext context, {
-    bool coloredBorder = false
-  }) {
-    return ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        // Colors
-        primary: Theme.of(context).scaffoldBackgroundColor,
-        onPrimary: Theme.of(context).textTheme.bodyText2!.color,
+  // static ElevatedButtonThemeData themeButtonSecondary(BuildContext context, {
+  //   bool coloredBorder = false
+  // }) {
+  //   return ElevatedButtonThemeData(
+  //     style: ElevatedButton.styleFrom(
+  //       // Colors
+  //       primary: Theme.of(context).scaffoldBackgroundColor,
+  //       onPrimary: Theme.of(context).textTheme.bodyText2!.color,
 
-        // style
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(60.0),
-          side: BorderSide(
-            color: coloredBorder ? Theme.of(context).primaryColor : const Color(0xffefefef)
-          ),
-        ),
-        elevation: 0
-      )
-    );
-  }
+  //       // style
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(60.0),
+  //         side: BorderSide(
+  //           color: coloredBorder ? Theme.of(context).primaryColor : const Color(0xffefefef)
+  //         ),
+  //       ),
+  //       elevation: 0
+  //     )
+  //   );
+  // }
 
   static MaterialColor colorSwatch(int value) {
     final color50 = Color(value).withOpacity(0.1);

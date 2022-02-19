@@ -6,3 +6,14 @@ mutation Login($email: String!, $password: String!) {
   })
 }
 ''';
+
+const String qGetLoggedUser = r'''
+query GetLoggedUser {
+  user {
+    email,
+    firstName,
+    lastName,
+    role
+  }
+}
+''';

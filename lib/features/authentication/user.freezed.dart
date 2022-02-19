@@ -22,10 +22,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call({required String firstName, required String lastName}) {
+  _User call(
+      {required String firstName,
+      required String lastName,
+      required String role}) {
     return _User(
       firstName: firstName,
       lastName: lastName,
+      role: role,
     );
   }
 
@@ -41,6 +45,7 @@ const $User = _$UserTearOff();
 mixin _$User {
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +56,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String firstName, String lastName});
+  $Res call({String firstName, String lastName, String role});
 }
 
 /// @nodoc
@@ -66,6 +71,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? firstName = freezed,
     Object? lastName = freezed,
+    Object? role = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: firstName == freezed
@@ -76,6 +82,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -85,7 +95,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({String firstName, String lastName});
+  $Res call({String firstName, String lastName, String role});
 }
 
 /// @nodoc
@@ -101,6 +111,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? firstName = freezed,
     Object? lastName = freezed,
+    Object? role = freezed,
   }) {
     return _then(_User(
       firstName: firstName == freezed
@@ -111,6 +122,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -118,7 +133,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_User with DiagnosticableTreeMixin implements _User {
-  const _$_User({required this.firstName, required this.lastName});
+  const _$_User(
+      {required this.firstName, required this.lastName, required this.role});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -126,10 +142,12 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   final String firstName;
   @override
   final String lastName;
+  @override
+  final String role;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(firstName: $firstName, lastName: $lastName)';
+    return 'User(firstName: $firstName, lastName: $lastName, role: $role)';
   }
 
   @override
@@ -138,7 +156,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
     properties
       ..add(DiagnosticsProperty('type', 'User'))
       ..add(DiagnosticsProperty('firstName', firstName))
-      ..add(DiagnosticsProperty('lastName', lastName));
+      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('role', role));
   }
 
   @override
@@ -147,14 +166,16 @@ class _$_User with DiagnosticableTreeMixin implements _User {
         (other.runtimeType == runtimeType &&
             other is _User &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName));
+            const DeepCollectionEquality().equals(other.lastName, lastName) &&
+            const DeepCollectionEquality().equals(other.role, role));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName));
+      const DeepCollectionEquality().hash(lastName),
+      const DeepCollectionEquality().hash(role));
 
   @JsonKey(ignore: true)
   @override
@@ -168,8 +189,10 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User({required String firstName, required String lastName}) =
-      _$_User;
+  const factory _User(
+      {required String firstName,
+      required String lastName,
+      required String role}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -177,6 +200,8 @@ abstract class _User implements User {
   String get firstName;
   @override
   String get lastName;
+  @override
+  String get role;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
