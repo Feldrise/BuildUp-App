@@ -1,56 +1,54 @@
+import 'package:buildup/core/graphql/graphql_client.dart';
+import 'package:buildup/core/utils/init.dart';
+import 'package:buildup/core/utils/screen_utils.dart';
+import 'package:buildup/core/widgets/splash_screen.dart';
+import 'package:buildup/features/authentication/app_user_controller.dart';
+import 'package:buildup/features/authentication/authentication_page.dart';
+import 'package:buildup/features/authentication/user.dart';
+import 'package:buildup/features/main_page/main_page.dart';
 import 'package:buildup/theme/bu_theme.dart';
 import 'package:flutter/material.dart';
-void main() {
-  runApp(const MyApp());
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initHiveForFlutter(); // For GraphQL cache
+  await HiveStore.openBox<dynamic>(HiveStore.defaultBoxName);
+
+  runApp(const ProviderScope(child: MyApp()));
 }
-class MyApp extends StatelessWidget {
+
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String? token = ref.watch(appUserControllerProvider).token;
+    
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'BuildUp',
       theme: BuTheme.theme(context),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      home: GraphQLProvider(
+        client: graphQLClient(token),
+        child: GraphQLConsumer(
+          builder: (client) => FutureBuilder<dynamic>(
+            future: Init.instance.initialize(client, ref),
+            builder: (context, snapshot) {
+              ScreenUtils.instance.setValues(context);
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SplashScreen();
+              }
+        
+              token = ref.read(appUserControllerProvider).token;
+              if (token == null) {
+                return const AuthenticationPage();
+              }
+        
+              return const MainPage();
+            },
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

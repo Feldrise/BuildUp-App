@@ -29,6 +29,7 @@ class BuTheme {
         headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextBlack),
         headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Palette.colorTextBlack),
         bodyText2: TextStyle(fontSize: 16, color: Palette.colorTextBlack),
+        button: TextStyle(fontSize: 16),
       ),
 
       // The appbar theme
@@ -53,7 +54,11 @@ class BuTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(60.0),
           ),
-          elevation: 0
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 22,
+          )
         )
       ),
 
