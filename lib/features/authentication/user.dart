@@ -22,12 +22,18 @@ mixin UserRoles {
 @immutable
 @freezed
 class User with _$User {
-  const factory User({
+  const factory User(String? id, {
     required String email,
     required String firstName,
     required String lastName,
     required String role,
     required String step,
+    required String description,
+    @Default("Situation Inconnue") String situation,
+    DateTime? birthday,
+    String? address,
+    String? discord,
+    String? linkedin,
     BuBuilder? builder,
     Coach? coach,
   }) = _User;

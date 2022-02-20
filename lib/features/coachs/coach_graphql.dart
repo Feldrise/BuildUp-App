@@ -1,5 +1,5 @@
 const String qActiveCoachs = r'''
-query ActiveBuilders {
+query ActiveCoachs {
   users(filters: [
     {
       key: "role",
@@ -15,10 +15,9 @@ query ActiveBuilders {
     lastName,
     role,
     step,
-    coach {
-      description,
-      situation
-    }
+    description,
+    situation
+    coach {}
   }
 }
 ''';

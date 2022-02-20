@@ -10,11 +10,14 @@ mutation Login($email: String!, $password: String!) {
 const String qGetLoggedUser = r'''
 query GetLoggedUser {
   user {
+    id,
     email,
     firstName,
     lastName,
     role,
     step,
+    situation,
+    description,
   }
 }
 ''';

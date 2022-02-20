@@ -9,8 +9,6 @@ part 'coach.g.dart';
 @freezed
 class Coach with _$Coach {
   const factory Coach({
-    required String description,
-    @Default("Situation Inconnue") String situation,
     List<User>? builders 
   }) = _Coach;
 

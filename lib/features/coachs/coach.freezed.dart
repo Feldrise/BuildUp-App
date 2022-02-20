@@ -22,13 +22,8 @@ Coach _$CoachFromJson(Map<String, dynamic> json) {
 class _$CoachTearOff {
   const _$CoachTearOff();
 
-  _Coach call(
-      {required String description,
-      String situation = "Situation Inconnue",
-      List<User>? builders}) {
+  _Coach call({List<User>? builders}) {
     return _Coach(
-      description: description,
-      situation: situation,
       builders: builders,
     );
   }
@@ -43,8 +38,6 @@ const $Coach = _$CoachTearOff();
 
 /// @nodoc
 mixin _$Coach {
-  String get description => throw _privateConstructorUsedError;
-  String get situation => throw _privateConstructorUsedError;
   List<User>? get builders => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +49,7 @@ mixin _$Coach {
 abstract class $CoachCopyWith<$Res> {
   factory $CoachCopyWith(Coach value, $Res Function(Coach) then) =
       _$CoachCopyWithImpl<$Res>;
-  $Res call({String description, String situation, List<User>? builders});
+  $Res call({List<User>? builders});
 }
 
 /// @nodoc
@@ -69,19 +62,9 @@ class _$CoachCopyWithImpl<$Res> implements $CoachCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? description = freezed,
-    Object? situation = freezed,
     Object? builders = freezed,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      situation: situation == freezed
-          ? _value.situation
-          : situation // ignore: cast_nullable_to_non_nullable
-              as String,
       builders: builders == freezed
           ? _value.builders
           : builders // ignore: cast_nullable_to_non_nullable
@@ -95,7 +78,7 @@ abstract class _$CoachCopyWith<$Res> implements $CoachCopyWith<$Res> {
   factory _$CoachCopyWith(_Coach value, $Res Function(_Coach) then) =
       __$CoachCopyWithImpl<$Res>;
   @override
-  $Res call({String description, String situation, List<User>? builders});
+  $Res call({List<User>? builders});
 }
 
 /// @nodoc
@@ -109,19 +92,9 @@ class __$CoachCopyWithImpl<$Res> extends _$CoachCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? description = freezed,
-    Object? situation = freezed,
     Object? builders = freezed,
   }) {
     return _then(_Coach(
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      situation: situation == freezed
-          ? _value.situation
-          : situation // ignore: cast_nullable_to_non_nullable
-              as String,
       builders: builders == freezed
           ? _value.builders
           : builders // ignore: cast_nullable_to_non_nullable
@@ -133,25 +106,17 @@ class __$CoachCopyWithImpl<$Res> extends _$CoachCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Coach with DiagnosticableTreeMixin implements _Coach {
-  const _$_Coach(
-      {required this.description,
-      this.situation = "Situation Inconnue",
-      this.builders});
+  const _$_Coach({this.builders});
 
   factory _$_Coach.fromJson(Map<String, dynamic> json) =>
       _$$_CoachFromJson(json);
 
   @override
-  final String description;
-  @JsonKey()
-  @override
-  final String situation;
-  @override
   final List<User>? builders;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Coach(description: $description, situation: $situation, builders: $builders)';
+    return 'Coach(builders: $builders)';
   }
 
   @override
@@ -159,8 +124,6 @@ class _$_Coach with DiagnosticableTreeMixin implements _Coach {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Coach'))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('situation', situation))
       ..add(DiagnosticsProperty('builders', builders));
   }
 
@@ -169,18 +132,12 @@ class _$_Coach with DiagnosticableTreeMixin implements _Coach {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Coach &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.situation, situation) &&
             const DeepCollectionEquality().equals(other.builders, builders));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(situation),
-      const DeepCollectionEquality().hash(builders));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(builders));
 
   @JsonKey(ignore: true)
   @override
@@ -194,17 +151,10 @@ class _$_Coach with DiagnosticableTreeMixin implements _Coach {
 }
 
 abstract class _Coach implements Coach {
-  const factory _Coach(
-      {required String description,
-      String situation,
-      List<User>? builders}) = _$_Coach;
+  const factory _Coach({List<User>? builders}) = _$_Coach;
 
   factory _Coach.fromJson(Map<String, dynamic> json) = _$_Coach.fromJson;
 
-  @override
-  String get description;
-  @override
-  String get situation;
   @override
   List<User>? get builders;
   @override

@@ -7,7 +7,6 @@ part of 'bu_builder.dart';
 // **************************************************************************
 
 _$_BuBuilder _$$_BuBuilderFromJson(Map<String, dynamic> json) => _$_BuBuilder(
-      description: json['description'] as String,
       project: json['project'] == null
           ? null
           : Project.fromJson(json['project'] as Map<String, dynamic>),
@@ -15,6 +14,5 @@ _$_BuBuilder _$$_BuBuilderFromJson(Map<String, dynamic> json) => _$_BuBuilder(
 
 Map<String, dynamic> _$$_BuBuilderToJson(_$_BuBuilder instance) =>
     <String, dynamic>{
-      'description': instance.description,
       'project': instance.project,
     };

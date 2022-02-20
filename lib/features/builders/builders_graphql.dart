@@ -15,8 +15,9 @@ query ActiveBuilders {
     lastName,
     role,
     step,
+    situation,
+    description,
     builder {
-      description,
       project {
         name,
         description

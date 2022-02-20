@@ -11,12 +11,18 @@ import 'package:buildup/features/main_page/admin_main_page.dart';
 import 'package:buildup/theme/bu_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initHiveForFlutter(); // For GraphQL cache
   await HiveStore.openBox<dynamic>(HiveStore.defaultBoxName);
+
+  // TODO: DEBUG ONLY
+  // const storage = FlutterSecureStorage();
+  // await storage.delete(key: "user_username");
+  // await storage.delete(key: "user_password");
 
   runApp(const ProviderScope(child: MyApp()));
 }

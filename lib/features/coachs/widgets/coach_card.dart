@@ -80,7 +80,7 @@ class CoachCard extends StatelessWidget {
 
       // The project name
       Text(
-        coach.coach!.situation,
+        coach.situation,
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.caption,
       )

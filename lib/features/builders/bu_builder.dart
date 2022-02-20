@@ -9,7 +9,6 @@ part 'bu_builder.g.dart';
 @freezed
 class BuBuilder with _$BuBuilder {
   const factory BuBuilder({
-    required String description,
     Project? project
   }) = _BuBuilder;
 
