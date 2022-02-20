@@ -77,6 +77,18 @@ class BuTheme {
     );
 
   } 
+
+  static AppBarTheme themeSecondAppBar(BuildContext context) {
+    return const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      elevation: 0,
+      toolbarHeight: 77,
+
+      backgroundColor: Palette.colorWhite,
+      foregroundColor: Palette.colorTextBlack,
+      titleTextStyle: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextBlack),
+    ); 
+  }
   
   // static ElevatedButtonThemeData themeButtonSecondary(BuildContext context, {
   //   bool coloredBorder = false

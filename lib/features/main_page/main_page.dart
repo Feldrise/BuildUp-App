@@ -1,5 +1,6 @@
 import 'package:buildup/features/main_page/page_item.dart';
 import 'package:buildup/features/main_page/widgets/menu_drawer.dart';
+import 'package:buildup/theme/bu_theme.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -70,7 +71,12 @@ class _MainPageState extends State<MainPage> {
                     shouldPop: true,
                   )
                   : null,
-                  body: widget.pages[_currentIndex],
+                  body: Theme(
+                    data: Theme.of(context).copyWith(
+                      appBarTheme: BuTheme.themeSecondAppBar(context)
+                    ),
+                    child: widget.pages[_currentIndex]
+                  ),
                 ),
               ),
             ],
