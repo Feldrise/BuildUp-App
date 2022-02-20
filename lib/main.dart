@@ -6,7 +6,7 @@ import 'package:buildup/core/widgets/splash_screen.dart';
 import 'package:buildup/features/authentication/app_user_controller.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
 import 'package:buildup/features/authentication/authentication_page.dart';
-import 'package:buildup/features/authentication/user.dart';
+import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/main_page/admin_main_page.dart';
 import 'package:buildup/theme/bu_theme.dart';
 import 'package:flutter/material.dart';

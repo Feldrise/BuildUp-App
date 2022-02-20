@@ -1,5 +1,5 @@
 import 'package:buildup/core/widgets/bu_card.dart';
-import 'package:buildup/features/authentication/user.dart';
+import 'package:buildup/features/users/user.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 

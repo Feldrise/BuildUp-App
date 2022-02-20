@@ -1,6 +1,6 @@
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
-import 'package:buildup/features/authentication/user.dart';
+import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/coachs/coach_graphql.dart';
 import 'package:buildup/features/coachs/widgets/coach_card.dart';
 import 'package:flutter/material.dart';

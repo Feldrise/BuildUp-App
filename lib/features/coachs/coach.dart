@@ -1,4 +1,4 @@
-import 'package:buildup/features/authentication/user.dart';
+import 'package:buildup/features/users/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
