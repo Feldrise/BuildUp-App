@@ -6,12 +6,20 @@ import 'package:flutter/material.dart';
 class AdminMainPage extends StatelessWidget {
   const AdminMainPage({Key? key}) : super(key: key);
 
-  final List<Widget> pages = const [
-    ActiveUsers()
-  ];
-
   @override
   Widget build(BuildContext context) {
+    // The pages
+    final List<Widget> pages = [
+      ClipRect(
+        child: Navigator(
+        onGenerateRoute: (route) => MaterialPageRoute<void>(
+          settings: route,
+          builder: (context) => const ActiveUsers()),
+        )
+      ),
+    ];
+
+    // The menu items
     const List<PageItem> pageItems = [
       // Active users
       PageItem(

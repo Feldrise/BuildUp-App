@@ -55,7 +55,7 @@ class ActiveBuildersPage extends StatelessWidget {
             shrinkWrap: true,
             children: [
               for (final builder in builders) 
-                BuilderCard(builder: builder)
+                BuilderCard(builder: builder, refetch: refetch,)
             ],
           );
         },

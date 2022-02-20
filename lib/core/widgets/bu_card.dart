@@ -41,11 +41,17 @@ class BuCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x0c000000),
+            color: Color(0x33000000),
+            offset: Offset(0.0, 1.0),
+            blurRadius: 3.0,
+            spreadRadius: 0
+          ),
+          BoxShadow(
+            color: Color(0x1f000000),
             offset: Offset(0.0, 2.0),
-            blurRadius: 12.0,
-            // spreadRadius: 1.0
-          )
+            blurRadius: 2.0,
+            spreadRadius: 0
+          ),
         ],
       ),
       child: child,

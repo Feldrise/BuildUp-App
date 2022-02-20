@@ -10,6 +10,7 @@ query ActiveBuilders {
       value: "ACTIVE"
     }
   ]) {
+    id,
     email,
     firstName,
     lastName,
