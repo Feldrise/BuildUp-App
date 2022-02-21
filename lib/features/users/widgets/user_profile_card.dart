@@ -26,9 +26,9 @@ class UserProfileCard extends StatelessWidget {
           // The header
           TitledCardBar(
             title: "${user.firstName} ${user.lastName}",
-            actionText: "Modifier",
-            actionIcon: Icons.edit,
-            onActionClicked: () {},
+            actionText: isLoggedUser ? "Modifier" : null,
+            actionIcon: isLoggedUser ? Icons.edit : null,
+            onActionClicked: isLoggedUser ? () {} : null,
           ),
           const SizedBox(height: 30,),
 
