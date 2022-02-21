@@ -70,9 +70,7 @@ class UserProfilePage extends StatelessWidget {
                 return Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtils.instance.horizontalPadding
-                    ),
+                    padding: EdgeInsets.all(ScreenUtils.instance.horizontalPadding),
                     child: const BuStatusMessage(
                       message: "Nous n'arrivons pas à charger les informations de l'utilisateur."
                     ),

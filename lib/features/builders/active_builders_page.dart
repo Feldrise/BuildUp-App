@@ -17,49 +17,50 @@ class ActiveBuildersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: ScreenUtils.instance.horizontalPadding,
-        left: ScreenUtils.instance.horizontalPadding,
-        right: ScreenUtils.instance.horizontalPadding
-      ),
-      child: Query(
-        options: _queryOptions(),
-        builder: (result, {fetchMore, refetch}) {
-          if (result.isLoading) {
-            return const Center(child: CircularProgressIndicator(),);
-          }
+    return Query(
+      options: _queryOptions(),
+      builder: (result, {fetchMore, refetch}) {
+        if (result.isLoading) {
+          return const Center(child: CircularProgressIndicator(),);
+        }
 
-          if (result.hasException) {
-            return const BuStatusMessage(
+        if (result.hasException) {
+          return Padding(
+            padding: EdgeInsets.all(ScreenUtils.instance.horizontalPadding),
+            child: const BuStatusMessage(
               title: "Erreur de chargement",
               message: "Nous ne parvenons pas à charger la liste des builders actifs... Si ce problème persite, n'hésitez pas à nous contacter.",
-            );
-          }
-
-          final List mapsBuilders = result.data!["users"] as List;
-          final List<User> builders = [];
-          for (final map in mapsBuilders) {
-            builders.add(User.fromJson(map as Map<String, dynamic>));
-          }
-
-          if (builders.isEmpty) return _buildEmptyInfo(context);
-
-          return GridView(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 255,
-              childAspectRatio: 8/10,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16
             ),
-            shrinkWrap: true,
-            children: [
-              for (final builder in builders) 
-                BuilderCard(builder: builder, refetch: refetch,)
-            ],
           );
-        },
-      ),
+        }
+
+        final List mapsBuilders = result.data!["users"] as List;
+        final List<User> builders = [];
+        for (final map in mapsBuilders) {
+          builders.add(User.fromJson(map as Map<String, dynamic>));
+        }
+
+        if (builders.isEmpty) return _buildEmptyInfo(context);
+
+        return GridView(
+          padding: EdgeInsets.only(
+            top: ScreenUtils.instance.horizontalPadding,
+            left: ScreenUtils.instance.horizontalPadding,
+            right: ScreenUtils.instance.horizontalPadding
+          ),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 255,
+            childAspectRatio: 8/10,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16
+          ),
+          shrinkWrap: true,
+          children: [
+            for (final builder in builders) 
+              BuilderCard(builder: builder, refetch: refetch,)
+          ],
+        );
+      },
     );
   }
 
