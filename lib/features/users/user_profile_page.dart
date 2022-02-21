@@ -1,6 +1,7 @@
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
+import 'package:buildup/features/project/widgets/project_card.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/users_graphql.dart';
 import 'package:buildup/features/users/widgets/user_profile_card.dart';
@@ -39,64 +40,77 @@ class UserProfilePage extends StatelessWidget {
       appBar: appBarTitle == null ? null : AppBar(
         title: Text(appBarTitle!),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: ScreenUtils.instance.horizontalPadding
-        ),
-        child: Query<Map<String, dynamic>>(
-          options: _loggedUserOptions(),
-          builder: (loggedResult, {fetchMore, refetch}) {
-            if (loggedResult.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+      body: Query<Map<String, dynamic>>(
+        options: _loggedUserOptions(),
+        builder: (loggedResult, {fetchMore, refetch}) {
+          if (loggedResult.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
     
-            if (loggedResult.hasException) {
-              return const Align(
-                alignment: Alignment.topLeft,
-                child: BuStatusMessage(
-                  message: "Nous n'arrivons pas à charger vos informations. Cette erreur ne devrait pas arriver, n'hésitez pas à nous contacter.",
-                ),
-              );
-            }
+          if (loggedResult.hasException) {
+            return const Align(
+              alignment: Alignment.topLeft,
+              child: BuStatusMessage(
+                message: "Nous n'arrivons pas à charger vos informations. Cette erreur ne devrait pas arriver, n'hésitez pas à nous contacter.",
+              ),
+            );
+          }
     
-            final User appUser = User.fromJson(loggedResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
+          final User appUser = User.fromJson(loggedResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
 
-            // Now we can get the actual user
-            return Query<Map<String, dynamic>>(
-              options: _userOptions(),
-              builder: (userResult, {fetchMore, refetch}) {
-                if (userResult.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-          
-                if (userResult.hasException) {
-                  return const Align(
-                    alignment: Alignment.topLeft,
-                    child: BuStatusMessage(
+          // Now we can get the actual user
+          return Query<Map<String, dynamic>>(
+            options: _userOptions(),
+            builder: (userResult, {fetchMore, refetch}) {
+              if (userResult.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+        
+              if (userResult.hasException) {
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtils.instance.horizontalPadding
+                    ),
+                    child: const BuStatusMessage(
                       message: "Nous n'arrivons pas à charger les informations de l'utilisateur."
                     ),
-                  );
-                }
+                  ),
+                );
+              }
 
-                final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
-                final bool isLoggedUser = appUser.id == user.id; 
+              final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
+              final bool isLoggedUser = appUser.id == user.id; 
 
-                return SingleChildScrollView(
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtils.instance.horizontalPadding
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(height: ScreenUtils.instance.horizontalPadding,),
+                      // The logged user
                       Flexible(child: UserProfileCard(user: user, isLoggedUser: isLoggedUser)),
+                      const SizedBox(height: 30,),
+
+                      // The project if there is one
+                      if (user.builder?.project != null) 
+                        Flexible(child: ProjectCard(project: user.builder!.project!, isLoggedUser: isLoggedUser,)),
+
                       SizedBox(height: ScreenUtils.instance.horizontalPadding,),
+                      
                     ],
                   ),
-                );
-              },
-            );
+                ),
+              );
+            },
+          );
     
-          },
-        ),
+        },
       ),
     );
   }

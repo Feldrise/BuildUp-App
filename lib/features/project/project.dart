@@ -9,7 +9,13 @@ part 'project.g.dart';
 class Project with _$Project {
   const factory Project({
     required String name,
-    required String description
+    required String description,
+    String? keywords,
+    String? categorie,
+    String? team,
+    DateTime? launchDate,
+    bool? isLucarative,
+    bool? isOfficialyRegistered,
   }) = _Project;
 
   factory Project.fromJson(Map<String, dynamic> json) => _$ProjectFromJson(json);

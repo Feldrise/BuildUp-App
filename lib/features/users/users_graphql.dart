@@ -21,6 +21,12 @@ query GetDetailledUser($id: ID!) {
       project {
         name,
         description,
+        categorie,
+        keywords,
+        team,
+        launchDate,
+        isLucrative,
+        isOfficialyRegistered
       }
     }
   }
