@@ -33,17 +33,17 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String? token = ref.watch(appUserControllerProvider).token;
     
-    return MaterialApp(
-      title: 'BuildUp',
-      theme: BuTheme.theme(context),
-      home: GraphQLProvider(
-        client: graphQLClient(token),
-        child: GraphQLConsumer(
+    return GraphQLProvider(
+      client: graphQLClient(token),
+      child: MaterialApp(
+        title: 'BuildUp',
+        theme: BuTheme.theme(context),
+        home: GraphQLConsumer(
           builder: (client) => FutureBuilder<dynamic>(
             future: Init.instance.initialize(client, ref),
             builder: (context, snapshot) {
               ScreenUtils.instance.setValues(context);
-
+    
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const SplashScreen();
               }
@@ -60,11 +60,11 @@ class MyApp extends ConsumerWidget {
                 ),
                 builder: (result, {fetchMore, refetch}) {
                   final User appUser = User.fromJson(result.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
-
+    
                   if (appUser.role == UserRoles.admin) {
                     return const AdminMainPage();
                   }
-
+    
                   return const BuStatusMessage(
                     type: BuStatusMessageType.info,
                     message: "Il semblerais que votre rôle ne soit pas reconnu. Vous n'auriez jamais du voir ce message, veuillez contacter notre équipe !",

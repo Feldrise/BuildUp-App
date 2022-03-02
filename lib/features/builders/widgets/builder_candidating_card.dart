@@ -1,5 +1,6 @@
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/core/widgets/small_info.dart';
+import 'package:buildup/features/users/dialogs/user_profile_dialog.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/widgets/step_badge.dart';
 import 'package:buildup/theme/palette.dart';
@@ -85,7 +86,7 @@ class BuilderCandidatingCard extends StatelessWidget {
               _buildButton(
                 context, 
                 icon: Icons.visibility, 
-                onPressed: _onViewClicked
+                onPressed: () => _onViewClicked(context)
               ),
         
               // Edit
@@ -144,8 +145,14 @@ class BuilderCandidatingCard extends StatelessWidget {
     );
   }
 
-  Future _onViewClicked() async {
-
+  Future _onViewClicked(BuildContext context) async {
+    await showDialog<dynamic>(
+      context: context, 
+      builder: (context) => UserProfilDialog(
+        userId: builder.id!, 
+        dialogTitle: "${builder.firstName} ${builder.lastName}"
+      )
+    );
   }
 
   Future _onEditClicked() async {
