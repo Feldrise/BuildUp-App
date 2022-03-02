@@ -1,4 +1,5 @@
 import 'package:buildup/features/active_users/active_users_page.dart';
+import 'package:buildup/features/candidating_users/candidating_users_page.dart';
 import 'package:buildup/features/main_page/main_page.dart';
 import 'package:buildup/features/main_page/page_item.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class AdminMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // The pages
     final List<Widget> pages = [
+      const CandidatingUsers(),
       ClipRect(
         child: Navigator(
         onGenerateRoute: (route) => MaterialPageRoute<void>(
@@ -21,11 +23,18 @@ class AdminMainPage extends StatelessWidget {
 
     // The menu items
     const List<PageItem> pageItems = [
-      // Active users
+      // Candidating users
       PageItem(
         index: 0, 
+        title: "Candidatures",
+        icon: Icons.library_books
+      ),
+      // Active users
+      PageItem(
+        index: 1, 
         title: "Membres actifs", 
-        icon: Icons.person)
+        icon: Icons.person
+      ),
     ];
 
     return MainPage(

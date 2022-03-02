@@ -30,6 +30,7 @@ class User with _$User {
     required String step,
     required String description,
     @Default("Situation Inconnue") String situation,
+    DateTime? createdAt,
     DateTime? birthday,
     String? address,
     String? discord,

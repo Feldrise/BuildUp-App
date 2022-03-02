@@ -1,6 +1,7 @@
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/user_profile_page.dart';
+import 'package:buildup/features/users/widgets/step_badge.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -51,7 +52,7 @@ class BuilderCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: _buildBadge(),),
+        Expanded(child: StepBadge(step: builder.step),),
         PopupMenuButton(
           itemBuilder: (context) => [
 
@@ -89,28 +90,6 @@ class BuilderCard extends StatelessWidget {
         style: Theme.of(context).textTheme.caption,
       )
     ];
-  }
-
-  Widget _buildBadge() {
-    // By default, the active badge
-    return Row(
-      children: [
-        // The badge icon
-        Container(
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(
-            color: const Color(0xff17ba63),
-            borderRadius: BorderRadius.circular(15)
-          ),
-          child: const Center(child: Icon(Icons.check, size: 15, color: Colors.white,),),
-        ),
-        const SizedBox(width: 5,),
-
-        // The badge text
-        const Flexible(child: Text("Actif", style: TextStyle(color: Color(0xff17ba63)),))
-      ],
-    );
   }
 
   Future _onProfileClicked(BuildContext context) async {
