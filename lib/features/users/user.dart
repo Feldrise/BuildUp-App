@@ -18,6 +18,19 @@ mixin UserRoles {
   };
 }
 
+mixin UserStatus {
+  static const String unknown = "UNKNOWN";
+  static const String candidating = "CANDIDATING";
+  static const String validated = "VALIDATED";
+  static const String deleted = "REFUSED";
+
+  static const Map<String, String> detailled = {
+    unknown: "Inconnue",
+    candidating: "En attente",
+    validated: "Validée",
+    deleted: "Refusée"
+  };
+}
 
 @immutable
 @freezed
@@ -27,8 +40,9 @@ class User with _$User {
     required String firstName,
     required String lastName,
     required String role,
-    required String step,
     required String description,
+    @Default("UNKNOWN") String status,
+    @Default("UNKNOWN") String step,
     @Default("Situation Inconnue") String situation,
     DateTime? createdAt,
     DateTime? birthday,

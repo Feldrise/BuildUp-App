@@ -6,7 +6,7 @@ query ActiveCoachs {
       value: "COACH"
     },
     {
-      key: "step",
+      key: "status",
       value: "ACTIVE"
     }
   ]) {
@@ -14,6 +14,7 @@ query ActiveCoachs {
     firstName,
     lastName,
     role,
+    status,
     step,
     description,
     situation

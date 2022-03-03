@@ -6,6 +6,10 @@ query ActiveBuilders {
       value: "BUILDER"
     },
     {
+      key: "status",
+      value: "VALIDATED"
+    },
+    {
       key: "step",
       value: "ACTIVE"
     }
@@ -15,6 +19,7 @@ query ActiveBuilders {
     firstName,
     lastName,
     role,
+    status,
     step,
     situation,
     description,
@@ -29,14 +34,14 @@ query ActiveBuilders {
 ''';
 
 const String qCandidatingBuilder = r'''
-query ActiveBuilders {
+query CandidatingBuilders {
   users(filters: [
     {
       key: "role",
       value: "BUILDER"
     },
     {
-      key: "step",
+      key: "status",
       value: "CANDIDATING"
     }
   ]) {
@@ -46,6 +51,7 @@ query ActiveBuilders {
     firstName,
     lastName,
     role,
+    status,
     step,
     situation,
     description,

@@ -27,8 +27,9 @@ class _$UserTearOff {
       required String firstName,
       required String lastName,
       required String role,
-      required String step,
       required String description,
+      String status = "UNKNOWN",
+      String step = "UNKNOWN",
       String situation = "Situation Inconnue",
       DateTime? createdAt,
       DateTime? birthday,
@@ -43,8 +44,9 @@ class _$UserTearOff {
       firstName: firstName,
       lastName: lastName,
       role: role,
-      step: step,
       description: description,
+      status: status,
+      step: step,
       situation: situation,
       createdAt: createdAt,
       birthday: birthday,
@@ -71,8 +73,9 @@ mixin _$User {
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  String get step => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get step => throw _privateConstructorUsedError;
   String get situation => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get birthday => throw _privateConstructorUsedError;
@@ -97,8 +100,9 @@ abstract class $UserCopyWith<$Res> {
       String firstName,
       String lastName,
       String role,
-      String step,
       String description,
+      String status,
+      String step,
       String situation,
       DateTime? createdAt,
       DateTime? birthday,
@@ -127,8 +131,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? role = freezed,
-    Object? step = freezed,
     Object? description = freezed,
+    Object? status = freezed,
+    Object? step = freezed,
     Object? situation = freezed,
     Object? createdAt = freezed,
     Object? birthday = freezed,
@@ -159,13 +164,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      step: step == freezed
-          ? _value.step
-          : step // ignore: cast_nullable_to_non_nullable
-              as String,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      step: step == freezed
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as String,
       situation: situation == freezed
           ? _value.situation
@@ -236,8 +245,9 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String firstName,
       String lastName,
       String role,
-      String step,
       String description,
+      String status,
+      String step,
       String situation,
       DateTime? createdAt,
       DateTime? birthday,
@@ -269,8 +279,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? role = freezed,
-    Object? step = freezed,
     Object? description = freezed,
+    Object? status = freezed,
+    Object? step = freezed,
     Object? situation = freezed,
     Object? createdAt = freezed,
     Object? birthday = freezed,
@@ -301,13 +312,17 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      step: step == freezed
-          ? _value.step
-          : step // ignore: cast_nullable_to_non_nullable
-              as String,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      step: step == freezed
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as String,
       situation: situation == freezed
           ? _value.situation
@@ -353,8 +368,9 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       required this.firstName,
       required this.lastName,
       required this.role,
-      required this.step,
       required this.description,
+      this.status = "UNKNOWN",
+      this.step = "UNKNOWN",
       this.situation = "Situation Inconnue",
       this.createdAt,
       this.birthday,
@@ -377,9 +393,13 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @override
   final String role;
   @override
-  final String step;
-  @override
   final String description;
+  @JsonKey()
+  @override
+  final String status;
+  @JsonKey()
+  @override
+  final String step;
   @JsonKey()
   @override
   final String situation;
@@ -400,7 +420,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, step: $step, description: $description, situation: $situation, createdAt: $createdAt, birthday: $birthday, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach)';
+    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, description: $description, status: $status, step: $step, situation: $situation, createdAt: $createdAt, birthday: $birthday, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach)';
   }
 
   @override
@@ -413,8 +433,9 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('firstName', firstName))
       ..add(DiagnosticsProperty('lastName', lastName))
       ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('step', step))
       ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('step', step))
       ..add(DiagnosticsProperty('situation', situation))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('birthday', birthday))
@@ -435,9 +456,10 @@ class _$_User with DiagnosticableTreeMixin implements _User {
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
             const DeepCollectionEquality().equals(other.role, role) &&
-            const DeepCollectionEquality().equals(other.step, step) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.step, step) &&
             const DeepCollectionEquality().equals(other.situation, situation) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.birthday, birthday) &&
@@ -456,8 +478,9 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(lastName),
       const DeepCollectionEquality().hash(role),
-      const DeepCollectionEquality().hash(step),
       const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(step),
       const DeepCollectionEquality().hash(situation),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(birthday),
@@ -484,8 +507,9 @@ abstract class _User implements User {
       required String firstName,
       required String lastName,
       required String role,
-      required String step,
       required String description,
+      String status,
+      String step,
       String situation,
       DateTime? createdAt,
       DateTime? birthday,
@@ -508,9 +532,11 @@ abstract class _User implements User {
   @override
   String get role;
   @override
-  String get step;
-  @override
   String get description;
+  @override
+  String get status;
+  @override
+  String get step;
   @override
   String get situation;
   @override

@@ -6,6 +6,7 @@ query GetDetailledUser($id: ID!) {
     firstName,
     lastName,
     role,
+    status,
     step,
     situation,
     description,
@@ -29,6 +30,21 @@ query GetDetailledUser($id: ID!) {
         isOfficialyRegistered
       }
     }
+  }
+}
+''';
+
+const mUserUpdateStepStatus = r'''
+mutation updateUserStepStatus($id: ID!, $step: String, $status: String) {
+  updateUser(
+    id: $id,
+    changes: {
+      step: $step,
+      status: $status,
+    }
+  ) {
+    step,
+    status
   }
 }
 ''';

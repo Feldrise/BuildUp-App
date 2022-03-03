@@ -7,10 +7,12 @@ class ClosableDialog extends StatelessWidget {
     Key? key,
     required this.title,
     required this.child,
+    this.actions = const []
   }) : super(key: key);
 
   final String title;
   final Widget child;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,15 @@ class ClosableDialog extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: child,
                 )
+              ),
+              const SizedBox(height: 20,),
+
+              // The actions
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: actions,
+                ),
               )
             ],
           ),

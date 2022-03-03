@@ -15,6 +15,7 @@ query GetLoggedUser {
     firstName,
     lastName,
     role,
+    status,
     step,
     situation,
     description,
