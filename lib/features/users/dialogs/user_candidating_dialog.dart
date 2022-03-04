@@ -3,7 +3,6 @@ import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/features/builders/bu_builder.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class UserCandidatingDialog extends StatefulWidget {
   const UserCandidatingDialog({

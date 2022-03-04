@@ -4,6 +4,7 @@ import 'package:buildup/core/widgets/small_info.dart';
 import 'package:buildup/features/builders/bu_builder.dart';
 import 'package:buildup/features/users/dialogs/user_candidating_dialog.dart';
 import 'package:buildup/features/users/dialogs/user_profile_dialog.dart';
+import 'package:buildup/features/users/dialogs/user_refuse_dialog.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/users_graphql.dart';
 import 'package:buildup/features/users/widgets/step_badge.dart';
@@ -143,7 +144,7 @@ class _BuilderCandidatingCardState extends State<BuilderCandidatingCard> {
               _buildButton(
                 context, 
                 icon: Icons.delete, 
-                onPressed: _onDeleteClicked
+                onPressed: () =>_onDeleteClicked(context, runMutation)
               )
             ],
           ),
@@ -209,7 +210,17 @@ class _BuilderCandidatingCardState extends State<BuilderCandidatingCard> {
     } 
   }
 
-  Future _onDeleteClicked() async {
+  Future _onDeleteClicked(BuildContext context, RunMutation runMutation) async {
+    bool delete = await showDialog<bool?>(
+      context: context,
+      builder: (context) => UserRefuseDialog(user: widget.builder)
+    ) ?? false;
 
+    if (delete) {
+      runMutation(<String, dynamic>{
+        "id": widget.builder.id,
+        "status": UserStatus.deleted
+      });
+    }
   }
 }
