@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 class DialogHeader extends StatelessWidget {
   const DialogHeader({
     Key? key,
-    required this.title
+    required this.title,
+    this.onClose,
   }) : super(key: key);
 
   final String title;
+
+  final Function()? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,12 @@ class DialogHeader extends StatelessWidget {
             iconSize: 22,
             color: Theme.of(context).textTheme.bodyText1!.color,
             onPressed: () {
-              Navigator.of(context).pop();
+              if (onClose != null) {
+                onClose!();
+              } 
+              else {
+                Navigator.of(context).pop();
+              }
             },
           )
         ],

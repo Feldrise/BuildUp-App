@@ -1,4 +1,5 @@
 import 'package:buildup/core/graphql/graphql_client.dart';
+import 'package:buildup/core/utils/app_manager.dart';
 import 'package:buildup/core/utils/init.dart';
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
@@ -37,6 +38,7 @@ class MyApp extends ConsumerWidget {
       client: graphQLClient(token),
       child: MaterialApp(
         title: 'BuildUp',
+        navigatorKey: AppManager.instance.appNavigatorKey,
         theme: BuTheme.theme(context),
         home: GraphQLConsumer(
           builder: (client) => FutureBuilder<dynamic>(
