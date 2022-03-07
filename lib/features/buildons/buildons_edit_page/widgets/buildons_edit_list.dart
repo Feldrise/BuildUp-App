@@ -2,7 +2,7 @@ import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/features/buildons/buildon.dart';
 import 'package:buildup/features/buildons/buildons_edit_page/dialog/buildon_edit_dialog.dart';
 import 'package:buildup/features/buildons/buildons_edit_page/widgets/buildon_edit_card.dart';
-import 'package:buildup/features/buildons/buildons_graphql.dart';
+import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/buildon_steps_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -10,11 +10,16 @@ class BuildOnsEditList extends StatefulWidget {
   const BuildOnsEditList({
     Key? key,
     required this.buildOns,
+    required this.creationMutation,
+    required this.updateMutation,
     this.maxPanelWidth = 200
   }) : super(key: key);
 
   final List<BuildOn> buildOns;
   final double maxPanelWidth;
+
+  final RunMutation creationMutation;
+  final RunMutation updateMutation;
 
   @override
   State<BuildOnsEditList> createState() => BuildOnsEditListState();
@@ -32,19 +37,6 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
   double _maxPanelWidth = 200;
 
   int? _selectedBuildOnIndex;
-
-  String _statusMessage = "";
-
-  MutationOptions<Map<String, dynamic>> _createMutationOptions() {
-    return MutationOptions(
-      document: gql(qMutCreateBuildOn),
-      onError: (error) {
-        setState(() {
-          _statusMessage = "Un ou plusieurs build-on n'ont pas pu être créé";
-        });
-      },
-    );
-  }
 
   void _initialize() {
     _buildOns = widget.buildOns;
@@ -86,7 +78,7 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
                     final item = _buildOns.removeAt(oldIndex);
                     _buildOns.insert(newIndex < oldIndex ? newIndex : newIndex -1, item);
 
-                    if (_selectedBuildOnIndex == oldIndex) _selectedBuildOnIndex = newIndex;
+                    if (_selectedBuildOnIndex == oldIndex) _selectedBuildOnIndex = newIndex < oldIndex ? newIndex : newIndex - 1;
                   },
                   itemCount: _buildOns.length,
                   itemBuilder: (context, index) => InkWell(
@@ -118,22 +110,24 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
             descriptionTextController: _descriptionTextController,
             urlTextController: _urlTextController,
             rewardsTextController: _rewardsTextController,
+            buildOnStepsCount: _buildOns[_selectedBuildOnIndex!].steps.length,
             onClose: _updateSelectedBuildOn,
             onRemove: _removeSelectedBuildOn,
+            onOpenSteps: _openBuildOnStepsDialog,
           ) : Container(),
         )
       ],
     );
   }
 
-  Future save(RunMutation creationMutation, RunMutation updateMutation) async {
-    if (!_updateSelectedBuildOn() && _selectedBuildOnIndex != null) return;
+  Future<bool> save() async {
+    if (!_updateSelectedBuildOn() && _selectedBuildOnIndex != null) return false;
 
     for (int i = 0; i < _buildOns.length; ++i) {
       final BuildOn buildOn = _buildOns[i];
 
       if (buildOn.id == null) {
-        creationMutation(<String, dynamic>{
+        widget.creationMutation(<String, dynamic>{
           "name": buildOn.name,
           "description": buildOn.description,
           "index": i+1,
@@ -142,7 +136,7 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
         });
       } 
       else {
-        updateMutation(<String, dynamic>{
+        widget.updateMutation(<String, dynamic>{
           "id": buildOn.id,
           "name": buildOn.name,
           "description": buildOn.description,
@@ -152,6 +146,8 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
         });
       }
     }
+
+    return true;
   }
 
   void _onAddNewBuildOn() {
@@ -199,6 +195,22 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
     });
   }
 
+  Future _openBuildOnStepsDialog() async {
+    if (_selectedBuildOnIndex == null) return;
+    if (!_formKey.currentState!.validate()) return;
+    
+    final int currentIndex = _selectedBuildOnIndex!;
+    final bool saved = await save();
+
+    if (!saved) return;
+
+    Navigator.of(context).push<dynamic>(
+      MaterialPageRoute<dynamic>(
+        builder: (context) => BuildOnStepEditPage(buildOnId: _buildOns[currentIndex].id!)
+      )
+    );
+  }
+
   void _openBuildOnDialog(int selectedIndex) {
     if (_selectedBuildOnIndex != null) {
       if (!_formKey.currentState!.validate()) return;
@@ -217,4 +229,5 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
       _selectedBuildOnIndex = selectedIndex;
     });
   }
+
 }

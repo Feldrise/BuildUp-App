@@ -1,4 +1,5 @@
 import 'package:buildup/core/widgets/inputs/bu_textfield.dart';
+import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 class BuildOnEditDialog extends StatelessWidget {
@@ -9,8 +10,10 @@ class BuildOnEditDialog extends StatelessWidget {
     required this.descriptionTextController,
     required this.urlTextController,
     required this.rewardsTextController,
+    required this.buildOnStepsCount,
     required this.onClose,
     required this.onRemove,
+    required this.onOpenSteps
   }) : super(key: key);
 
   final GlobalKey<FormState> formKey;
@@ -19,8 +22,11 @@ class BuildOnEditDialog extends StatelessWidget {
   final TextEditingController urlTextController;
   final TextEditingController rewardsTextController;
 
+  final int buildOnStepsCount;
+
   final Function() onClose;
   final Function() onRemove;
+  final Function() onOpenSteps;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +57,9 @@ class BuildOnEditDialog extends StatelessWidget {
             children: [
               // The Header
               Flexible(child: _buildHeader(context)),
+
+              // The steps header
+              Flexible(child: _buildStepsHeader()),
 
               // The form
               Flexible(child: _buildForm(),),
@@ -104,6 +113,34 @@ class BuildOnEditDialog extends StatelessWidget {
             ),
             iconSize: 32,
             onPressed: onClose,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStepsHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // The button
+          TextButton(
+            onPressed: onOpenSteps,
+            child: Row(
+              children: const [
+                Icon(Icons.edit, size: 18,),
+                SizedBox(width: 4,),
+                Text("Modifier les étapes")
+              ],
+            ),
+          ),
+
+          // The number
+          Text(
+            "$buildOnStepsCount étape(s)",
+            style: const TextStyle(color: Palette.colorSecondary),
           )
         ],
       ),

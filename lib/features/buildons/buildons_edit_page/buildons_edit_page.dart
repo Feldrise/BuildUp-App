@@ -73,7 +73,7 @@ class _BuildOnsEditPageState extends State<BuildOnsEditPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_editListKey.currentState != null) {
-                          await _editListKey.currentState!.save(createRunMutation, updateRunMutation);
+                          await _editListKey.currentState!.save();
                         }
                       },
                       child: Row(
@@ -135,7 +135,7 @@ class _BuildOnsEditPageState extends State<BuildOnsEditPage> {
                           ),
                         ),
                       
-                      Flexible(child: _buildContent(context, buildOns))
+                      Flexible(child: _buildContent(context, buildOns, createRunMutation, updateRunMutation))
                     ],
                   );
                 },
@@ -147,7 +147,7 @@ class _BuildOnsEditPageState extends State<BuildOnsEditPage> {
     ); 
   }
 
-  Widget _buildContent(BuildContext context, List<BuildOn> buildOns) {
+  Widget _buildContent(BuildContext context, List<BuildOn> buildOns, RunMutation createMutation, RunMutation updateMutation) {
     return LayoutBuilder(
       builder: (context, constraints) {
         // We return the empty info widget if the list is empty
@@ -160,6 +160,8 @@ class _BuildOnsEditPageState extends State<BuildOnsEditPage> {
           key: _editListKey,
           buildOns: buildOns,
           maxPanelWidth: maxPanelWidth,
+          creationMutation: createMutation,
+          updateMutation: updateMutation,
         );
         
       },
