@@ -1,10 +1,8 @@
 import 'package:buildup/core/widgets/bu_card.dart';
-import 'package:buildup/core/widgets/small_info.dart';
 import 'package:buildup/core/widgets/titled_card_bar.dart';
 import 'package:buildup/features/project/project.dart';
 import 'package:buildup/features/project/widgets/project_info.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
