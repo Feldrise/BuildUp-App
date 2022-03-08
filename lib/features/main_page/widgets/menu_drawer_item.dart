@@ -22,7 +22,7 @@ class MenuDrawerItem extends StatelessWidget {
           // height: 100,
           padding: const EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
-            color: isActive ? Theme.of(context).primaryColor.brighten(percent: 90) : Theme.of(context).cardColor,
+            color: isActive ? Theme.of(context).primaryColor.withOpacity(0.1) : Theme.of(context).cardColor,
             border: !isActive ? null : Border(
               left: BorderSide(width: 4, color: Theme.of(context).primaryColor)
             )

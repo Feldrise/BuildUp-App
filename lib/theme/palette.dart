@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 class Palette {
   static const Color colorPrimary = Color(0xfffc4349);
   static const Color colorSecondary = Color(0xff5caad5);
+
   static const Color colorDivider = Color(0xffeff1f7);
+  static const Color colorDividerDark = Color(0xff323f4b);
 
   static const Color colorTextBlack = Color(0xff2c3e50);
   static const Color colorIconsBlack = Color(0xff6e8faf);
+  static const Color colorTextWhite = Color(0xfff5f7fa);
+  static const Color colorIconsWhite = Color(0xff9aa6b1);
 
   static const Color colorInfo = Color(0xff36a2b1);
   static const Color colorWarning = Color(0xffffc21f);
@@ -30,4 +34,8 @@ class Palette {
   static const Color colorLightGrey2 = Color(0xffebeced);
   static const Color colorLightGrey3 = Color(0xffd7dadb);
   static const Color colorBlack = Color(0xff000000);
+
+  // DARK MODE
+  static const Color colorGrey700 = Color(0xff3e4c59);
+  static const Color colorGrey900 = Color(0xff1f2933);
 }

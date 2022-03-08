@@ -77,6 +77,80 @@ class BuTheme {
     );
 
   } 
+  static ThemeData themeDark(BuildContext context) {
+    return ThemeData(
+      // Colors
+      colorScheme: ColorScheme.fromSwatch(
+        brightness: Brightness.dark,
+        primarySwatch: colorSwatch(Palette.colorPrimary.value),
+
+        accentColor: Palette.colorPrimary,
+        backgroundColor: Palette.colorGrey900,
+        cardColor: Palette.colorGrey700,
+        errorColor: Palette.colorError,
+      ),
+
+      primaryColor: Palette.colorPrimary,
+      cardColor: Palette.colorGrey700,
+      errorColor: Palette.colorError,
+      scaffoldBackgroundColor: Palette.colorGrey900,
+      dividerColor: Palette.colorDividerDark,
+
+      // Text
+      textTheme: const TextTheme(
+        headline1: TextStyle(fontSize: 48, fontWeight: FontWeight.w300, color: Palette.colorTextWhite),
+        headline2: TextStyle(fontSize: 40, fontWeight: FontWeight.w300, color: Palette.colorTextWhite),
+        headline3: TextStyle(fontSize: 32, fontWeight: FontWeight.w300, color: Palette.colorTextWhite),
+        headline4: TextStyle(fontSize: 28, fontWeight: FontWeight.w300, color: Palette.colorTextWhite),
+        headline5: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextWhite),
+        headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Palette.colorTextWhite),
+        bodyText2: TextStyle(fontSize: 16, color: Palette.colorTextWhite),
+        caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Palette.colorIconsWhite),
+        button: TextStyle(fontSize: 16),
+      ),
+
+      // The appbar theme
+      appBarTheme: const AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        elevation: 0,
+        toolbarHeight: 77,
+
+        backgroundColor: Palette.colorGrey700,
+        foregroundColor: Palette.colorTextWhite,
+        titleTextStyle: TextStyle(fontSize: 40, fontWeight: FontWeight.w300, color: Palette.colorTextWhite),
+      ),
+
+      // Default button style
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          // Colors 
+          primary: Palette.colorPrimary,
+          onPrimary: Palette.colorWhite,
+
+          // Style
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(60.0),
+          ),
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 22,
+          )
+        )
+      ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Palette.colorPrimary),
+            borderRadius: BorderRadius.circular(60.0),
+          ),
+        )
+      ),
+
+      visualDensity: VisualDensity.standard
+    );
+  }
 
   static AppBarTheme themeSecondAppBar(BuildContext context) {
     return const AppBarTheme(
@@ -87,6 +161,18 @@ class BuTheme {
       backgroundColor: Palette.colorWhite,
       foregroundColor: Palette.colorTextBlack,
       titleTextStyle: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextBlack),
+    ); 
+  }
+
+   static AppBarTheme themeSecondAppBarDark(BuildContext context) {
+    return const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      elevation: 0,
+      toolbarHeight: 77,
+
+      backgroundColor: Palette.colorGrey700,
+      foregroundColor: Palette.colorTextWhite,
+      titleTextStyle: TextStyle(fontSize: 21, fontWeight: FontWeight.w500, color: Palette.colorTextWhite),
     ); 
   }
   
