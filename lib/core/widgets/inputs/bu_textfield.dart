@@ -65,7 +65,7 @@ class _BuTextFieldState extends State<BuTextField> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.labelText.toUpperCase(), style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 12),),
+        Text(widget.labelText.toUpperCase(), style: Theme.of(context).textTheme.caption,),
         const SizedBox(height: 10.0,),
         TextFormField(
           readOnly: widget.readOnly,
@@ -81,11 +81,11 @@ class _BuTextFieldState extends State<BuTextField> {
             ),
             hintText: widget.hintText,
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).textTheme.bodyText1!.color!,),
+              borderSide: BorderSide(color: Theme.of(context).dividerColor,),
               borderRadius: BorderRadius.circular(6.0),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).textTheme.bodyText1!.color!,),
+              borderSide: BorderSide(color: Theme.of(context).dividerColor,),
               borderRadius: BorderRadius.circular(6.0),
             ),
             suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : InkWell(
