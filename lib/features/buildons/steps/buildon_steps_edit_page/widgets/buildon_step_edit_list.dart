@@ -64,7 +64,7 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
         Expanded(
           child: Scaffold(
             body: Center(
-              child: Container(
+              child: _steps.isEmpty ? _buildEmptyInfo(context) : Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 20,
                   horizontal: ScreenUtils.instance.horizontalPadding
@@ -114,6 +114,29 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
           ) : Container(),
         )
       ],
+    );
+  }
+
+  Widget _buildEmptyInfo(BuildContext context) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.list, 
+            size: 92,
+            color: Theme.of(context).textTheme.caption!.color
+          ),
+          const SizedBox(height: 8,),
+          Text(
+            "Il n'y a aucune étape pour le moment. Ajoutez-en un en appuyant sur le bouton +",
+            style: TextStyle(
+              color: Theme.of(context).textTheme.caption!.color
+            ),
+          )
+        ],
+      ),
     );
   }
 

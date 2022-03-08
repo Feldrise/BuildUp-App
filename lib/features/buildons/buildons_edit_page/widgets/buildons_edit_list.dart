@@ -66,7 +66,7 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
           child: Scaffold(
             // The list
             body: Center(
-              child: Container(
+              child: _buildOns.isEmpty ? _buildEmptyInfo(context) : Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 20,
                   horizontal: ScreenUtils.instance.horizontalPadding
@@ -115,6 +115,27 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
             onRemove: _removeSelectedBuildOn,
             onOpenSteps: _openBuildOnStepsDialog,
           ) : Container(),
+        )
+      ],
+    );
+  }
+
+  Widget _buildEmptyInfo(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.list, 
+          size: 92,
+          color: Theme.of(context).textTheme.caption!.color
+        ),
+        const SizedBox(height: 8,),
+        Text(
+          "Il n'y a aucun Build-On pour le moment. Ajoutez-en un en appuyant sur le bouton +",
+          style: TextStyle(
+            color: Theme.of(context).textTheme.caption!.color
+          ),
         )
       ],
     );
