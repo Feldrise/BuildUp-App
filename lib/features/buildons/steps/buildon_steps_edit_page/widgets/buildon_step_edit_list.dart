@@ -3,26 +3,33 @@ import 'package:buildup/features/buildons/steps/buildon_step.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/dialog/buildon_step_edit_dialog.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/widgets/buildon_step_edit_card.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class BuildOnStepEditList extends StatefulWidget {
   const BuildOnStepEditList({
     Key? key,
     required this.steps,
+    // required this.creationMutation,
+    // required this.updateMutation,
     this.maxPanelWidth = 200
   }) : super(key: key);
 
   final List<BuildOnStep> steps;
   final double maxPanelWidth;
 
+  // final RunMutation creationMutation;
+  // final RunMutation updateMutation;
+
   @override
-  State<BuildOnStepEditList> createState() => _BuildOnStepEditListState();
+  State<BuildOnStepEditList> createState() => BuildOnStepEditListState();
 }
 
-class _BuildOnStepEditListState extends State<BuildOnStepEditList> {
+class BuildOnStepEditListState extends State<BuildOnStepEditList> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _descriptionTextController = TextEditingController();
+  final TextEditingController _proofTypeTextController = TextEditingController();
   final TextEditingController _proofDescriptionTextController = TextEditingController();
 
   List<BuildOnStep> _steps = [];
@@ -98,6 +105,7 @@ class _BuildOnStepEditListState extends State<BuildOnStepEditList> {
             formKey: _formKey,
             nameTextController: _nameTextController,
             descriptionTextController: _descriptionTextController,
+            proofTypeTextController: _proofTypeTextController,
             proofDescriptionTextController: _proofDescriptionTextController,
             onClose: _updateSelectedStep,
             onRemove: _removeSelectedStep,
@@ -132,6 +140,7 @@ class _BuildOnStepEditListState extends State<BuildOnStepEditList> {
       _steps[_selectedStepIndex!] = _steps[_selectedStepIndex!].copyWith(
         name: _nameTextController.text,
         description: _descriptionTextController.text,
+        proofType: _proofTypeTextController.text,
         proofDescription: _proofDescriptionTextController.text,
       );
       _selectedStepIndex = null;
@@ -162,6 +171,7 @@ class _BuildOnStepEditListState extends State<BuildOnStepEditList> {
       _selectedStepIndex = selectedIndex;
       _nameTextController.text = selected.name;
       _descriptionTextController.text = selected.description;
+      _proofTypeTextController.text = selected.proofType;
       _proofDescriptionTextController.text = selected.proofDescription;
     });
   }

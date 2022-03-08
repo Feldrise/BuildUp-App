@@ -1,12 +1,15 @@
+import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/core/widgets/inputs/bu_textfield.dart';
+import 'package:buildup/features/buildons/steps/buildon_step.dart';
 import 'package:flutter/material.dart';
 
-class BuildOnStepEditDialog extends StatelessWidget {
+class BuildOnStepEditDialog extends StatefulWidget {
   const BuildOnStepEditDialog({
     Key? key, 
     required this.formKey,
     required this.nameTextController,
     required this.descriptionTextController,
+    required this.proofTypeTextController,
     required this.proofDescriptionTextController,
     required this.onClose, 
     required this.onRemove
@@ -15,15 +18,41 @@ class BuildOnStepEditDialog extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController  nameTextController;
   final TextEditingController descriptionTextController;
+  final TextEditingController proofTypeTextController;
   final TextEditingController proofDescriptionTextController;
 
   final Function() onClose;
   final Function() onRemove;
 
   @override
+  State<BuildOnStepEditDialog> createState() => _BuildOnStepEditDialogState();
+}
+
+class _BuildOnStepEditDialogState extends State<BuildOnStepEditDialog> {
+  String _proofType = BuildOnStepProofType.comment;
+
+  void _initialize() {
+    _proofType = widget.proofTypeTextController.text;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _initialize();
+  }
+
+  @override
+  void didUpdateWidget(covariant BuildOnStepEditDialog oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _initialize();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -61,10 +90,10 @@ class BuildOnStepEditDialog extends StatelessWidget {
                     children: const [
                       Icon(Icons.delete_forever),
                       SizedBox(width: 4,),
-                      Text("Supprimer le Build-On")
+                      Text("Supprimer l'étape")
                     ],
                   ),
-                  onPressed: onRemove,
+                  onPressed: widget.onRemove,
                 ),
               ),
             ]
@@ -100,7 +129,7 @@ class BuildOnStepEditDialog extends StatelessWidget {
               color: Theme.of(context).textTheme.caption!.color,
             ),
             iconSize: 32,
-            onPressed: onClose,
+            onPressed: widget.onClose,
           )
         ],
       ),
@@ -116,7 +145,7 @@ class BuildOnStepEditDialog extends StatelessWidget {
         children: [
           // The name
           BuTextField(
-            controller: nameTextController,
+            controller: widget.nameTextController,
             labelText: "Nom de l'étape",
             hintText: "",
             validator: (value) {
@@ -129,7 +158,7 @@ class BuildOnStepEditDialog extends StatelessWidget {
 
           // The description
           BuTextField(
-            controller: descriptionTextController,
+            controller: widget.descriptionTextController,
             labelText: "Description",
             hintText: "",
             inputType: TextInputType.multiline,
@@ -142,9 +171,23 @@ class BuildOnStepEditDialog extends StatelessWidget {
           ),
           const SizedBox(height: 20,),
 
+          // The proof type
+          BuDropdown<String>(
+            stringValueController: widget.proofTypeTextController,
+            label: "Type de preuves",
+            items: BuildOnStepProofType.detailled,
+            currentValue: _proofType,
+            onChanged: (value) {
+              setState(() {
+                _proofType = value!;
+              });
+            },
+          ),
+          const SizedBox(height: 20,),
+
           // The proof description
           BuTextField(
-            controller: proofDescriptionTextController,
+            controller: widget.proofDescriptionTextController,
             labelText: "Déscription des preuves à fournir",
             hintText: "",
             inputType: TextInputType.multiline,

@@ -1,4 +1,3 @@
-import 'package:buildup/core/utils/colors.dart';
 import 'package:buildup/features/main_page/page_item.dart';
 import 'package:flutter/material.dart';
 

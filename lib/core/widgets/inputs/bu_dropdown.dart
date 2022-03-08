@@ -6,8 +6,11 @@ class BuDropdown<T> extends StatelessWidget {
     required this.items, 
     required this.currentValue, 
     required this.onChanged,
+    this.stringValueController,
     this.label,
   }) : super(key: key);
+
+  final TextEditingController? stringValueController;
 
   final Map<T, String> items;
   final T currentValue;
@@ -45,7 +48,13 @@ class BuDropdown<T> extends StatelessWidget {
             iconSize: 32,
             underline: Container(),
             isExpanded: true,
-            onChanged: onChanged,
+            onChanged: (T? value) {
+              if (stringValueController != null) {
+                stringValueController!.text = value.toString();
+              }
+
+              onChanged(value);
+            },
             items: [
               for (final key in items.keys) 
                 DropdownMenuItem(

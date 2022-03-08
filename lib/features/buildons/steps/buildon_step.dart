@@ -4,6 +4,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'buildon_step.freezed.dart';
 part 'buildon_step.g.dart';
 
+mixin BuildOnStepProofType {
+  static const comment = "COMMENT";
+  static const file = "FILE";
+
+  static const Map<String, String> detailled = {
+    comment: "Un commentaire",
+    file: "Un fichier"
+  };
+}
+
 @immutable
 @freezed
 class BuildOnStep with _$BuildOnStep {

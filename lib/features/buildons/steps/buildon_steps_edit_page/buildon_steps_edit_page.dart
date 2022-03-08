@@ -7,7 +7,7 @@ import 'package:buildup/features/buildons/steps/buildon_steps_graphql.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-class BuildOnStepEditPage extends StatelessWidget {
+class BuildOnStepEditPage extends StatefulWidget {
   const BuildOnStepEditPage({
     Key? key,
     required this.buildOnId
@@ -15,11 +15,16 @@ class BuildOnStepEditPage extends StatelessWidget {
 
   final String buildOnId;
 
+  @override
+  State<BuildOnStepEditPage> createState() => _BuildOnStepEditPageState();
+}
+
+class _BuildOnStepEditPageState extends State<BuildOnStepEditPage> {
   QueryOptions<dynamic> _queryOptions() {
     return QueryOptions<dynamic>(
       document: gql(qBuildOnSteps),
       variables: <String, dynamic>{
-        "buildOnID": buildOnId
+        "buildOnID": widget.buildOnId
       }
     );
   }
