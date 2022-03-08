@@ -16,6 +16,28 @@ query buildOnSteps($buildOnID: ID!) {
 }
 ''';
 
+const String qMutCreateBuildOnStep = r'''
+mutation createBuildOnStep(
+  $buildOnID: ID!,
+  $name: String!,
+  $description: String!,
+  $index: Int!,
+  $proofType: String!,
+  $proofDescription: String!
+) {
+  createBuildOnStep(buildOnID: $buildOnID, input: {
+    name: $name,
+    description: $description,
+    index: $index,
+    proofType: $proofType
+    proofDescription: $proofDescription
+  }) {
+    id,
+    name,
+    index
+  }
+}
+''';
 
 const String qMutUpdateBuildOnStep = r'''
 mutation updateBuildOnStep(
@@ -26,7 +48,7 @@ mutation updateBuildOnStep(
   $proofType: String!,
   $proofDescription: String!
 ) {
-  updateBuildOn(id: $id, changes: {
+  updateBuildOnStep(id: $id, changes: {
     name: $name,
     description: $description,
     index: $index,

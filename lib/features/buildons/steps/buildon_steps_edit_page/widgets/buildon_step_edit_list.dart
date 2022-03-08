@@ -9,16 +9,18 @@ class BuildOnStepEditList extends StatefulWidget {
   const BuildOnStepEditList({
     Key? key,
     required this.steps,
-    // required this.creationMutation,
-    // required this.updateMutation,
+    required this.creationMutation,
+    required this.updateMutation,
+    required this.buildOnId,
     this.maxPanelWidth = 200
   }) : super(key: key);
 
   final List<BuildOnStep> steps;
   final double maxPanelWidth;
 
-  // final RunMutation creationMutation;
-  // final RunMutation updateMutation;
+  final RunMutation creationMutation;
+  final RunMutation updateMutation;
+  final String buildOnId;
 
   @override
   State<BuildOnStepEditList> createState() => BuildOnStepEditListState();
@@ -115,6 +117,37 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
     );
   }
 
+  Future<bool> save() async {
+    if (!_updateSelectedStep() && _selectedStepIndex != null) return false;
+
+    for (int i = 0; i < _steps.length; ++i) {
+      final BuildOnStep step = _steps[i];
+
+      if (step.id == null) {
+        widget.creationMutation(<String, dynamic>{
+          "buildOnID": widget.buildOnId,
+          "name": step.name,
+          "description": step.description,
+          "index": i+1,
+          "proofType": step.proofType,
+          "proofDescription": step.proofDescription
+        });
+      }
+      else {
+        widget.updateMutation(<String, dynamic>{
+          "id": step.id,
+          "name": step.name,
+          "description": step.description,
+          "index": i+1,
+          "proofType": step.proofType,
+          "proofDescription": step.proofDescription
+        });
+      }
+    }
+
+    return true;
+  }
+
   void _onAddNewStep() {
     if (_formKey.currentState != null && !_formKey.currentState!.validate()) return;
 
@@ -122,6 +155,7 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
       name: "",
       description: "",
       index: _steps.length + 1,
+      proofType: BuildOnStepProofType.comment,
       proofDescription: ""
     );
 
