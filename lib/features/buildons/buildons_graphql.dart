@@ -8,7 +8,9 @@ query buildons {
     annexeUrl,
     rewards,
     steps {
+      id,
       name,
+      description,
       index
     }
   }

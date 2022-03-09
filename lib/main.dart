@@ -7,6 +7,7 @@ import 'package:buildup/core/widgets/splash_screen.dart';
 import 'package:buildup/features/authentication/app_user_controller.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
 import 'package:buildup/features/authentication/authentication_page.dart';
+import 'package:buildup/features/main_page/builder_main_page.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/main_page/admin_main_page.dart';
 import 'package:buildup/theme/bu_theme.dart';
@@ -67,6 +68,10 @@ class MyApp extends ConsumerWidget {
                     return const AdminMainPage();
                   }
     
+                  if (appUser.role == UserRoles.builder) {
+                    return const BuilderMainPage();
+                  }
+
                   return const BuStatusMessage(
                     type: BuStatusMessageType.info,
                     message: "Il semblerais que votre rôle ne soit pas reconnu. Vous n'auriez jamais du voir ce message, veuillez contacter notre équipe !",

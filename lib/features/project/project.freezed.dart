@@ -22,7 +22,7 @@ Project _$ProjectFromJson(Map<String, dynamic> json) {
 class _$ProjectTearOff {
   const _$ProjectTearOff();
 
-  _Project call(
+  _Project call(String? id,
       {required String name,
       required String description,
       String? keywords,
@@ -30,8 +30,10 @@ class _$ProjectTearOff {
       String? team,
       DateTime? launchDate,
       bool? isLucarative,
-      bool? isOfficialyRegistered}) {
+      bool? isOfficialyRegistered,
+      List<Proof>? proofs}) {
     return _Project(
+      id,
       name: name,
       description: description,
       keywords: keywords,
@@ -40,6 +42,7 @@ class _$ProjectTearOff {
       launchDate: launchDate,
       isLucarative: isLucarative,
       isOfficialyRegistered: isOfficialyRegistered,
+      proofs: proofs,
     );
   }
 
@@ -53,6 +56,7 @@ const $Project = _$ProjectTearOff();
 
 /// @nodoc
 mixin _$Project {
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String? get keywords => throw _privateConstructorUsedError;
@@ -61,6 +65,7 @@ mixin _$Project {
   DateTime? get launchDate => throw _privateConstructorUsedError;
   bool? get isLucarative => throw _privateConstructorUsedError;
   bool? get isOfficialyRegistered => throw _privateConstructorUsedError;
+  List<Proof>? get proofs => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,14 +77,16 @@ abstract class $ProjectCopyWith<$Res> {
   factory $ProjectCopyWith(Project value, $Res Function(Project) then) =
       _$ProjectCopyWithImpl<$Res>;
   $Res call(
-      {String name,
+      {String? id,
+      String name,
       String description,
       String? keywords,
       String? categorie,
       String? team,
       DateTime? launchDate,
       bool? isLucarative,
-      bool? isOfficialyRegistered});
+      bool? isOfficialyRegistered,
+      List<Proof>? proofs});
 }
 
 /// @nodoc
@@ -92,6 +99,7 @@ class _$ProjectCopyWithImpl<$Res> implements $ProjectCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? keywords = freezed,
@@ -100,8 +108,13 @@ class _$ProjectCopyWithImpl<$Res> implements $ProjectCopyWith<$Res> {
     Object? launchDate = freezed,
     Object? isLucarative = freezed,
     Object? isOfficialyRegistered = freezed,
+    Object? proofs = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -134,6 +147,10 @@ class _$ProjectCopyWithImpl<$Res> implements $ProjectCopyWith<$Res> {
           ? _value.isOfficialyRegistered
           : isOfficialyRegistered // ignore: cast_nullable_to_non_nullable
               as bool?,
+      proofs: proofs == freezed
+          ? _value.proofs
+          : proofs // ignore: cast_nullable_to_non_nullable
+              as List<Proof>?,
     ));
   }
 }
@@ -144,14 +161,16 @@ abstract class _$ProjectCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       __$ProjectCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String name,
+      {String? id,
+      String name,
       String description,
       String? keywords,
       String? categorie,
       String? team,
       DateTime? launchDate,
       bool? isLucarative,
-      bool? isOfficialyRegistered});
+      bool? isOfficialyRegistered,
+      List<Proof>? proofs});
 }
 
 /// @nodoc
@@ -165,6 +184,7 @@ class __$ProjectCopyWithImpl<$Res> extends _$ProjectCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? keywords = freezed,
@@ -173,8 +193,13 @@ class __$ProjectCopyWithImpl<$Res> extends _$ProjectCopyWithImpl<$Res>
     Object? launchDate = freezed,
     Object? isLucarative = freezed,
     Object? isOfficialyRegistered = freezed,
+    Object? proofs = freezed,
   }) {
     return _then(_Project(
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -207,6 +232,10 @@ class __$ProjectCopyWithImpl<$Res> extends _$ProjectCopyWithImpl<$Res>
           ? _value.isOfficialyRegistered
           : isOfficialyRegistered // ignore: cast_nullable_to_non_nullable
               as bool?,
+      proofs: proofs == freezed
+          ? _value.proofs
+          : proofs // ignore: cast_nullable_to_non_nullable
+              as List<Proof>?,
     ));
   }
 }
@@ -214,7 +243,7 @@ class __$ProjectCopyWithImpl<$Res> extends _$ProjectCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Project with DiagnosticableTreeMixin implements _Project {
-  const _$_Project(
+  const _$_Project(this.id,
       {required this.name,
       required this.description,
       this.keywords,
@@ -222,11 +251,14 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
       this.team,
       this.launchDate,
       this.isLucarative,
-      this.isOfficialyRegistered});
+      this.isOfficialyRegistered,
+      this.proofs});
 
   factory _$_Project.fromJson(Map<String, dynamic> json) =>
       _$$_ProjectFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String name;
   @override
@@ -243,10 +275,12 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
   final bool? isLucarative;
   @override
   final bool? isOfficialyRegistered;
+  @override
+  final List<Proof>? proofs;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Project(name: $name, description: $description, keywords: $keywords, categorie: $categorie, team: $team, launchDate: $launchDate, isLucarative: $isLucarative, isOfficialyRegistered: $isOfficialyRegistered)';
+    return 'Project(id: $id, name: $name, description: $description, keywords: $keywords, categorie: $categorie, team: $team, launchDate: $launchDate, isLucarative: $isLucarative, isOfficialyRegistered: $isOfficialyRegistered, proofs: $proofs)';
   }
 
   @override
@@ -254,6 +288,7 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Project'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('keywords', keywords))
@@ -261,8 +296,8 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
       ..add(DiagnosticsProperty('team', team))
       ..add(DiagnosticsProperty('launchDate', launchDate))
       ..add(DiagnosticsProperty('isLucarative', isLucarative))
-      ..add(
-          DiagnosticsProperty('isOfficialyRegistered', isOfficialyRegistered));
+      ..add(DiagnosticsProperty('isOfficialyRegistered', isOfficialyRegistered))
+      ..add(DiagnosticsProperty('proofs', proofs));
   }
 
   @override
@@ -270,6 +305,7 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Project &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
@@ -281,12 +317,14 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
             const DeepCollectionEquality()
                 .equals(other.isLucarative, isLucarative) &&
             const DeepCollectionEquality()
-                .equals(other.isOfficialyRegistered, isOfficialyRegistered));
+                .equals(other.isOfficialyRegistered, isOfficialyRegistered) &&
+            const DeepCollectionEquality().equals(other.proofs, proofs));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(keywords),
@@ -294,7 +332,8 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
       const DeepCollectionEquality().hash(team),
       const DeepCollectionEquality().hash(launchDate),
       const DeepCollectionEquality().hash(isLucarative),
-      const DeepCollectionEquality().hash(isOfficialyRegistered));
+      const DeepCollectionEquality().hash(isOfficialyRegistered),
+      const DeepCollectionEquality().hash(proofs));
 
   @JsonKey(ignore: true)
   @override
@@ -308,7 +347,7 @@ class _$_Project with DiagnosticableTreeMixin implements _Project {
 }
 
 abstract class _Project implements Project {
-  const factory _Project(
+  const factory _Project(String? id,
       {required String name,
       required String description,
       String? keywords,
@@ -316,10 +355,13 @@ abstract class _Project implements Project {
       String? team,
       DateTime? launchDate,
       bool? isLucarative,
-      bool? isOfficialyRegistered}) = _$_Project;
+      bool? isOfficialyRegistered,
+      List<Proof>? proofs}) = _$_Project;
 
   factory _Project.fromJson(Map<String, dynamic> json) = _$_Project.fromJson;
 
+  @override
+  String? get id;
   @override
   String get name;
   @override
@@ -336,6 +378,8 @@ abstract class _Project implements Project {
   bool? get isLucarative;
   @override
   bool? get isOfficialyRegistered;
+  @override
+  List<Proof>? get proofs;
   @override
   @JsonKey(ignore: true)
   _$ProjectCopyWith<_Project> get copyWith =>

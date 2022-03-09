@@ -34,6 +34,31 @@ query GetDetailledUser($id: ID!) {
 }
 ''';
 
+const qGetUserWithProofs = r'''
+query userWithProof($id: ID) {
+  user(id: $id) {
+    id,
+    email,
+    firstName,
+    lastName,
+    role,
+    description,
+    builder {
+      project {
+        name,
+        description,
+        proofs {
+          id,
+          stepID,
+          type,
+          status,
+        }
+      }
+    }
+  }
+}
+''';
+
 const mUserUpdateStepStatus = r'''
 mutation updateUserStepStatus($id: ID!, $step: String, $status: String) {
   updateUser(

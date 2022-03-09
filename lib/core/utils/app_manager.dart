@@ -10,4 +10,6 @@ class AppManager {
   // ADMIN KEYS
   final GlobalKey<NavigatorState> adminActiveMembersKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> adminBuildOnEditKey = GlobalKey<NavigatorState>();
+
+  final GlobalKey<NavigatorState> buildOnsKey = GlobalKey<NavigatorState>();
 }
