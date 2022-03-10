@@ -7,6 +7,8 @@ part 'proof.g.dart';
 mixin ProofStatus {
   static const completed = "VALIDATED";
   static const waiting = "WAITING";
+  static const waitingAdmin = "WAITING_ADMIN";
+  static const waitingCoach = "WAITING_COACH";
 }
 
 @immutable

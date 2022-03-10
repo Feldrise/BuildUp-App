@@ -34,6 +34,38 @@ query GetDetailledUser($id: ID!) {
 }
 ''';
 
+const String qGetCoachUser = r'''
+query coachUser {
+  user {
+    id,
+    email,
+    firstName,
+    lastName,
+    role,
+    description,
+    coach {
+      builders {
+        id,
+        email,
+        firstName,
+        lastName,
+        role,
+        status,
+        step,
+        situation,
+        description,
+        builder {
+          project {
+            name,
+            description
+          }
+        }
+      }
+    }
+  }
+}
+''';
+
 const qGetUserWithProofs = r'''
 query userWithProof($id: ID) {
   user(id: $id) {

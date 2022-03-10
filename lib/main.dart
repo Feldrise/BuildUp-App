@@ -8,6 +8,7 @@ import 'package:buildup/features/authentication/app_user_controller.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
 import 'package:buildup/features/authentication/authentication_page.dart';
 import 'package:buildup/features/main_page/builder_main_page.dart';
+import 'package:buildup/features/main_page/widgets/coach_main_page.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/main_page/admin_main_page.dart';
 import 'package:buildup/theme/bu_theme.dart';
@@ -40,7 +41,7 @@ class MyApp extends ConsumerWidget {
       child: MaterialApp(
         title: 'BuildUp',
         navigatorKey: AppManager.instance.appNavigatorKey,
-        theme: BuTheme.theme(context),
+        theme: BuTheme.themeDark(context),
         home: GraphQLConsumer(
           builder: (client) => FutureBuilder<dynamic>(
             future: Init.instance.initialize(client, ref),
@@ -70,6 +71,10 @@ class MyApp extends ConsumerWidget {
     
                   if (appUser.role == UserRoles.builder) {
                     return const BuilderMainPage();
+                  }
+
+                  if (appUser.role == UserRoles.coach) {
+                    return const CoachMainPage();
                   }
 
                   return const BuStatusMessage(

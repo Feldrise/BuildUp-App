@@ -11,5 +11,9 @@ class AppManager {
   final GlobalKey<NavigatorState> adminActiveMembersKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> adminBuildOnEditKey = GlobalKey<NavigatorState>();
 
+  // COACHS KEYS
+  final GlobalKey<NavigatorState> coachBuildersKey = GlobalKey<NavigatorState>();
+
+  // GENERIC KEYS
   final GlobalKey<NavigatorState> buildOnsKey = GlobalKey<NavigatorState>();
 }

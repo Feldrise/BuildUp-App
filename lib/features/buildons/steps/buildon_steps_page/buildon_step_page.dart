@@ -57,7 +57,43 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
         _shouldRefetch = true;
       }
     );
-  }
+  } 
+
+  MutationOptions<dynamic> _valudateProofMutationOptions() {
+    return MutationOptions<dynamic>(
+      document: gql(qMutValidateProof),
+      onError: (error) {
+        _isSuccessfull = false;
+        _statusMessage = "Nous n'arrivons pas à accépter la preuve...";
+        _shouldRefetch = false; 
+      },
+      onCompleted: (dynamic data) {
+        if (data == null) return;
+
+        _isSuccessfull = true;
+        _statusMessage = "La preuve a bien été refusé";
+        _shouldRefetch = true;
+      }
+    );
+  } 
+
+  MutationOptions<dynamic> _refuseProofMutationOptions() {
+    return MutationOptions<dynamic>(
+      document: gql(qMutRefuseProof),
+      onError: (error) {
+        _isSuccessfull = false;
+        _statusMessage = "Nous n'arrivons pas à refuser la preuve...";
+        _shouldRefetch = false; 
+      },
+      onCompleted: (dynamic data) {
+        if (data == null) return;
+
+        _isSuccessfull = true;
+        _statusMessage = "La preuve a bien été refusé";
+        _shouldRefetch = true;
+      }
+    );
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -68,65 +104,88 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
       body: Mutation<dynamic>(
         options: _submitProofMutationOptions(),
         builder: (submitRunMutation, submitMutationResult) {
-          return Query<dynamic>(
-            options: _userOptions(),
-            builder: (userResult, {fetchMore, refetch}) {
-              if (_shouldRefetch && refetch != null) {
-                refetch();
-                _shouldRefetch = false;
-              }
+          return Mutation<dynamic>(
+            options: _valudateProofMutationOptions(),
+            builder: (validateRunMutation, validateMutationResult) {
+              return Mutation<dynamic>(
+                options: _refuseProofMutationOptions(),
+                builder: (refuseRunMutation, refuseMutationResult) {
+                  return Query<dynamic>(
+                    options: _userOptions(),
+                    builder: (userResult, {fetchMore, refetch}) {
+                      if (_shouldRefetch && refetch != null) {
+                        refetch();
+                        _shouldRefetch = false;
+                      }
 
-              if ((submitMutationResult?.isLoading ?? false)|| userResult.isLoading) {
-                return const Center(child: CircularProgressIndicator(),);
-              }
+                      if (
+                        (submitMutationResult?.isLoading ?? false) || 
+                        (validateMutationResult?.isLoading ?? false) || 
+                        (refuseMutationResult?.isLoading ?? false) || 
+                        userResult.isLoading
+                      ) {
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
 
-              if (userResult.hasException) {
-                return const Align(
-                alignment: Alignment.topLeft,
-                  child: BuStatusMessage(
-                    message: "Nous n'arrivons pas à charger les informations utilisateur .",
-                  ),
-                );
-              }
-              
-              final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
-              final Map<String, Proof> proofs = _proofsToMap(user.builder!.project!.proofs!);
-            
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: ScreenUtils.instance.horizontalPadding,
-                    right: ScreenUtils.instance.horizontalPadding,
-                    top: 30,
-                  ),
-                  constraints: const BoxConstraints(maxWidth: 850),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // We may show a message if needed
-                      if (_statusMessage.isNotEmpty) ...{
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: ScreenUtils.instance.horizontalPadding
-                          ),
+                      if (userResult.hasException) {
+                        return const Align(
+                        alignment: Alignment.topLeft,
                           child: BuStatusMessage(
-                            type: _isSuccessfull ? BuStatusMessageType.success : BuStatusMessageType.error,
-                            message: _statusMessage,
+                            message: "Nous n'arrivons pas à charger les informations utilisateur .",
+                          ),
+                        );
+                      }
+                      
+                      final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
+                      final Map<String, Proof> proofs = _proofsToMap(user.builder!.project!.proofs!);
+                    
+                      return SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: ScreenUtils.instance.horizontalPadding,
+                            right: ScreenUtils.instance.horizontalPadding,
+                            top: 30,
+                          ),
+                          constraints: const BoxConstraints(maxWidth: 850),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // We may show a message if needed
+                              if (_statusMessage.isNotEmpty) ...{
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 20,
+                                    horizontal: ScreenUtils.instance.horizontalPadding
+                                  ),
+                                  child: BuStatusMessage(
+                                    type: _isSuccessfull ? BuStatusMessageType.success : BuStatusMessageType.error,
+                                    message: _statusMessage,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              },
+
+                              // The buildon infos
+                              Flexible(child: BuildOnDetail(buildOn: widget.buildOn,)),
+
+                              // The stepper
+                              Flexible(
+                                child: _buildStepper(
+                                  proofs, 
+                                  user.builder!.project!.id!, 
+                                  submitRunMutation,
+                                  refuseRunMutation,
+                                  validateRunMutation,
+                                )
+                              )
+                            ], 
                           ),
                         ),
-                        const SizedBox(height: 20),
-                      },
-
-                      // The buildon infos
-                      Flexible(child: BuildOnDetail(buildOn: widget.buildOn,)),
-
-                      // The stepper
-                      Flexible(child: _buildStepper(proofs, user.builder!.project!.id!, submitRunMutation))
-                    ], 
-                  ),
-                ),
+                      );
+                    }
+                  );
+                }
               );
             }
           );
@@ -135,8 +194,20 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
     );
   }
 
-  Widget _buildStepper(Map<String, Proof> proofs, String projectID, RunMutation submitProofRunMutation) {
-    final List<StepperStep> steps = _stepperStep(proofs, projectID, submitProofRunMutation);
+  Widget _buildStepper(
+    Map<String, Proof> proofs, 
+    String projectID, 
+    RunMutation submitProofRunMutation,
+    RunMutation refuseProofRunMutation,
+    RunMutation validateProofRunMutation,
+  ) {
+    final List<StepperStep> steps = _stepperStep(
+      proofs, 
+      projectID, 
+      submitProofRunMutation,
+      refuseProofRunMutation,
+      validateProofRunMutation,
+    );
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -148,7 +219,13 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
     );
   }
 
-  List<StepperStep> _stepperStep(Map<String, Proof> proofs, String projectID, RunMutation submitProofRunMutation) {
+  List<StepperStep> _stepperStep(
+    Map<String, Proof> proofs, 
+    String projectID, 
+    RunMutation submitProofRunMutation, 
+    RunMutation refuseProofRunMutation,
+    RunMutation validateRunMutation,
+  ) {
     final List<StepperStep> result = [];
 
     for (int i = 0; i < widget.buildOn.steps.length; ++i) {
@@ -170,7 +247,15 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
         index: i + 1,
         isLast: isLast,
         state: state,
-        child: BuildOnStepStepperDetail(step: step, associatedProof: proofs[step.id], projectID: projectID, submitProofRunMutation: submitProofRunMutation,),
+        child: BuildOnStepStepperDetail(
+          step: step, 
+          associatedProof: proofs[step.id], 
+          projectID: projectID, 
+          submitProofRunMutation: submitProofRunMutation,
+          refuseProofRunMutation: refuseProofRunMutation,
+          validateProofRunMutation: validateRunMutation,
+          isBuilder: widget.builderId == null,
+        ),
         previousColor: i > 0 ? Palette.colorSuccess : null,
       ));
 

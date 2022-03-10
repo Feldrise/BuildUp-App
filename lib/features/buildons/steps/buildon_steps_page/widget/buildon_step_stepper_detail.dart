@@ -1,8 +1,11 @@
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
+import 'package:buildup/features/authentication/authentication_graphql.dart';
 import 'package:buildup/features/buildons/steps/buildon_step.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_page/dialog/buildon_step_send_dialog.dart';
+import 'package:buildup/features/buildons/steps/buildon_steps_page/dialog/buildon_step_validation_dialog.dart';
 import 'package:buildup/features/project/proofs/proof.dart';
+import 'package:buildup/features/users/user.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -13,6 +16,9 @@ class BuildOnStepStepperDetail extends StatelessWidget {
     required this.step,
     required this.projectID,
     required this.submitProofRunMutation,
+    required this.refuseProofRunMutation,
+    required this.validateProofRunMutation,
+    required this.isBuilder,
     this.associatedProof,
   }) : super(key: key);
 
@@ -20,7 +26,11 @@ class BuildOnStepStepperDetail extends StatelessWidget {
   final String projectID;
   final Proof? associatedProof;
 
+  final bool isBuilder;
+
   final RunMutation submitProofRunMutation;
+  final RunMutation refuseProofRunMutation;
+  final RunMutation validateProofRunMutation;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +133,7 @@ class BuildOnStepStepperDetail extends StatelessWidget {
       );
     }
 
-    if (associatedProof?.status == ProofStatus.waiting) {
+    if (associatedProof?.status.contains(ProofStatus.waiting) ?? false) {
       return Row(
         children: const [
           // The icon
@@ -150,7 +160,7 @@ class BuildOnStepStepperDetail extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context) {
-    if (associatedProof == null) {
+    if (associatedProof == null && isBuilder) {
       return TextButton(
         onPressed: () => _openSendProofDialog(context),
         child: Row(
@@ -164,7 +174,46 @@ class BuildOnStepStepperDetail extends StatelessWidget {
       );
     }
 
+    if (!isBuilder && (associatedProof?.status.contains(ProofStatus.waiting) ?? false)) {
+      if (associatedProof?.status == ProofStatus.waiting) {
+        return _buildValidateButton(context);
+      }
+
+      return Query<dynamic>(
+        options: QueryOptions<dynamic>(
+          document: gql(qGetLoggedUser),
+        ),
+        builder: (result, {fetchMore, refetch}) {
+          final User appUser = User.fromJson(result.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
+
+          if (appUser.role == UserRoles.admin && associatedProof?.status == ProofStatus.waitingAdmin) {
+            return _buildValidateButton(context);
+          }
+          
+          if (appUser.role == UserRoles.coach && associatedProof?.status == ProofStatus.waitingCoach) {
+            return _buildValidateButton(context);
+          }
+
+          return Container();
+        }
+      );
+    }
+
     return Container();
+  }
+
+  Widget _buildValidateButton(BuildContext context) {
+    return TextButton(
+      onPressed: () => _openValidateProofDialog(context),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text("Voir la preuve à valider"),
+          SizedBox(width: 8,),
+          Icon(Icons.chevron_right)
+        ],
+      ),
+    );
   }
 
   Future _openSendProofDialog(BuildContext context) async {
@@ -179,6 +228,29 @@ class BuildOnStepStepperDetail extends StatelessWidget {
         "stepID": step.id,
         "type": proof.type,
         "comment": proof.comment
+      });
+    }
+  }
+
+  Future _openValidateProofDialog(BuildContext context) async {
+    final bool? validate = await showDialog<bool?>(
+      context: context,
+      builder: (context) => BuildOnStepValidationDialog(
+        step: step, 
+        proof: associatedProof!,
+      ) 
+    );
+
+    if (validate == null) return;
+
+    if (validate) {
+      validateProofRunMutation(<String, dynamic>{
+        "proofID": associatedProof?.id
+      });
+    } 
+    else {
+      refuseProofRunMutation(<String, dynamic>{
+        "proofID": associatedProof?.id
       });
     }
   }
