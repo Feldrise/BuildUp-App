@@ -40,7 +40,7 @@ class MyApp extends ConsumerWidget {
       child: MaterialApp(
         title: 'BuildUp',
         navigatorKey: AppManager.instance.appNavigatorKey,
-        theme: BuTheme.themeDark(context),
+        theme: BuTheme.theme(context),
         home: GraphQLConsumer(
           builder: (client) => FutureBuilder<dynamic>(
             future: Init.instance.initialize(client, ref),

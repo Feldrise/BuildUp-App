@@ -6,6 +6,7 @@ part 'buildon_step.g.dart';
 
 mixin BuildOnStepProofType {
   static const comment = "COMMENT";
+  static const link = "LINK";
   static const file = "FILE";
 
   static const Map<String, String> detailled = {

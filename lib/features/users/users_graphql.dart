@@ -45,12 +45,14 @@ query userWithProof($id: ID) {
     description,
     builder {
       project {
+        id,
         name,
         description,
         proofs {
           id,
           stepID,
           type,
+          comment,
           status,
         }
       }

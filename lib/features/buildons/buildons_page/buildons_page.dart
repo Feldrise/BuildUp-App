@@ -188,7 +188,7 @@ class BuildOnsPage extends ConsumerWidget {
   Future _openBuildOn(BuildContext context, BuildOn buildOn, Project project) async {
     await Navigator.of(context).push<dynamic>(
       MaterialPageRoute<dynamic>(
-        builder: (context) => BuildOnStepPage(buildOn: buildOn, project: project),
+        builder: (context) => BuildOnStepPage(buildOn: buildOn, builderId: builderId,),
       )
     );
   }

@@ -73,7 +73,7 @@ class _MainPageState extends State<MainPage> {
                   : null,
                   body: Theme(
                     data: Theme.of(context).copyWith(
-                      appBarTheme: BuTheme.themeSecondAppBarDark(context)
+                      appBarTheme: BuTheme.themeSecondAppBar(context)
                     ),
                     child: widget.pages[_currentIndex]
                   ),

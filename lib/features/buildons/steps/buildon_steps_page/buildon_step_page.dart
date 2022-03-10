@@ -1,49 +1,62 @@
 import 'package:buildup/core/utils/screen_utils.dart';
+import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/features/buildons/buildon.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_page/widget/buildon_detail.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_page/widget/buildon_step_stepper_detail.dart';
 import 'package:buildup/features/buildons/widgets/buildon_locked_detail.dart';
 import 'package:buildup/features/buildons/widgets/stepper_step.dart';
-import 'package:buildup/features/project/project.dart';
+import 'package:buildup/features/project/project_graphql.dart';
 import 'package:buildup/features/project/proofs/proof.dart';
+import 'package:buildup/features/users/user.dart';
+import 'package:buildup/features/users/users_graphql.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class BuildOnStepPage extends StatefulWidget {
   const BuildOnStepPage({
     Key? key,
     required this.buildOn,
-    required this.project,
+    this.builderId,
   }) : super(key: key);
 
   final BuildOn buildOn;
-  final Project project;
+  final String? builderId;
 
   @override
   State<BuildOnStepPage> createState() => _BuildOnStepPageState();
 }
 
 class _BuildOnStepPageState extends State<BuildOnStepPage> {
-  final Map<String, Proof> _proofs = {};
+  String _statusMessage = "";
+  bool _isSuccessfull = true;
+  bool _shouldRefetch = false;
 
-  void _initialize() {
-    for (final proof in widget.project.proofs!) {
-      _proofs[proof.stepID] = proof;
-    }
+  QueryOptions<dynamic> _userOptions() {
+    return QueryOptions<dynamic>(
+      document: gql(qGetUserWithProofs),
+      variables: <String, dynamic>{
+        "id": widget.builderId
+      }
+    );
   }
 
-  @override
-  void initState() {
-    super.initState();
+  MutationOptions<dynamic> _submitProofMutationOptions() {
+    return MutationOptions<dynamic>(
+      document: gql(qMutSubmitProof),
+      onError: (error) {
+        _isSuccessfull = false;
+        _statusMessage = "Nous n'arrivons pas à soumettre votre preuve...";
+        _shouldRefetch = false; 
+      },
+      onCompleted: (dynamic data) {
+        if (data == null) return;
 
-    _initialize();
-  }
-
-  @override
-  void didUpdateWidget(covariant BuildOnStepPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _initialize();
+        _isSuccessfull = true;
+        _statusMessage = "Votre preuve a bien été envoyé !";
+        _shouldRefetch = true;
+      }
+    );
   }
 
   @override
@@ -52,32 +65,78 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
       appBar: AppBar(
         title: Text(widget.buildOn.name),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(
-            left: ScreenUtils.instance.horizontalPadding,
-            right: ScreenUtils.instance.horizontalPadding,
-            top: 30,
-          ),
-          constraints: const BoxConstraints(maxWidth: 850),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // The buildon infos
-              Flexible(child: BuildOnDetail(buildOn: widget.buildOn,)),
+      body: Mutation<dynamic>(
+        options: _submitProofMutationOptions(),
+        builder: (submitRunMutation, submitMutationResult) {
+          return Query<dynamic>(
+            options: _userOptions(),
+            builder: (userResult, {fetchMore, refetch}) {
+              if (_shouldRefetch && refetch != null) {
+                refetch();
+                _shouldRefetch = false;
+              }
 
-              // The stepper
-              Flexible(child: _buildStepper())
-            ], 
-          ),
-        ),
+              if ((submitMutationResult?.isLoading ?? false)|| userResult.isLoading) {
+                return const Center(child: CircularProgressIndicator(),);
+              }
+
+              if (userResult.hasException) {
+                return const Align(
+                alignment: Alignment.topLeft,
+                  child: BuStatusMessage(
+                    message: "Nous n'arrivons pas à charger les informations utilisateur .",
+                  ),
+                );
+              }
+              
+              final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
+              final Map<String, Proof> proofs = _proofsToMap(user.builder!.project!.proofs!);
+            
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: ScreenUtils.instance.horizontalPadding,
+                    right: ScreenUtils.instance.horizontalPadding,
+                    top: 30,
+                  ),
+                  constraints: const BoxConstraints(maxWidth: 850),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // We may show a message if needed
+                      if (_statusMessage.isNotEmpty) ...{
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: ScreenUtils.instance.horizontalPadding
+                          ),
+                          child: BuStatusMessage(
+                            type: _isSuccessfull ? BuStatusMessageType.success : BuStatusMessageType.error,
+                            message: _statusMessage,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      },
+
+                      // The buildon infos
+                      Flexible(child: BuildOnDetail(buildOn: widget.buildOn,)),
+
+                      // The stepper
+                      Flexible(child: _buildStepper(proofs, user.builder!.project!.id!, submitRunMutation))
+                    ], 
+                  ),
+                ),
+              );
+            }
+          );
+        }
       ),
     );
   }
 
-  Widget _buildStepper() {
-    final List<StepperStep> steps = _stepperStep();
+  Widget _buildStepper(Map<String, Proof> proofs, String projectID, RunMutation submitProofRunMutation) {
+    final List<StepperStep> steps = _stepperStep(proofs, projectID, submitProofRunMutation);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -89,14 +148,14 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
     );
   }
 
-  List<StepperStep> _stepperStep() {
+  List<StepperStep> _stepperStep(Map<String, Proof> proofs, String projectID, RunMutation submitProofRunMutation) {
     final List<StepperStep> result = [];
 
     for (int i = 0; i < widget.buildOn.steps.length; ++i) {
       final step = widget.buildOn.steps[i];
       final bool isLast = i == widget.buildOn.steps.length - 1;
-      final bool isCompleted = _proofs[step.id]?.status == ProofStatus.completed;
-      final bool isWaitingForValidation = _proofs[step.id]?.status == ProofStatus.waiting;
+      final bool isCompleted = proofs[step.id]?.status == ProofStatus.completed;
+      final bool isWaitingForValidation = proofs[step.id]?.status == ProofStatus.waiting;
 
       StepperStepState state = StepperStepState.waiting;
 
@@ -111,7 +170,7 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
         index: i + 1,
         isLast: isLast,
         state: state,
-        child: BuildOnStepStepperDetail(step: step, associatedProof: _proofs[step.id],),
+        child: BuildOnStepStepperDetail(step: step, associatedProof: proofs[step.id], projectID: projectID, submitProofRunMutation: submitProofRunMutation,),
         previousColor: i > 0 ? Palette.colorSuccess : null,
       ));
 
@@ -127,6 +186,16 @@ class _BuildOnStepPageState extends State<BuildOnStepPage> {
 
         break;
       }
+    }
+
+    return result;
+  }
+
+  Map<String, Proof> _proofsToMap(List<Proof> proofs) {
+    final Map<String, Proof> result = {};
+
+    for (final proof in proofs) {
+      result[proof.stepID] = proof;
     }
 
     return result;

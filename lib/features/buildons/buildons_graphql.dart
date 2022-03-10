@@ -11,6 +11,8 @@ query buildons {
       id,
       name,
       description,
+      proofDescription,
+      proofType,
       index
     }
   }
