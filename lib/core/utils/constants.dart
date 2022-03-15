@@ -5,3 +5,9 @@ const List<String> kProjectCategories = [
   "Informatique",
   "Voyage",
 ];
+
+const List<String> kSituations = [
+  "Siuation Inconnue",
+  "Alternant",
+  "Fée",
+];

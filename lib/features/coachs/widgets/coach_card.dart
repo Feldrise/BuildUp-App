@@ -1,15 +1,19 @@
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/features/users/user.dart';
+import 'package:buildup/features/users/user_profile_page.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class CoachCard extends StatelessWidget {
   const CoachCard({
     Key? key,
-    required this.coach
+    required this.coach,
+    required this.refetch,
   }) : super(key: key);
 
   final User coach;
+  final Refetch? refetch;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class CoachCard extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: OutlinedButton(
-              onPressed: _onProfileClicked,
+              onPressed: () => _onProfileClicked(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -109,7 +113,19 @@ class CoachCard extends StatelessWidget {
     );
   }
 
-  Future _onProfileClicked() async {
+  Future _onProfileClicked(BuildContext context) async {
+    bool shouldRefetch = await Navigator.of(context).push<bool?>(
+      MaterialPageRoute<bool?>(
+        builder: (context) => UserProfilePage(
+          userId: coach.id!,
+          appBarTitle: "Coach : ${coach.firstName} ${coach.lastName}",
+        ),
+      )
+    ) ?? false;
 
+    if (shouldRefetch && refetch != null) {
+      refetch!();
+    }
   }
+
 }

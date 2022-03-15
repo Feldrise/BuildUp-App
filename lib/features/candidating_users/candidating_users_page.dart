@@ -1,5 +1,6 @@
 import 'package:buildup/core/widgets/tab_widget/bu_tab_widget.dart';
 import 'package:buildup/features/builders/candidating_builders_page.dart';
+import 'package:buildup/features/coachs/candidating_coachs_page.dart';
 import 'package:buildup/features/main_page/page_item.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class CandidatingUsers extends StatelessWidget {
           ],
           pages: const [
             CandidatingBuildersPage(),
-            Center(child: Text("Candidating Coachs"),)
+            CandidatingCoachsPage(),
           ]
         )
       ),

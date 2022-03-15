@@ -1,6 +1,7 @@
 import 'package:buildup/core/widgets/dialogs/closable_dialog.dart';
 import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
 import 'package:buildup/features/builders/bu_builder.dart';
+import 'package:buildup/features/coachs/coach.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:flutter/material.dart';
 
@@ -121,7 +122,7 @@ class _UserCandidatingDialogState extends State<UserCandidatingDialog> {
                 child: BuDropdown<String>(
                   items: widget.user.role == UserRoles.builder 
                     ? BuilderSteps.detailled
-                    : <String, String>{}, // TODO: put coach steps
+                    : CoachSteps.detailled, 
                   currentValue: _currentUserStep,
                   label: "étape",
                   onChanged: (value) {

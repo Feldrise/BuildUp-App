@@ -55,7 +55,7 @@ class ActiveCoachsPage extends StatelessWidget {
             shrinkWrap: true,
             children: [
                 for (final coach in coachs)
-                  CoachCard(coach: coach)
+                  CoachCard(coach: coach, refetch: refetch,)
             ],
           );
         },

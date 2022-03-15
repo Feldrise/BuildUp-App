@@ -1,3 +1,4 @@
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/core/widgets/inputs/bu_datefield.dart';
 import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
@@ -296,9 +297,9 @@ class _UserProfileCardFormState extends State<UserProfileCardForm> {
           child: BuDropdown<String>(
             label: "Situation",
             currentValue: _currentSituation,
-            items: const {
-              "Siuation Inconnue": "Situation Inconnue",
-              "Fée": "Fée"
+            items: {
+              for (final situation in kSituations) 
+                situation: situation
             },
             onChanged: (value) {
               setState(() {
