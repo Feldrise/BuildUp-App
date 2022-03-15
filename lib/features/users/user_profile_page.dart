@@ -106,8 +106,15 @@ class UserProfilePage extends StatelessWidget {
                       const SizedBox(height: 30,),
 
                       // The project if there is one
-                      if (user.builder?.project != null) 
-                        Flexible(child: ProjectCard(project: user.builder!.project!, isLoggedUser: isLoggedUser,)),
+                      if (user.builder?.project != null && isAdmin) 
+                        Flexible(child: ProjectCard(
+                          project: user.builder!.project!, 
+                          userID: user.id!,
+                          isLoggedUser: isLoggedUser,
+                          isAdmin: isAdmin,
+                          refetch: refetch,
+                        )
+                      ),
 
                       SizedBox(height: ScreenUtils.instance.horizontalPadding,),
                       

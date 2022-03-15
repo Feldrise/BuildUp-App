@@ -2,6 +2,7 @@ import 'package:buildup/core/utils/app_manager.dart';
 import 'package:buildup/features/buildons/buildons_page/buildons_page.dart';
 import 'package:buildup/features/main_page/main_page.dart';
 import 'package:buildup/features/main_page/page_item.dart';
+import 'package:buildup/features/project/project_page.dart';
 import 'package:buildup/features/users/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class BuilderMainPage extends StatelessWidget {
     // The pages
     final List<Widget> pages = [
       const UserProfilePage(userId: null,),
+      const ProjectPage(),
       ClipRect(
         child: Navigator(
           key: AppManager.instance.buildOnsKey,
@@ -33,9 +35,16 @@ class BuilderMainPage extends StatelessWidget {
         icon: Icons.account_circle
       ),
 
+      // Project
+      PageItem(
+        index: 1,
+        title: "Projet",
+        icon: Icons.work
+      ),
+
       // Build Ons
       PageItem(
-        index: 1, 
+        index: 2,
         title: "Build-Ons",
         icon: Icons.view_day
       ),
