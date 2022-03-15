@@ -95,8 +95,8 @@ class UserProfileInfo extends StatelessWidget {
                   SmallInfo(
                     title: "Date de naissance", 
                     width: 200,
-                    child: Text(user.birthday != null 
-                      ? DateFormat("dd/MM/yyyy").format(user.birthday!)
+                    child: Text(user.birthdate != null 
+                      ? DateFormat("dd/MM/yyyy").format(user.birthdate!)
                       : "Non précisée"
                     ),
                   ),

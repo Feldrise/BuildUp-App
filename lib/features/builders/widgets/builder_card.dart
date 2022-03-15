@@ -157,6 +157,21 @@ class BuilderCard extends StatelessWidget {
   }
 
   Future _onOpenRoute(BuildContext context, BuilderCardRoute route) async {
+    // If we open the profil
+    if (route == BuilderCardRoute.profile) {
+      await Navigator.of(context).push<bool?>(
+        MaterialPageRoute<bool?>(
+          builder: (context) => UserProfilePage(
+            userId: builder.id!,
+            appBarTitle: "Builder : ${builder.firstName} ${builder.lastName}",
+          ),
+        )
+      ) ?? false;
+
+      if (refetch != null) {
+        refetch!();
+      }
+    }
     // If we open the build-ons
     if (route == BuilderCardRoute.buildOns) {
       await Navigator.of(context).push<dynamic>(

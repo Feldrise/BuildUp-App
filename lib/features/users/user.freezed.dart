@@ -32,7 +32,7 @@ class _$UserTearOff {
       String step = "UNKNOWN",
       String situation = "Situation Inconnue",
       DateTime? createdAt,
-      DateTime? birthday,
+      DateTime? birthdate,
       String? address,
       String? discord,
       String? linkedin,
@@ -49,7 +49,7 @@ class _$UserTearOff {
       step: step,
       situation: situation,
       createdAt: createdAt,
-      birthday: birthday,
+      birthdate: birthdate,
       address: address,
       discord: discord,
       linkedin: linkedin,
@@ -78,7 +78,7 @@ mixin _$User {
   String get step => throw _privateConstructorUsedError;
   String get situation => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get birthday => throw _privateConstructorUsedError;
+  DateTime? get birthdate => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   String? get discord => throw _privateConstructorUsedError;
   String? get linkedin => throw _privateConstructorUsedError;
@@ -105,7 +105,7 @@ abstract class $UserCopyWith<$Res> {
       String step,
       String situation,
       DateTime? createdAt,
-      DateTime? birthday,
+      DateTime? birthdate,
       String? address,
       String? discord,
       String? linkedin,
@@ -136,7 +136,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? step = freezed,
     Object? situation = freezed,
     Object? createdAt = freezed,
-    Object? birthday = freezed,
+    Object? birthdate = freezed,
     Object? address = freezed,
     Object? discord = freezed,
     Object? linkedin = freezed,
@@ -184,9 +184,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      birthday: birthday == freezed
-          ? _value.birthday
-          : birthday // ignore: cast_nullable_to_non_nullable
+      birthdate: birthdate == freezed
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       address: address == freezed
           ? _value.address
@@ -250,7 +250,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String step,
       String situation,
       DateTime? createdAt,
-      DateTime? birthday,
+      DateTime? birthdate,
       String? address,
       String? discord,
       String? linkedin,
@@ -284,7 +284,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? step = freezed,
     Object? situation = freezed,
     Object? createdAt = freezed,
-    Object? birthday = freezed,
+    Object? birthdate = freezed,
     Object? address = freezed,
     Object? discord = freezed,
     Object? linkedin = freezed,
@@ -332,9 +332,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      birthday: birthday == freezed
-          ? _value.birthday
-          : birthday // ignore: cast_nullable_to_non_nullable
+      birthdate: birthdate == freezed
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       address: address == freezed
           ? _value.address
@@ -373,7 +373,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       this.step = "UNKNOWN",
       this.situation = "Situation Inconnue",
       this.createdAt,
-      this.birthday,
+      this.birthdate,
       this.address,
       this.discord,
       this.linkedin,
@@ -406,7 +406,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @override
   final DateTime? createdAt;
   @override
-  final DateTime? birthday;
+  final DateTime? birthdate;
   @override
   final String? address;
   @override
@@ -420,7 +420,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, description: $description, status: $status, step: $step, situation: $situation, createdAt: $createdAt, birthday: $birthday, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach)';
+    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, description: $description, status: $status, step: $step, situation: $situation, createdAt: $createdAt, birthdate: $birthdate, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach)';
   }
 
   @override
@@ -438,7 +438,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('step', step))
       ..add(DiagnosticsProperty('situation', situation))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('birthday', birthday))
+      ..add(DiagnosticsProperty('birthdate', birthdate))
       ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('discord', discord))
       ..add(DiagnosticsProperty('linkedin', linkedin))
@@ -462,7 +462,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
             const DeepCollectionEquality().equals(other.step, step) &&
             const DeepCollectionEquality().equals(other.situation, situation) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.birthday, birthday) &&
+            const DeepCollectionEquality().equals(other.birthdate, birthdate) &&
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other.discord, discord) &&
             const DeepCollectionEquality().equals(other.linkedin, linkedin) &&
@@ -483,7 +483,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(step),
       const DeepCollectionEquality().hash(situation),
       const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(birthday),
+      const DeepCollectionEquality().hash(birthdate),
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(discord),
       const DeepCollectionEquality().hash(linkedin),
@@ -512,7 +512,7 @@ abstract class _User implements User {
       String step,
       String situation,
       DateTime? createdAt,
-      DateTime? birthday,
+      DateTime? birthdate,
       String? address,
       String? discord,
       String? linkedin,
@@ -542,7 +542,7 @@ abstract class _User implements User {
   @override
   DateTime? get createdAt;
   @override
-  DateTime? get birthday;
+  DateTime? get birthdate;
   @override
   String? get address;
   @override

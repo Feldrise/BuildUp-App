@@ -19,9 +19,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      birthday: json['birthday'] == null
+      birthdate: json['birthdate'] == null
           ? null
-          : DateTime.parse(json['birthday'] as String),
+          : DateTime.parse(json['birthdate'] as String),
       address: json['address'] as String?,
       discord: json['discord'] as String?,
       linkedin: json['linkedin'] as String?,
@@ -44,7 +44,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'step': instance.step,
       'situation': instance.situation,
       'createdAt': instance.createdAt?.toIso8601String(),
-      'birthday': instance.birthday?.toIso8601String(),
+      'birthdate': instance.birthdate?.toIso8601String(),
       'address': instance.address,
       'discord': instance.discord,
       'linkedin': instance.linkedin,

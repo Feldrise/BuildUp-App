@@ -45,7 +45,7 @@ class User with _$User {
     @Default("UNKNOWN") String step,
     @Default("Situation Inconnue") String situation,
     DateTime? createdAt,
-    DateTime? birthday,
+    DateTime? birthdate,
     String? address,
     String? discord,
     String? linkedin,

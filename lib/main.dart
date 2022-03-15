@@ -23,9 +23,9 @@ void main() async {
   await HiveStore.openBox<dynamic>(HiveStore.defaultBoxName);
 
   // TODO: DEBUG ONLY
-  // const storage = FlutterSecureStorage();
-  // await storage.delete(key: "user_username");
-  // await storage.delete(key: "user_password");
+  const storage = FlutterSecureStorage();
+  await storage.delete(key: "user_username");
+  await storage.delete(key: "user_password");
 
   runApp(const ProviderScope(child: MyApp()));
 }

@@ -1,5 +1,5 @@
 const String qGetDetailedUser = r'''
-query GetDetailledUser($id: ID!) {
+query GetDetailledUser($id: ID) {
   user(id: $id) {
     id,
     email,
@@ -89,6 +89,34 @@ query userWithProof($id: ID) {
         }
       }
     }
+  }
+}
+''';
+
+const String qMutUpdateUser = r'''
+mutation updateUser(
+  $id: ID!,
+  $email: String,
+  $firstName: String,
+  $lastName: String,
+  $description: String,
+  $situation: String,
+  $discord: String,
+  $linkedin: String
+) {
+  updateUser(
+    id: $id,
+    changes: {
+      firstName: $firstName,
+      lastName: $lastName,
+      email: $email,
+      description: $description,
+      situation: $situation,
+      discord: $discord,
+      linkedin: $linkedin
+    }
+  ) {
+    id,
   }
 }
 ''';
