@@ -3,11 +3,12 @@ mutation submitProof(
   $projectID: ID!, 
   $stepID: ID!,
   $type: String!,
-  $comment: String
+  $comment: String,
+  $file: Upload,
 ) {
   submitProof(
     projectID: $projectID, 
-    input: {type: $type, stepID: $stepID, comment: $comment}) {
+    input: {type: $type, stepID: $stepID, comment: $comment, file: $file}) {
     id
   }
 }

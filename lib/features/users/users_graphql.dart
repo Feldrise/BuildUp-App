@@ -85,6 +85,9 @@ query userWithProof($id: ID) {
           stepID,
           type,
           comment,
+          file {
+            name,
+          }
           status,
         }
       }
@@ -132,6 +135,20 @@ mutation updateUserStepStatus($id: ID!, $step: String, $status: String) {
   ) {
     step,
     status
+  }
+}
+''';
+
+const String qProofWithFile = r'''
+query proofWithFile($id: ID!) {
+  proof(id: $id) {
+    stepID,
+    type,
+    status,
+    file {
+      name,
+      content
+    }
   }
 }
 ''';

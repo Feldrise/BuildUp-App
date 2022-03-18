@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
@@ -9,6 +11,7 @@ import 'package:buildup/features/users/user.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 
 class BuildOnStepStepperDetail extends StatelessWidget {
   const BuildOnStepStepperDetail({
@@ -227,7 +230,13 @@ class BuildOnStepStepperDetail extends StatelessWidget {
         "projectID": projectID,
         "stepID": step.id,
         "type": proof.type,
-        "comment": proof.comment
+        "comment": proof.comment,
+        if (proof.file != null)
+          "file": MultipartFile.fromBytes(
+            "file",
+            base64Decode(proof.file!.base64content!),
+            filename: proof.file!.filename
+          )
       });
     }
   }

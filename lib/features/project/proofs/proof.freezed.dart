@@ -26,13 +26,15 @@ class _$ProofTearOff {
       {required String stepID,
       required String type,
       required String status,
-      String? comment}) {
+      String? comment,
+      BuFile? file}) {
     return _Proof(
       id,
       stepID: stepID,
       type: type,
       status: status,
       comment: comment,
+      file: file,
     );
   }
 
@@ -51,6 +53,7 @@ mixin _$Proof {
   String get type => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String? get comment => throw _privateConstructorUsedError;
+  BuFile? get file => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +65,14 @@ abstract class $ProofCopyWith<$Res> {
   factory $ProofCopyWith(Proof value, $Res Function(Proof) then) =
       _$ProofCopyWithImpl<$Res>;
   $Res call(
-      {String? id, String stepID, String type, String status, String? comment});
+      {String? id,
+      String stepID,
+      String type,
+      String status,
+      String? comment,
+      BuFile? file});
+
+  $BuFileCopyWith<$Res>? get file;
 }
 
 /// @nodoc
@@ -80,6 +90,7 @@ class _$ProofCopyWithImpl<$Res> implements $ProofCopyWith<$Res> {
     Object? type = freezed,
     Object? status = freezed,
     Object? comment = freezed,
+    Object? file = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -102,7 +113,22 @@ class _$ProofCopyWithImpl<$Res> implements $ProofCopyWith<$Res> {
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
+      file: file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
+  }
+
+  @override
+  $BuFileCopyWith<$Res>? get file {
+    if (_value.file == null) {
+      return null;
+    }
+
+    return $BuFileCopyWith<$Res>(_value.file!, (value) {
+      return _then(_value.copyWith(file: value));
+    });
   }
 }
 
@@ -112,7 +138,15 @@ abstract class _$ProofCopyWith<$Res> implements $ProofCopyWith<$Res> {
       __$ProofCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id, String stepID, String type, String status, String? comment});
+      {String? id,
+      String stepID,
+      String type,
+      String status,
+      String? comment,
+      BuFile? file});
+
+  @override
+  $BuFileCopyWith<$Res>? get file;
 }
 
 /// @nodoc
@@ -131,6 +165,7 @@ class __$ProofCopyWithImpl<$Res> extends _$ProofCopyWithImpl<$Res>
     Object? type = freezed,
     Object? status = freezed,
     Object? comment = freezed,
+    Object? file = freezed,
   }) {
     return _then(_Proof(
       id == freezed
@@ -153,6 +188,10 @@ class __$ProofCopyWithImpl<$Res> extends _$ProofCopyWithImpl<$Res>
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
+      file: file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
   }
 }
@@ -164,7 +203,8 @@ class _$_Proof with DiagnosticableTreeMixin implements _Proof {
       {required this.stepID,
       required this.type,
       required this.status,
-      this.comment});
+      this.comment,
+      this.file});
 
   factory _$_Proof.fromJson(Map<String, dynamic> json) =>
       _$$_ProofFromJson(json);
@@ -179,10 +219,12 @@ class _$_Proof with DiagnosticableTreeMixin implements _Proof {
   final String status;
   @override
   final String? comment;
+  @override
+  final BuFile? file;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Proof(id: $id, stepID: $stepID, type: $type, status: $status, comment: $comment)';
+    return 'Proof(id: $id, stepID: $stepID, type: $type, status: $status, comment: $comment, file: $file)';
   }
 
   @override
@@ -194,7 +236,8 @@ class _$_Proof with DiagnosticableTreeMixin implements _Proof {
       ..add(DiagnosticsProperty('stepID', stepID))
       ..add(DiagnosticsProperty('type', type))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('comment', comment));
+      ..add(DiagnosticsProperty('comment', comment))
+      ..add(DiagnosticsProperty('file', file));
   }
 
   @override
@@ -206,7 +249,8 @@ class _$_Proof with DiagnosticableTreeMixin implements _Proof {
             const DeepCollectionEquality().equals(other.stepID, stepID) &&
             const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.comment, comment));
+            const DeepCollectionEquality().equals(other.comment, comment) &&
+            const DeepCollectionEquality().equals(other.file, file));
   }
 
   @override
@@ -216,7 +260,8 @@ class _$_Proof with DiagnosticableTreeMixin implements _Proof {
       const DeepCollectionEquality().hash(stepID),
       const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(comment));
+      const DeepCollectionEquality().hash(comment),
+      const DeepCollectionEquality().hash(file));
 
   @JsonKey(ignore: true)
   @override
@@ -234,7 +279,8 @@ abstract class _Proof implements Proof {
       {required String stepID,
       required String type,
       required String status,
-      String? comment}) = _$_Proof;
+      String? comment,
+      BuFile? file}) = _$_Proof;
 
   factory _Proof.fromJson(Map<String, dynamic> json) = _$_Proof.fromJson;
 
@@ -248,6 +294,8 @@ abstract class _Proof implements Proof {
   String get status;
   @override
   String? get comment;
+  @override
+  BuFile? get file;
   @override
   @JsonKey(ignore: true)
   _$ProofCopyWith<_Proof> get copyWith => throw _privateConstructorUsedError;

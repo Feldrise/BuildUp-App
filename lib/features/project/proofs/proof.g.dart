@@ -12,6 +12,9 @@ _$_Proof _$$_ProofFromJson(Map<String, dynamic> json) => _$_Proof(
       type: json['type'] as String,
       status: json['status'] as String,
       comment: json['comment'] as String?,
+      file: json['file'] == null
+          ? null
+          : BuFile.fromJson(json['file'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_ProofToJson(_$_Proof instance) => <String, dynamic>{
@@ -20,4 +23,5 @@ Map<String, dynamic> _$$_ProofToJson(_$_Proof instance) => <String, dynamic>{
       'type': instance.type,
       'status': instance.status,
       'comment': instance.comment,
+      'file': instance.file,
     };

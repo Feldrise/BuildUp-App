@@ -1,3 +1,4 @@
+import 'package:buildup/core/models/bu_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -18,7 +19,8 @@ class Proof with _$Proof {
     required String stepID,
     required String type,
     required String status,
-    String? comment
+    String? comment,
+    BuFile? file,
   }) = _Proof;
 
   factory Proof.fromJson(Map<String, dynamic> json) => _$ProofFromJson(json);
