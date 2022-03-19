@@ -23,14 +23,16 @@ mutation createBuildOnStep(
   $description: String!,
   $index: Int!,
   $proofType: String!,
-  $proofDescription: String!
+  $proofDescription: String!,
+  $image: Upload
 ) {
   createBuildOnStep(buildOnID: $buildOnID, input: {
     name: $name,
     description: $description,
     index: $index,
-    proofType: $proofType
-    proofDescription: $proofDescription
+    proofType: $proofType,
+    proofDescription: $proofDescription,
+    image: $image
   }) {
     id,
     name,
@@ -46,14 +48,16 @@ mutation updateBuildOnStep(
   $description: String!,
   $index: Int!,
   $proofType: String!,
-  $proofDescription: String!
+  $proofDescription: String!,
+  $image: Upload,
 ) {
   updateBuildOnStep(id: $id, changes: {
     name: $name,
     description: $description,
     index: $index,
-    proofType: $proofType
-    proofDescription: $proofDescription
+    proofType: $proofType,
+    proofDescription: $proofDescription,
+    image: $image
   }) {
     id,
     name,

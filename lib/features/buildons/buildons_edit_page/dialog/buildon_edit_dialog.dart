@@ -1,3 +1,6 @@
+import 'package:buildup/core/models/bu_file.dart';
+import 'package:buildup/core/utils/constants.dart';
+import 'package:buildup/core/widgets/inputs/bu_image_picker_big.dart';
 import 'package:buildup/core/widgets/inputs/bu_textfield.dart';
 import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +13,13 @@ class BuildOnEditDialog extends StatelessWidget {
     required this.descriptionTextController,
     required this.urlTextController,
     required this.rewardsTextController,
+    required this.image,
+    required this.buildOnID,
     required this.buildOnStepsCount,
     required this.onClose,
     required this.onRemove,
-    required this.onOpenSteps
+    required this.onOpenSteps,
+    required this.onImageSelected,
   }) : super(key: key);
 
   final GlobalKey<FormState> formKey;
@@ -21,12 +27,17 @@ class BuildOnEditDialog extends StatelessWidget {
   final TextEditingController descriptionTextController;
   final TextEditingController urlTextController;
   final TextEditingController rewardsTextController;
+  
+  final BuFile? image;
+
+  final String? buildOnID;
 
   final int buildOnStepsCount;
 
   final Function() onClose;
   final Function() onRemove;
   final Function() onOpenSteps;
+  final Function(BuFile) onImageSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +71,16 @@ class BuildOnEditDialog extends StatelessWidget {
 
               // The steps header
               Flexible(child: _buildStepsHeader()),
+
+              // The image picker
+              SizedBox(
+                height: 250,
+                child: BuImagePickerBig(
+                  imageURL: "$kImagesUrls/buildons/${buildOnID ?? ""}.jpg",
+                  onImageSelected: onImageSelected,
+                  imageData: image,
+                )
+              ),
 
               // The form
               Flexible(child: _buildForm(),),

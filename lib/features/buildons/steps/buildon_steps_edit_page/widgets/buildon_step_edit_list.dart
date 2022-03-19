@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:buildup/core/models/bu_file.dart';
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/features/buildons/steps/buildon_step.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/dialog/buildon_step_edit_dialog.dart';
 import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/widgets/buildon_step_edit_card.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 
 class BuildOnStepEditList extends StatefulWidget {
   const BuildOnStepEditList({
@@ -36,6 +40,8 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
 
   List<BuildOnStep> _steps = [];
 
+  BuFile? _selectedImage;
+  
   int? _selectedStepIndex;
 
   void _initialize() {
@@ -104,13 +110,16 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
           duration: const Duration(milliseconds: 200),
           width: _selectedStepIndex != null ? widget.maxPanelWidth : 0.0,
           child: _selectedStepIndex != null ? BuildOnStepEditDialog(
+            buildOnStepID: _selectedStepIndex != null ? _steps[_selectedStepIndex!].id : null,
             formKey: _formKey,
             nameTextController: _nameTextController,
             descriptionTextController: _descriptionTextController,
             proofTypeTextController: _proofTypeTextController,
             proofDescriptionTextController: _proofDescriptionTextController,
+            image: _selectedStepIndex != null ? _steps[_selectedStepIndex!].image : null,
             onClose: _updateSelectedStep,
             onRemove: _removeSelectedStep,
+            onImageSelected: _onImageSelected,
           ) : Container(),
         )
       ],
@@ -140,6 +149,10 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
     );
   }
 
+  void _onImageSelected(BuFile image) {
+    _selectedImage = image;
+  }
+
   Future<bool> save() async {
     if (!_updateSelectedStep() && _selectedStepIndex != null) return false;
 
@@ -153,7 +166,13 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
           "description": step.description,
           "index": i+1,
           "proofType": step.proofType,
-          "proofDescription": step.proofDescription
+          "proofDescription": step.proofDescription,
+          if (step.image != null) 
+            "image": MultipartFile.fromBytes(
+              "file",
+              base64Decode(step.image!.base64content!),
+              filename: step.image!.filename
+            )
         });
       }
       else {
@@ -163,7 +182,13 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
           "description": step.description,
           "index": i+1,
           "proofType": step.proofType,
-          "proofDescription": step.proofDescription
+          "proofDescription": step.proofDescription,
+          if (step.image != null)
+            "image": MultipartFile.fromBytes(
+              "file",
+              base64Decode(step.image!.base64content!),
+              filename: step.image!.filename
+            )
         });
       }
     }
@@ -179,7 +204,7 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
       description: "",
       index: _steps.length + 1,
       proofType: BuildOnStepProofType.comment,
-      proofDescription: ""
+      proofDescription: "",
     );
 
     setState(() {
@@ -199,6 +224,7 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
         description: _descriptionTextController.text,
         proofType: _proofTypeTextController.text,
         proofDescription: _proofDescriptionTextController.text,
+        image: _selectedImage
       );
       _selectedStepIndex = null;
     });
@@ -230,6 +256,7 @@ class BuildOnStepEditListState extends State<BuildOnStepEditList> {
       _descriptionTextController.text = selected.description;
       _proofTypeTextController.text = selected.proofType;
       _proofDescriptionTextController.text = selected.proofDescription;
+      _selectedImage = selected.image;
     });
   }
 }

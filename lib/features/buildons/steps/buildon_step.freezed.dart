@@ -27,7 +27,8 @@ class _$BuildOnStepTearOff {
       required int index,
       String description = "Pas de description fournis",
       String proofType = "Pas d'information",
-      String proofDescription = "Pas d'information"}) {
+      String proofDescription = "Pas d'information",
+      @JsonKey(ignore: true) BuFile? image}) {
     return _BuildOnStep(
       id,
       name: name,
@@ -35,6 +36,7 @@ class _$BuildOnStepTearOff {
       description: description,
       proofType: proofType,
       proofDescription: proofDescription,
+      image: image,
     );
   }
 
@@ -54,6 +56,8 @@ mixin _$BuildOnStep {
   String get description => throw _privateConstructorUsedError;
   String get proofType => throw _privateConstructorUsedError;
   String get proofDescription => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  BuFile? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,7 +76,10 @@ abstract class $BuildOnStepCopyWith<$Res> {
       int index,
       String description,
       String proofType,
-      String proofDescription});
+      String proofDescription,
+      @JsonKey(ignore: true) BuFile? image});
+
+  $BuFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -91,6 +98,7 @@ class _$BuildOnStepCopyWithImpl<$Res> implements $BuildOnStepCopyWith<$Res> {
     Object? description = freezed,
     Object? proofType = freezed,
     Object? proofDescription = freezed,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -117,7 +125,22 @@ class _$BuildOnStepCopyWithImpl<$Res> implements $BuildOnStepCopyWith<$Res> {
           ? _value.proofDescription
           : proofDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
+  }
+
+  @override
+  $BuFileCopyWith<$Res>? get image {
+    if (_value.image == null) {
+      return null;
+    }
+
+    return $BuFileCopyWith<$Res>(_value.image!, (value) {
+      return _then(_value.copyWith(image: value));
+    });
   }
 }
 
@@ -134,7 +157,11 @@ abstract class _$BuildOnStepCopyWith<$Res>
       int index,
       String description,
       String proofType,
-      String proofDescription});
+      String proofDescription,
+      @JsonKey(ignore: true) BuFile? image});
+
+  @override
+  $BuFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -155,6 +182,7 @@ class __$BuildOnStepCopyWithImpl<$Res> extends _$BuildOnStepCopyWithImpl<$Res>
     Object? description = freezed,
     Object? proofType = freezed,
     Object? proofDescription = freezed,
+    Object? image = freezed,
   }) {
     return _then(_BuildOnStep(
       id == freezed
@@ -181,6 +209,10 @@ class __$BuildOnStepCopyWithImpl<$Res> extends _$BuildOnStepCopyWithImpl<$Res>
           ? _value.proofDescription
           : proofDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
   }
 }
@@ -193,7 +225,8 @@ class _$_BuildOnStep with DiagnosticableTreeMixin implements _BuildOnStep {
       required this.index,
       this.description = "Pas de description fournis",
       this.proofType = "Pas d'information",
-      this.proofDescription = "Pas d'information"});
+      this.proofDescription = "Pas d'information",
+      @JsonKey(ignore: true) this.image});
 
   factory _$_BuildOnStep.fromJson(Map<String, dynamic> json) =>
       _$$_BuildOnStepFromJson(json);
@@ -213,10 +246,13 @@ class _$_BuildOnStep with DiagnosticableTreeMixin implements _BuildOnStep {
   @JsonKey()
   @override
   final String proofDescription;
+  @override
+  @JsonKey(ignore: true)
+  final BuFile? image;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BuildOnStep(id: $id, name: $name, index: $index, description: $description, proofType: $proofType, proofDescription: $proofDescription)';
+    return 'BuildOnStep(id: $id, name: $name, index: $index, description: $description, proofType: $proofType, proofDescription: $proofDescription, image: $image)';
   }
 
   @override
@@ -229,7 +265,8 @@ class _$_BuildOnStep with DiagnosticableTreeMixin implements _BuildOnStep {
       ..add(DiagnosticsProperty('index', index))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('proofType', proofType))
-      ..add(DiagnosticsProperty('proofDescription', proofDescription));
+      ..add(DiagnosticsProperty('proofDescription', proofDescription))
+      ..add(DiagnosticsProperty('image', image));
   }
 
   @override
@@ -244,7 +281,8 @@ class _$_BuildOnStep with DiagnosticableTreeMixin implements _BuildOnStep {
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.proofType, proofType) &&
             const DeepCollectionEquality()
-                .equals(other.proofDescription, proofDescription));
+                .equals(other.proofDescription, proofDescription) &&
+            const DeepCollectionEquality().equals(other.image, image));
   }
 
   @override
@@ -255,7 +293,8 @@ class _$_BuildOnStep with DiagnosticableTreeMixin implements _BuildOnStep {
       const DeepCollectionEquality().hash(index),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(proofType),
-      const DeepCollectionEquality().hash(proofDescription));
+      const DeepCollectionEquality().hash(proofDescription),
+      const DeepCollectionEquality().hash(image));
 
   @JsonKey(ignore: true)
   @override
@@ -274,7 +313,8 @@ abstract class _BuildOnStep implements BuildOnStep {
       required int index,
       String description,
       String proofType,
-      String proofDescription}) = _$_BuildOnStep;
+      String proofDescription,
+      @JsonKey(ignore: true) BuFile? image}) = _$_BuildOnStep;
 
   factory _BuildOnStep.fromJson(Map<String, dynamic> json) =
       _$_BuildOnStep.fromJson;
@@ -291,6 +331,9 @@ abstract class _BuildOnStep implements BuildOnStep {
   String get proofType;
   @override
   String get proofDescription;
+  @override
+  @JsonKey(ignore: true)
+  BuFile? get image;
   @override
   @JsonKey(ignore: true)
   _$BuildOnStepCopyWith<_BuildOnStep> get copyWith =>

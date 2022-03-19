@@ -1,3 +1,4 @@
+import 'package:buildup/core/models/bu_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -23,7 +24,8 @@ class BuildOnStep with _$BuildOnStep {
     required int index,
     @Default("Pas de description fournis") String description,
     @Default("Pas d'information") String proofType,
-    @Default("Pas d'information") String proofDescription
+    @Default("Pas d'information") String proofDescription,
+    @JsonKey(ignore: true) BuFile? image,
   }) = _BuildOnStep;
 
   factory BuildOnStep.fromJson(Map<String, dynamic> json) => _$BuildOnStepFromJson(json);

@@ -1,4 +1,7 @@
+import 'package:buildup/core/models/bu_file.dart';
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
+import 'package:buildup/core/widgets/inputs/bu_image_picker_big.dart';
 import 'package:buildup/core/widgets/inputs/bu_textfield.dart';
 import 'package:buildup/features/buildons/steps/buildon_step.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +9,19 @@ import 'package:flutter/material.dart';
 class BuildOnStepEditDialog extends StatefulWidget {
   const BuildOnStepEditDialog({
     Key? key, 
+    required this.buildOnStepID,
     required this.formKey,
     required this.nameTextController,
     required this.descriptionTextController,
     required this.proofTypeTextController,
     required this.proofDescriptionTextController,
+    required this.image,
     required this.onClose, 
-    required this.onRemove
+    required this.onRemove,
+    required this.onImageSelected,
   }) : super(key: key);
+
+  final String? buildOnStepID;
 
   final GlobalKey<FormState> formKey;
   final TextEditingController  nameTextController;
@@ -21,8 +29,11 @@ class BuildOnStepEditDialog extends StatefulWidget {
   final TextEditingController proofTypeTextController;
   final TextEditingController proofDescriptionTextController;
 
+  final BuFile? image;
+
   final Function() onClose;
   final Function() onRemove;
+  final Function(BuFile) onImageSelected;
 
   @override
   State<BuildOnStepEditDialog> createState() => _BuildOnStepEditDialogState();
@@ -78,6 +89,17 @@ class _BuildOnStepEditDialogState extends State<BuildOnStepEditDialog> {
             children: [
               // The Header
               Flexible(child: _buildHeader(context)),
+
+              // The image picker
+              SizedBox(
+                height: 250,
+                child: BuImagePickerBig(
+                  imageURL: "$kImagesUrls/buildons/steps/${widget.buildOnStepID ?? ""}.jpg",
+                  onImageSelected: widget.onImageSelected,
+                  imageData: widget.image,
+                )
+              ),
+
 
               // The form
               Flexible(child: _buildForm()),

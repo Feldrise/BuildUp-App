@@ -26,13 +26,15 @@ mutation createBuildOn(
   $index: Int!,
   $annexeUrl: String!,
   $rewards: String!
+  $image: Upload
 ) {
   createBuildOn(input: {
     name: $name,
     description: $description,
     index: $index,
     annexeUrl: $annexeUrl,
-    rewards: $rewards
+    rewards: $rewards,
+    image: $image,
   }) {
     id,
     name,
@@ -49,13 +51,15 @@ mutation updateBuildOn(
   $index: Int!,
   $annexeUrl: String!,
   $rewards: String!
+  $image: Upload
 ) {
   updateBuildOn(id: $id, changes: {
     name: $name,
     description: $description,
     index: $index,
     annexeUrl: $annexeUrl,
-    rewards: $rewards
+    rewards: $rewards,
+    image: $image,
   }) {
     id,
     name,

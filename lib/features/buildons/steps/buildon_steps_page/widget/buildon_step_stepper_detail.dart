@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
@@ -23,6 +24,7 @@ class BuildOnStepStepperDetail extends StatelessWidget {
     required this.validateProofRunMutation,
     required this.isBuilder,
     this.associatedProof,
+    this.isSmall = false,
   }) : super(key: key);
 
   final BuildOnStep step;
@@ -35,52 +37,93 @@ class BuildOnStepStepperDetail extends StatelessWidget {
   final RunMutation refuseProofRunMutation;
   final RunMutation validateProofRunMutation;
 
+  final bool isSmall;
+
   @override
   Widget build(BuildContext context) {
     return BuCard(
-      child: Row(
-        children: [
-          // The image
-          Flexible(
-            flex: 3,
-            child: Container(
-              color: Palette.colorLightGrey3,
-            ),
-          ),
-          const SizedBox(width: 12,),
-    
-          // The info
-          Flexible(
-            flex: 7,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // The title
-                _buildHeader(context),
-                const SizedBox(height: 12,),
-    
-                // The description
-                Flexible(child: Text(step.description)),
-                const SizedBox(height: 12,),
+      padding: EdgeInsets.zero,
+      child: Builder(
+        builder: (context) {
+          if (!isSmall) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _content(context)
+            );
+          }
 
-                // The message 
-                _buildStatusMessage(),
-                const SizedBox(height: 12,),
-
-                // The button if needed
-                Flexible(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: _buildButton(context),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _content(context),
+          );
+        }
       ),
     );
+  }
+
+  List<Widget> _content(BuildContext context) {
+    return [
+      // The image
+      Flexible(
+        flex: 3,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(8.0),
+            topRight: Radius.circular(isSmall ? 8.0 : 0.0),
+          ),
+          child: Image.network(
+            "$kImagesUrls/buildons/steps/${step.id}.jpg",
+            loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                  : null,
+              ),
+            ),
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Theme.of(context).dividerColor,
+                height: 250,
+              );
+            },
+          ),
+        ),
+      ),
+      const SizedBox(width: 12,),
+
+      // The info
+      Flexible(
+        flex: 7,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // The title
+              _buildHeader(context),
+              const SizedBox(height: 12,),
+
+              // The description
+              Flexible(child: Text(step.description)),
+              const SizedBox(height: 12,),
+
+              // The message 
+              _buildStatusMessage(),
+              const SizedBox(height: 12,),
+
+              // The button if needed
+              Flexible(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: _buildButton(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ];
   }
 
   Widget _buildStatusMessage() {

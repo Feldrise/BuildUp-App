@@ -1,3 +1,4 @@
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/features/buildons/buildon.dart';
 import 'package:buildup/theme/palette.dart';
@@ -25,9 +26,21 @@ class BuildOnDetail extends StatelessWidget {
                 // The image
                 Expanded(
                   flex: 35,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxHeight: 300),
-                    child: Container(color: Palette.colorLightGrey3,)
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      "$kImagesUrls/buildons/${buildOn.id}.jpg",
+                      loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                            : null,
+                        ),
+                      ),
+                      errorBuilder: (context, error, stackTrace) {
+                        return const SizedBox(height: 250,);
+                      },
+                              ),
                   ),
                 ),
 
@@ -53,7 +66,7 @@ class BuildOnDetail extends StatelessWidget {
             ),
 
             // The description
-            Flexible(child: _buildDescription(context))
+            Flexible(child: _buildDescription(context)),
           ],
         );
       }
@@ -72,7 +85,17 @@ class BuildOnDetail extends StatelessWidget {
           const SizedBox(height: 10),
 
           // The buildon description
-          Text(buildOn.description)
+          Text(buildOn.description),
+          const SizedBox(height: 10),
+
+          // The button
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ElevatedButton(
+              onPressed: () {},
+              child: const Text("Accéder au dossier annexe"),
+            ),
+          )
         ],
       )
     );

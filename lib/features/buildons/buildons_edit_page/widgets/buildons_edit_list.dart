@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:buildup/core/models/bu_file.dart';
 import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/features/buildons/buildon.dart';
 import 'package:buildup/features/buildons/buildons_edit_page/dialog/buildon_edit_dialog.dart';
@@ -5,6 +8,7 @@ import 'package:buildup/features/buildons/buildons_edit_page/widgets/buildon_edi
 import 'package:buildup/features/buildons/steps/buildon_steps_edit_page/buildon_steps_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 
 class BuildOnsEditList extends StatefulWidget {
   const BuildOnsEditList({
@@ -32,6 +36,8 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
   final TextEditingController _descriptionTextController = TextEditingController();
   final TextEditingController _urlTextController = TextEditingController();
   final TextEditingController _rewardsTextController = TextEditingController();
+
+  BuFile? _selectedImage;
 
   List<BuildOn> _buildOns = [];
   double _maxPanelWidth = 200;
@@ -105,15 +111,18 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
           duration: const Duration(milliseconds: 200),
           width: _selectedBuildOnIndex != null ? _maxPanelWidth : 0.0,
           child: _selectedBuildOnIndex != null ? BuildOnEditDialog(
+            buildOnID: _selectedBuildOnIndex != null ? _buildOns[_selectedBuildOnIndex!].id : null,
             formKey: _formKey,
             nameTextController: _nameTextController,
             descriptionTextController: _descriptionTextController,
             urlTextController: _urlTextController,
             rewardsTextController: _rewardsTextController,
+            image: _selectedBuildOnIndex != null ? _buildOns[_selectedBuildOnIndex!].image : null,
             buildOnStepsCount: _buildOns[_selectedBuildOnIndex!].steps.length,
             onClose: _updateSelectedBuildOn,
             onRemove: _removeSelectedBuildOn,
             onOpenSteps: _openBuildOnStepsDialog,
+            onImageSelected: _onImageSelected,
           ) : Container(),
         )
       ],
@@ -141,6 +150,10 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
     );
   }
 
+  void _onImageSelected(BuFile image) {
+    _selectedImage = image;
+  }
+
   Future<bool> save() async {
     if (!_updateSelectedBuildOn() && _selectedBuildOnIndex != null) return false;
 
@@ -153,7 +166,13 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
           "description": buildOn.description,
           "index": i+1,
           "annexeUrl": buildOn.annexeUrl,
-          "rewards": buildOn.rewards
+          "rewards": buildOn.rewards,
+          if (buildOn.image != null) 
+            "image": MultipartFile.fromBytes(
+              "file",
+              base64Decode(buildOn.image!.base64content!),
+              filename: buildOn.image!.filename
+            )
         });
       } 
       else {
@@ -163,7 +182,13 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
           "description": buildOn.description,
           "index": i+1,
           "annexeUrl": buildOn.annexeUrl,
-          "rewards": buildOn.rewards
+          "rewards": buildOn.rewards,
+          if (buildOn.image != null)
+            "image": MultipartFile.fromBytes(
+              "file",
+              base64Decode(buildOn.image!.base64content!),
+              filename: buildOn.image!.filename
+            )
         });
       }
     }
@@ -199,7 +224,8 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
         name: _nameTextController.text,
         description: _descriptionTextController.text,
         annexeUrl: _urlTextController.text,
-        rewards: _rewardsTextController.text
+        rewards: _rewardsTextController.text,
+        image: _selectedImage
       );
       _selectedBuildOnIndex = null;
     });
@@ -248,6 +274,7 @@ class BuildOnsEditListState extends State<BuildOnsEditList> {
       _rewardsTextController.text = selected.rewards;
 
       _selectedBuildOnIndex = selectedIndex;
+      _selectedImage = selected.image;
     });
   }
 

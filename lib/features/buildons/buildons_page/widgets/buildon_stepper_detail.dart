@@ -1,3 +1,4 @@
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/features/buildons/buildon.dart';
 import 'package:buildup/theme/palette.dart';
@@ -19,8 +20,18 @@ class BuildOnStepperDetail extends StatelessWidget {
           // The image
           Flexible(
             flex: 25,
-            child: Container(
-              color: Palette.colorLightGrey3,
+            child: Image.network(
+              "$kImagesUrls/buildons/${buildOn.id}.jpg",
+              loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+                ),
+              ),
+              errorBuilder: (context, error, stackTrace) {
+                return const SizedBox(height: 250,);
+              },
             ),
           ),
           const SizedBox(width: 12,),

@@ -28,7 +28,8 @@ class _$BuildOnTearOff {
       String description = "Pas de description fournis",
       String annexeUrl = "Pas d'URL",
       String rewards = "Pas d'information",
-      List<BuildOnStep> steps = const <BuildOnStep>[]}) {
+      List<BuildOnStep> steps = const <BuildOnStep>[],
+      @JsonKey(ignore: true) BuFile? image}) {
     return _BuildOn(
       id,
       name: name,
@@ -37,6 +38,7 @@ class _$BuildOnTearOff {
       annexeUrl: annexeUrl,
       rewards: rewards,
       steps: steps,
+      image: image,
     );
   }
 
@@ -57,6 +59,8 @@ mixin _$BuildOn {
   String get annexeUrl => throw _privateConstructorUsedError;
   String get rewards => throw _privateConstructorUsedError;
   List<BuildOnStep> get steps => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  BuFile? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +78,10 @@ abstract class $BuildOnCopyWith<$Res> {
       String description,
       String annexeUrl,
       String rewards,
-      List<BuildOnStep> steps});
+      List<BuildOnStep> steps,
+      @JsonKey(ignore: true) BuFile? image});
+
+  $BuFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -94,6 +101,7 @@ class _$BuildOnCopyWithImpl<$Res> implements $BuildOnCopyWith<$Res> {
     Object? annexeUrl = freezed,
     Object? rewards = freezed,
     Object? steps = freezed,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -124,7 +132,22 @@ class _$BuildOnCopyWithImpl<$Res> implements $BuildOnCopyWith<$Res> {
           ? _value.steps
           : steps // ignore: cast_nullable_to_non_nullable
               as List<BuildOnStep>,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
+  }
+
+  @override
+  $BuFileCopyWith<$Res>? get image {
+    if (_value.image == null) {
+      return null;
+    }
+
+    return $BuFileCopyWith<$Res>(_value.image!, (value) {
+      return _then(_value.copyWith(image: value));
+    });
   }
 }
 
@@ -140,7 +163,11 @@ abstract class _$BuildOnCopyWith<$Res> implements $BuildOnCopyWith<$Res> {
       String description,
       String annexeUrl,
       String rewards,
-      List<BuildOnStep> steps});
+      List<BuildOnStep> steps,
+      @JsonKey(ignore: true) BuFile? image});
+
+  @override
+  $BuFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -161,6 +188,7 @@ class __$BuildOnCopyWithImpl<$Res> extends _$BuildOnCopyWithImpl<$Res>
     Object? annexeUrl = freezed,
     Object? rewards = freezed,
     Object? steps = freezed,
+    Object? image = freezed,
   }) {
     return _then(_BuildOn(
       id == freezed
@@ -191,6 +219,10 @@ class __$BuildOnCopyWithImpl<$Res> extends _$BuildOnCopyWithImpl<$Res>
           ? _value.steps
           : steps // ignore: cast_nullable_to_non_nullable
               as List<BuildOnStep>,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as BuFile?,
     ));
   }
 }
@@ -204,7 +236,8 @@ class _$_BuildOn with DiagnosticableTreeMixin implements _BuildOn {
       this.description = "Pas de description fournis",
       this.annexeUrl = "Pas d'URL",
       this.rewards = "Pas d'information",
-      this.steps = const <BuildOnStep>[]});
+      this.steps = const <BuildOnStep>[],
+      @JsonKey(ignore: true) this.image});
 
   factory _$_BuildOn.fromJson(Map<String, dynamic> json) =>
       _$$_BuildOnFromJson(json);
@@ -227,10 +260,13 @@ class _$_BuildOn with DiagnosticableTreeMixin implements _BuildOn {
   @JsonKey()
   @override
   final List<BuildOnStep> steps;
+  @override
+  @JsonKey(ignore: true)
+  final BuFile? image;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BuildOn(id: $id, name: $name, index: $index, description: $description, annexeUrl: $annexeUrl, rewards: $rewards, steps: $steps)';
+    return 'BuildOn(id: $id, name: $name, index: $index, description: $description, annexeUrl: $annexeUrl, rewards: $rewards, steps: $steps, image: $image)';
   }
 
   @override
@@ -244,7 +280,8 @@ class _$_BuildOn with DiagnosticableTreeMixin implements _BuildOn {
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('annexeUrl', annexeUrl))
       ..add(DiagnosticsProperty('rewards', rewards))
-      ..add(DiagnosticsProperty('steps', steps));
+      ..add(DiagnosticsProperty('steps', steps))
+      ..add(DiagnosticsProperty('image', image));
   }
 
   @override
@@ -259,7 +296,8 @@ class _$_BuildOn with DiagnosticableTreeMixin implements _BuildOn {
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.annexeUrl, annexeUrl) &&
             const DeepCollectionEquality().equals(other.rewards, rewards) &&
-            const DeepCollectionEquality().equals(other.steps, steps));
+            const DeepCollectionEquality().equals(other.steps, steps) &&
+            const DeepCollectionEquality().equals(other.image, image));
   }
 
   @override
@@ -271,7 +309,8 @@ class _$_BuildOn with DiagnosticableTreeMixin implements _BuildOn {
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(annexeUrl),
       const DeepCollectionEquality().hash(rewards),
-      const DeepCollectionEquality().hash(steps));
+      const DeepCollectionEquality().hash(steps),
+      const DeepCollectionEquality().hash(image));
 
   @JsonKey(ignore: true)
   @override
@@ -291,7 +330,8 @@ abstract class _BuildOn implements BuildOn {
       String description,
       String annexeUrl,
       String rewards,
-      List<BuildOnStep> steps}) = _$_BuildOn;
+      List<BuildOnStep> steps,
+      @JsonKey(ignore: true) BuFile? image}) = _$_BuildOn;
 
   factory _BuildOn.fromJson(Map<String, dynamic> json) = _$_BuildOn.fromJson;
 
@@ -309,6 +349,9 @@ abstract class _BuildOn implements BuildOn {
   String get rewards;
   @override
   List<BuildOnStep> get steps;
+  @override
+  @JsonKey(ignore: true)
+  BuFile? get image;
   @override
   @JsonKey(ignore: true)
   _$BuildOnCopyWith<_BuildOn> get copyWith =>
