@@ -2,6 +2,7 @@ import 'package:buildup/core/utils/screen_utils.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/features/authentication/authentication_graphql.dart';
 import 'package:buildup/features/project/widgets/project_card.dart';
+import 'package:buildup/features/users/forms/widgets/form_card.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/users_graphql.dart';
 import 'package:buildup/features/users/widgets/user_profile_card.dart';
@@ -107,14 +108,21 @@ class UserProfilePage extends StatelessWidget {
                       const SizedBox(height: 30,),
 
                       // The project if there is one
-                      if (user.builder?.project != null && (isAdmin || isCoach)) 
-                        Flexible(child: ProjectCard(
-                          project: user.builder!.project!, 
-                          userID: user.id!,
-                          isLoggedUser: isLoggedUser,
-                          isAdmin: isAdmin,
-                          refetch: refetch,
-                        )
+                      if (user.builder?.project != null && (isAdmin || isCoach)) ...{
+                        Flexible(
+                          child: ProjectCard(
+                            project: user.builder!.project!, 
+                            userID: user.id!,
+                            isLoggedUser: isLoggedUser,
+                            isAdmin: isAdmin,
+                            refetch: refetch,
+                          )
+                        ),
+                        const SizedBox(height: 30,),
+                      },
+
+                      Flexible(
+                        child: FormCard(user: user),
                       ),
 
                       SizedBox(height: ScreenUtils.instance.horizontalPadding,),

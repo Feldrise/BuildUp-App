@@ -31,6 +31,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       coach: json['coach'] == null
           ? null
           : Coach.fromJson(json['coach'] as Map<String, dynamic>),
+      form: json['form'] == null
+          ? null
+          : BuForm.fromJson(json['form'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -50,4 +53,5 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'linkedin': instance.linkedin,
       'builder': instance.builder,
       'coach': instance.coach,
+      'form': instance.form,
     };

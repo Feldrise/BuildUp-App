@@ -30,6 +30,12 @@ query GetDetailledUser($id: ID) {
         isOfficialyRegistered
       }
     }
+    form {
+      items {
+        question
+        answer
+      }
+    }
   }
 }
 ''';
@@ -105,7 +111,8 @@ mutation updateUser(
   $description: String,
   $situation: String,
   $discord: String,
-  $linkedin: String
+  $linkedin: String,
+  $image: Upload,
 ) {
   updateUser(
     id: $id,
@@ -116,7 +123,8 @@ mutation updateUser(
       description: $description,
       situation: $situation,
       discord: $discord,
-      linkedin: $linkedin
+      linkedin: $linkedin,
+      image: $image,
     }
   ) {
     id,

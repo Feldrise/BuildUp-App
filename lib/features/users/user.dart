@@ -1,5 +1,6 @@
 import 'package:buildup/features/builders/bu_builder.dart';
 import 'package:buildup/features/coachs/coach.dart';
+import 'package:buildup/features/users/forms/bu_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -51,6 +52,7 @@ class User with _$User {
     String? linkedin,
     BuBuilder? builder,
     Coach? coach,
+    BuForm? form,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

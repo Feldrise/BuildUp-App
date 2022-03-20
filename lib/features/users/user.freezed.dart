@@ -37,7 +37,8 @@ class _$UserTearOff {
       String? discord,
       String? linkedin,
       BuBuilder? builder,
-      Coach? coach}) {
+      Coach? coach,
+      BuForm? form}) {
     return _User(
       id,
       email: email,
@@ -55,6 +56,7 @@ class _$UserTearOff {
       linkedin: linkedin,
       builder: builder,
       coach: coach,
+      form: form,
     );
   }
 
@@ -84,6 +86,7 @@ mixin _$User {
   String? get linkedin => throw _privateConstructorUsedError;
   BuBuilder? get builder => throw _privateConstructorUsedError;
   Coach? get coach => throw _privateConstructorUsedError;
+  BuForm? get form => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -110,10 +113,12 @@ abstract class $UserCopyWith<$Res> {
       String? discord,
       String? linkedin,
       BuBuilder? builder,
-      Coach? coach});
+      Coach? coach,
+      BuForm? form});
 
   $BuBuilderCopyWith<$Res>? get builder;
   $CoachCopyWith<$Res>? get coach;
+  $BuFormCopyWith<$Res>? get form;
 }
 
 /// @nodoc
@@ -142,6 +147,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? linkedin = freezed,
     Object? builder = freezed,
     Object? coach = freezed,
+    Object? form = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -208,6 +214,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.coach
           : coach // ignore: cast_nullable_to_non_nullable
               as Coach?,
+      form: form == freezed
+          ? _value.form
+          : form // ignore: cast_nullable_to_non_nullable
+              as BuForm?,
     ));
   }
 
@@ -230,6 +240,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
     return $CoachCopyWith<$Res>(_value.coach!, (value) {
       return _then(_value.copyWith(coach: value));
+    });
+  }
+
+  @override
+  $BuFormCopyWith<$Res>? get form {
+    if (_value.form == null) {
+      return null;
+    }
+
+    return $BuFormCopyWith<$Res>(_value.form!, (value) {
+      return _then(_value.copyWith(form: value));
     });
   }
 }
@@ -255,12 +276,15 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? discord,
       String? linkedin,
       BuBuilder? builder,
-      Coach? coach});
+      Coach? coach,
+      BuForm? form});
 
   @override
   $BuBuilderCopyWith<$Res>? get builder;
   @override
   $CoachCopyWith<$Res>? get coach;
+  @override
+  $BuFormCopyWith<$Res>? get form;
 }
 
 /// @nodoc
@@ -290,6 +314,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? linkedin = freezed,
     Object? builder = freezed,
     Object? coach = freezed,
+    Object? form = freezed,
   }) {
     return _then(_User(
       id == freezed
@@ -356,6 +381,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.coach
           : coach // ignore: cast_nullable_to_non_nullable
               as Coach?,
+      form: form == freezed
+          ? _value.form
+          : form // ignore: cast_nullable_to_non_nullable
+              as BuForm?,
     ));
   }
 }
@@ -378,7 +407,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       this.discord,
       this.linkedin,
       this.builder,
-      this.coach});
+      this.coach,
+      this.form});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -417,10 +447,12 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   final BuBuilder? builder;
   @override
   final Coach? coach;
+  @override
+  final BuForm? form;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, description: $description, status: $status, step: $step, situation: $situation, createdAt: $createdAt, birthdate: $birthdate, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach)';
+    return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, description: $description, status: $status, step: $step, situation: $situation, createdAt: $createdAt, birthdate: $birthdate, address: $address, discord: $discord, linkedin: $linkedin, builder: $builder, coach: $coach, form: $form)';
   }
 
   @override
@@ -443,7 +475,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('discord', discord))
       ..add(DiagnosticsProperty('linkedin', linkedin))
       ..add(DiagnosticsProperty('builder', builder))
-      ..add(DiagnosticsProperty('coach', coach));
+      ..add(DiagnosticsProperty('coach', coach))
+      ..add(DiagnosticsProperty('form', form));
   }
 
   @override
@@ -467,7 +500,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
             const DeepCollectionEquality().equals(other.discord, discord) &&
             const DeepCollectionEquality().equals(other.linkedin, linkedin) &&
             const DeepCollectionEquality().equals(other.builder, builder) &&
-            const DeepCollectionEquality().equals(other.coach, coach));
+            const DeepCollectionEquality().equals(other.coach, coach) &&
+            const DeepCollectionEquality().equals(other.form, form));
   }
 
   @override
@@ -488,7 +522,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(discord),
       const DeepCollectionEquality().hash(linkedin),
       const DeepCollectionEquality().hash(builder),
-      const DeepCollectionEquality().hash(coach));
+      const DeepCollectionEquality().hash(coach),
+      const DeepCollectionEquality().hash(form));
 
   @JsonKey(ignore: true)
   @override
@@ -517,7 +552,8 @@ abstract class _User implements User {
       String? discord,
       String? linkedin,
       BuBuilder? builder,
-      Coach? coach}) = _$_User;
+      Coach? coach,
+      BuForm? form}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -553,6 +589,8 @@ abstract class _User implements User {
   BuBuilder? get builder;
   @override
   Coach? get coach;
+  @override
+  BuForm? get form;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

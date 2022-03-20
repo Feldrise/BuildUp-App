@@ -51,11 +51,9 @@ class _BuImagePickerState extends State<BuImagePicker> {
             child: Container(
               height: 92, width: 92,
               color: Theme.of(context).dividerColor,
-              child: Positioned.fill(
-                child: Image.memory(
-                  base64Decode(_image!.base64content!),
-                  fit: BoxFit.cover,
-                ),
+              child: Image.memory(
+                base64Decode(_image!.base64content!),
+                fit: BoxFit.cover,
               )
             )
           )
@@ -65,21 +63,19 @@ class _BuImagePickerState extends State<BuImagePicker> {
           child: Container(
             height: 92, width: 92,
             color: Theme.of(context).dividerColor,
-            child: Positioned.fill(
-              child: Image.network(
-                widget.imageURL,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                      : null,
-                  ),
+            child: Image.network(
+              widget.imageURL,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
                 ),
-                errorBuilder: (context, error, stackTrace) {
-                  return const SizedBox(height: 250,);
-                },
               ),
+              errorBuilder: (context, error, stackTrace) {
+                return const SizedBox(height: 250,);
+              },
             ),
           )
         ),

@@ -1,6 +1,7 @@
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/core/widgets/dialogs/closable_dialog.dart';
 import 'package:buildup/features/project/widgets/project_info.dart';
+import 'package:buildup/features/users/forms/widgets/form_info.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/users_graphql.dart';
 import 'package:buildup/features/users/widgets/user_profile_info.dart';
@@ -64,7 +65,9 @@ class UserProfilDialog extends StatelessWidget {
               },
 
               // Form
-              _buildTitle(context, "Réponses au formulaire")
+              _buildTitle(context, "Réponses au formulaire"),
+              const SizedBox(height: 12,),
+              FormInfo(user: user,)
             ],
           );
         },
