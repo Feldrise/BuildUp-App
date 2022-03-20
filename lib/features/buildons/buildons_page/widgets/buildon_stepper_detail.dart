@@ -1,7 +1,6 @@
 import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/features/buildons/buildon.dart';
-import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 class BuildOnStepperDetail extends StatelessWidget {

@@ -1,6 +1,6 @@
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/small_info.dart';
 import 'package:buildup/features/users/user.dart';
-import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -68,11 +68,27 @@ class UserProfileInfo extends StatelessWidget {
       if (showProfilePicture) ...{
         Align(
           alignment: Alignment.centerLeft,
-          child: Container(
+          child: SizedBox(
             width: 112, height: 112,
-            decoration: BoxDecoration(
-              color: Palette.colorLightGrey3,
-              borderRadius: BorderRadius.circular(56)
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(56),
+              child: Image.network(
+                "$kImagesUrls/users/${user.id}.jpg",
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                      : null,
+                  ),
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    "assets/images/buildup_mini.png",
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
             ),
           ),
         ),

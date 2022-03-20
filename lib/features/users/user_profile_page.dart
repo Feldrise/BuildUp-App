@@ -82,6 +82,7 @@ class UserProfilePage extends StatelessWidget {
               final User user = User.fromJson(userResult.data?["user"] as Map<String, dynamic>? ?? <String, dynamic>{});
               final bool isLoggedUser = appUser.id == user.id; 
               final bool isAdmin = appUser.role == UserRoles.admin;
+              final bool isCoach = appUser.role == UserRoles.coach;
 
               return SingleChildScrollView(
                 controller: ScrollController(),
@@ -106,7 +107,7 @@ class UserProfilePage extends StatelessWidget {
                       const SizedBox(height: 30,),
 
                       // The project if there is one
-                      if (user.builder?.project != null && isAdmin) 
+                      if (user.builder?.project != null && (isAdmin || isCoach)) 
                         Flexible(child: ProjectCard(
                           project: user.builder!.project!, 
                           userID: user.id!,

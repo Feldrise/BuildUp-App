@@ -2,6 +2,7 @@ import 'package:buildup/core/utils/app_manager.dart';
 import 'package:buildup/features/builders/widgets/coach_builders_page.dart';
 import 'package:buildup/features/main_page/main_page.dart';
 import 'package:buildup/features/main_page/page_item.dart';
+import 'package:buildup/features/users/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
 class CoachMainPage extends StatelessWidget {
@@ -11,6 +12,7 @@ class CoachMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // The pages
     final List<Widget> pages = [
+      const UserProfilePage(userId: null,),
       ClipRect(
         child: Navigator(
           key: AppManager.instance.coachBuildersKey,
@@ -24,9 +26,16 @@ class CoachMainPage extends StatelessWidget {
 
     // The menu items
     const List<PageItem> pageItems = [
-      // Build Ons
+      // Profil
       PageItem(
         index: 0, 
+        title: "Profil",
+        icon: Icons.account_circle
+      ),
+
+      // Build Ons
+      PageItem(
+        index: 1, 
         title: "Mes Builders",
         icon: Icons.supervisor_account
       ),

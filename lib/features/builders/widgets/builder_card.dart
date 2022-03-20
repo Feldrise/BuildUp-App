@@ -1,9 +1,9 @@
+import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_card.dart';
 import 'package:buildup/features/buildons/buildons_page/buildons_page.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/user_profile_page.dart';
 import 'package:buildup/features/users/widgets/step_badge.dart';
-import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -70,11 +70,27 @@ class BuilderCard extends StatelessWidget {
     return [
       // The profile picture
       Center(
-        child: Container(
+        child: SizedBox(
           width: 48, height: 48,
-          decoration: BoxDecoration(
-            color: Palette.colorLightGrey3,
-            borderRadius: BorderRadius.circular(24)
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(56),
+            child: Image.network(
+              "$kImagesUrls/users/${builder.id}.jpg",
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+                ),
+              ),
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  "assets/images/buildup_mini.png",
+                  fit: BoxFit.cover,
+                );
+              },
+            ),
           ),
         ),
       ),

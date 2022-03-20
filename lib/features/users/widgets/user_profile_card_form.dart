@@ -1,13 +1,17 @@
+import 'dart:convert';
+
+import 'package:buildup/core/models/bu_file.dart';
 import 'package:buildup/core/utils/constants.dart';
 import 'package:buildup/core/widgets/bu_status_message.dart';
 import 'package:buildup/core/widgets/inputs/bu_datefield.dart';
 import 'package:buildup/core/widgets/inputs/bu_dropdown.dart';
+import 'package:buildup/core/widgets/inputs/bu_image_picker.dart';
 import 'package:buildup/core/widgets/inputs/bu_textfield.dart';
 import 'package:buildup/features/users/user.dart';
 import 'package:buildup/features/users/users_graphql.dart';
-import 'package:buildup/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 
 class UserProfileCardForm extends StatefulWidget {
   const UserProfileCardForm({
@@ -40,6 +44,7 @@ class _UserProfileCardFormState extends State<UserProfileCardForm> {
 
   final TextEditingController _descriptionTextControler = TextEditingController();
 
+  BuFile? _image;
   late String _currentSituation;
 
   String _statusMessage = "";
@@ -222,12 +227,11 @@ class _UserProfileCardFormState extends State<UserProfileCardForm> {
   }
 
   Widget _buildImagePicker() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Palette.colorLightGrey3,
-        borderRadius: BorderRadius.circular(48)
-      ),
-      width: 92, height: 92,
+    return BuImagePicker(
+      imageURL: "$kImagesUrls/users/${widget.user.id}.jpg", 
+      onImageSelected: (image) {
+        _image = image;
+      }
     );
   }
 
@@ -446,7 +450,15 @@ class _UserProfileCardFormState extends State<UserProfileCardForm> {
       "description": _descriptionTextControler.text,
       "situation": _currentSituation,
       "discord": _discordTagTextController.text,
-      "linkedin": _linkedinTextController.text
+      "linkedin": _linkedinTextController.text,
+      if (_image != null)
+        "image": MultipartFile.fromBytes(
+          "file", 
+          base64Decode(_image!.base64content!),
+          filename: _image!.filename
+      )
     });
+
+    imageCache?.clear();
   }
 }
